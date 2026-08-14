@@ -91,7 +91,7 @@ const SLIDE_BACKGROUNDS = {
   hub: { default: 'backgrounds/bg-hub.png' },
   tutor: {
     default: 'backgrounds/bg-tutor-neural.png',
-    1: 'backgrounds/bg-tutor-ai.png',
+    1: 'backgrounds/bg-tutor-lumi.png',
     2: 'backgrounds/bg-tutor-study.png',
     3: 'backgrounds/bg-tutor-ai.png',
     9: 'backgrounds/bg-tutor-ai.png',

@@ -2121,6 +2121,17 @@ html[data-deck="tutor"] .slide-photo-overlay {
     linear-gradient(105deg, rgba(2, 10, 22, 0.92) 0%, rgba(3, 12, 28, 0.78) 40%, rgba(4, 18, 36, 0.48) 100%);
 }
 
+#tutor-slide-1 .slide-photo-overlay,
+.slide-hero-lumi .slide-photo-overlay {
+  background:
+    linear-gradient(105deg, rgba(2, 8, 22, 0.72) 0%, rgba(2, 10, 24, 0.42) 38%, rgba(4, 12, 32, 0.18) 100%);
+}
+
+#tutor-slide-1 .slide-photo-bg,
+.slide-hero-lumi .slide-photo-bg {
+  filter: saturate(1.15) contrast(1.08);
+}
+
 html[data-deck="fastfood"] .slide-photo-overlay {
   background:
     radial-gradient(ellipse at 82% 48%, rgba(245, 158, 11, 0.18) 0%, transparent 50%),
