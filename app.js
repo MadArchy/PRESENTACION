@@ -488,12 +488,12 @@ function playVentureVideo(deckKey) {
   if (playPromise && typeof playPromise.catch === 'function') {
     playPromise.catch(() => {
       video.muted = true;
-      video.play().catch(() => {});
+      video.play().catch(() => closeVentureVideo(true));
     });
   }
 
   video.onended = () => {
-    setVideoEndedState(true);
+    closeVentureVideo(true);
   };
 }
 

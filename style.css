@@ -1474,6 +1474,122 @@ html, body {
   box-shadow: var(--shadow-md);
 }
 
+.team-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.squads-split {
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.squads-compact {
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.squads-compact .team-card {
+  padding: 10px 12px;
+  gap: 6px;
+}
+
+.squads-compact .team-header {
+  padding-bottom: 6px;
+}
+
+.squads-compact .team-name {
+  font-size: 0.88rem;
+  line-height: 1.2;
+}
+
+.squads-compact .team-role {
+  font-size: 0.75rem;
+  margin: 0;
+}
+
+.squads-compact .agent-list {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.squads-compact .agent-item {
+  padding: 3px 8px;
+  font-size: 0.7rem;
+  line-height: 1.25;
+}
+
+.squads-compact .team-mini-icon .ico {
+  width: 16px;
+  height: 16px;
+}
+
+html[data-deck="tutor"] .slide {
+  padding: 22px 28px;
+}
+
+html[data-deck="tutor"] .slide-top-meta {
+  margin-bottom: 6px;
+}
+
+html[data-deck="tutor"] .slide-header {
+  margin-bottom: 8px;
+}
+
+html[data-deck="tutor"] .slide-header h2 {
+  font-size: 1.55rem;
+  margin-bottom: 4px;
+}
+
+html[data-deck="tutor"] .slide-header .slide-lead {
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+html[data-deck="tutor"] .slide-footer {
+  margin-top: 8px;
+  padding-top: 8px;
+}
+
+html[data-deck="tutor"] .punchline-badge {
+  padding: 7px 14px;
+  font-size: 0.82rem;
+}
+
+html[data-deck="tutor"] .feature-card {
+  padding: 12px 14px;
+  gap: 8px;
+}
+
+html[data-deck="tutor"] .feature-card.compact {
+  padding: 10px 12px;
+}
+
+html[data-deck="tutor"] .card-title {
+  font-size: 0.98rem;
+}
+
+html[data-deck="tutor"] .card-desc {
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+html[data-deck="tutor"] .diagram-preview-box {
+  padding: 8px;
+}
+
+html[data-deck="tutor"] .diagram-preview-box img {
+  max-height: min(300px, 38vh);
+}
+
+html[data-deck="tutor"] .split-layout {
+  gap: 16px;
+  align-items: stretch;
+}
+
 .team-header {
   display: flex;
   align-items: center;
@@ -2102,6 +2218,12 @@ html, body {
   .slide, .executive-hub-slide {
     padding: 30px !important;
   }
+  .squads-compact {
+    grid-template-columns: 1fr 1fr;
+  }
+  html[data-deck="tutor"] .slide {
+    padding: 16px 18px !important;
+  }
 }
 
 @media (max-width: 768px) {
@@ -2118,6 +2240,15 @@ html, body {
   }
   .hub-hero-headline {
     font-size: 2.8rem;
+  }
+  .squads-compact {
+    grid-template-columns: 1fr 1fr;
+  }
+  html[data-deck="tutor"] .slide {
+    padding: 14px 16px !important;
+  }
+  html[data-deck="tutor"] .slide-header h2 {
+    font-size: 1.28rem;
   }
 }
 
