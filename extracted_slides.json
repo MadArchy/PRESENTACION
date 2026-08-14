@@ -1,0 +1,497 @@
+[
+  {
+    "slide": "ppt/slides/slide1.xml",
+    "texts": [
+      "Diagnose",
+      "Teach",
+      "Assess",
+      "Adapt",
+      "INVESTOR PRESENTATION",
+      "Expert Multi-Agent Tutor",
+      "An intelligent tutoring system that diagnoses, teaches, evaluates, and adapts.",
+      "It does not just answer questions. It produces verifiable learning.",
+      "Diagnosis  •  Plan  •  Teaching  •  Evidence",
+      "1"
+    ],
+    "full_text": "Diagnose Teach Assess Adapt INVESTOR PRESENTATION Expert Multi-Agent Tutor An intelligent tutoring system that diagnoses, teaches, evaluates, and adapts. It does not just answer questions. It produces verifiable learning. Diagnosis  •  Plan  •  Teaching  •  Evidence 1"
+  },
+  {
+    "slide": "ppt/slides/slide2.xml",
+    "texts": [
+      "01 · OPPORTUNITY",
+      "The problem",
+      "02",
+      "Today’s AI answers very well. But answering is not the same as teaching.",
+      "“Explain",
+      "percentages”",
+      "Does not know the real level",
+      "Does not remember what worked",
+      "Confuses an answer with mastery",
+      "To teach, AI needs…",
+      "Diagnosis",
+      "Know where the learner starts.",
+      "Path",
+      "Define what to learn and in what order.",
+      "Memory",
+      "Remember evidence, not only messages.",
+      "Proof",
+      "Demonstrate understanding and transfer.",
+      "Answering ≠ teaching",
+      "2"
+    ],
+    "full_text": "01 · OPPORTUNITY The problem 02 Today’s AI answers very well. But answering is not the same as teaching. “Explain percentages” Does not know the real level Does not remember what worked Confuses an answer with mastery To teach, AI needs… Diagnosis Know where the learner starts. Path Define what to learn and in what order. Memory Remember evidence, not only messages. Proof Demonstrate understanding and transfer. Answering ≠ teaching 2"
+  },
+  {
+    "slide": "ppt/slides/slide3.xml",
+    "texts": [
+      "02 · TIMING",
+      "Why now",
+      "03",
+      "Three capabilities are finally mature enough to build a real AI tutor.",
+      "Models",
+      "They can now explain, adapt, and assess with useful quality.",
+      "Agents",
+      "They coordinate long processes with roles and rules.",
+      "Memory",
+      "Graphs + vectors remember relationships and examples.",
+      "The opportunity: a tutor that remembers, connects, and verifies.",
+      "3"
+    ],
+    "full_text": "02 · TIMING Why now 03 Three capabilities are finally mature enough to build a real AI tutor. Models They can now explain, adapt, and assess with useful quality. Agents They coordinate long processes with roles and rules. Memory Graphs + vectors remember relationships and examples. The opportunity: a tutor that remembers, connects, and verifies. 3"
+  },
+  {
+    "slide": "ppt/slides/slide4.xml",
+    "texts": [
+      "03 · PRODUCT",
+      "The solution",
+      "04",
+      "One tutor made of 12 specialized agents working as a coordinated team.",
+      "AI agent",
+      "A specialized AI role with a goal, rules, tools, and controlled memory.",
+      "1",
+      "Diagnose",
+      "2",
+      "Plan",
+      "3",
+      "Teach",
+      "4",
+      "Assess",
+      "5",
+      "Remediate",
+      "6",
+      "Update",
+      "The learner arrives with a goal",
+      "The system turns that goal into a living, explainable path backed by evidence.",
+      "12 agents · 1 experience",
+      "Product = complete system",
+      "4"
+    ],
+    "full_text": "03 · PRODUCT The solution 04 One tutor made of 12 specialized agents working as a coordinated team. AI agent A specialized AI role with a goal, rules, tools, and controlled memory. 1 Diagnose 2 Plan 3 Teach 4 Assess 5 Remediate 6 Update The learner arrives with a goal The system turns that goal into a living, explainable path backed by evidence. 12 agents · 1 experience Product = complete system 4"
+  },
+  {
+    "slide": "ppt/slides/slide5.xml",
+    "texts": [
+      "04 · EXPERIENCE",
+      "What a session feels like",
+      "05",
+      "The experience is a learning loop, not an open-ended conversation.",
+      "Goal",
+      "Diagnosis",
+      "Plan",
+      "Accept",
+      "Lesson",
+      "Practice",
+      "Assessment",
+      "Profile + graph",
+      "Is there a gap?",
+      "Yes → Remediation",
+      "No → Next topic",
+      "The learner can accept or adjust the plan. An error changes the path; it does not restart the conversation.",
+      "5"
+    ],
+    "full_text": "04 · EXPERIENCE What a session feels like 05 The experience is a learning loop, not an open-ended conversation. Goal Diagnosis Plan Accept Lesson Practice Assessment Profile + graph Is there a gap? Yes → Remediation No → Next topic The learner can accept or adjust the plan. An error changes the path; it does not restart the conversation. 5"
+  },
+  {
+    "slide": "ppt/slides/slide6.xml",
+    "texts": [
+      "05 · POSITIONING",
+      "What makes us different",
+      "06",
+      "The difference is not better conversation. It is how learning is decided, remembered, and proven.",
+      "Educational chatbot",
+      "Multi-agent tutor",
+      "Open conversation",
+      "Measurable goals",
+      "Chat memory",
+      "Profile + graph + evidence",
+      "One explanation",
+      "Multiple strategies & hints",
+      "Right / wrong",
+      "Rubrics + reasoning",
+      "Optional sources",
+      "Research + verify + curate",
+      "Moves on by request",
+      "Moves on by mastery",
+      "TEACHING IS A SYSTEM, NOT A PROMPT",
+      "6"
+    ],
+    "full_text": "05 · POSITIONING What makes us different 06 The difference is not better conversation. It is how learning is decided, remembered, and proven. Educational chatbot Multi-agent tutor Open conversation Measurable goals Chat memory Profile + graph + evidence One explanation Multiple strategies & hints Right / wrong Rubrics + reasoning Optional sources Research + verify + curate Moves on by request Moves on by mastery TEACHING IS A SYSTEM, NOT A PROMPT 6"
+  },
+  {
+    "slide": "ppt/slides/slide7.xml",
+    "texts": [
+      "06 · GOVERNANCE",
+      "Twelve specialists, one tutor",
+      "07",
+      "Instead of memorizing 12 agent names, think of four teams with separate responsibilities.",
+      "1 · COORDINATE",
+      "Understand the goal and build the path",
+      "Orchestrator",
+      "Profile & diagnosis",
+      "Planner",
+      "2 · TEACH",
+      "Explain, connect, and practice",
+      "Tutor",
+      "Connections",
+      "Generator",
+      "3 · MEASURE",
+      "Assess and fix the root cause",
+      "Evaluator",
+      "Remediation",
+      "Researcher",
+      "4 · PROTECT",
+      "Govern sources, truth, and safety",
+      "Curator",
+      "Verifier",
+      "Safety",
+      "Separation of duties prevents the system from “approving itself.”",
+      "7"
+    ],
+    "full_text": "06 · GOVERNANCE Twelve specialists, one tutor 07 Instead of memorizing 12 agent names, think of four teams with separate responsibilities. 1 · COORDINATE Understand the goal and build the path Orchestrator Profile & diagnosis Planner 2 · TEACH Explain, connect, and practice Tutor Connections Generator 3 · MEASURE Assess and fix the root cause Evaluator Remediation Researcher 4 · PROTECT Govern sources, truth, and safety Curator Verifier Safety Separation of duties prevents the system from “approving itself.” 7"
+  },
+  {
+    "slide": "ppt/slides/slide8.xml",
+    "texts": [
+      "07 · LEARNING",
+      "The pedagogical advantage",
+      "08",
+      "The tutor connects new knowledge to something the learner already understands.",
+      "What is already mastered",
+      "Analogy / example",
+      "New concept",
+      "The tutor checks whether the bridge worked",
+      "Reuses previous examples",
+      "Marks where the analogy stops",
+      "Remembers which connections work",
+      "More use → better teaching",
+      "8"
+    ],
+    "full_text": "07 · LEARNING The pedagogical advantage 08 The tutor connects new knowledge to something the learner already understands. What is already mastered Analogy / example New concept The tutor checks whether the bridge worked Reuses previous examples Marks where the analogy stops Remembers which connections work More use → better teaching 8"
+  },
+  {
+    "slide": "ppt/slides/slide9.xml",
+    "texts": [
+      "08 · MEMORY",
+      "Three memories, not an endless chat",
+      "09",
+      "Conversation is only the interface. Learning is structured, persistent, and auditable.",
+      "RELATIONAL",
+      "Who the learner is, the plan, and assessed evidence.",
+      "GRAPH",
+      "Concepts, prerequisites, and mastery level.",
+      "VECTOR",
+      "Documents, examples, and semantic memories.",
+      "Chat is the interface. Truth lives in these memories.",
+      "9"
+    ],
+    "full_text": "08 · MEMORY Three memories, not an endless chat 09 Conversation is only the interface. Learning is structured, persistent, and auditable. RELATIONAL Who the learner is, the plan, and assessed evidence. GRAPH Concepts, prerequisites, and mastery level. VECTOR Documents, examples, and semantic memories. Chat is the interface. Truth lives in these memories. 9"
+  },
+  {
+    "slide": "ppt/slides/slide10.xml",
+    "texts": [
+      "09 · TRUST",
+      "Trust: sources are not improvised",
+      "10",
+      "Research, verification, and curation are different jobs. Separating them reduces hallucinations.",
+      "1",
+      "Research",
+      "Find candidate resources.",
+      "2",
+      "Verify",
+      "Check citations, contradictions, and confidence.",
+      "3",
+      "Curate",
+      "Decide what is included, updated, or removed.",
+      "Sensitive topics → safety can block or escalate to human review.",
+      "10"
+    ],
+    "full_text": "09 · TRUST Trust: sources are not improvised 10 Research, verification, and curation are different jobs. Separating them reduces hallucinations. 1 Research Find candidate resources. 2 Verify Check citations, contradictions, and confidence. 3 Curate Decide what is included, updated, or removed. Sensitive topics → safety can block or escalate to human review. 10"
+  },
+  {
+    "slide": "ppt/slides/slide11.xml",
+    "texts": [
+      "10 · ARCHITECTURE",
+      "Technology built to last",
+      "11",
+      "Pedagogy is the core. Models and databases can change without rebuilding the product.",
+      "PEDAGOGICAL",
+      "CORE",
+      "AI models",
+      "Replaceable",
+      "Orchestration",
+      "Python · LangChain · LangGraph",
+      "Data",
+      "PostgreSQL · Neo4j · Vector DB",
+      "Adapters",
+      "SQL / Cypher / APIs",
+      "Changing providers ≠ rewriting how the system teaches",
+      "11"
+    ],
+    "full_text": "10 · ARCHITECTURE Technology built to last 11 Pedagogy is the core. Models and databases can change without rebuilding the product. PEDAGOGICAL CORE AI models Replaceable Orchestration Python · LangChain · LangGraph Data PostgreSQL · Neo4j · Vector DB Adapters SQL / Cypher / APIs Changing providers ≠ rewriting how the system teaches 11"
+  },
+  {
+    "slide": "ppt/slides/slide12.xml",
+    "texts": [
+      "11 · INITIAL MARKET",
+      "Who we serve",
+      "12",
+      "Start with goal-driven learners. Expand to teachers, institutions, and companies.",
+      "Self-learners",
+      "Learn a skill with a clear path.",
+      "Professionals",
+      "Upgrade skills with evidence.",
+      "Teachers",
+      "Extend instruction and follow-up.",
+      "Companies",
+      "Train for competence, not attendance.",
+      "MVP: Spanish + a few tightly scoped domains → depth before breadth.",
+      "12"
+    ],
+    "full_text": "11 · INITIAL MARKET Who we serve 12 Start with goal-driven learners. Expand to teachers, institutions, and companies. Self-learners Learn a skill with a clear path. Professionals Upgrade skills with evidence. Teachers Extend instruction and follow-up. Companies Train for competence, not attendance. MVP: Spanish + a few tightly scoped domains → depth before breadth. 12"
+  },
+  {
+    "slide": "ppt/slides/slide13.xml",
+    "texts": [
+      "12 · DEMO",
+      "The minimum viable product",
+      "13",
+      "The MVP must prove one thing: evidence of learning.",
+      "1 · DIAGNOSIS",
+      "Goal: learn percentages",
+      "✓ Masters ratios",
+      "△ Unsure with fractions",
+      "→ Personalized path",
+      "2 · LESSON",
+      "“50% means half”",
+      "Connects to mastered ratios and creates a short practice task.",
+      "Previously successful example",
+      "3 · EVIDENCE",
+      "Result",
+      "83% mastery",
+      "1 gap detected",
+      "Remediation triggered",
+      "Success = evidence of learning",
+      "13"
+    ],
+    "full_text": "12 · DEMO The minimum viable product 13 The MVP must prove one thing: evidence of learning. 1 · DIAGNOSIS Goal: learn percentages ✓ Masters ratios △ Unsure with fractions → Personalized path 2 · LESSON “50% means half” Connects to mastered ratios and creates a short practice task. Previously successful example 3 · EVIDENCE Result 83% mastery 1 gap detected Remediation triggered Success = evidence of learning 13"
+  },
+  {
+    "slide": "ppt/slides/slide14.xml",
+    "texts": [
+      "13 · ROADMAP",
+      "Product roadmap",
+      "14",
+      "Build the pedagogical core once; later phases expand experience and distribution.",
+      "NOW · MVP",
+      "Complete tutor in 1–few domains.",
+      "Measurable learning.",
+      "PHASE 2",
+      "Review calendar, progress dashboard, languages, voice, more exercises.",
+      "PHASE 3",
+      "Teachers, organizations, LMS, multimodal content, groups.",
+      "Same pedagogical core",
+      "14"
+    ],
+    "full_text": "13 · ROADMAP Product roadmap 14 Build the pedagogical core once; later phases expand experience and distribution. NOW · MVP Complete tutor in 1–few domains. Measurable learning. PHASE 2 Review calendar, progress dashboard, languages, voice, more exercises. PHASE 3 Teachers, organizations, LMS, multimodal content, groups. Same pedagogical core 14"
+  },
+  {
+    "slide": "ppt/slides/slide15.xml",
+    "texts": [
+      "14 · VALUE MODEL",
+      "Where value is created",
+      "15",
+      "Three commercial paths plus a proprietary learning asset that improves with use.",
+      "B2C",
+      "Subscription for self-learners and professionals.",
+      "Education B2B",
+      "Teachers and institutions needing traceability.",
+      "Corporate B2B",
+      "Training with evidence of competence.",
+      "PROPRIETARY ASSET",
+      "Each learner’s learning graph",
+      "Which anchor works · what fails · which analogy helps · what mastery was proven",
+      "15"
+    ],
+    "full_text": "14 · VALUE MODEL Where value is created 15 Three commercial paths plus a proprietary learning asset that improves with use. B2C Subscription for self-learners and professionals. Education B2B Teachers and institutions needing traceability. Corporate B2B Training with evidence of competence. PROPRIETARY ASSET Each learner’s learning graph Which anchor works · what fails · which analogy helps · what mastery was proven 15"
+  },
+  {
+    "slide": "ppt/slides/slide16.xml",
+    "texts": [
+      "15 · RISK & CONTROL",
+      "Risks designed from day one",
+      "16",
+      "We do not promise magic. We design how failures are detected, contained, and escalated.",
+      "Hallucinations",
+      "Verify sources; cite or stay silent.",
+      "Unfair assessment",
+      "Rubrics + multiple evidence + human review.",
+      "Token costs",
+      "Models matched to complexity and budget.",
+      "Vendor lock-in",
+      "Replaceable ports and adapters.",
+      "Privacy",
+      "Consent, isolation, and deletion.",
+      "Multi-agent complexity",
+      "Clear contracts + one orchestrator.",
+      "We design how the system fails, not only how it works.",
+      "16"
+    ],
+    "full_text": "15 · RISK & CONTROL Risks designed from day one 16 We do not promise magic. We design how failures are detected, contained, and escalated. Hallucinations Verify sources; cite or stay silent. Unfair assessment Rubrics + multiple evidence + human review. Token costs Models matched to complexity and budget. Vendor lock-in Replaceable ports and adapters. Privacy Consent, isolation, and deletion. Multi-agent complexity Clear contracts + one orchestrator. We design how the system fails, not only how it works. 16"
+  },
+  {
+    "slide": "ppt/slides/slide17.xml",
+    "texts": [
+      "16 · INVESTMENT / PARTNERSHIP",
+      "What we are looking for",
+      "17",
+      "Capital or a strategic partnership to build, test, and validate the MVP in a real domain.",
+      "VALIDATE",
+      "LEARNING",
+      "1",
+      "Define first domain + rubrics",
+      "2",
+      "Build agents + memory + verification",
+      "3",
+      "Run a measurable pilot",
+      "4",
+      "Compare diagnosis vs. outcome",
+      "Goal of the capital: prove that someone learned.",
+      "17"
+    ],
+    "full_text": "16 · INVESTMENT / PARTNERSHIP What we are looking for 17 Capital or a strategic partnership to build, test, and validate the MVP in a real domain. VALIDATE LEARNING 1 Define first domain + rubrics 2 Build agents + memory + verification 3 Run a measurable pilot 4 Compare diagnosis vs. outcome Goal of the capital: prove that someone learned. 17"
+  },
+  {
+    "slide": "ppt/slides/slide18.xml",
+    "texts": [
+      "18",
+      "CLOSING",
+      "Closing",
+      "The question is not whether AI can explain. The question is whether we can prove that someone learned.",
+      "Goal",
+      "Diagnosis",
+      "Teaching",
+      "Evidence",
+      "Adaptation",
+      "This is not a chatbot.",
+      "It is infrastructure for learning.",
+      "Q&A",
+      "18"
+    ],
+    "full_text": "18 CLOSING Closing The question is not whether AI can explain. The question is whether we can prove that someone learned. Goal Diagnosis Teaching Evidence Adaptation This is not a chatbot. It is infrastructure for learning. Q&A 18"
+  },
+  {
+    "slide": "ppt/slides/slide19.xml",
+    "texts": [
+      "APPENDIX",
+      "Frequently asked questions",
+      "19",
+      "Short answers to the questions investors are most likely to ask.",
+      "Why multiple agents?",
+      "Teaching, grading, searching, and verifying have different incentives.",
+      "What if the AI provider changes?",
+      "Pedagogy is separated from the model; the adapter can be replaced.",
+      "How do we know learning happened?",
+      "Concept mastery, retention, transfer, and resolved gaps.",
+      "Is it for children?",
+      "The architecture allows it, but launch requires age, consent, and stronger safeguards.",
+      "How long does the MVP take?",
+      "It depends on domain and team; scope is already limited to the full learning loop.",
+      "What is the first market?",
+      "Still to be chosen: professional skills, coding, languages, or internal training.",
+      "19"
+    ],
+    "full_text": "APPENDIX Frequently asked questions 19 Short answers to the questions investors are most likely to ask. Why multiple agents? Teaching, grading, searching, and verifying have different incentives. What if the AI provider changes? Pedagogy is separated from the model; the adapter can be replaced. How do we know learning happened? Concept mastery, retention, transfer, and resolved gaps. Is it for children? The architecture allows it, but launch requires age, consent, and stronger safeguards. How long does the MVP take? It depends on domain and team; scope is already limited to the full learning loop. What is the first market? Still to be chosen: professional skills, coding, languages, or internal training. 19"
+  },
+  {
+    "slide": "ppt/slides/slide20.xml",
+    "texts": [
+      "From chatbot to tutor",
+      "A visual comparison of the problem and the opportunity",
+      "VISUAL CONTEXT"
+    ],
+    "full_text": "From chatbot to tutor A visual comparison of the problem and the opportunity VISUAL CONTEXT"
+  },
+  {
+    "slide": "ppt/slides/slide21.xml",
+    "texts": [
+      "Product view",
+      "An AI-guided tutoring experience",
+      "VISUAL CONTEXT"
+    ],
+    "full_text": "Product view An AI-guided tutoring experience VISUAL CONTEXT"
+  },
+  {
+    "slide": "ppt/slides/slide22.xml",
+    "texts": [
+      "Learning cycle",
+      "From goal to reinforcement, with continuous tracking",
+      "VISUAL CONTEXT"
+    ],
+    "full_text": "Learning cycle From goal to reinforcement, with continuous tracking VISUAL CONTEXT"
+  },
+  {
+    "slide": "ppt/slides/slide23.xml",
+    "texts": [
+      "Four teams, one tutor",
+      "Coordinate, teach, measure, and protect",
+      "VISUAL CONTEXT"
+    ],
+    "full_text": "Four teams, one tutor Coordinate, teach, measure, and protect VISUAL CONTEXT"
+  },
+  {
+    "slide": "ppt/slides/slide24.xml",
+    "texts": [
+      "Learning through connections",
+      "New knowledge builds on what the learner already knows",
+      "VISUAL CONTEXT"
+    ],
+    "full_text": "Learning through connections New knowledge builds on what the learner already knows VISUAL CONTEXT"
+  },
+  {
+    "slide": "ppt/slides/slide25.xml",
+    "texts": [
+      "Structured memory",
+      "Three memory layers working as one system",
+      "VISUAL CONTEXT"
+    ],
+    "full_text": "Structured memory Three memory layers working as one system VISUAL CONTEXT"
+  },
+  {
+    "slide": "ppt/slides/slide26.xml",
+    "texts": [
+      "Verified sources",
+      "Research, validate, and curate before teaching",
+      "VISUAL CONTEXT"
+    ],
+    "full_text": "Verified sources Research, validate, and curate before teaching VISUAL CONTEXT"
+  },
+  {
+    "slide": "ppt/slides/slide27.xml",
+    "texts": [
+      "Decoupled architecture",
+      "A pedagogical core designed to evolve",
+      "VISUAL CONTEXT"
+    ],
+    "full_text": "Decoupled architecture A pedagogical core designed to evolve VISUAL CONTEXT"
+  }
+]

@@ -1,0 +1,511 @@
+=== SLIDE 01 ===
+INVESTOR PRESENTATION
+Arcana
+Accounting that cannot be lied about
+A trust network for franchises and remote investors.
+Signed IoT inside the store.
+Auditable daily close.
+Settlement on Polygon backed by USDC.
+Verifiable trust, not blind trust
+A
+1
+Arcana · Investor deck
+
+=== SLIDE 02 ===
+The problem in one sentence
+The investor does not see the store. The manager does.
+A
+2
+Arcana · Investor deck
+Underreported sales.
+Inventory that “disappears”.
+Suppliers delivering less than agreed.
+Margins that do not match what was served.
+Reports editable in Excel or POS.
+
+=== SLIDE 03 ===
+The cost of not knowing
+When physical evidence is not correlated, everyone loses.
+A
+3
+Arcana · Investor deck
+Who loses
+How
+Investor
+Receives a % of an inflated number
+Franchise
+Damaged brand and auditability
+Honest owner
+Cannot prove good operations
+Customer
+Cold chain and portions lack a useful trace
+Today trust is human. Tomorrow it must be verifiable.
+
+=== SLIDE 04 ===
+The investment thesis
+Arcana turns each location into an accounting book signed by machines.
+A
+4
+Arcana · Investor deck
+What is bought, cooked, and sold leaves a physical trace.
+Multiple independent devices must agree.
+At daily close, that truth is anchored on Polygon.
+The investor audits the location without being there.
+
+=== SLIDE 05 ===
+What Arcana is — and is not
+A
+5
+Arcana · Investor deck
+IS
+• Distributed accounting for the establishment
+• Sensors and controllers in store equipment
+• Public proof of daily close
+• Token backed 1:1 by USDC
+IS NOT
+• A speculative cryptocurrency
+• A POS replacement
+• A payroll system in this phase
+• A full food-safety guarantee by itself
+
+=== SLIDE 06 ===
+Express dictionary
+One minute of vocabulary to follow the business.
+A
+6
+Arcana · Investor deck
+Term
+Plain meaning
+Blockchain
+Public ledger that is hard to erase quietly
+Polygon
+Low-cost network where we seal the day and move money
+USDC
+Digital dollar, ≈ 1 USD
+Token
+Store unit backed 1:1 by USDC
+ESP32 / IoT
+Mini-computer that observes and signs
+
+=== SLIDE 07 ===
+What is a blockchain?
+A ledger notebook copied by many people at the same time.
+A
+7
+Arcana · Investor deck
+In Excel, someone can delete a row quietly.
+On a blockchain, the same book exists in many places.
+Faking a row would require changing many copies at once.
+Each new page links to the previous one.
+It is not a bank or Bitcoin: it is a ledger that is hard to tamper with.
+
+=== SLIDE 08 ===
+What is Polygon?
+The network where Arcana seals the close and settles money.
+A
+8
+Arcana · Investor deck
+Ethereum is known, but writing there can be expensive.
+Polygon is compatible, faster, and cheaper.
+Think of a parallel road: same vehicle, lower toll.
+Arcana does not cook on Polygon: it cooks in the store.
+Polygon acts as the notary of the day.
+A daily seal costs cents, not a restaurant commission.
+
+=== SLIDE 09 ===
+What is USDC?
+A dollar that moves through the internet.
+A
+9
+Arcana · Investor deck
+1 USDC is designed to equal 1 U.S. dollar.
+It is issued by Circle; it is not meant for speculation.
+It is used to deposit, back, and redeem value.
+It is not Arcana’s token: it backs Arcana’s token.
+Analogy: digital dollars in a visible vault.
+
+=== SLIDE 10 ===
+What is a token? And ERC-20?
+A digital unit with rules. Not a memecoin.
+A
+10
+Arcana · Investor deck
+Arcana’s token is the store’s settlement unit.
+1 token = 1 gross USDC.
+It is not designed for free exchange trading.
+It pays daily machine debt and distributes proceeds.
+ERC-20 is the standard format: like saying “PDF for money”.
+
+=== SLIDE 11 ===
+What is a smart contract?
+A program that executes money rules without manual exceptions.
+A
+11
+Arcana · Investor deck
+It lives on Polygon and its rules are visible.
+It prevents issuing more units than deposited dollars.
+It distributes proceeds according to agreed percentages.
+It reduces diversion to unauthorized accounts if audited properly.
+Analogy: a vending machine for rules.
+
+=== SLIDE 12 ===
+What is IoT? And an ESP32?
+IoT = devices that talk. ESP32 = the mini-computer on each machine.
+A
+12
+Arcana · Investor deck
+It fits in the palm of a hand and is low-cost.
+It can be placed in a fridge, oven, dispenser, or cashier station.
+It reads weight, temperature, energy, and activity.
+It signs what it saw; it does not “opine”.
+Multiple ESP32 devices check one another.
+
+=== SLIDE 13 ===
+Signature, key, and distributed trust
+Each device has a pen that cannot be borrowed.
+A
+13
+Arcana · Investor deck
+Private key: the device’s secret.
+Signature: the device’s seal over an event.
+Another node can verify the seal without knowing the pen.
+Old or cloned messages can be rejected.
+One lying witness is not enough: others must agree.
+
+=== SLIDE 14 ===
+Merkle: the envelope seal
+A day has thousands of events. We do not publish them one by one.
+A
+14
+Arcana · Investor deck
+A single fingerprint is calculated for the day: the Merkle root.
+That fingerprint is written to Polygon.
+If one sale changes, the fingerprint no longer matches.
+A Merkle proof shows that an event was inside the sealed day.
+It is like sealing a thick envelope with wax.
+
+=== SLIDE 15 ===
+What is gas?
+The toll paid to write on Polygon.
+A
+15
+Arcana · Investor deck
+Each public write pays a small fee.
+We do not publish every sale or fridge opening.
+The store operates toll-free during the day.
+At close, it pays one toll for the seal.
+Treasury movements happen afterward when needed.
+
+=== SLIDE 16 ===
+What is a laboratory attack?
+Not employee fraud. It means opening the chip in a lab.
+A
+16
+Arcana · Investor deck
+The attacker has time, the device, and specialized tools.
+The goal is to extract secrets from the silicon.
+Arcana does cover everyday operational fraud.
+This phase does not promise to defeat advanced physical chip extraction.
+Saying this builds credibility: “impossible to hack” is banned.
+
+=== SLIDE 17 ===
+Three plain-language rules
+The system is designed to fail in a controlled way.
+A
+17
+Arcana · Investor deck
+Fail-secure: when in doubt, it does not count as valid.
+Quorum: several devices must agree.
+Override: manual mode with a cap and a record.
+If internet fails, the store can operate with traceability.
+Fridges never shut down: food is not used as leverage.
+
+=== SLIDE 18 ===
+Initial market
+First: fast food and franchises. Later: hospitality, tourism, and other inventory-plus-cash locations.
+A
+18
+Arcana · Investor deck
+Fridges and cold chain: measured, never shut down.
+Ovens, stoves, dispensers, and ice-cream machines.
+Cash register and POS.
+Inventory by weight.
+Real service activity.
+
+=== SLIDE 19 ===
+For whom
+A
+19
+Arcana · Investor deck
+Store owner
+• Proves real operations
+• Reduces waste
+• Reduces disputes with partners
+Investor / Network
+• Audits sales, purchases, and inventory
+• Sets thresholds in contracts
+• Compares all locations
+The buyer may be the franchise; the core beneficiary is investor trust.
+
+=== SLIDE 20 ===
+How it works: simple view
+Operations are local and low-cost. Audit is global and low-cost.
+A
+20
+Arcana · Investor deck
+Orders, inventory, kitchen, and POS create events.
+Sensors + ESP32 per device sign what they see.
+The local network validates that no single device rules alone.
+Daily close produces a Merkle fingerprint.
+Polygon receives the proof and executes USDC treasury.
+
+=== SLIDE 21 ===
+The store fingerprint
+One fact is not enough. It must match the rest of the store.
+A
+21
+Arcana · Investor deck
+If 10 portions leave the fridge, cooking activity should match.
+There should also be sales or justified waste.
+If a supplier delivers 240 g instead of 250 g, weight exposes it.
+Lying through one machine is not enough.
+Fraud would need coordination across almost the whole store.
+
+=== SLIDE 22 ===
+Security principle in business language
+Zero blind trust: neither POS, server, nor one device rules alone.
+A
+22
+Arcana · Investor deck
+Fail-secure: without valid agreement, critical activity is not “valid”.
+Limited override: recorded and counted against an agreed threshold.
+Daily override patterns trigger alerts.
+Internet or Polygon can fail: degraded mode remains auditable.
+Fridges never get blocked.
+
+=== SLIDE 23 ===
+The daily cycle
+Each day has permission, evidence, close, and settlement.
+A
+23
+Arcana · Investor deck
+The store opens with valid credit and permission.
+Each job creates debt: energy, cycles, and portions.
+The network validates evidence and prevents double charging.
+Active nodes sign the daily summary.
+It is published on Polygon, debt is paid, and the next day is enabled.
+Operating without settling is not free: it accumulates and becomes visible.
+
+=== SLIDE 24 ===
+The money: 1:1 model
+Three parts: USDC treasury, store token, and machine debt.
+A
+24
+Arcana · Investor deck
+USDC = real backing.
+ERC-20 token = store unit, 1 token = 1 gross USDC.
+Machine debt = what each machine owes for working.
+Golden rule: no redeemable token exceeds reserved USDC.
+The token is not speculation; it is a settlement unit.
+
+=== SLIDE 25 ===
+Where return comes from
+When a machine pays its debt, tokens are distributed.
+A
+25
+Arcana · Investor deck
+Moment
+Fee
+Profit distribution
+Small % on gross batch
+Transfer between users
+0, only Polygon gas
+Exit to USDC
+Small exit %
+Investors / owners.
+Store operator.
+Energy and resources.
+Maintenance.
+Replacement and expansion.
+
+=== SLIDE 26 ===
+Why an investor can audit
+The investor does not have to believe the owner’s dashboard.
+A
+26
+Arcana · Investor deck
+Daily close anchored on Polygon.
+Merkle proof of sale, waste, or receipt.
+Debt and override thresholds written in the store contract.
+Alerts when manual operation is too frequent.
+Visible USDC reserve vs. circulating tokens.
+Arcana guarantees correlated trace and auditable close.
+
+=== SLIDE 27 ===
+What it protects
+Arcana protects operational, financial, and reputational assets.
+A
+27
+Arcana · Investor deck
+Integrity of what is sold and bought.
+Investor capital and inventory.
+Signed evidence: weight, temperature, energy, POS, and supporting video.
+Device keys, debt, and debt capacity.
+Funds / USDC, cold chain, and store reputation.
+
+=== SLIDE 28 ===
+Architecture: one technical slide
+A distributed system with blockchain anchoring, not public blockchain inside the microcontroller.
+A
+28
+Arcana · Investor deck
+Edge: ESP32 + sensors + machine identity.
+Local network: authenticated gossip, quorum, and permissions.
+Persistence: recent blocks in Flash; full history outside the chip.
+Backend: stores history; does not invent the close.
+Polygon: registry, debt, treasury, settlement, and restricted ERC-20.
+
+=== SLIDE 29 ===
+Why not put everything on public blockchain
+Publishing every event to Polygon would be slow, expensive, and fragile.
+A
+29
+Arcana · Investor deck
+The kitchen must decide in milliseconds.
+Internet may fail during the day.
+The database stores operational detail.
+Polygon stores one fingerprint for the entire day.
+If one byte changes in history, it no longer matches the anchor.
+
+=== SLIDE 30 ===
+Advantage and defensibility
+Not another IoT dashboard. It connects physical evidence, signatures, close, and payment.
+A
+30
+Arcana · Investor deck
+Identity per device.
+Local consensus, not server authority.
+Multi-sensor correlation.
+On-chain settlement with solvency invariant.
+Stolen machine: without authorized network and lease, it cannot operate validly.
+Fraud stops being an Excel edit; it becomes a coordinated attack on the whole store.
+
+=== SLIDE 31 ===
+Business model
+Who pays and why the market can demand it.
+A
+31
+Arcana · Investor deck
+Franchise or owner: hardware + installation + store subscription.
+Network: distribution fee and exit fee.
+More locations = more nodes, closes, and settlements.
+The contract is cloned per site.
+The investor demands Arcana as a condition for funding.
+
+=== SLIDE 32 ===
+Project status: honest
+Today: architecture and product model are defined. It is not in production.
+A
+32
+Arcana · Investor deck
+As an idea
+• Solid design basis
+• Clear technical thesis
+• Scoped architecture
+As a ready product
+• Prototype pending
+• Pilot pending
+• Audits pending
+A system that moves food and money is not launched just because the whitepaper looks good.
+
+=== SLIDE 33 ===
+Roadmap
+This stage funds the MVP and first pilot, not an immediate global network.
+A
+33
+Arcana · Investor deck
+MVP: 3–5 devices, one machine, and one sensor.
+Simulated debt, signed close, and Merkle on testnet, no real USDC.
+Must demonstrate power loss, fake messages, and blocking without quorum.
+Pilot: one store, low limits, fridges only measured.
+Production: audits, segregated treasury, and real USDC with caps.
+
+=== SLIDE 34 ===
+Use of funds
+Suggested allocation to adjust to the actual round.
+A
+34
+Arcana · Investor deck
+Use
+Purpose
+Hardware and firmware
+ESP32, persistence, identity, fail-secure
+Network protocol
+Gossip, quorum, and recovery
+Contracts
+Treasury, debt, close, and tests
+Backend and audit
+History, Merkle, and investor panel
+Pilot / legal
+Real site, compliance, KYC/AML
+
+=== SLIDE 35 ===
+Risks named from day one
+Showing risks does not weaken the pitch. It makes it serious.
+A
+35
+Arcana · Investor deck
+One fallen device must not veto the store forever.
+One lying sensor must not charge alone.
+The manager must not silently “fix” the day.
+Internet or Polygon can fail: degraded mode must remain auditable.
+1 token = 1 USDC is a redemption promise, not magic.
+Mitigation: scoped pilot, thresholds, untouchable fridges, and audits.
+
+=== SLIDE 36 ===
+The guarantee phrase
+The moral contract with the investor.
+A
+36
+Arcana · Investor deck
+Arcana guarantees that relevant store operations leave a correlated, signed trace across establishment devices, and that a Polygon anchor makes the close auditable for owners and investors.
+It does not guarantee resistance to chip laboratory attacks.
+It does not guarantee food safety by itself.
+It does not prevent every override: it makes it visible and bounded.
+
+=== SLIDE 37 ===
+Why now
+The kitchen already produces data. Nobody was turning it into trust.
+A
+37
+Arcana · Investor deck
+Franchises and remote investors need proof, not promises.
+IoT hardware is now low-cost.
+Polygon can anchor a full day for cents.
+USDC enables settlement without turning the store into a crypto casino.
+Today’s POS does not sign the fridge, oven, or supplier weight.
+
+=== SLIDE 38 ===
+The closing question
+Today, if you invest in a store you do not visit, what are you trusting?
+A
+38
+Arcana · Investor deck
+A person.
+A report.
+A system that can be edited.
+Arcana proposes a fourth anchor: what machines saw, signed, and cannot deny alone.
+
+=== SLIDE 39 ===
+Closing / Ask
+Arcana: accounting that cannot be lied about.
+A
+39
+Arcana · Investor deck
+We are raising capital to build the MVP on real hardware.
+Close the protocol for one store.
+Run the first pilot in a food franchise.
+Reach audits before custodying real funds.
+Next step: simulated demo of sale → evidence → close → payment → unlock.
+Next step: simulated demo
+

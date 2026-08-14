@@ -1,0 +1,721 @@
+[
+  {
+    "id": 1,
+    "tag_en": "WEB3 & IOT TRUST NETWORK · 3i BAIRD LAB",
+    "tag_es": "RED DE CONFIANZA WEB3 E IOT · 3i BAIRD LAB",
+    "title_en": "Arcana: Trust by Construction",
+    "title_es": "Arcana: Contabilidad Inalterable",
+    "subtitle_en": "Accounting that cannot be lied about. A trust network for franchises and remote investors: Signed IoT inside the store, auditable daily close on Polygon, and automated USDC dividend settlement.",
+    "subtitle_es": "Contabilidad imposible de falsear. Una red de confianza para franquicias e inversionistas remotos: IoT firmado dentro del local, cierre diario en Polygon y liquidación automática en USDC.",
+    "flow_en": [
+      "Store Hardware Sensors",
+      "Cryptographic Signatures",
+      "Multi-Point Correlation",
+      "Polygon Daily Notary",
+      "Instant USDC Settlement"
+    ],
+    "flow_es": [
+      "Sensores de Hardware en Local",
+      "Firmas Criptográficas",
+      "Correlación Multi-Punto",
+      "Notarización en Polygon",
+      "Liquidación Instantánea USDC"
+    ],
+    "badge_en": "Investor Pitch · 15 Slides",
+    "badge_es": "Pitch para Inversionistas · 15 Slides",
+    "category": "hero",
+    "image": "extracted_media_arcana/image1.png"
+  },
+  {
+    "id": 2,
+    "num": "01",
+    "category_en": "THE CORE PROBLEM",
+    "category_es": "EL PROBLEMA CENTRAL",
+    "title_en": "The Disconnect: The Investor Does Not See the Store",
+    "title_es": "La Desconexión: El Inversor No Ve el Local",
+    "lead_en": "“The investor does not see the store. The store manager does.” Information asymmetry fuels fraud and limits capital expansion.",
+    "lead_es": "“El inversionista no ve el local. El administrador sí.” La asimetría de información genera fraude y frena la inversión.",
+    "pillars_en": [
+      {
+        "title": "Underreported Cash & Sales",
+        "desc": "Cash sales omitted from reports or cancelled in POS after the customer leaves the store."
+      },
+      {
+        "title": "Disappearing High-Value Inventory",
+        "desc": "Cheese, proteins, and specialty supplies vanish between delivery and kitchen prep without audit trails."
+      },
+      {
+        "title": "Supplier Shortages & Kickbacks",
+        "desc": "Suppliers deliver less weight or lower grade than invoiced, pocketing the difference."
+      },
+      {
+        "title": "Editable Spreadsheets & POS",
+        "desc": "Traditional franchise accounting relies on human-edited Excel reports and manipulable software."
+      }
+    ],
+    "pillars_es": [
+      {
+        "title": "Ventas y Efectivo No Reportados",
+        "desc": "Cobros en efectivo omitidos de reportes o anulados en el POS después de que el cliente se retira."
+      },
+      {
+        "title": "Inventario de Alto Valor que Desaparece",
+        "desc": "Quesos, proteínas e insumos clave se evaporan entre la entrega y la cocina sin rastro auditable."
+      },
+      {
+        "title": "Mermas de Proveedores y Acuerdos Opacos",
+        "desc": "Proveedores entregan menos peso o menor calidad que lo facturado formalmente."
+      },
+      {
+        "title": "Reportes Modificables en Excel y POS",
+        "desc": "La contabilidad tradicional de franquicias depende de hojas de cálculo editables por humanos."
+      }
+    ],
+    "image": "extracted_media_arcana/image2.png",
+    "punchline_en": "Today trust is human and fragile. Tomorrow it must be mathematical and verifiable.",
+    "punchline_es": "Hoy la confianza es humana y frágil. Mañana debe ser matemática y verificable."
+  },
+  {
+    "id": 3,
+    "num": "02",
+    "category_en": "THE INVESTMENT THESIS",
+    "category_es": "TESIS DE INVERSIÓN",
+    "title_en": "Turning Stores into Accounting Books Signed by Machines",
+    "title_es": "Locales Convertidos en Libros Contables Firmados por Máquinas",
+    "lead_en": "Arcana turns each physical commercial store into an unforgeable ledger verified by independent hardware devices.",
+    "lead_es": "Arcana convierte cada local comercial en un libro contable inalterable verificado por hardware independiente.",
+    "cards_en": [
+      {
+        "title": "Physical Operational Traces",
+        "desc": "What is bought, stored, weighed, cooked, and dispensed leaves an unforgeable hardware signature."
+      },
+      {
+        "title": "Multi-Sensor Consensus",
+        "desc": "Independent IoT nodes (scales, current clamps, optical counters) must corroborate to validate sales."
+      },
+      {
+        "title": "Daily Polygon Notarization",
+        "desc": "At midnight, the day's financial Merkle root is sealed on Polygon blockchain for cents."
+      },
+      {
+        "title": "Remote Trustless Auditing",
+        "desc": "Investors audit real-time unit economics and receive automated USDC dividend payouts."
+      }
+    ],
+    "cards_es": [
+      {
+        "title": "Huella Física de Operación",
+        "desc": "Lo comprado, almacenado, pesado, cocinado y servido deja una firma de hardware infalsificable."
+      },
+      {
+        "title": "Consenso Multi-Sensor",
+        "desc": "Nodos IoT independientes (básculas, pinzas eléctricas, sensores ópticos) deben corroborar cada venta."
+      },
+      {
+        "title": "Cierre Diario Sellado en Polygon",
+        "desc": "A medianoche, la raíz de Merkle del día se notariza en la blockchain Polygon por centavos."
+      },
+      {
+        "title": "Auditoría Remota Sin Confianza Ciega",
+        "desc": "Los inversionistas auditan ventas reales y reciben dividendos automáticos en USDC."
+      }
+    ],
+    "image": "extracted_media_arcana/image3.png",
+    "punchline_en": "Audit the store and receive dividends without ever being physically present.",
+    "punchline_es": "Audita el local y recibe dividendos sin necesidad de estar presente físicamente."
+  },
+  {
+    "id": 4,
+    "num": "03",
+    "category_en": "SCOPE & POSITIONING",
+    "category_es": "ALCANCE Y POSICIONAMIENTO",
+    "title_en": "What Arcana Is — And What It Is Not",
+    "title_es": "Qué Es Arcana — Y Qué No Es",
+    "lead_en": "Enterprise financial infrastructure for real physical assets, strictly decoupled from crypto speculation.",
+    "lead_es": "Infraestructura financiera empresarial para activos reales, totalmente desvinculada de la especulación cripto.",
+    "comparison": [
+      {
+        "aspect_en": "Core Infrastructure",
+        "aspect_es": "Infraestructura Central",
+        "bot_en": "IS NOT: A speculative volatile cryptocurrency",
+        "bot_es": "NO ES: Una criptomoneda volátil o memecoin",
+        "tutor_en": "IS: Tamper-proof store accounting ledger",
+        "tutor_es": "SÍ ES: Libro contable inalterable de local"
+      },
+      {
+        "aspect_en": "Hardware Role",
+        "aspect_es": "Rol del Hardware",
+        "bot_en": "IS NOT: A replacement for cashier POS software",
+        "bot_es": "NO ES: Un reemplazo del software de caja POS",
+        "tutor_en": "IS: Independent physical validation mesh",
+        "tutor_es": "SÍ ES: Malla de validación física independiente"
+      },
+      {
+        "aspect_en": "Settlement Token",
+        "aspect_es": "Token de Liquidación",
+        "bot_en": "IS NOT: A token traded on open exchanges",
+        "bot_es": "NO ES: Un token transado en exchanges",
+        "tutor_en": "IS: 1:1 USDC-backed internal clearing unit",
+        "tutor_es": "SÍ ES: Unidad respaldada 1:1 por USDC"
+      },
+      {
+        "aspect_en": "Dividend Rules",
+        "aspect_es": "Reglas de Dividendos",
+        "bot_en": "IS NOT: Manual subjective manager transfers",
+        "bot_es": "NO ES: Giros manuales a discreción humana",
+        "tutor_en": "IS: Deterministic smart contract payouts",
+        "tutor_es": "SÍ ES: Pagos deterministas por contrato"
+      }
+    ],
+    "image": "extracted_media_arcana/image4.png",
+    "punchline_en": "Institutional-grade financial plumbing for real-world franchise networks.",
+    "punchline_es": "Infraestructura financiera institucional para franquicias del mundo real."
+  },
+  {
+    "id": 5,
+    "num": "04",
+    "category_en": "SIGNED IOT HARDWARE",
+    "category_es": "HARDWARE IOT FIRMADO",
+    "title_en": "Signed IoT Inside the Store: Hardware-Level Truth",
+    "title_es": "IoT Firmado en el Local: Verdad a Nivel de Hardware",
+    "lead_en": "Industrial sensor nodes equipped with cryptographic secure elements continuously monitor physical actions.",
+    "lead_es": "Nodos industriales con chips criptográficos seguros monitorean continuamente las acciones físicas del local.",
+    "cards_en": [
+      {
+        "title": "Cryptographic Secure Element (ATECC608)",
+        "desc": "Stores hardware private keys in tamper-proof silicon; firmware and signatures cannot be extracted or spoofed."
+      },
+      {
+        "title": "Direct Physical Weight & Count Telemetry",
+        "desc": "Load cells measure ingredient consumption; optical sensors log packaging extraction."
+      },
+      {
+        "title": "Energy & Heat Consumption Tracking",
+        "desc": "Non-invasive current clamps monitor oven thermal cycles vs. reported ticket volume."
+      },
+      {
+        "title": "Offline-First Encrypted Gateway",
+        "desc": "Signed data packets are buffered locally with battery backup during internet or power outages."
+      }
+    ],
+    "cards_es": [
+      {
+        "title": "Chip Criptográfico Seguro (ATECC608)",
+        "desc": "Almacena llaves privadas en silicio blindado; las firmas no pueden ser clonadas ni alteradas."
+      },
+      {
+        "title": "Telemetría Directa de Peso y Conteo",
+        "desc": "Celdas de carga miden consumo de masa y queso; sensores ópticos cuentan empaques."
+      },
+      {
+        "title": "Monitoreo de Energía y Ciclos Térmicos",
+        "desc": "Pinzas amperimétricas registran ciclos de calentamiento de hornos vs. tickets cobrados."
+      },
+      {
+        "title": "Pasarela Encriptada con Respaldo Offline",
+        "desc": "Almacena paquetes firmados en memoria local con batería ante cortes de luz o internet."
+      }
+    ],
+    "image": "extracted_media_arcana/image4.png",
+    "punchline_en": "Physical kitchen telemetry that software hackers cannot forge.",
+    "punchline_es": "Telemetría física de cocina imposible de falsear por software."
+  },
+  {
+    "id": 6,
+    "num": "05",
+    "category_en": "CORRELATION ENGINE",
+    "category_es": "MOTOR DE CORRELACIÓN",
+    "title_en": "Multi-Vector Fraud Detection & Evidence Correlation",
+    "title_es": "Detección de Fraude Multi-Vector y Correlación",
+    "lead_en": "Manipulating a single sensor is useless: multiple independent physical vectors must corroborate in real time.",
+    "lead_es": "Alterar un sensor no sirve de nada: múltiples vectores físicos independientes deben coincidir en tiempo real.",
+    "comparison": [
+      {
+        "aspect_en": "1. Ingredient Weight",
+        "aspect_es": "1. Peso de Insumos",
+        "bot_en": "20kg flour + 10kg cheese consumed",
+        "bot_es": "20kg harina + 10kg queso consumidos",
+        "tutor_en": "Yields exactly 85 standard pizzas",
+        "tutor_es": "Rinde exactamente 85 pizzas estándar"
+      },
+      {
+        "aspect_en": "2. Oven Electrical Cycles",
+        "aspect_es": "2. Ciclos del Horno",
+        "bot_en": "2.4 kWh active baking draw",
+        "bot_es": "2.4 kWh de calentamiento activo",
+        "tutor_en": "Corroborates 85 continuous bake cycles",
+        "tutor_es": "Corrobora 85 horneados continuos"
+      },
+      {
+        "aspect_en": "3. Packaging Dispensers",
+        "aspect_es": "3. Dispensador de Cajas",
+        "bot_en": "85 boxes pulled from dispenser",
+        "bot_es": "85 cajas retiradas del dispensador",
+        "tutor_en": "Optical sensor confirms 85 units",
+        "tutor_es": "Sensor óptico confirma 85 unidades"
+      },
+      {
+        "aspect_en": "4. POS Financial Register",
+        "aspect_es": "4. Caja Registradora",
+        "bot_en": "85 orders paid and registered",
+        "bot_es": "85 órdenes cobradas y registradas",
+        "tutor_en": "Zero discrepancy detected",
+        "tutor_es": "Cero discrepancias detectadas"
+      }
+    ],
+    "image": "extracted_media_arcana/image6.png",
+    "punchline_en": "Fraud requires compromising 4 independent hardware systems simultaneously.",
+    "punchline_es": "El fraude requeriría alterar 4 sistemas de hardware independientes a la vez."
+  },
+  {
+    "id": 7,
+    "num": "06",
+    "category_en": "DAILY CLOSE WORKFLOW",
+    "category_es": "CIERRE DIARIO",
+    "title_en": "The Immutable Daily Close Protocol on Polygon",
+    "title_es": "El Cierre Diario Inalterable en Polygon",
+    "lead_en": "Every midnight, the day's operational telemetry is validated, compressed into a Merkle tree, and notarized on Polygon.",
+    "lead_es": "Cada medianoche, la telemetría se valida, se resume en un árbol de Merkle y se notariza en Polygon.",
+    "features_en": [
+      "Thousands of sensor readings hashed into a single 32-byte cryptographic Merkle root",
+      "Notarization on Polygon blockchain takes 2 seconds and costs less than $0.02 USD per store",
+      "Creates a permanent mathematical audit trail that neither store manager nor franchise can alter",
+      "One-click verification on Polygonscan proves reported financial results match hardware telemetry"
+    ],
+    "features_es": [
+      "Miles de lecturas de sensores se comprimen en una única raíz de Merkle de 32 bytes",
+      "La notarización en Polygon toma 2 segundos y cuesta menos de $0.02 USD por local",
+      "Genera un historial contable permanente que ni el administrador ni la franquicia pueden modificar",
+      "Verificación pública en Polygonscan con un clic demostrando que los ingresos coinciden con el hardware"
+    ],
+    "diagram_en": [
+      {
+        "label": "1. Telemetry Ingestion",
+        "detail": "Aggregation of signed IoT packets"
+      },
+      {
+        "label": "2. Merkle Root Hash",
+        "detail": "Cryptographic compression of truth"
+      },
+      {
+        "label": "3. Polygon Notarization",
+        "detail": "Permanent on-chain daily seal (<$0.02)"
+      }
+    ],
+    "diagram_es": [
+      {
+        "label": "1. Ingesta de Datos",
+        "detail": "Agrupación de paquetes IoT firmados"
+      },
+      {
+        "label": "2. Hash Raíz de Merkle",
+        "detail": "Compresión criptográfica de la verdad"
+      },
+      {
+        "label": "3. Notarización en Polygon",
+        "detail": "Sello permanente on-chain (<$0.02)"
+      }
+    ],
+    "image": "extracted_media_arcana/image3.png",
+    "punchline_en": "Every day is a closed, tamper-proof cryptographic accounting chapter.",
+    "punchline_es": "Cada día es un capítulo contable cerrado e inalterable."
+  },
+  {
+    "id": 8,
+    "num": "07",
+    "category_en": "USDC SETTLEMENT",
+    "category_es": "LIQUIDACIÓN EN USDC",
+    "title_en": "USDC Settlement & Smart Contract Split Rules",
+    "title_es": "Liquidación en USDC y Reparto Automatizado por Contrato",
+    "lead_en": "Autonomous programs enforce profit distribution agreements without human delays or banking friction.",
+    "lead_es": "Programas autónomos ejecutan el reparto de dividendos pactado sin demoras humanas ni trabas bancarias.",
+    "cards_en": [
+      {
+        "title": "100% Backed by Regulated USDC",
+        "desc": "1:1 parity with U.S. Dollars; zero price volatility, auditable reserves, and instant 24/7 global settlement."
+      },
+      {
+        "title": "Automated Revenue Waterfall",
+        "desc": "Contract splits daily net revenue: 70% to store operating expenses, 20% to investors, 10% to franchise brand."
+      },
+      {
+        "title": "Direct Investor Wallet Payouts",
+        "desc": "Dividends arrive daily in the investor's crypto or custodial wallet without cross-border wire delays."
+      },
+      {
+        "title": "Zero Unauthorized Capital Leaks",
+        "desc": "Eliminates embezzlement and unauthorized withdrawals from local store bank accounts."
+      }
+    ],
+    "cards_es": [
+      {
+        "title": "100% Respaldado en USDC Regulado",
+        "desc": "Paridad 1:1 con USD; cero volatilidad, reservas auditadas y liquidación global 24/7 en segundos."
+      },
+      {
+        "title": "Cascada de Reparto Automática",
+        "desc": "El contrato reparte el ingreso neto diario: 70% a OPEX del local, 20% a inversionistas, 10% a franquicia."
+      },
+      {
+        "title": "Pagos Diarios a Billeteras",
+        "desc": "Los dividendos se depositan a diario en la billetera del inversor sin demoras bancarias."
+      },
+      {
+        "title": "Cero Fuga de Capitales",
+        "desc": "Elimina desvíos de fondos y retiros no autorizados de las cuentas del restaurante."
+      }
+    ],
+    "image": "extracted_media_arcana/image5.png",
+    "punchline_en": "Like a transparent, unforgeable vending machine for investment returns.",
+    "punchline_es": "Como una máquina dispensadora transparente e inviolable para dividendos."
+  },
+  {
+    "id": 9,
+    "num": "08",
+    "category_en": "INVESTOR PORTAL",
+    "category_es": "PORTAL DEL INVERSOR",
+    "title_en": "The Investor Dashboard: Live Telemetry & Daily Payouts",
+    "title_es": "El Portal del Inversionista: Telemetría y Pagos en Vivo",
+    "lead_en": "Remote investors monitor actual unit economics and machinery health with complete transparency.",
+    "lead_es": "Los inversionistas remotos monitorean la economía real y la maquinaria con transparencia total.",
+    "cards_en": [
+      {
+        "title": "Live Machine Status & Uptime",
+        "desc": "Track oven operating hours, daily ingredient consumption curves, and store foot traffic in real time."
+      },
+      {
+        "title": "Daily Automated Dividend Ledger",
+        "desc": "View historical USDC payouts with on-chain transaction hashes and tax-compliant financial exports."
+      },
+      {
+        "title": "Instant Anomaly & Fraud Alerts",
+        "desc": "Receive push notifications if sensor correlation drops below 99% or if equipment is disconnected."
+      },
+      {
+        "title": "Multi-Store Portfolio View",
+        "desc": "Aggregate franchise investments across multiple cities and brands into a single high-yield dashboard."
+      }
+    ],
+    "cards_es": [
+      {
+        "title": "Estado de Máquinas en Vivo",
+        "desc": "Monitorea horas de horneado, curvas de consumo de insumos y tráfico de clientes en tiempo real."
+      },
+      {
+        "title": "Historial de Dividendos Diarios",
+        "desc": "Consulta transferencias en USDC con hashes verificables en blockchain y reportes contables."
+      },
+      {
+        "title": "Alertas Inmediatas de Anomalías",
+        "desc": "Notificaciones push si la correlación de sensores cae por debajo del 99% o si desconectan un equipo."
+      },
+      {
+        "title": "Gestión de Portafolio Multisede",
+        "desc": "Consolida inversiones en franquicias de múltiples ciudades y marcas en un único panel de control."
+      }
+    ],
+    "image": "extracted_media_arcana/image7.png",
+    "punchline_en": "Complete visibility from kitchen oven to investor wallet.",
+    "punchline_es": "Visibilidad total desde el horno de cocina hasta la billetera del inversor."
+  },
+  {
+    "id": 10,
+    "num": "09",
+    "category_en": "BUSINESS MODEL",
+    "category_es": "MODELO DE NEGOCIO",
+    "title_en": "Monetization: Recurring SaaS + Settlement Take-Rate",
+    "title_es": "Monetización: SaaS Recurrente + Comisión de Liquidación",
+    "lead_en": "Three recurring revenue streams tied to store hardware deployments, software monitoring, and gross sales volume.",
+    "lead_es": "Tres flujos recurrentes de ingresos: hardware instalado, software de monitoreo y volumen de liquidación.",
+    "streams_en": [
+      {
+        "type": "Hardware Sensor Lease",
+        "tier": "$150–$250 / store / mo",
+        "desc": "Covers ESP32 secure gateway, load cells, current clamps, maintenance, and warranty."
+      },
+      {
+        "type": "SaaS Platform Subscription",
+        "tier": "$200 / location / mo",
+        "desc": "Franchisor and investor portal access, real-time anomaly alerts, and tax audit compliance exports."
+      },
+      {
+        "type": "Settlement Volume Take-Rate",
+        "tier": "0.75% Protocol Fee",
+        "desc": "Fee collected on all gross USDC revenues settled through the Polygon smart contract."
+      }
+    ],
+    "streams_es": [
+      {
+        "type": "Arrendamiento de Sensores IoT",
+        "tier": "$150–$250 USD / sede / mes",
+        "desc": "Cubre pasarela segura ESP32, celdas de carga, pinzas amperimétricas, mantenimiento y garantía."
+      },
+      {
+        "type": "Suscripción SaaS a Plataforma",
+        "tier": "$200 USD / sede / mes",
+        "desc": "Acceso al portal para franquiciador e inversor, alertas de anomalías y reportes contables certificados."
+      },
+      {
+        "type": "Comisión por Volumen Liquidado",
+        "tier": "0.75% Tarifa Protocolo",
+        "desc": "Comisión cobrada sobre el volumen bruto en USDC liquidado por contrato inteligente en Polygon."
+      }
+    ],
+    "moat_en": "Defensible Hardware Moat: Proprietary cryptochip telemetry combined with verified operational benchmark data.",
+    "moat_es": "Moat de Hardware Defendible: Telemetría propietaria en chip seguro combinada con métricas operativas verificadas.",
+    "punchline_en": "High-margin recurring revenues that scale directly with franchise sales volume.",
+    "punchline_es": "Ingresos recurrentes de alto margen que escalan con las ventas de cada local."
+  },
+  {
+    "id": 11,
+    "num": "10",
+    "category_en": "MARKET SIZE",
+    "category_es": "TAMAÑO DE MERCADO",
+    "title_en": "The $800B Global Franchise Market Opportunity",
+    "title_es": "Oportunidad de Mercado Global de Franquicias ($800B)",
+    "lead_en": "Targeting high-volume QSR, cloud kitchens, and automated retail networks seeking remote capital.",
+    "lead_es": "Enfocado en cadenas de comida rápida QSR, dark kitchens y retail automatizado que buscan capital remoto.",
+    "segments_en": [
+      {
+        "title": "Multi-Unit QSR Franchises",
+        "target": "Phase 1 Beachhead",
+        "desc": "Franchisors struggling with underreported royalties, employee inventory theft, and lack of unit visibility."
+      },
+      {
+        "title": "Remote Franchise Investors",
+        "target": "High-Growth Niche",
+        "desc": "Passive investors financing store units who demand live telemetry and automated daily dividend payouts."
+      },
+      {
+        "title": "Cloud Kitchen Operators",
+        "target": "Phase 2 Expansion",
+        "desc": "Multi-tenant commercial kitchens requiring automated ingredient tracking and tenant utility billing."
+      },
+      {
+        "title": "Automated Smart Retail & Vending",
+        "target": "Phase 3 Enterprise",
+        "desc": "Unmanned kiosks and automated stores requiring trustless inventory reconciliation and supplier settlement."
+      }
+    ],
+    "segments_es": [
+      {
+        "title": "Franquicias QSR Multisede",
+        "target": "Fase 1 Insignia",
+        "desc": "Franquiciadores con problemas de regalías no reportadas, mermas de insumos y falta de visibilidad."
+      },
+      {
+        "title": "Inversionistas Remotos de Franquicias",
+        "target": "Nicho en Alto Crecimiento",
+        "desc": "Inversionistas pasivos que exigen telemetría en vivo y dividendos diarios automáticos en sus billeteras."
+      },
+      {
+        "title": "Operadores de Dark Kitchens",
+        "target": "Fase 2 Expansión",
+        "desc": "Cocinas compartidas que requieren control de insumos por arrendatario y cobro de servicios en tiempo real."
+      },
+      {
+        "title": "Retail y Vending Automatizado",
+        "target": "Fase 3 Corporativa",
+        "desc": "Tiendas autónomas inteligentes que requieren conciliación de inventario y pago directo a proveedores."
+      }
+    ],
+    "image": "extracted_media_arcana/image8.png",
+    "punchline_en": "Unlocking institutional and retail capital for physical commercial franchises.",
+    "punchline_es": "Desbloqueando capital institucional y minorista para franquicias comerciales físicas."
+  },
+  {
+    "id": 12,
+    "num": "11",
+    "category_en": "PILOT INTEGRATION",
+    "category_es": "INTEGRACIÓN PILOTO",
+    "title_en": "First Flagship Integration: Smart Fast-Food Pilot",
+    "title_es": "Primera Integración Insignia: Piloto Smart Fast-Food",
+    "lead_en": "Deploying Arcana in our flagship Smart Fast-Food pilot store in Cúcuta as the living proof of concept.",
+    "lead_es": "Desplegando Arcana en el local insignia de comida rápida inteligente en Cúcuta como caso de éxito real.",
+    "cards_en": [
+      {
+        "title": "Connected Conveyor Oven & Scales",
+        "desc": "Arcana IoT gateway connected directly to the high-speed oven and topping scale wells in the Cúcuta store."
+      },
+      {
+        "title": "Live 2.5-Minute Bake Auditing",
+        "desc": "Correlating electrical heating power draw with customer app orders to verify 100% of pizza sales."
+      },
+      {
+        "title": "Daily USDC Dividends to Pilot Investors",
+        "desc": "Remote angel investors receive daily USDC profit distributions directly from Cúcuta store sales."
+      },
+      {
+        "title": "Showcase for Regional Franchisors",
+        "desc": "Live showroom demonstrating verifiable accounting to prospective franchise buyers across Latin America."
+      }
+    ],
+    "cards_es": [
+      {
+        "title": "Horno de Banda y Básculas Conectadas",
+        "desc": "Pasarela Arcana conectada al horno continuo y pozuelos de pesaje en el local de Cúcuta."
+      },
+      {
+        "title": "Auditoría de Horneado en Tiempo Real",
+        "desc": "Correlaciona consumo eléctrico del horno con pedidos en la app para verificar el 100% de las ventas."
+      },
+      {
+        "title": "Dividendos Diarios en USDC para Inversores",
+        "desc": "Inversionistas ángeles reciben repartos diarios en USDC generados por las ventas del local."
+      },
+      {
+        "title": "Showroom para Futuros Franquiciados",
+        "desc": "Demostración en vivo de contabilidad inalterable para interesados en abrir nuevas franquicias."
+      }
+    ],
+    "image": "extracted_media_arcana/image6.png",
+    "punchline_en": "Two complementary businesses validating each other in a real commercial environment.",
+    "punchline_es": "Dos negocios complementarios validándose mutuamente en un entorno comercial real."
+  },
+  {
+    "id": 13,
+    "num": "12",
+    "category_en": "ROADMAP",
+    "category_es": "HOJA DE RUTA",
+    "title_en": "Strategic Roadmap: From Pilot to 100 Stores",
+    "title_es": "Hoja de Ruta: Del Piloto a 100 Locales Conectados",
+    "lead_en": "Disciplined hardware manufacturing and smart contract scaling roadmap.",
+    "lead_es": "Plan de escalamiento disciplinado en fabricación de hardware y contratos inteligentes.",
+    "phases_en": [
+      {
+        "phase": "PHASE 1 · PILOTO FUNDADOR (Meses 1–3)",
+        "focus": "5 Locales Piloto QSR",
+        "milestones": [
+          "Deploy sensor kits in 5 flagship pizza and quick-serve locations",
+          "Validate daily Polygon notary seals and Merkle correlation accuracy",
+          "Achieve 99.8% sensor uptime with zero false fraud positives"
+        ]
+      },
+      {
+        "phase": "PHASE 2 · EXPANSIÓN REGIONAL (Meses 4–9)",
+        "focus": "50 Sedes Franquiciadas",
+        "milestones": [
+          "Launch remote investor portal with automated daily USDC dividends",
+          "Integrate major POS vendors and industrial equipment manufacturers",
+          "Onboard 3 regional franchise chains across Colombia and Mexico"
+        ]
+      },
+      {
+        "phase": "PHASE 3 · ESCALA CORPORATIVA (Meses 10–18)",
+        "focus": "500+ Locales Conectados",
+        "milestones": [
+          "Decentralize sensor oracle validator network",
+          "Enterprise API integration for hospitality and cloud kitchen brands",
+          "Series A expansion into North American franchise networks"
+        ]
+      }
+    ],
+    "phases_es": [
+      {
+        "phase": "FASE 1 · PILOTO FUNDADOR (Meses 1–3)",
+        "focus": "5 Locales Piloto QSR",
+        "milestones": [
+          "Instalar kits de sensores en 5 locales insignia de comida rápida",
+          "Validar cierres diarios en Polygon y precisión del árbol de Merkle",
+          "Alcanzar 99.8% de disponibilidad de sensores con cero falsos positivos"
+        ]
+      },
+      {
+        "phase": "FASE 2 · EXPANSIÓN REGIONAL (Meses 4–9)",
+        "focus": "50 Sedes Franquiciadas",
+        "milestones": [
+          "Lanzar portal para inversores con dividendos diarios automáticos en USDC",
+          "Integrar principales proveedores de POS y fabricantes de maquinaria",
+          "Sumar 3 cadenas de franquicias regionales en Colombia y México"
+        ]
+      },
+      {
+        "phase": "FASE 3 · ESCALA CORPORATIVA (Meses 10–18)",
+        "focus": "500+ Locales Conectados",
+        "milestones": [
+          "Descentralizar red de oráculos validadores de hardware",
+          "API corporativa para marcas de hotelería y dark kitchens",
+          "Expansión Serie A hacia redes de franquicias en Norteamérica"
+        ]
+      }
+    ],
+    "punchline_en": "Proving the trust flywheel store by store.",
+    "punchline_es": "Demostrando el volante de confianza local por local."
+  },
+  {
+    "id": 14,
+    "num": "13",
+    "category_en": "INVESTMENT ASK",
+    "category_es": "RONDA DE INVERSIÓN",
+    "title_en": "Seed Investment Ask: $750,000 USD",
+    "title_es": "Ronda Semilla de Inversión: $750,000 USD",
+    "lead_en": "Funding hardware manufacturing for 100 sensor kits, smart contract formal audits, and franchise onboarding.",
+    "lead_es": "Financiando la fabricación de 100 kits de sensores, auditoría de contratos inteligentes y despliegue en franquicias.",
+    "cards_en": [
+      {
+        "title": "40% · Hardware Manufacturing & Certification",
+        "desc": "Production of 100 industrial ESP32 / ATECC608 sensor gateway kits with CE/FCC certifications."
+      },
+      {
+        "title": "30% · Software & Smart Contract Audits",
+        "desc": "Formal mathematical verification of Polygon settlement contracts and investor portal development."
+      },
+      {
+        "title": "20% · Commercial Franchise Onboarding",
+        "desc": "Deploying dedicated onboarding field engineers across initial partner franchise locations."
+      },
+      {
+        "title": "10% · Legal, Compliance & Working Capital",
+        "desc": "International corporate structuring, IP protection, and operational runway buffer."
+      }
+    ],
+    "cards_es": [
+      {
+        "title": "40% · Fabricación y Certificación de Hardware",
+        "desc": "Producción de 100 kits de pasarelas y sensores ESP32/ATECC608 con certificaciones industriales."
+      },
+      {
+        "title": "30% · Software y Auditoría de Contratos",
+        "desc": "Verificación formal de contratos en Polygon y desarrollo del portal web del inversionista."
+      },
+      {
+        "title": "20% · Despliegue en Franquicias Aliadas",
+        "desc": "Equipo de ingenieros para instalación e integración en locales franquiciados."
+      },
+      {
+        "title": "10% · Legal, Cumplimiento y Capital de Trabajo",
+        "desc": "Estructura jurídica internacional, patentes de hardware y margen operativo."
+      }
+    ],
+    "image": "extracted_media_arcana/image7.png",
+    "punchline_en": "Goal: Connect 100 stores and validate $5M in annual settled GMV.",
+    "punchline_es": "Meta: Conectar 100 locales y validar $5M USD en volumen anual liquidado."
+  },
+  {
+    "id": 15,
+    "num": "14",
+    "category_en": "EXECUTIVE CLOSING",
+    "category_es": "CIERRE EJECUTIVO",
+    "title_en": "The Future of Franchise Investment is Verifiable",
+    "title_es": "El Futuro de las Franquicias es Verificable",
+    "quote_en": "“We do not ask investors to trust human reports. We give them mathematical proof signed by physical machines.”",
+    "quote_es": "“No le pedimos a los inversionistas que confíen en reportes humanos. Les entregamos pruebas matemáticas firmadas por máquinas físicas.”",
+    "pillars_en": [
+      "Signed IoT Edge Devices",
+      "Multi-Vector Correlation",
+      "Polygon Daily Close Notary",
+      "Instant USDC Dividends",
+      "3i BAIRD LAB DeepTech"
+    ],
+    "pillars_es": [
+      "Dispositivos IoT Firmados",
+      "Correlación Multi-Vector",
+      "Cierre Diario en Polygon",
+      "Dividendos Diarios en USDC",
+      "DeepTech 3i BAIRD LAB"
+    ],
+    "image": "extracted_media_arcana/image1.png",
+    "punchline_en": "Arcana: Trust by Construction · Powered by 3i BAIRD LAB.",
+    "punchline_es": "Arcana: Contabilidad Inalterable · Impulsado por 3i BAIRD LAB."
+  }
+]

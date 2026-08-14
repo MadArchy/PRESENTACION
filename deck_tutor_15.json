@@ -1,0 +1,759 @@
+[
+  {
+    "id": 1,
+    "tag_en": "DEEPTECH AI · 3i BAIRD LAB",
+    "tag_es": "DEEPTECH AI · 3i BAIRD LAB",
+    "title_en": "Expert Multi-Agent Tutor",
+    "title_es": "Tutor Experto Multi-Agente",
+    "subtitle_en": "Autonomous enterprise-grade tutoring engine powered by 12 collaborative AI agents, knowledge graphs, 3 memory tiers, and verifiable learning proof.",
+    "subtitle_es": "Motor de tutoría autónomo de nivel empresarial impulsado por 12 agentes de IA, grafos de conocimiento, 3 niveles de memoria y prueba verificable de aprendizaje.",
+    "flow_en": [
+      "Student Diagnosis",
+      "12-Agent Orchestration",
+      "Knowledge Graphs",
+      "Socratic Guidance",
+      "Verifiable Mastery Proof"
+    ],
+    "flow_es": [
+      "Diagnóstico del Alumno",
+      "Orquestación de 12 Agentes",
+      "Grafos de Conocimiento",
+      "Guía Socrática",
+      "Prueba Verificable de Dominio"
+    ],
+    "badge_en": "Executive Investor Pitch · 15 Slides",
+    "badge_es": "Pitch Ejecutivo para Inversores · 15 Slides",
+    "category": "hero",
+    "image": "extracted_media/image1.png"
+  },
+  {
+    "id": 2,
+    "num": "01",
+    "category_en": "THE CORE PROBLEM",
+    "category_es": "EL PROBLEMA CENTRAL",
+    "title_en": "The $300B Education Bottleneck: AI Chatbots Fail",
+    "title_es": "El Cuello de Botella Educativo: Los Chatbots Fallan",
+    "lead_en": "Current LLM solutions simply give direct answers rather than teaching students how to think.",
+    "lead_es": "Las soluciones actuales de IA solo entregan respuestas directas sin enseñar a razonar.",
+    "pillars_en": [
+      {
+        "title": "Passive Answer Delivery",
+        "desc": "Chatbots write homework directly, creating false competence without cognitive mastery."
+      },
+      {
+        "title": "Hallucinations & No Verification",
+        "desc": "Unchecked errors in complex math, STEM, and specialized professional concepts."
+      },
+      {
+        "title": "Zero Persistent Memory",
+        "desc": "Generic bots forget student weaknesses, learning style, and previous curriculum gaps."
+      },
+      {
+        "title": "Lack of Pedagogical Structure",
+        "desc": "No progressive scaffolded guidance or mastery verification mechanism."
+      }
+    ],
+    "pillars_es": [
+      {
+        "title": "Entrega Pasiva de Respuestas",
+        "desc": "Los chatbots resuelven la tarea de golpe, generando falsa competencia sin razonamiento."
+      },
+      {
+        "title": "Alucinaciones Sin Verificación",
+        "desc": "Errores no detectados en matemáticas, STEM y conceptos técnicos avanzados."
+      },
+      {
+        "title": "Cero Memoria Persistente",
+        "desc": "Los bots genéricos olvidan las debilidades, estilo y vacíos previos del estudiante."
+      },
+      {
+        "title": "Falta de Rigor Pedagógico",
+        "desc": "Sin andamiaje progresivo ni mecanismos de comprobación de dominio real."
+      }
+    ],
+    "image": "extracted_media/image2.png",
+    "punchline_en": "Students don't need answer machines. They need a personal Socratic tutor.",
+    "punchline_es": "Los alumnos no necesitan máquinas de respuestas. Necesitan un tutor socrático personal."
+  },
+  {
+    "id": 3,
+    "num": "02",
+    "category_en": "OUR SOLUTION",
+    "category_es": "NUESTRA SOLUCIÓN",
+    "title_en": "The Socratic Multi-Agent Architecture",
+    "title_es": "La Arquitectura Multi-Agente Socrática",
+    "lead_en": "A specialized 12-agent ecosystem that guides students through active discovery and inquiry.",
+    "lead_es": "Un ecosistema de 12 agentes especializados que guía al estudiante mediante descubrimiento activo.",
+    "cards_en": [
+      {
+        "title": "Step-by-Step Questioning",
+        "desc": "Agents ask targeted questions to prompt student reasoning rather than spitting out answers."
+      },
+      {
+        "title": "Adaptive Difficulty Scaling",
+        "desc": "Dynamic calibration adjusts problem difficulty in real time based on student cognitive load."
+      },
+      {
+        "title": "Knowledge Graph Grounding",
+        "desc": "Curriculum concepts are mapped to verified semantic ontologies to prevent hallucinations."
+      },
+      {
+        "title": "Multimodal Input & Voice",
+        "desc": "Supports handwritten equations, voice conversations, diagrams, and live code execution."
+      }
+    ],
+    "cards_es": [
+      {
+        "title": "Interrogación Socrática",
+        "desc": "Formula preguntas estratégicas para estimular la deducción en lugar de dar soluciones."
+      },
+      {
+        "title": "Dificultad Autocalibrada",
+        "desc": "Ajuste dinámico de complejidad en tiempo real según la carga cognitiva del estudiante."
+      },
+      {
+        "title": "Anclaje en Grafos de Conocimiento",
+        "desc": "Conceptos vinculados a ontologías curriculares verificadas para erradicar alucinaciones."
+      },
+      {
+        "title": "Entrada Multimodal y Voz",
+        "desc": "Procesa ecuaciones manuscritas, diálogo por voz, diagramas y ejecución de código."
+      }
+    ],
+    "image": "extracted_media/image3.png",
+    "punchline_en": "Active inquiry yields 3.8x higher long-term knowledge retention.",
+    "punchline_es": "El aprendizaje activo genera 3.8x mayor retención de conocimientos a largo plazo."
+  },
+  {
+    "id": 4,
+    "num": "03",
+    "category_en": "COMPETITIVE ADVANTAGE",
+    "category_es": "VENTAJA COMPETITIVA",
+    "title_en": "Direct Comparison: Generic AI vs. 3i Multi-Agent",
+    "title_es": "Comparativa: IA Genérica vs. Sistema 3i Multi-Agente",
+    "lead_en": "Why foundational LLMs and simple wrappers cannot compete with an orchestrated agent architecture.",
+    "lead_es": "Por qué los LLM genéricos no pueden competir con una arquitectura orquestada de agentes.",
+    "comparison": [
+      {
+        "aspect_en": "Pedagogical Method",
+        "aspect_es": "Método Pedagógico",
+        "bot_en": "Spits immediate solutions",
+        "bot_es": "Entrega respuestas de golpe",
+        "tutor_en": "Scaffolded Socratic questioning",
+        "tutor_es": "Guía socrática progresiva"
+      },
+      {
+        "aspect_en": "Factual Accuracy",
+        "aspect_es": "Precisión y Rigor",
+        "bot_en": "Prone to silent hallucinations",
+        "bot_es": "Propenso a alucinaciones",
+        "tutor_en": "Knowledge graph verified & audited",
+        "tutor_es": "Validado contra grafos ontológicos"
+      },
+      {
+        "aspect_en": "Student Memory",
+        "aspect_es": "Memoria del Estudiante",
+        "bot_en": "Lost on session reset",
+        "bot_es": "Se borra en cada sesión",
+        "tutor_en": "3-Tier persistent cognitive memory",
+        "tutor_es": "Memoria persistente en 3 capas"
+      },
+      {
+        "aspect_en": "Mastery Verification",
+        "aspect_es": "Verificación de Dominio",
+        "bot_en": "Zero verification metrics",
+        "bot_es": "Sin métricas de dominio",
+        "tutor_en": "Cryptographic Proof of Mastery",
+        "tutor_es": "Prueba Criptográfica de Dominio"
+      }
+    ],
+    "image": "extracted_media/image2.png",
+    "punchline_en": "Moving from conversational novelty to enterprise educational infrastructure.",
+    "punchline_es": "De la novedad conversacional a infraestructura educativa de clase mundial."
+  },
+  {
+    "id": 5,
+    "num": "04",
+    "category_en": "MULTI-AGENT TEAMS",
+    "category_es": "EQUIPOS MULTI-AGENTE",
+    "title_en": "The 4 Specialized Agent Governance Squads",
+    "title_es": "Las 4 Escuadras de Gobernanza Multi-Agente",
+    "lead_en": "12 autonomous agents organized in 4 structured governance squads with strict cross-verification.",
+    "lead_es": "12 agentes autónomos divididos en 4 escuadras con verificación cruzada rigurosa.",
+    "teams_en": [
+      {
+        "num": "01",
+        "name": "Diagnostic & Triage",
+        "role": "Cognitive profiling",
+        "agents": [
+          "Diagnostic Agent",
+          "Triage Coordinator",
+          "Curriculum Navigator"
+        ]
+      },
+      {
+        "num": "02",
+        "name": "Pedagogy & Socratic",
+        "role": "Mastery guidance",
+        "agents": [
+          "Socratic Dialogue Coach",
+          "Analogy Generator",
+          "Exercise Synthesizer"
+        ]
+      },
+      {
+        "num": "03",
+        "name": "Verification & Logic",
+        "role": "Hallucination defense",
+        "agents": [
+          "Formal Logic Checker",
+          "Graph Validator",
+          "Code & Math Verifier"
+        ]
+      },
+      {
+        "num": "04",
+        "name": "Synthesis & Mastery",
+        "role": "Progress & proof",
+        "agents": [
+          "Cognitive Memory Indexer",
+          "Proof-of-Mastery Mint",
+          "Analytics Reporter"
+        ]
+      }
+    ],
+    "teams_es": [
+      {
+        "num": "01",
+        "name": "Diagnóstico y Triaje",
+        "role": "Perfilamiento cognitivo",
+        "agents": [
+          "Agente de Diagnóstico",
+          "Coordinador de Triaje",
+          "Navegador Curricular"
+        ]
+      },
+      {
+        "num": "02",
+        "name": "Pedagogía Socrática",
+        "role": "Guía de razonamiento",
+        "agents": [
+          "Coach Socrático",
+          "Generador de Analogías",
+          "Sintetizador de Ejercicios"
+        ]
+      },
+      {
+        "num": "03",
+        "name": "Verificación y Lógica",
+        "role": "Defensa contra alucinaciones",
+        "agents": [
+          "Verificador Lógico",
+          "Validador de Grafos",
+          "Auditor de Código y Mate"
+        ]
+      },
+      {
+        "num": "04",
+        "name": "Síntesis y Maestría",
+        "role": "Progreso y certificación",
+        "agents": [
+          "Indexador de Memoria",
+          "Minteador de Maestría",
+          "Generador de Reportes"
+        ]
+      }
+    ],
+    "image": "extracted_media/image1.png",
+    "punchline_en": "Collaborative agent consensus ensures 99.4% factual accuracy.",
+    "punchline_es": "El consenso entre agentes asegura un 99.4% de precisión factual."
+  },
+  {
+    "id": 6,
+    "num": "05",
+    "category_en": "3-TIER MEMORY",
+    "category_es": "MEMORIA EN 3 CAPAS",
+    "title_en": "3-Tier Memory Architecture: True Personalization",
+    "title_es": "Arquitectura de Memoria en 3 Capas: Personalización Total",
+    "lead_en": "Our proprietary memory stack retains working, episodic, and semantic mastery data across years.",
+    "lead_es": "Nuestra pila de memoria propietaria retiene datos de trabajo, episódicos y de dominio semántico por años.",
+    "layers_en": [
+      {
+        "type": "Working Memory (Fast Cache)",
+        "tech": "Redis / Context Window",
+        "desc": "Maintains active problem step-by-step state, current misconceptions, and real-time student tone."
+      },
+      {
+        "type": "Episodic Memory (Timeline)",
+        "tech": "Vector Embeddings / Milvus",
+        "desc": "Remembers past study sessions, recurring struggle areas, emotional fatigue indicators, and breakthroughs."
+      },
+      {
+        "type": "Semantic Knowledge Memory",
+        "tech": "Neo4j Knowledge Graph",
+        "desc": "Maps student progress against the global concept ontology, identifying prerequisites and leap points."
+      }
+    ],
+    "layers_es": [
+      {
+        "type": "Memoria de Trabajo (Caché Rápida)",
+        "tech": "Redis / Context Window",
+        "desc": "Mantiene el estado paso a paso del ejercicio activo, dudas actuales y tono emocional en vivo."
+      },
+      {
+        "type": "Memoria Episódica (Línea de Tiempo)",
+        "tech": "Vector Embeddings / Milvus",
+        "desc": "Recuerda sesiones pasadas, bloqueos recurrentes, momentos de fatiga y avances clave."
+      },
+      {
+        "type": "Memoria Semántica de Conocimiento",
+        "tech": "Grafo Neo4j",
+        "desc": "Mapea el progreso del alumno sobre el grafo curricular identificando prerrequisitos y vacíos."
+      }
+    ],
+    "image": "extracted_media/image4.png",
+    "punchline_en": "A tutor that truly knows the student better with every session.",
+    "punchline_es": "Un tutor que conoce a profundidad al alumno y evoluciona con cada sesión."
+  },
+  {
+    "id": 7,
+    "num": "06",
+    "category_en": "KNOWLEDGE GRAPHS",
+    "category_es": "GRAFOS DE CONOCIMIENTO",
+    "title_en": "Ontological Knowledge Graph Grounding",
+    "title_es": "Anclaje Curricular en Grafos de Conocimiento",
+    "lead_en": "Curriculum concepts are represented as structured mathematical graphs with dependency trees.",
+    "lead_es": "Los conceptos curriculares se representan como grafos estructurados con árboles de dependencias.",
+    "cards_en": [
+      {
+        "title": "Dependency Tracing",
+        "desc": "If a student fails Calculus derivatives, the graph traces back to identify gaps in Trigonometry or Algebra."
+      },
+      {
+        "title": "Zero-Hallucination Retrieval",
+        "desc": "Agents only generate explanations based on verified nodes and relationships in the knowledge graph."
+      },
+      {
+        "title": "Dynamic Remediation Paths",
+        "desc": "Generates the shortest personalized path to master complex topics without skipping foundations."
+      },
+      {
+        "title": "Institutional Standard Alignment",
+        "desc": "Maps directly to IB, AP, ABET, MCAT, and corporate certification syllabi."
+      }
+    ],
+    "cards_es": [
+      {
+        "title": "Rastreo de Dependencias",
+        "desc": "Si el alumno falla en Derivadas, el grafo identifica vacíos previos en Álgebra o Trigonometría."
+      },
+      {
+        "title": "Cero Alucinaciones",
+        "desc": "Los agentes solo explican basándose en nodos y relaciones verificadas del grafo ontológico."
+      },
+      {
+        "title": "Rutas de Nivelación Dinámicas",
+        "desc": "Traza el camino más corto y eficiente para dominar temas complejos sin saltarse bases."
+      },
+      {
+        "title": "Alineación Curricular Global",
+        "desc": "Mapeo directo a estándares IB, AP, ABET, MCAT y certificaciones corporativas."
+      }
+    ],
+    "image": "extracted_media/image5.png",
+    "punchline_en": "Structured curriculum graphs eliminate learning blindspots.",
+    "punchline_es": "Los grafos curriculares estructurados eliminan los puntos ciegos del aprendizaje."
+  },
+  {
+    "id": 8,
+    "num": "07",
+    "category_en": "VERIFIABLE MASTERY",
+    "category_es": "PRUEBA DE DOMINIO",
+    "title_en": "Proof-of-Mastery: Verifiable Learning Credentials",
+    "title_es": "Prueba de Maestría: Credenciales de Aprendizaje Verificables",
+    "lead_en": "Replacing easily cheated online quizzes with cryptographic, auditable proofs of step-by-step reasoning.",
+    "lead_es": "Sustituyendo los exámenes tradicionales por pruebas criptográficas auditables de razonamiento paso a paso.",
+    "features_en": [
+      "Every step of student reasoning and active problem resolution is logged and signed",
+      "Evaluates cognitive problem-solving path rather than simple multiple-choice selection",
+      "Generates tamper-proof cryptographic skill credentials verifiable by universities and employers",
+      "Eliminates AI copy-pasting fraud through live multi-turn reasoning validation"
+    ],
+    "features_es": [
+      "Cada paso de deducción y resolución activa del estudiante queda registrado y firmado",
+      "Evalúa la ruta cognitiva de resolución en lugar de una simple opción múltiple",
+      "Genera credenciales de habilidad inmutables verificables por universidades y empresas",
+      "Erradica el fraude de copiar y pegar respuestas de IA mediante validación interactiva"
+    ],
+    "diagram_en": [
+      {
+        "label": "Interactive Reasoning",
+        "detail": "Live multi-turn problem defense"
+      },
+      {
+        "label": "Cryptographic Hash",
+        "detail": "Immutable audit trail of competence"
+      },
+      {
+        "label": "Employer Ready",
+        "detail": "Verifiable skill certification"
+      }
+    ],
+    "diagram_es": [
+      {
+        "label": "Razonamiento Interactivo",
+        "detail": "Defensa de problemas en vivo"
+      },
+      {
+        "label": "Hash Criptográfico",
+        "detail": "Rastro inmutable de competencia"
+      },
+      {
+        "label": "Listo para Empresas",
+        "detail": "Certificación verificable de habilidades"
+      }
+    ],
+    "image": "extracted_media/image6.png",
+    "punchline_en": "The end of fake certificates. The beginning of true verifiable competence.",
+    "punchline_es": "El fin de los certificados vacíos. El inicio de la competencia real verificable."
+  },
+  {
+    "id": 9,
+    "num": "08",
+    "category_en": "TECHNICAL STACK",
+    "category_es": "STACK TECNOLÓGICO",
+    "title_en": "Enterprise DeepTech Infrastructure",
+    "title_es": "Infraestructura Tecnológica Empresarial",
+    "lead_en": "High-throughput, low-latency microservices built for millions of concurrent active tutoring sessions.",
+    "lead_es": "Microservicios de alto rendimiento y baja latencia diseñados para millones de sesiones simultáneas.",
+    "stack_en": [
+      {
+        "layer": "Agent Orchestration Core",
+        "desc": "LangGraph & Rust state machine with sub-120ms token-to-decision routing."
+      },
+      {
+        "layer": "Hybrid LLM Inference",
+        "desc": "Multi-tier LLM routing: Claude 3.5 Sonnet / GPT-4o for complex reasoning + distilled local SLMs for latency."
+      },
+      {
+        "layer": "Graph & Vector Database",
+        "desc": "Neo4j enterprise cluster coupled with Milvus distributed vector search for instant semantic recall."
+      },
+      {
+        "layer": "Real-Time Streaming Voice",
+        "desc": "WebRTC sub-250ms conversational audio synthesis for natural spoken Socratic tutoring."
+      }
+    ],
+    "stack_es": [
+      {
+        "layer": "Núcleo de Orquestación",
+        "desc": "Máquina de estados en LangGraph y Rust con enrutamiento de decisiones < 120ms."
+      },
+      {
+        "layer": "Inferencia Híbrida de LLMs",
+        "desc": "Ruteo inteligente: Claude 3.5 / GPT-4o para deducción compleja + SLMs locales para baja latencia."
+      },
+      {
+        "layer": "Base de Datos de Grafos y Vectores",
+        "desc": "Cluster Neo4j junto a Milvus distribuido para recuperación semántica instantánea."
+      },
+      {
+        "layer": "Voz Conversacional en Tiempo Real",
+        "desc": "Síntesis de audio WebRTC < 250ms para tutoría socrática hablada natural."
+      }
+    ],
+    "image": "extracted_media/image7.png",
+    "punchline_en": "Built for institutional scale, privacy, and low-latency performance.",
+    "punchline_es": "Diseñado para escala institucional, privacidad y máxima velocidad."
+  },
+  {
+    "id": 10,
+    "num": "09",
+    "category_en": "MARKET SIZE",
+    "category_es": "TAMAÑO DE MERCADO",
+    "title_en": "$180B Market Opportunity across 3 Tiers",
+    "title_es": "Oportunidad de Mercado de $180B en 3 Niveles",
+    "lead_en": "Addressing high-margin segments: Higher Ed, K-12 STEM tutoring, and Enterprise Upskilling.",
+    "lead_es": "Abordando segmentos de alto margen: Educación Superior, STEM K-12 y Reentrenamiento Corporativo.",
+    "segments_en": [
+      {
+        "title": "Higher Education & STEM",
+        "target": "TAM $42B",
+        "desc": "Universities deploying 24/7 personalized AI teaching assistants to reduce student dropout rates by 35%."
+      },
+      {
+        "title": "Corporate Workforce Upskilling",
+        "target": "TAM $78B",
+        "desc": "Enterprise retraining in software engineering, compliance, medical protocols, and technical sales."
+      },
+      {
+        "title": "Consumer K-12 & Test Prep",
+        "target": "TAM $60B",
+        "desc": "Families replacing expensive $80/hr human tutors with an always-available personal AI mentor."
+      }
+    ],
+    "segments_es": [
+      {
+        "title": "Educación Superior y STEM",
+        "target": "TAM $42B",
+        "desc": "Universidades integrando asistentes 24/7 para reducir la deserción estudiantil en un 35%."
+      },
+      {
+        "title": "Reentrenamiento Corporativo",
+        "target": "TAM $78B",
+        "desc": "Empresas capacitando en ingeniería, cumplimiento normativo, protocolos médicos y ventas técnicas."
+      },
+      {
+        "title": "Consumo K-12 y Exámenes",
+        "target": "TAM $60B",
+        "desc": "Familias sustituyendo tutores privados de $80 USD/h por un mentor de IA personalizado 24/7."
+      }
+    ],
+    "image": "extracted_media/image8.png",
+    "punchline_en": "Capturing value across consumer, academic, and enterprise segments.",
+    "punchline_es": "Capturando valor en los sectores B2C, académico y corporativo B2B."
+  },
+  {
+    "id": 11,
+    "num": "10",
+    "category_en": "BUSINESS MODEL",
+    "category_es": "MODELO DE NEGOCIO",
+    "title_en": "Monetization: High-Margin Recurring Revenue",
+    "title_es": "Monetización: Ingresos Recurrentes de Alto Margen",
+    "lead_en": "Diversified revenue streams with 82% gross margins and high institutional retention.",
+    "lead_es": "Flujos de ingresos diversificados con 82% de margen bruto y alta retención institucional.",
+    "streams_en": [
+      {
+        "type": "B2C Student Subscription",
+        "tier": "$19–$39 / month",
+        "desc": "Unlimited Socratic tutoring, step-by-step reasoning support, and exam preparation packages."
+      },
+      {
+        "type": "B2B Higher Ed SaaS",
+        "tier": "$5–$12 / student / yr",
+        "desc": "Campus-wide license with LMS integration (Canvas, Blackboard), analytics dashboards, and syllabi alignment."
+      },
+      {
+        "type": "Enterprise Training API",
+        "tier": "Usage + $2.5k/mo fee",
+        "desc": "Custom knowledge graph ingestion for proprietary corporate training and audited employee certification."
+      }
+    ],
+    "streams_es": [
+      {
+        "type": "Suscripción B2C Estudiantes",
+        "tier": "$19–$39 USD / mes",
+        "desc": "Tutoría socrática ilimitada, resolución paso a paso y preparación intensiva para exámenes."
+      },
+      {
+        "type": "SaaS B2B Universidades",
+        "tier": "$5–$12 USD / alumno / año",
+        "desc": "Licencia institucional con integración a Canvas/Blackboard y paneles de analítica académica."
+      },
+      {
+        "type": "API de Capacitación Corporativa",
+        "tier": "Uso + $2,500 USD / mes",
+        "desc": "Carga de grafos de conocimiento internos para certificar empleados con métricas auditables."
+      }
+    ],
+    "moat_en": "Data Flywheel: Every tutoring session enriches our proprietary reasoning graphs and misconception models.",
+    "moat_es": "Efecto de Red de Datos: Cada sesión enriquece nuestros grafos propietarios de razonamiento y modelos de errores comunes.",
+    "punchline_en": "SaaS unit economics with negative net revenue churn.",
+    "punchline_es": "Economía unitaria SaaS con retención neta de ingresos superior al 120%."
+  },
+  {
+    "id": 12,
+    "num": "11",
+    "category_en": "TRACTION & METRICS",
+    "category_es": "TRACCIÓN Y MÉTRICAS",
+    "title_en": "Pilot Validation & Early Growth Metrics",
+    "title_es": "Validación Piloto y Métricas de Crecimiento",
+    "lead_en": "Validated with over 15,000 active students across 4 university STEM departments.",
+    "lead_es": "Validado con más de 15,000 estudiantes activos en 4 facultades universitarias de STEM.",
+    "cards_en": [
+      {
+        "title": "15,000+ Active Students",
+        "desc": "Over 240,000 hours of Socratic tutoring delivered with 4.85/5 student satisfaction score."
+      },
+      {
+        "title": "+28% Exam Score Improvement",
+        "desc": "Controlled study in Calculus and Physics showed a 28% improvement vs. passive video/lecture cohorts."
+      },
+      {
+        "title": "84% Monthly Retention",
+        "desc": "Industry-leading student engagement driven by persistent memory and conversational empathy."
+      },
+      {
+        "title": "4 University Pilot MOUs",
+        "desc": "Expanding institutional rollouts across Latin America and North American engineering schools."
+      }
+    ],
+    "cards_es": [
+      {
+        "title": "15,000+ Estudiantes Activos",
+        "desc": "Más de 240,000 horas de tutoría socrática completadas con calificación de 4.85/5."
+      },
+      {
+        "title": "+28% Mejora en Calificaciones",
+        "desc": "Estudio de control en Cálculo y Física demostró un 28% de mejora frente a métodos tradicionales."
+      },
+      {
+        "title": "84% Retención Mensual",
+        "desc": "Compromiso de alumnos líder en la industria impulsado por la memoria persistente del tutor."
+      },
+      {
+        "title": "4 Cartas de Intención Universitarias",
+        "desc": "Despliegues institucionales en marcha en facultades de ingeniería de Latam y Norteamérica."
+      }
+    ],
+    "image": "extracted_media/image8.png",
+    "punchline_en": "Proven academic outcomes backed by strong retention economics.",
+    "punchline_es": "Resultados académicos comprobados respaldados por alta retención."
+  },
+  {
+    "id": 13,
+    "num": "12",
+    "category_en": "ROADMAP",
+    "category_es": "HOJA DE RUTA",
+    "title_en": "Strategic Roadmap: 18-Month Horizon",
+    "title_es": "Hoja de Ruta Estratégica: Horizonte 18 Meses",
+    "lead_en": "Disciplined execution scaling from STEM beachhead to multi-disciplinary enterprise deployments.",
+    "lead_es": "Ejecución disciplinada escalando desde STEM hacia despliegues corporativos multidisciplinarios.",
+    "phases_en": [
+      {
+        "phase": "Q1–Q2 · CORE SCALE",
+        "focus": "STEM & Higher Ed",
+        "milestones": [
+          "Expand to 50k active students in Calculus, Physics, and CS",
+          "Launch mobile app with real-time streaming voice mode",
+          "Canvas and Blackboard LMS native one-click integrations"
+        ]
+      },
+      {
+        "phase": "Q3–Q4 · B2B ENTERPRISE",
+        "focus": "Corporate Upskilling",
+        "milestones": [
+          "Ingest enterprise compliance and software engineering ontologies",
+          "Deploy on-premise dedicated LLM inference for banking clients",
+          "Launch automated Proof-of-Mastery credential verification"
+        ]
+      },
+      {
+        "phase": "YEAR 2 · GLOBAL EXPANSION",
+        "focus": "Multi-Language & K-12",
+        "milestones": [
+          "Full multilingual expansion across Spanish, English, and Portuguese",
+          "Series A round of $8M to scale global university sales force",
+          "SDK release for 3rd party educational content publishers"
+        ]
+      }
+    ],
+    "phases_es": [
+      {
+        "phase": "Q1–Q2 · ESCALA CENTRAL",
+        "focus": "STEM y Educación Superior",
+        "milestones": [
+          "Alcanzar 50k estudiantes activos en Cálculo, Física y Computación",
+          "Lanzamiento de app móvil con modo de voz conversacional",
+          "Integración nativa con LMS Canvas y Blackboard"
+        ]
+      },
+      {
+        "phase": "Q3–Q4 · EXPANSIÓN B2B",
+        "focus": "Capacitación Corporativa",
+        "milestones": [
+          "Ingesta de ontologías de ingeniería de software y banca",
+          "Inferencia de LLMs locales dedicados para clientes corporativos",
+          "Despliegue de credenciales verificables de dominio"
+        ]
+      },
+      {
+        "phase": "AÑO 2 · EXPANSIÓN GLOBAL",
+        "focus": "Multilingüe y K-12",
+        "milestones": [
+          "Expansión total en Español, Inglés y Portugués",
+          "Ronda Serie A de $8M para acelerar ventas institucionales globales",
+          "Lanzamiento de SDK para creadores de contenido educativo"
+        ]
+      }
+    ],
+    "punchline_en": "From foundational beachhead to the global standard in AI learning.",
+    "punchline_es": "Del nicho inicial al estándar global en aprendizaje con IA."
+  },
+  {
+    "id": 14,
+    "num": "13",
+    "category_en": "INVESTMENT ASK",
+    "category_es": "RONDA DE INVERSIÓN",
+    "title_en": "Seed Investment Ask: $1.2M USD",
+    "title_es": "Ronda Semilla de Inversión: $1.2M USD",
+    "lead_en": "Funding 18 months of runway to reach 100k active students and $2.4M ARR.",
+    "lead_es": "Financiando 18 meses de operación para alcanzar 100k estudiantes y $2.4M USD de ARR.",
+    "cards_en": [
+      {
+        "title": "45% · AI Research & Engineering",
+        "desc": "Scaling multi-agent orchestration, knowledge graph auto-generation, and ultra-low-latency voice synthesis."
+      },
+      {
+        "title": "30% · Institutional B2B Sales",
+        "desc": "Building dedicated sales team targeting universities and enterprise corporate training departments."
+      },
+      {
+        "title": "15% · Compute & Cloud Infrastructure",
+        "desc": "Dedicated GPU clusters, vector database infrastructure, and SOC2 / GDPR compliance audits."
+      },
+      {
+        "title": "10% · Operations & Working Capital",
+        "desc": "Legal IP protection, international business development, and operational buffer."
+      }
+    ],
+    "cards_es": [
+      {
+        "title": "45% · Investigación e Ingeniería de IA",
+        "desc": "Escalar la orquestación de agentes, auto-generación de grafos y voz conversacional ultrarrápida."
+      },
+      {
+        "title": "30% · Ventas B2B Institucionales",
+        "desc": "Equipo comercial dedicado a cerrar universidades y áreas de capacitación empresarial."
+      },
+      {
+        "title": "15% · Cómputo e Infraestructura Cloud",
+        "desc": "Clusters de GPUs dedicados, bases de datos vectoriales y certificaciones SOC2 / GDPR."
+      },
+      {
+        "title": "10% · Operaciones y Legal",
+        "desc": "Protección de propiedad intelectual internacional y capital de trabajo."
+      }
+    ],
+    "image": "extracted_media/image6.png",
+    "punchline_en": "Targeting 10x revenue growth and market leadership in intelligent tutoring.",
+    "punchline_es": "Meta: Multiplicar por 10x los ingresos y liderar la tutoría inteligente."
+  },
+  {
+    "id": 15,
+    "num": "14",
+    "category_en": "EXECUTIVE CLOSING",
+    "category_es": "CIERRE EJECUTIVO",
+    "title_en": "Building the Future of Human Intellect",
+    "title_es": "Construyendo el Futuro de la Inteligencia Humana",
+    "quote_en": "“We are not building an AI that does your thinking for you. We are building the AI that empowers you to think deeper.”",
+    "quote_es": "“No estamos construyendo una IA que piense por ti. Estamos creando la IA que te enseña a pensar más profundo.”",
+    "pillars_en": [
+      "12 Collaborative Agents",
+      "3-Tier Cognitive Memory",
+      "Knowledge Graph Grounding",
+      "Proof-of-Mastery Credentials",
+      "3i BAIRD LAB DeepTech"
+    ],
+    "pillars_es": [
+      "12 Agentes Colaborativos",
+      "Memoria Cognitiva en 3 Capas",
+      "Anclaje en Grafos Curriculares",
+      "Pruebas de Dominio Verificables",
+      "DeepTech 3i BAIRD LAB"
+    ],
+    "image": "extracted_media/image1.png",
+    "punchline_en": "Join us in revolutionizing global education with 3i BAIRD LAB.",
+    "punchline_es": "Únete a transformar la educación global con 3i BAIRD LAB."
+  }
+]

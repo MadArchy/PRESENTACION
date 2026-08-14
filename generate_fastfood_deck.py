@@ -1,0 +1,644 @@
+# -*- coding: utf-8 -*-
+import json
+
+slides_data = [
+    {
+        "id": 1,
+        "tag_en": "INVESTOR PITCH",
+        "tag_es": "PITCH PARA INVERSORES",
+        "title_en": "Smart Fast-Food Franchise",
+        "title_es": "Franquicia de Comida Rápida Inteligente",
+        "subtitle_en": "Franchise pilot in Cúcuta, Colombia. The first regional QSR concept that rewards planning, eliminates food waste, and scales with data.",
+        "subtitle_es": "Piloto de franquicia en Cúcuta, Colombia. El primer concepto QSR regional que premia la planificación, elimina desperdicios y escala con datos.",
+        "flow_en": ["Pre-Order App", "Dynamic Pricing", "Zero Waste", "Standardized Kitchen", "Data-Driven Scale"],
+        "flow_es": ["App de Pre-Orden", "Precios Dinámicos", "Cero Desperdicio", "Cocina Estandarizada", "Escala con Datos"],
+        "badge_en": "Smart QSR Pilot · Cúcuta",
+        "badge_es": "Piloto QSR Inteligente · Cúcuta",
+        "category": "hero",
+        "image": "extracted_media_fastfood/image1.png"
+    },
+    {
+        "id": 2,
+        "num": "01",
+        "category_en": "INVESTMENT THESIS",
+        "category_es": "TESIS DE INVERSIÓN",
+        "title_en": "The Investment Thesis in 15 Seconds",
+        "title_es": "La Tesis de Inversión en 15 Segundos",
+        "lead_en": "A fast-food pilot governed by data, not guesswork.",
+        "lead_es": "Un piloto de comida rápida gobernado por datos, no por suposiciones.",
+        "pillars_en": [
+            {"title": "Customers Plan & Save", "desc": "Users order ahead via our app and receive structural price discounts."},
+            {"title": "Pre-Sold Production", "desc": "The kitchen prepares and bakes only what is already bought and paid for."},
+            {"title": "Protected Margins", "desc": "Food waste drops below 2% and reliance on 30% aggregator commissions is minimized."},
+            {"title": "Superior Unit Economics", "desc": "Lower prices for the customer, higher profit margins for the franchise operator."}
+        ],
+        "pillars_es": [
+            {"title": "Clientes Planifican y Ahorran", "desc": "Los clientes piden con anticipación en la app y reciben descuentos estructurales."},
+            {"title": "Producción Pre-Vendida", "desc": "La cocina hornea y despacha solo lo que ya está vendido y pagado."},
+            {"title": "Márgenes Protegidos", "desc": "El desperdicio cae por debajo del 2% y se reduce la comisión del 30% de agregadores."},
+            {"title": "Economía Unitaria Superior", "desc": "Precios más bajos para el consumidor, mayor rentabilidad para el franquiciado."}
+        ],
+        "image": "extracted_media_fastfood/image2.png",
+        "punchline_en": "Better customer pricing + stronger operator economics.",
+        "punchline_es": "Mejores precios al cliente + mayor rentabilidad para el operador."
+    },
+    {
+        "id": 3,
+        "num": "02",
+        "category_en": "THE PROBLEM",
+        "category_es": "EL PROBLEMA",
+        "title_en": "The Industry Problem: Reactive & Inefficient QSR",
+        "title_es": "El Problema del Sector: Restaurantes Reactivos e Ineficientes",
+        "lead_en": "Traditional fast food operates reactively, destroying margins through unpredictability.",
+        "lead_es": "La comida rápida tradicional opera de forma reactiva, destruyendo márgenes por falta de previsión.",
+        "pillars_en": [
+            {"title": "High Food Waste", "desc": "Unpredictable daily foot traffic causes massive spoilage in perishable ingredients."},
+            {"title": "Chaotic Rush Hours", "desc": "Long queues and slow service during peaks; idle and costly labor during off-peak hours."},
+            {"title": "Crushing Aggregator Fees", "desc": "Delivery apps take up to 30% commission, capturing the majority of operator profit."},
+            {"title": "Frustrated Consumers", "desc": "Customers pay inflated prices, wait in lines, and receive inconsistent quality."}
+        ],
+        "pillars_es": [
+            {"title": "Alto Desperdicio de Alimentos", "desc": "El tráfico impredecible genera pérdidas masivas de ingredientes perecederos."},
+            {"title": "Picos Caóticos y Horas Muertas", "desc": "Largas filas en horas pico; personal ocioso y costoso durante horas valle."},
+            {"title": "Comisiones Devastadoras", "desc": "Las apps de delivery cobran hasta un 30%, erosionando el margen del restaurante."},
+            {"title": "Clientes Inconformes", "desc": "El consumidor paga precios inflados, espera en fila y recibe calidad inconsistente."}
+        ],
+        "image": "extracted_media_fastfood/image3.png",
+        "punchline_en": "Customers pay more and wait longer; restaurant owners earn less.",
+        "punchline_es": "Los clientes pagan más y esperan más; los dueños ganan menos."
+    },
+    {
+        "id": 4,
+        "num": "03",
+        "category_en": "THE OPPORTUNITY",
+        "category_es": "LA OPORTUNIDAD",
+        "title_en": "Flip the Model: Pre-Sold Production with Certainty",
+        "title_es": "Invertir el Modelo: Producción Pre-Vendida con Certeza",
+        "lead_en": "The customer plans ahead, and the kitchen produces with mathematical certainty.",
+        "lead_es": "El cliente planifica con anticipación y la cocina produce con certeza matemática.",
+        "steps_en": ["1. Schedule in App", "2. Dynamic Discount", "3. Batch Production", "4. Food Cost < 23%", "5. Zero Wait Pickup", "6. Habit Flywheel"],
+        "steps_es": ["1. Programar en App", "2. Descuento Dinámico", "3. Producción en Lote", "4. Costo Insumos < 23%", "5. Retiro sin Filas", "6. Hábito Recurrente"],
+        "definition_en": "Structural Discount: Savings generated by zero food waste and zero aggregator fees are directly shared with the customer.",
+        "definition_es": "Descuento Estructural: El ahorro derivado de cero desperdicio y cero intermediarios se transfiere directamente al precio del cliente.",
+        "image": "extracted_media_fastfood/image1.png",
+        "punchline_en": "We do not compete on 'more flavor'; we compete on smart pricing + zero waiting.",
+        "punchline_es": "No competimos por 'más sabor'; competimos en precio inteligente + cero espera."
+    },
+    {
+        "id": 5,
+        "num": "04",
+        "category_en": "LOCATION & TIMING",
+        "category_es": "UBICACIÓN Y MOMENTO",
+        "title_en": "Why Cúcuta, and Why Now?",
+        "title_es": "¿Por qué Cúcuta y por qué ahora?",
+        "lead_en": "Cúcuta is the ideal testbed: high foot traffic, high price sensitivity, and limited modern QSR supply.",
+        "lead_es": "Cúcuta es el laboratorio ideal: alto tráfico peatonal, alta sensibilidad al precio y poca oferta QSR estructurada.",
+        "cards_en": [
+            {"title": "Vibrant Nightlife Culture", "desc": "High evening and outdoor social consumption habits generate natural street traffic."},
+            {"title": "High Value Sensitivity", "desc": "Consumers prioritize generous portion size, speed, and real price savings over premium branding."},
+            {"title": "Burger Market Saturated", "desc": "The burger sector is trapped in unsustainable price wars; we avoid it entirely."},
+            {"title": "Massive Whitespace", "desc": "Zero structured competition in express pizza ($9,900–$14,900 COP) and Mexican assembly bars."}
+        ],
+        "cards_es": [
+            {"title": "Cultura de Vida Nocturna", "desc": "Hábitos de consumo social nocturno y al aire libre que generan tráfico natural."},
+            {"title": "Alta Sensibilidad al Valor", "desc": "El cliente prioriza porciones generosas, velocidad y ahorro real sobre marcas de lujo."},
+            {"title": "Mercado de Hamburguesas Saturado", "desc": "El sector de hamburguesas está en guerra de precios; lo evitamos por completo."},
+            {"title": "Gran Oportunidad de Mercado", "desc": "Cero competencia estructurada en pizza express ($9.900–$14.900 COP) y barra mexicana."}
+        ],
+        "image": "extracted_media_fastfood/image4.png",
+        "punchline_en": "Pioneer positioning in high-traffic regional corridors.",
+        "punchline_es": "Posicionamiento pionero en corredores regionales de alto tráfico."
+    },
+    {
+        "id": 6,
+        "num": "05",
+        "category_en": "STRATEGIC DISCIPLINE",
+        "category_es": "DISCIPLINA ESTRATÉGICA",
+        "title_en": "The Market We Will NOT Fight: Burgers",
+        "title_es": "El Mercado en el que NO Vamos a Pelear: Hamburguesas",
+        "lead_en": "Strategic discipline means refusing to spend capital in commoditized, bloody red oceans.",
+        "lead_es": "Disciplina estratégica significa no quemar capital en océanos rojos hipercompetidos.",
+        "comparison": [
+            {"aspect_en": "Competition", "aspect_es": "Competencia", "bot_en": "Hundreds of street carts & chains", "bot_es": "Cientos de puestos callejeros y cadenas", "tutor_en": "Pioneer in express 3-min pizza", "tutor_es": "Pionero absoluto en pizza express de 3 min"},
+            {"aspect_en": "Pricing Dynamic", "aspect_es": "Dinámica de Precios", "bot_en": "Trapped in destructive margin wars", "bot_es": "Atrapado en guerra de precios destructiva", "tutor_en": "Structural dynamic pricing via app", "tutor_es": "Precios dinámicos estructurales por app"},
+            {"aspect_en": "App Adoption", "aspect_es": "Adopción de App", "bot_en": "Near-impossible for commoditized food", "bot_es": "Casi imposible en producto genérico", "tutor_en": "Natural incentive: save 20-30% & skip line", "tutor_es": "Incentivo natural: ahorra 25% y salta fila"},
+            {"aspect_en": "Standardization", "aspect_es": "Estandarización", "bot_en": "High labor variance & grill smoke", "bot_es": "Alta varianza manual y humo en planchas", "tutor_en": "Automated conveyor oven / modular bar", "tutor_es": "Horno continuo automatizado / barra modular"}
+        ],
+        "punchline_en": "Strategy is deciding what NOT to do.",
+        "punchline_es": "Estrategia es decidir qué NO hacer."
+    },
+    {
+        "id": 7,
+        "num": "06",
+        "category_en": "WINNING CONCEPTS",
+        "category_es": "CONCEPTOS GANADORES",
+        "title_en": "Two Validated Concepts, One Technology Engine",
+        "title_es": "Dos Conceptos Validados, Un Solo Motor Tecnológico",
+        "lead_en": "Both concepts operate on the exact same digital operating system and inventory brain.",
+        "lead_es": "Ambos conceptos operan sobre el mismo sistema operativo digital y motor de inventarios.",
+        "teams_en": [
+            {"num": "1", "name": "OPTION A · EXPRESS PIZZA", "role": "Recommended Flagship", "agents": ["Conveyor oven (baked in 3.5 min)", "Standardized 24-28cm personal pizza", "Ultra-low food cost (< 21%)", "Pioneer Hot-and-Ready format in Cúcuta"]},
+            {"num": "2", "name": "OPTION B · MEXICAN BAR", "role": "Plan B Alternative", "agents": ["Visual assembly saladette line (Chipotle style)", "Tacos, Burritos, Bowls & Nachos", "Perceived freshness & custom portions", "Higher average ticket, low prep complexity"]}
+        ],
+        "teams_es": [
+            {"num": "1", "name": "OPCIÓN A · PIZZA EXPRESS", "role": "Insignia Recomendada", "agents": ["Horno de banda continuo (horneado en 3.5 min)", "Pizza personal estandarizada 24-28cm", "Costo de insumos ultra-bajo (< 21%)", "Formato pionero Hot-and-Ready en Cúcuta"]},
+            {"num": "2", "name": "OPCIÓN B · BARRA MEXICANA", "role": "Alternativa Plan B", "agents": ["Línea de ensamble visual (estilo Chipotle)", "Tacos, Burritos, Bowls y Totopos", "Alta percepción de frescura y personalización", "Mayor ticket promedio, baja complejidad"]}
+        ],
+        "image": "extracted_media_fastfood/image5.png",
+        "punchline_en": "Identical tech stack and unit economics across both culinary formats.",
+        "punchline_es": "Misma plataforma tecnológica y economía unitaria para ambos formatos."
+    },
+    {
+        "id": 8,
+        "num": "07",
+        "category_en": "CONCEPT A · PIZZA",
+        "category_es": "CONCEPTO A · PIZZA",
+        "title_en": "Why Express Pizza is the Clear Winner",
+        "title_es": "Por qué la Pizza Express es la Opción Ganadora",
+        "lead_en": "Absolute pioneer value in Cúcuta: ready-to-go personal pizza in minutes at a mass-market price.",
+        "lead_es": "Valor pionero absoluto en Cúcuta: pizza personal lista en minutos a precio masivo popular.",
+        "features_en": [
+            "Pioneer novelty drives huge organic walk-in traffic from Day 1",
+            "Conveyor oven delivers perfect, foolproof baking consistency with minimal training",
+            "High margin resilience: flour, cheese, and sauce enable sub-21% food cost",
+            "Store counter captures impulse buyers and converts them into app planners"
+        ],
+        "features_es": [
+            "La novedad del formato genera tráfico orgánico masivo desde el Día 1",
+            "El horno de banda garantiza cocción perfecta a prueba de errores humanos",
+            "Alta resiliencia de margen: harina, queso y salsa logran costos < 21%",
+            "El mostrador captura compradores impulsivos y los migra a la app"
+        ],
+        "diagram_en": [
+            {"label": "Conveyor Speed", "detail": "3.5 minutes bake time at 260°C"},
+            {"label": "Target Price", "detail": "$9,900 – $14,900 COP"},
+            {"label": "Food Cost Target", "detail": "19% – 22% of gross revenue"}
+        ],
+        "diagram_es": [
+            {"label": "Velocidad de Banda", "detail": "3.5 minutos de horneado a 260°C"},
+            {"label": "Precio Objetivo", "detail": "$9.900 – $14.900 COP"},
+            {"label": "Meta de Food Cost", "detail": "19% – 22% sobre ventas brutas"}
+        ],
+        "image": "extracted_media_fastfood/image1.png",
+        "punchline_en": "Ready-to-go pizza at mass-market price.",
+        "punchline_es": "Pizza lista al instante a precio de consumo masivo."
+    },
+    {
+        "id": 9,
+        "num": "08",
+        "category_en": "CONCEPT B · MEXICAN",
+        "category_es": "CONCEPTO B · MEXICANO",
+        "title_en": "Plan B: The Fast-Casual Mexican Assembly Bar",
+        "title_es": "Plan B: Barra de Ensamble Rápido Mexicano",
+        "lead_en": "Ideal if high visual customization, perceived freshness, and higher ticket size are prioritized.",
+        "lead_es": "Ideal si se prioriza personalización visual, frescura percibida y mayor ticket promedio.",
+        "features_en": [
+            "Transparent glass assembly creates trust, culinary theater, and appetite appeal",
+            "Batch proteins (carnitas, shredded beef, chicken) prepared during off-peak morning hours",
+            "Perfect fit for regional palate: bold seasonings, generous sauces, and melted cheeses",
+            "Digital app allows custom ingredient selection and line-free counter pickup"
+        ],
+        "features_es": [
+            "La barra de vidrio transparente genera confianza, espectáculo visual y apetito",
+            "Proteínas preparadas en lote (carnitas, birria, pollo) en horas de la mañana",
+            "Alineación perfecta con el gusto local: sabores intensos, salsas y queso fundido",
+            "La app permite personalizar ingredientes y recoger en mostrador sin filas"
+        ],
+        "diagram_en": [
+            {"label": "Assembly Time", "detail": "Under 60 seconds per item"},
+            {"label": "Ticket Range", "detail": "$14,900 – $22,900 COP"},
+            {"label": "Food Cost Target", "detail": "23% – 25% with strict portioning"}
+        ],
+        "diagram_es": [
+            {"label": "Tiempo de Ensamble", "detail": "Menos de 60 segundos por plato"},
+            {"label": "Rango de Ticket", "detail": "$14.900 – $22.900 COP"},
+            {"label": "Meta de Food Cost", "detail": "23% – 25% con porcionado estricto"}
+        ],
+        "image": "extracted_media_fastfood/image5.png",
+        "punchline_en": "High visual customization with fast assembly velocity.",
+        "punchline_es": "Alta personalización visual con máxima velocidad de ensamble."
+    },
+    {
+        "id": 10,
+        "num": "09",
+        "category_en": "TARGET AUDIENCE",
+        "category_es": "PÚBLICO OBJETIVO",
+        "title_en": "Who We Sell To: Strata 2, 3, and 4 in Cúcuta",
+        "title_es": "A Quién Vendemos: Estratos 2, 3 y 4 de Cúcuta",
+        "lead_en": "Young adults, university students, workers, and modern families seeking speed and value.",
+        "lead_es": "Jóvenes, universitarios, trabajadores y familias modernas que buscan rapidez y ahorro real.",
+        "segments_en": [
+            {"title": "University Students & Youth", "target": "18-28 Years", "desc": "High tech fluency, heavy nightlife participation, and tight budgets. They love app savings."},
+            {"title": "Urban Workers & Commuters", "target": "Lunch & Evening", "desc": "Zero time to waste in lunch queues. They pre-order at 11:30 AM and pick up at 12:15 PM sharp."},
+            {"title": "Modern Budget Families", "target": "Weekend & Dinner", "desc": "Seeking affordable group meals ($40k-$60k COP family combo) without restaurant markups."},
+            {"title": "Impulse Walk-ins", "target": "Street Traffic", "desc": "Pay full price at counter; store marketing prompts them to download app for next visit discount."}
+        ],
+        "segments_es": [
+            {"title": "Universitarios y Jóvenes", "target": "18-28 Años", "desc": "Nativos digitales, vida nocturna activa y presupuesto medido. Adoran el ahorro por app."},
+            {"title": "Trabajadores y Empleados", "target": "Almuerzo y Noche", "desc": "Cero tiempo para hacer filas. Pre-ordenan a las 11:30 AM y retiran a las 12:15 PM en punto."},
+            {"title": "Familias Modernas", "target": "Cenas y Fin de Semana", "desc": "Buscan combos familiares accesibles ($40.000–$60.000 COP) con porciones abundantes."},
+            {"title": "Compradores Espontáneos", "target": "Tráfico Peatonal", "desc": "Pagan precio completo en caja; el empaque los educa para pedir por app la próxima vez."}
+        ],
+        "image": "extracted_media_fastfood/image4.png",
+        "punchline_en": "This is not luxury. It is not street food. It is intelligent QSR.",
+        "punchline_es": "No es lujo. No es comida callejera informal. Es QSR inteligente."
+    },
+    {
+        "id": 11,
+        "num": "10",
+        "category_en": "VALUE PROPOSITION",
+        "category_es": "PROPUESTA DE VALOR",
+        "title_en": "Our Core Value Promise to the Consumer",
+        "title_es": "Nuestra Promesa de Valor Central al Consumidor",
+        "lead_en": "“Your favorite meal, instantly or at the exact time you need it. Guaranteed quality and real savings when you plan ahead in our app.”",
+        "lead_es": "“Tu comida favorita, al instante o a la hora exacta que la necesitas. Calidad garantizada y ahorro real al planificar en nuestra app.”",
+        "cards_en": [
+            {"title": "⚡ Absolute Speed", "desc": "Ready-to-go on the spot or scheduled to the exact minute. Zero queueing."},
+            {"title": "💰 Structural Savings", "desc": "20% to 30% lower prices because we eliminate food waste and aggregator fees."},
+            {"title": "🎯 Guaranteed Consistency", "desc": "Industrial conveyor baking and precise portioning ensure identical taste every time."}
+        ],
+        "cards_es": [
+            {"title": "⚡ Velocidad Absoluta", "desc": "Lista al instante en mostrador o programada al minuto exacto. Cero filas."},
+            {"title": "💰 Ahorro Estructural", "desc": "20% a 30% más económico porque eliminamos desperdicios y comisiones de delivery."},
+            {"title": "🎯 Consistencia Garantizada", "desc": "Horneado industrial continuo y porcionado exacto aseguran el mismo sabor siempre."}
+        ],
+        "image": "extracted_media_fastfood/image1.png",
+        "punchline_en": "Fair price for anticipation, not for lower quality.",
+        "punchline_es": "Descuento por anticipación, nunca por menor calidad."
+    },
+    {
+        "id": 12,
+        "num": "11",
+        "category_en": "MARKET POSITIONING",
+        "category_es": "POSICIONAMIENTO",
+        "title_en": "Brand Positioning: Fast + Fair + Tech-Enabled",
+        "title_es": "Posicionamiento de Marca: Rápido + Justo + Tecnológico",
+        "lead_en": "The first smart fast-food chain in the region. It turns kitchen uncertainty into a pricing advantage.",
+        "lead_es": "La primera cadena de comida rápida inteligente de la región. Convierte la incertidumbre de cocina en ventaja de precio.",
+        "pillars_en": [
+            {"title": "Rewards Planners", "desc": "App users get the best price in town and zero waiting time."},
+            {"title": "Captures Walk-ins", "desc": "Spontaneous street customers pay full retail price, subsidizing marketing."},
+            {"title": "Eliminates Idleness", "desc": "Dynamic flash pricing fills slow kitchen hours automatically."}
+        ],
+        "pillars_es": [
+            {"title": "Premia al que Planifica", "desc": "Los usuarios de la app obtienen el mejor precio de la ciudad sin esperar."},
+            {"title": "Monetiza el Impulso", "desc": "Los clientes de paso pagan tarifa plena en mostrador, financiando la captación."},
+            {"title": "Elimina Horas Muertas", "desc": "Precios dinámicos de oportunidad llenan la capacidad en horas valle."}
+        ],
+        "image": "extracted_media_fastfood/image1.png",
+        "punchline_en": "Brand position: Fast, honest, and mathematically optimized.",
+        "punchline_es": "Posición de marca: Rápida, honesta y matemáticamente optimizada."
+    },
+    {
+        "id": 13,
+        "num": "12",
+        "category_en": "HYBRID CHANNEL MODEL",
+        "category_es": "MODELO HÍBRIDO DE CANALES",
+        "title_en": "How the Hybrid Omni-Channel Model Works",
+        "title_es": "Cómo Opera el Modelo Híbrido Multicanal",
+        "lead_en": "Physical location serves as billboard and conversion funnel into the proprietary digital app.",
+        "lead_es": "El local físico actúa como vitrina publicitaria y embudo de conversión hacia la app propia.",
+        "comparison": [
+            {"aspect_en": "Own App (Pre-Order)", "aspect_es": "App Propia (Pre-Orden)", "bot_en": "Planned pickup / scheduled slot", "bot_es": "Retiro programado con franja horaria", "tutor_en": "Structural Discount (Best Price)", "tutor_es": "Descuento Estructural (Mejor Precio)"},
+            {"aspect_en": "Physical Counter (Walk-in)", "aspect_es": "Mostrador Físico (Paso)", "bot_en": "Immediate purchase on impulse", "bot_es": "Compra inmediata por impulso", "tutor_en": "Full Retail Price (Captures Margin)", "tutor_es": "Precio Pleno (Captura Margen)"},
+            {"aspect_en": "Rappi / Delivery Aggregators", "aspect_es": "Rappi / Agregadores", "bot_en": "New customer discovery showcase", "bot_es": "Canal de descubrimiento de nuevos clientes", "tutor_en": "Commission-Adjusted Price + QR Hook", "tutor_es": "Precio Ajustado con QR para Migración"}
+        ],
+        "image": "extracted_media_fastfood/image2.png",
+        "punchline_en": "The physical store converts counter and delivery traffic into loyal app users.",
+        "punchline_es": "La tienda física convierte el tráfico de mostrador y delivery en usuarios fieles de la app."
+    },
+    {
+        "id": 14,
+        "num": "13",
+        "category_en": "TECHNOLOGY ENGINE",
+        "category_es": "MOTOR TECNOLÓGICO",
+        "title_en": "Technology: The Franchise Operating System",
+        "title_es": "Tecnología: El Sistema Operativo de la Franquicia",
+        "lead_en": "This is not just an ordering app; it is the entire operational intelligence of the kitchen.",
+        "lead_es": "No es solo una app para ordenar; es toda la inteligencia operativa de la cocina.",
+        "stack_en": [
+            {"layer": "DYNAMIC CAPACITY ENGINE", "desc": "Algorithms regulate oven slots and offer flash discounts during off-peak hours."},
+            {"layer": "KITCHEN DISPLAY SYSTEM (KDS)", "desc": "Tablets schedule prep batches based on pre-sold customer arrival times."},
+            {"layer": "INTEGRATED CLOUD POS", "desc": "Unified inventory sync across counter cash registers, app orders, and aggregators."},
+            {"layer": "GROWTH & EXPANSION ALERTS", "desc": "Geolocation data tracks customer clusters to pinpoint the exact location for Store #2."}
+        ],
+        "stack_es": [
+            {"layer": "MOTOR DE CAPACIDAD DINÁMICA", "desc": "Algoritmos regulan franjas de horneado y ofrecen descuentos flash en horas valle."},
+            {"layer": "SISTEMA KDS PARA COCINA", "desc": "Tablets organizan lotes de producción según la hora de llegada confirmada."},
+            {"layer": "POS EN LA NUBE INTEGRADO", "desc": "Sincronización de inventario en tiempo real entre mostrador, app y agregadores."},
+            {"layer": "ALERTAS DE EXPANSIÓN", "desc": "Datos de geolocalización detectan concentraciones de demanda para ubicar la Tienda #2."}
+        ],
+        "image": "extracted_media_fastfood/image6.png",
+        "punchline_en": "Data replaces culinary guesswork.",
+        "punchline_es": "Los datos reemplazan las suposiciones en la cocina."
+    },
+    {
+        "id": 15,
+        "num": "14",
+        "category_en": "THE VIRTUOUS CYCLE",
+        "category_es": "EL CÍRCULO VIRTUOSO",
+        "title_en": "The Virtuous Economic Flywheel",
+        "title_es": "El Círculo Virtuoso de Rentabilidad",
+        "lead_en": "Lower food waste + zero third-party fees = aggressive customer pricing without sacrificing operator profit.",
+        "lead_es": "Menos desperdicio + cero comisiones de terceros = precios agresivos sin sacrificar ganancias.",
+        "cards_en": [
+            {"title": "1. Customer Plans Ahead", "desc": "User selects time slot in app and secures structural discount."},
+            {"title": "2. Kitchen Pre-Bakes Exact Volume", "desc": "Zero leftover dough or discarded cheese. Food waste drops to near-zero."},
+            {"title": "3. Operator Retains 100% Margin", "desc": "No 30% aggregator commission cut on repeat customers."},
+            {"title": "4. Density Unlocks Franchise Expansion", "desc": "Accumulated customer data indicates where and when to open satellite stores."}
+        ],
+        "cards_es": [
+            {"title": "1. El Cliente Planifica", "desc": "El usuario elige su franja en la app y obtiene su descuento estructural."},
+            {"title": "2. La Cocina Produce lo Exacto", "desc": "Cero masa sobrante ni queso desechado. Desperdicio cercano a cero."},
+            {"title": "3. Margen 100% para el Negocio", "desc": "Sin pagar 30% a plataformas en compras de clientes recurrentes."},
+            {"title": "4. Expansión Basada en Datos", "desc": "Los datos acumulados señalan dónde y cuándo abrir la siguiente tienda."}
+        ],
+        "image": "extracted_media_fastfood/image7.png",
+        "punchline_en": "Zero waste + direct channel = unassailable price advantage.",
+        "punchline_es": "Cero desperdicio + canal directo = ventaja de precio insuperable."
+    },
+    {
+        "id": 16,
+        "num": "15",
+        "category_en": "UNIT ECONOMICS",
+        "category_es": "ECONOMÍA UNITARIA",
+        "title_en": "Unit Economics: The 5 Growth Levers",
+        "title_es": "Economía Unitaria: Las 5 Palancas de Rentabilidad",
+        "lead_en": "A flexible financial model powered by operational levers, not an unrealistic spreadsheet.",
+        "lead_es": "Un modelo financiero flexible impulsado por palancas operativas, no por hojas de cálculo ficticias.",
+        "comparison": [
+            {"aspect_en": "Pre-Sold Production", "aspect_es": "Producción Pre-Vendida", "bot_en": "Eliminates ingredient spoilage", "bot_es": "Elimina el desperdicio de insumos", "tutor_en": "Food Cost < 23% Guaranteed", "tutor_es": "Costo de Alimentos < 23% Garantizado"},
+            {"aspect_en": "Proprietary App", "aspect_es": "App Propia", "bot_en": "Direct relationship with customer", "bot_es": "Relación directa con el consumidor", "tutor_en": "Saves 30% Aggregator Commission", "tutor_es": "Ahorra el 30% de Comisión de Rappi"},
+            {"aspect_en": "Dynamic Off-Peak Pricing", "aspect_es": "Precios Dinámicos Valle", "bot_en": "Monetizes idle staff & ovens", "bot_es": "Monetiza personal y hornos ociosos", "tutor_en": "+35% Off-Peak Revenue Boost", "tutor_es": "+35% Ingresos Extra en Horas Valle"},
+            {"aspect_en": "Counter Walk-in Markup", "aspect_es": "Margen en Mostrador", "bot_en": "Captures impulse foot traffic", "bot_es": "Captura el paso peatonal espontáneo", "tutor_en": "Subsidizes Customer Acquisition", "tutor_es": "Financia la Adquisición de Usuarios"}
+        ],
+        "image": "extracted_media_fastfood/image7.png",
+        "punchline_en": "Each location is an automated cash and data engine that justifies the next one.",
+        "punchline_es": "Cada local es un motor de caja y datos que financia y justifica el siguiente."
+    },
+    {
+        "id": 17,
+        "num": "16",
+        "category_en": "FRANCHISE SCALABILITY",
+        "category_es": "ESCALABILIDAD DE FRANQUICIA",
+        "title_en": "Why This is a Franchise, Not Just a Restaurant",
+        "title_es": "Por qué es una Franquicia y no solo un Restaurante",
+        "lead_en": "What scales is not a chef's secret recipe. It is the standardized operating system.",
+        "lead_es": "Lo que escala no es la receta secreta de un chef. Es el sistema operativo estandarizado.",
+        "cards_en": [
+            {"title": "Industrial Simplicity", "desc": "Conveyor ovens and pre-portioned inputs eliminate the need for expensive chefs."},
+            {"title": "Unified Tech Stack", "desc": "App, POS, KDS, and dynamic pricing software deployed in hours to new franchisees."},
+            {"title": "Customer Migration Playbook", "desc": "Standardized on-site marketing converts street walk-ins into repeat digital planners."},
+            {"title": "Data-Driven Site Selection", "desc": "Store #2, #3, and #4 are opened exactly where registered app users are already ordering."}
+        ],
+        "cards_es": [
+            {"title": "Simplicidad Industrial", "desc": "Hornos continuos e insumos preporsionados eliminan la necesidad de chefs costosos."},
+            {"title": "Plataforma Tecnológica Única", "desc": "App, POS, KDS y software de precios desplegables en horas para nuevos franquiciados."},
+            {"title": "Manual de Conversión", "desc": "Marketing en empaques convierte al comprador de paso en planificador digital."},
+            {"title": "Ubicación Basada en Datos", "desc": "Las tiendas 2, 3 y 4 se abren exactamente donde los usuarios registrados ya piden."}
+        ],
+        "image": "extracted_media_fastfood/image8.png",
+        "punchline_en": "The recipe can be copied. The operating franchise system cannot.",
+        "punchline_es": "La receta puede copiarse. El sistema operativo de franquicia no."
+    },
+    {
+        "id": 18,
+        "num": "17",
+        "category_en": "EQUIPMENT · PIZZA",
+        "category_es": "EQUIPAMIENTO · PIZZA",
+        "title_en": "Industrial Infrastructure: Express Pizza Format",
+        "title_es": "Infraestructura Industrial: Formato Pizza Express",
+        "lead_en": "High-efficiency, compact commercial footprint designed for speed and low utility consumption.",
+        "lead_es": "Planta comercial compacta de alta eficiencia diseñada para velocidad y bajo consumo.",
+        "diagram_en": [
+            {"label": "Conveyor Oven", "detail": "Electric or gas continuous tunnel oven (12-16 pizzas/min peak)"},
+            {"label": "Refrigerated Prep Table", "detail": "Stainless steel saladette with cold ingredient pans"},
+            {"label": "Dough Press / Roller", "detail": "Standardized 24-28cm crust formation in 5 seconds"},
+            {"label": "Hot-Hold Display", "detail": "Heated glass showcase for instant walk-in slice/personal pick"}
+        ],
+        "diagram_es": [
+            {"label": "Horno de Banda", "detail": "Horno continuo de túnel (capacidad de 12-16 pizzas/min en pico)"},
+            {"label": "Mesa de Prep Refrigerada", "detail": "Saladette de acero inoxidable con insertos refrigerados"},
+            {"label": "Prensa / Rodillo de Masa", "detail": "Formación estandarizada de base 24-28cm en 5 segundos"},
+            {"label": "Vitrina Térmica Hot-Hold", "detail": "Exhibidor caliente para venta inmediata de paso"}
+        ],
+        "image": "extracted_media_fastfood/image5.png",
+        "punchline_en": "Compact 35-50m² footprint with maximum throughput.",
+        "punchline_es": "Local compacto de 35-50m² con máxima capacidad de despacho."
+    },
+    {
+        "id": 19,
+        "num": "18",
+        "category_en": "EQUIPMENT · MEXICAN",
+        "category_es": "EQUIPAMIENTO · MEXICANO",
+        "title_en": "Industrial Infrastructure: Mexican Assembly Bar",
+        "title_es": "Infraestructura Industrial: Barra Mexicana",
+        "lead_en": "Modular stainless steel front-line designed for high throughput and visual theater.",
+        "lead_es": "Línea frontal de acero inoxidable modular diseñada para alto flujo y show visual.",
+        "diagram_en": [
+            {"label": "Dual Temperature Bar", "detail": "Hot wells for meats and cold saladette for toppings/salsas"},
+            {"label": "Tortilla Warmers & Press", "detail": "Heavy-duty dual platens for fresh, hot tortillas and quesadillas"},
+            {"label": "Batch Slow Cookers", "detail": "Commercial warmers holding carnitas, shredded beef, and rice/beans"},
+            {"label": "Speed Line POS Tablet", "detail": "Counter tablet with barcode scanner for line-free pre-order pickup"}
+        ],
+        "diagram_es": [
+            {"label": "Barra de Doble Temperatura", "detail": "Insertos calientes para carnes y saladette fría para verduras/salsas"},
+            {"label": "Prensas y Calentadores", "detail": "Planchas de uso rudo para calentar tortillas y fundir quesadillas"},
+            {"label": "Ollas de Cocción Lenta", "detail": "Conservadores térmicos para carnitas, birria, arroz y frijol"},
+            {"label": "Terminal POS de Línea Rápida", "detail": "Tablet con lector QR para despacho inmediato de pre-órdenes"}
+        ],
+        "image": "extracted_media_fastfood/image5.png",
+        "punchline_en": "Under 60 seconds per assembled customized dish.",
+        "punchline_es": "Menos de 60 segundos por plato personalizado y despachado."
+    },
+    {
+        "id": 20,
+        "num": "19",
+        "category_en": "TECH INFRASTRUCTURE",
+        "category_es": "INFRAESTRUCTURA TECH",
+        "title_en": "Technology & Connectivity Architecture",
+        "title_es": "Arquitectura Tecnológica y de Conectividad",
+        "lead_en": "Robust, fail-safe hardware setup guaranteeing 99.9% uptime during operational rush hours.",
+        "lead_es": "Configuración de hardware robusta y redundante garantizando 99.9% de disponibilidad operativa.",
+        "stack_en": [
+            {"layer": "INTEGRATED POS & CASHIER", "desc": "Processes walk-in payments and instantly issues QR-coded migration receipts."},
+            {"layer": "KITCHEN DISPLAY (KDS) TABLETS", "desc": "Displays color-coded cooking priority queues synchronized with app timers."},
+            {"layer": "DUAL REDUNDANT INTERNET", "desc": "Primary fiber connection + automatic 4G LTE failover router for zero downtime."},
+            {"layer": "CAPACITY SLOT CONTROLLER", "desc": "Dynamically caps order volume per 15-min window to prevent kitchen bottlenecks."}
+        ],
+        "stack_es": [
+            {"layer": "POS Y CAJA INTEGRADA", "desc": "Procesa pagos en mostrador e imprime recibos con QR para incentivar la app."},
+            {"layer": "TABLETS KDS EN COCINA", "desc": "Muestra colas de horneado por código de color sincronizadas con la app."},
+            {"layer": "INTERNET DUAL REDUNDANTE", "desc": "Fibra óptica principal + respaldo 4G LTE automático sin interrupciones."},
+            {"layer": "CONTROLADOR DE FRANGAS", "desc": "Regula el cupo máximo por ventana de 15 min para evitar saturación de cocina."}
+        ],
+        "image": "extracted_media_fastfood/image6.png",
+        "punchline_en": "Built for zero operational downtime.",
+        "punchline_es": "Construido para cero tiempo fuera de servicio."
+    },
+    {
+        "id": 21,
+        "num": "20",
+        "category_en": "COMPETITIVE MOAT",
+        "category_es": "VENTAJA COMPETITIVA",
+        "title_en": "Our Sustainable Competitive Moat",
+        "title_es": "Nuestro Foso Competitivo Sostenible",
+        "lead_en": "Five structural barriers that prevent traditional copycats from matching our pricing and margin.",
+        "lead_es": "Cinco barreras estructurales que impiden a competidores tradicionales igualar nuestros precios y margen.",
+        "cards_en": [
+            {"title": "Pioneer First-Mover", "desc": "Dominates the express personal pizza / modern Mexican space in Cúcuta before competitors react."},
+            {"title": "Proprietary App Habit", "desc": "Direct digital channel protects margins from delivery app commissions and creates customer lock-in."},
+            {"title": "Dynamic Yield Management", "desc": "Kitchen capacity pricing models imported from airline revenue management into fast food."},
+            {"title": "Geographic Demand Graph", "desc": "User database provides exact demand heatmaps for de-risked franchise expansion."}
+        ],
+        "cards_es": [
+            {"title": "Ventaja del Pionero", "desc": "Domina el segmento de pizza personal express / comida mexicana moderna en Cúcuta."},
+            {"title": "Hábito en App Propia", "desc": "Canal digital directo blindado contra comisiones de delivery y con alta retención."},
+            {"title": "Gestión de Rendimiento Dinámico", "desc": "Modelos de optimización de capacidad inspirados en aerolíneas aplicados a comida rápida."},
+            {"title": "Mapa de Demanda Real", "desc": "Base de datos de usuarios que reduce el riesgo de selección de nuevas sedes."}
+        ],
+        "image": "extracted_media_fastfood/image6.png",
+        "punchline_en": "The recipe is public. The operational data moat is private.",
+        "punchline_es": "La receta es pública. El foso de datos operativos es privado."
+    },
+    {
+        "id": 22,
+        "num": "21",
+        "category_en": "RISK & MITIGATION",
+        "category_es": "RIESGO Y MITIGACIÓN",
+        "title_en": "Risk Management: Engineered From Day One",
+        "title_es": "Gestión de Riesgos: Diseñada desde el Día Uno",
+        "lead_en": "We do not rely on wishful thinking. We design how customer habits and kitchen bottlenecks are handled.",
+        "lead_es": "No dependemos de deseos. Diseñamos cómo se gestionan los hábitos y los cuellos de botella.",
+        "risks_en": [
+            {"risk": "Teaching Customers to Pre-Order", "solution": "Physical store attracts initial foot traffic; packaging discounts reward downloading the app."},
+            {"risk": "Day 1 Digital Friction", "solution": "App is incentivized with savings, never mandatory for spontaneous walk-ins."},
+            {"risk": "Initial Delivery Reliance", "solution": "Rappi menu prices absorb commission; inside packaging contains $5k COP coupon for our app."},
+            {"risk": "Wrong Concept Selection", "solution": "Burgers discarded; express pizza is the highest margin, lowest friction entry."},
+            {"risk": "Peak Kitchen Bottlenecks", "solution": "App automatically limits order slots per 15-min window to match conveyor oven capacity."}
+        ],
+        "risks_es": [
+            {"risk": "Educar en Pre-Ordenar", "solution": "El local físico capta el tráfico inicial; el empaque regala descuento para la app."},
+            {"risk": "Fricción Digital Inicial", "solution": "La app se incentiva con ahorro, pero nunca es obligatoria para el cliente de paso."},
+            {"risk": "Dependencia Inicial de Rappi", "solution": "Precios en Rappi absorben la comisión; el empaque incluye cupón para pedir en app propia."},
+            {"risk": "Elegir el Concepto Equivocado", "solution": "Hamburguesas descartadas; la pizza express es el formato de menor riesgo y mayor margen."},
+            {"risk": "Cuellos de Botella en Picos", "solution": "La app topa automáticamente pedidos por franja según capacidad del horno de banda."}
+        ],
+        "image": "extracted_media_fastfood/image3.png",
+        "punchline_en": "The real challenge is not competition. It is consumer behavior.",
+        "punchline_es": "El verdadero reto no es la competencia. Es el comportamiento del consumidor."
+    },
+    {
+        "id": 23,
+        "num": "22",
+        "category_en": "PILOT VALIDATION",
+        "category_es": "VALIDACIÓN DEL PILOTO",
+        "title_en": "What the Pilot Must Conclusively Validate",
+        "title_es": "Lo que el Piloto Debe Validar Concluyentemente",
+        "lead_en": "Clear, measurable KPIs to confirm operational viability before expanding the franchise network.",
+        "lead_es": "Métricas claras y medibles para confirmar la viabilidad operativa antes de expandir la red.",
+        "demo_steps_en": [
+            {"badge": "METRIC 1 · TRAFFIC & ADOPTION", "title": "Store Foot Traffic & Conversion", "items": ["Generate 300+ daily transactions across counter & app", "Migrate 40%+ of walk-in customers to app within 60 days", "Sub-3-minute pickup times during rush hours"]},
+            {"badge": "METRIC 2 · MARGIN & FOOD COST", "title": "Unit Economic Discipline", "items": ["Keep ingredient food cost strictly under 23%", "Food waste below 2.5% of total raw inputs", "EBITDA margin > 18% at location level"]},
+            {"badge": "METRIC 3 · APP RETENTION", "title": "Digital Habit Formation", "items": ["35%+ monthly repeat order rate on proprietary app", "Average customer lifetime value > $180,000 COP", "Data heatmap identifying Store #2 sweet spot"]}
+        ],
+        "demo_steps_es": [
+            {"badge": "MÉTRICA 1 · TRÁFICO Y ADOPCIÓN", "title": "Tráfico y Conversión en Tienda", "items": ["Generar 300+ transacciones diarias entre mostrador y app", "Migrar 40%+ de clientes de mostrador a la app en 60 días", "Tiempos de retiro menores a 3 minutos en picos"]},
+            {"badge": "MÉTRICA 2 · MARGEN Y FOOD COST", "title": "Disciplina Económica Unitaria", "items": ["Mantener costo de insumos estrictamente bajo el 23%", "Desperdicio de alimentos menor al 2.5% del total", "Margen EBITDA de local superior al 18%"]},
+            {"badge": "MÉTRICA 3 · RETENCIÓN EN APP", "title": "Consolidación del Hábito Digital", "items": ["35%+ tasa de recompra mensual en app propia", "Valor de vida del cliente (LTV) > $180.000 COP", "Mapa de calor de datos que define la Tienda #2"]}
+        ],
+        "image": "extracted_media_fastfood/image8.png",
+        "punchline_en": "Goal: Prove unit profitability and digital customer retention.",
+        "punchline_es": "Meta: Demostrar rentabilidad unitaria y retención digital del cliente."
+    },
+    {
+        "id": 24,
+        "num": "23",
+        "category_en": "EXECUTION ROADMAP",
+        "category_es": "HOJA DE RUTA",
+        "title_en": "Pilot Execution Roadmap: 4 Strategic Phases",
+        "title_es": "Hoja de Ruta del Piloto: 4 Fases Estratégicas",
+        "lead_en": "From concept lock to scalable franchise network expansion.",
+        "lead_es": "Desde la definición del concepto hasta la expansión de la red de franquicias.",
+        "phases_en": [
+            {"phase": "PHASE 1 (Weeks 1-4)", "focus": "Concept Lock & Location", "milestones": ["Finalize commercial lease in high-traffic Cúcuta corridor", "Procure conveyor oven and stainless steel line", "Deploy branded app, cloud POS, and KDS system"]},
+            {"phase": "PHASE 2 (Weeks 5-8)", "focus": "Buildout & Operational Dry-Run", "milestones": ["Complete store branding, counter buildout, and kitchen setup", "Staff training on conveyor timing and batch prep", "Soft launch with invited influencer & student cohort"]},
+            {"phase": "PHASE 3 (Weeks 9-20)", "focus": "Pilot Commercial Execution", "milestones": ["Official launch with street activations & QR promo campaigns", "Measure food cost, waste delta, and app migration rate", "Optimize dynamic pricing algorithms and off-peak slots"]},
+            {"phase": "PHASE 4 (Weeks 21+)", "focus": "Franchise Expansion", "milestones": ["Package complete franchise operating manual", "Select Store #2 and #3 locations from app demand data", "Open external franchise licensing rounds"]}
+        ],
+        "phases_es": [
+            {"phase": "FASE 1 (Semanas 1-4)", "focus": "Cierre de Concepto y Local", "milestones": ["Asegurar contrato de arrendamiento en corredor de alto flujo", "Adquisición de horno de banda y mobiliario de acero", "Despliegue de app con marca blanca, POS y KDS en la nube"]},
+            {"phase": "FASE 2 (Semanas 5-8)", "focus": "Adecuación y Pruebas Operativas", "milestones": ["Adecuación física de fachada, mostrador y cocina", "Entrenamiento de personal en tiempos de horneado y porcionado", "Lanzamiento suave (soft-launch) con estudiantes e influencers"]},
+            {"phase": "FASE 3 (Semanas 9-20)", "focus": "Operación Comercial del Piloto", "milestones": ["Apertura oficial con activaciones de calle y campañas QR", "Monitoreo estricto de food cost, mermas y migración a app", "Ajuste fino de precios dinámicos y franjas horarias"]},
+            {"phase": "FASE 4 (Semana 21+)", "focus": "Expansión de Franquicia", "milestones": ["Empaquetar manuales operativos y de franquicia", "Seleccionar sedes 2 y 3 basados en datos de calor de la app", "Abrir ronda de franquiciamiento a terceros"]}
+        ],
+        "image": "extracted_media_fastfood/image8.png",
+        "punchline_en": "Disciplined execution from pilot to franchise network.",
+        "punchline_es": "Ejecución disciplinada desde el piloto hasta la red de franquicias."
+    },
+    {
+        "id": 25,
+        "num": "24",
+        "category_en": "INVESTMENT ASK",
+        "category_es": "SOLICITUD DE INVERSIÓN",
+        "title_en": "What We Ask From the Investor: Seed Capital",
+        "title_es": "Qué Buscamos del Inversionista: Capital Semilla",
+        "lead_en": "Capital to build, launch, and validate the founding pilot location of a future regional franchise chain.",
+        "lead_es": "Capital para adecuar, lanzar y validar el local piloto fundador de una futura cadena regional de franquicias.",
+        "milestones_en": [
+            {"num": "1", "title": "Store Lease & Architectural Buildout", "desc": "Securing prime location, facade branding, counter area, and customer pickup point."},
+            {"num": "2", "title": "Commercial Kitchen Equipment", "desc": "High-speed conveyor oven, refrigerated prep table, mixers, and cold storage."},
+            {"num": "3", "title": "Software & Hardware Deployment", "desc": "Custom app white-label, cloud POS, kitchen KDS tablets, and dual internet infrastructure."},
+            {"num": "4", "title": "Working Capital & Launch Marketing", "desc": "Initial food inventory, staff payroll for launch period, and street acquisition campaigns."}
+        ],
+        "milestones_es": [
+            {"num": "1", "title": "Arrendamiento y Adecuación Física", "desc": "Garantía de local prime, fachada, mostrador y zona de retiro rápido."},
+            {"num": "2", "title": "Equipamiento Industrial de Cocina", "desc": "Horno continuo de banda, mesa fría saladette, amasadora y congeladores."},
+            {"num": "3", "title": "Despliegue Tecnológico de Software y Hardware", "desc": "App personalizada, POS en la nube, tablets KDS y conectividad dual."},
+            {"num": "4", "title": "Capital de Trabajo y Marketing de Lanzamiento", "desc": "Insumos iniciales, nómina de arranque y campañas de captación en calle."}
+        ],
+        "image": "extracted_media_fastfood/image8.png",
+        "punchline_en": "Capital Goal: Prove the unit model and launch the franchise network.",
+        "punchline_es": "Meta del Capital: Validar el modelo unitario y encender la red de franquicias."
+    },
+    {
+        "id": 26,
+        "num": "25",
+        "category_en": "CLOSING STATEMENT",
+        "category_es": "CIERRE EJECUTIVO",
+        "title_en": "Cúcuta Does Not Need Another Burger Shop",
+        "title_es": "Cúcuta No Necesita Otra Hamburguesería",
+        "quote_en": "“Cúcuta does not need another burger shop. It needs the first intelligent, high-speed QSR franchise in the region.”",
+        "quote_es": "“Cúcuta no necesita otra hamburguesería. Necesita la primera franquicia de comida rápida inteligente y veloz de la región.”",
+        "pillars_en": ["Pioneer Format", "Pre-Sold Production", "Direct App Channel", "Zero Food Waste", "Data-Driven Scale"],
+        "pillars_es": ["Formato Pionero", "Producción Pre-Vendida", "Canal Directo por App", "Cero Desperdicio", "Escala con Datos"],
+        "image": "extracted_media_fastfood/image1.png",
+        "punchline_en": "Smart Fast-Food: The future of regional QSR.",
+        "punchline_es": "Smart Fast-Food: El futuro de la comida rápida regional."
+    },
+    {
+        "id": 27,
+        "num": "26",
+        "category_en": "CONCEPT SUMMARY & MATRIX",
+        "category_es": "RESUMEN Y MATRIZ COMPARATIVA",
+        "title_en": "Appendix: Concept Decision Matrix",
+        "title_es": "Apéndice: Matriz de Decisión de Conceptos",
+        "lead_en": "Comparative breakdown between Express Pizza, Burger, and Mexican Assembly formats.",
+        "lead_es": "Desglose comparativo entre Pizza Express, Hamburguesa y Barra Mexicana.",
+        "comparison": [
+            {"aspect_en": "Local Demand in Cúcuta", "aspect_es": "Demanda Local en Cúcuta", "bot_en": "Express Pizza: High · Mexican: High", "bot_es": "Pizza Express: Alta · Mexicana: Alta", "tutor_en": "Burger: Very High (Saturated)", "tutor_es": "Hamburguesa: Muy Alta (Saturada)"},
+            {"aspect_en": "Direct Competition", "aspect_es": "Competencia Directa", "bot_en": "Express Pizza: None · Mexican: Low", "bot_es": "Pizza Express: Nula · Mexicana: Baja", "tutor_en": "Burger: Extreme / Price Wars", "tutor_es": "Hamburguesa: Extrema / Guerra de Precios"},
+            {"aspect_en": "Standardization Ease", "aspect_es": "Facilidad de Estandarización", "bot_en": "Express Pizza: Very High (Conveyor)", "bot_es": "Pizza Express: Muy Alta (Horno Banda)", "tutor_en": "Mexican: High · Burger: Moderate", "tutor_es": "Mexicana: Alta · Hamburguesa: Moderada"},
+            {"aspect_en": "Target Food Cost", "aspect_es": "Costo Objetivo de Insumos", "bot_en": "Express Pizza: 19%–22%", "bot_es": "Pizza Express: 19%–22%", "tutor_en": "Mexican: 23%–25% · Burger: 28%–34%", "tutor_es": "Mexicana: 23%–25% · Burger: 28%–34%"},
+            {"aspect_en": "Recommendation", "aspect_es": "Recomendación Final", "bot_en": "Option 1: Express Pizza (Primary)", "bot_es": "Opción 1: Pizza Express (Insignia)", "tutor_en": "Plan B: Mexican · Discard: Burger", "tutor_es": "Plan B: Mexicana · Descarte: Burger"}
+        ],
+        "image": "extracted_media_fastfood/image5.png",
+        "punchline_en": "Clear strategic verdict: Express Pizza offers highest margin and lowest operational friction.",
+        "punchline_es": "Veredicto estratégico claro: Pizza Express ofrece mayor margen y menor fricción operativa."
+    }
+]
+
+with open('deck_fastfood_data.json', 'w', encoding='utf-8') as f:
+    json.dump(slides_data, f, ensure_ascii=False, indent=2)
+
+print("Generated deck_fastfood_data.json with 27 rich bilingual slides for Smart Fast Food.")

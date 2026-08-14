@@ -1,0 +1,707 @@
+[
+  {
+    "id": 1,
+    "tag_en": "FOODTECH QSR · 3i BAIRD LAB",
+    "tag_es": "FOODTECH QSR · 3i BAIRD LAB",
+    "title_en": "Smart Fast-Food Franchise",
+    "title_es": "Franquicia Fast-Food Inteligente",
+    "subtitle_en": "Pioneering the automated Smart QSR model in Cúcuta: Express pizza baked in 2.5 minutes, app-first pre-ordering, zero peak-hour queues, and sub-23% food cost.",
+    "subtitle_es": "Pioneros en el modelo QSR inteligente en Cúcuta: Pizza express horneada en 2.5 minutos, app de pre-orden, cero filas en hora pico y costo de insumos < 23%.",
+    "flow_en": [
+      "App Pre-Order",
+      "Conveyor Oven Baking (2.5m)",
+      "Digital Locker Pickup",
+      "Dynamic Pricing AI",
+      "Rapid Franchise Scale"
+    ],
+    "flow_es": [
+      "Pre-Orden en App",
+      "Horno de Banda (2.5 min)",
+      "Retiro en Lockers",
+      "Precios Dinámicos con IA",
+      "Escala Rápida de Franquicias"
+    ],
+    "badge_en": "Pilot Pitch · Cúcuta · 15 Slides",
+    "badge_es": "Pitch Piloto · Cúcuta · 15 Slides",
+    "category": "hero",
+    "image": "extracted_media_fastfood/image1.png"
+  },
+  {
+    "id": 2,
+    "num": "01",
+    "category_en": "MARKET PAIN",
+    "category_es": "EL PROBLEMA DE MERCADO",
+    "title_en": "The 3 Inefficiencies Killing Fast-Food Margins",
+    "title_es": "Las 3 Ineficiencias que Destruyen los Márgenes",
+    "lead_en": "Traditional quick-serve restaurants suffer from slow prep times, lost sales in peak hours, and massive food waste.",
+    "lead_es": "La comida rápida tradicional sufre por tiempos lentos, ventas perdidas en horas pico y desperdicio de insumos.",
+    "pillars_en": [
+      {
+        "title": "15+ Minute Wait Times",
+        "desc": "Traditional deck ovens and manual prep create painful customer friction and abandoned orders during rush hours."
+      },
+      {
+        "title": "Lost Peak Demand",
+        "desc": "Restaurants lose up to 40% of walk-in revenue because counter queues exceed customer patience."
+      },
+      {
+        "title": "High Labor & Food Cost",
+        "desc": "Manual portioning and uncalibrated baking lead to 32%+ COGS and unpredictable quality."
+      }
+    ],
+    "pillars_es": [
+      {
+        "title": "15+ Minutos de Espera",
+        "desc": "Hornos tradicionales y preparación manual generan cuellos de botella y pedidos abandonados en hora pico."
+      },
+      {
+        "title": "Pérdida de Demanda Pico",
+        "desc": "Los locales pierden hasta un 40% de ventas porque las filas superan la paciencia del cliente."
+      },
+      {
+        "title": "Altos Costos de Insumos y Personal",
+        "desc": "Porcionado manual y desperdicio elevan los costos de insumos por encima del 32% con calidad irregular."
+      }
+    ],
+    "image": "extracted_media_fastfood/image2.png",
+    "punchline_en": "The fast food industry is neither fast nor predictable. We fix both.",
+    "punchline_es": "La comida rápida tradicional ni es rápida ni es predecible. Nosotros resolvemos ambas."
+  },
+  {
+    "id": 3,
+    "num": "02",
+    "category_en": "THE PILOT SOLUTION",
+    "category_es": "LA SOLUCIÓN PILOTO",
+    "title_en": "The Smart QSR Operating Engine (Cúcuta Pilot)",
+    "title_es": "El Modelo Operativo Smart QSR (Piloto Cúcuta)",
+    "lead_en": "Standardized industrial conveyor ovens combined with app-first pre-ordering to serve artisan pizza in 150 seconds.",
+    "lead_es": "Hornos industriales de banda continua combinados con pre-orden por app para servir pizza artesanal en 150 segundos.",
+    "cards_en": [
+      {
+        "title": "High-Speed Continuous Conveyor Oven",
+        "desc": "Bakes a perfect artisan personal pizza in exactly 2.5 minutes at 315°C with zero human error."
+      },
+      {
+        "title": "Pre-Order & Smart Pickup Lockers",
+        "desc": "Customers order 5 minutes ahead on the app; fresh hot pizza is ready in heated lockers upon arrival."
+      },
+      {
+        "title": "Ultra-Lean Kitchen Workflow",
+        "desc": "Requires only 2 cross-trained operators per shift, slashing labor overhead by 50%."
+      },
+      {
+        "title": "Strict Ingredient Portioning",
+        "desc": "Pre-portioned dough and toppings guarantee exact food cost of 21.8% per unit."
+      }
+    ],
+    "cards_es": [
+      {
+        "title": "Horno Continuo de Alta Velocidad",
+        "desc": "Hornea una pizza personal perfecta en 2.5 minutos a 315°C con cero error humano."
+      },
+      {
+        "title": "Pre-Orden y Lockers Térmicos",
+        "desc": "El cliente pide 5 min antes en la app; la pizza recién salida espera caliente en lockers digitales."
+      },
+      {
+        "title": "Cocina Ultra-Eficiente",
+        "desc": "Solo requiere 2 operadores polivalentes por turno, reduciendo costos laborales en 50%."
+      },
+      {
+        "title": "Porcionado Estandarizado",
+        "desc": "Masas y toppings pre-pesados garantizan un costo exacto de insumos del 21.8% por unidad."
+      }
+    ],
+    "image": "extracted_media_fastfood/image3.png",
+    "punchline_en": "From 15-minute queues to a 150-second precision operation.",
+    "punchline_es": "De 15 minutos de fila a una operación de precisión de 150 segundos."
+  },
+  {
+    "id": 4,
+    "num": "03",
+    "category_en": "BENCHMARK COMPARISON",
+    "category_es": "COMPARATIVA DE MERCADO",
+    "title_en": "Direct Comparison: Traditional Pizzeria vs. Smart QSR",
+    "title_es": "Comparativa Directa: Pizzería Tradicional vs. Smart QSR",
+    "lead_en": "Superior operational unit economics across speed, labor efficiency, food cost, and floor space.",
+    "lead_es": "Economía unitaria superior en velocidad, eficiencia de personal, costo de insumos y espacio.",
+    "comparison": [
+      {
+        "aspect_en": "Baking & Prep Time",
+        "aspect_es": "Tiempo de Horneado",
+        "bot_en": "12–18 minutes",
+        "bot_es": "12 a 18 minutos",
+        "tutor_en": "2.5 minutes continuous",
+        "tutor_es": "2.5 minutos continuos"
+      },
+      {
+        "aspect_en": "Kitchen Staff per Shift",
+        "aspect_es": "Personal por Turno",
+        "bot_en": "5–7 workers",
+        "bot_es": "5 a 7 empleados",
+        "tutor_en": "2 operators",
+        "tutor_es": "2 operadores"
+      },
+      {
+        "aspect_en": "Food Cost % (COGS)",
+        "aspect_es": "Costo de Insumos (COGS)",
+        "bot_en": "32% – 38%",
+        "bot_es": "32% a 38%",
+        "tutor_en": "21.8% (Target < 23%)",
+        "tutor_es": "21.8% (Meta < 23%)"
+      },
+      {
+        "aspect_en": "Peak Hourly Capacity",
+        "aspect_es": "Capacidad Pico / Hora",
+        "bot_en": "35–45 pizzas",
+        "bot_es": "35 a 45 pizzas",
+        "tutor_en": "120+ pizzas / hour",
+        "tutor_es": "120+ pizzas / hora"
+      }
+    ],
+    "image": "extracted_media_fastfood/image2.png",
+    "punchline_en": "3x throughput with half the staff in a 40m² compact footprint.",
+    "punchline_es": "3x capacidad de despacho con la mitad del personal en solo 40m²."
+  },
+  {
+    "id": 5,
+    "num": "04",
+    "category_en": "STRATEGIC PILOT CITY",
+    "category_es": "CIUDAD PILOTO ESTRATÉGICA",
+    "title_en": "Why Cúcuta as our Pilot Beachhead?",
+    "title_es": "¿Por qué Cúcuta como Ciudad Piloto?",
+    "lead_en": "High urban population density, vibrant commercial corridors, low initial OPEX, and unserved demand for fast quality food.",
+    "lead_es": "Alta densidad urbana, corredores comerciales activos, bajo costo inicial y demanda insatisfecha por comida rápida de calidad.",
+    "cards_en": [
+      {
+        "title": "High Commercial Foot Traffic",
+        "desc": "Prime spots in Caobos, Ventura Plaza corridor, and university avenues guarantee continuous customer flow."
+      },
+      {
+        "title": "Low Real Estate & Labor OPEX",
+        "desc": "35% lower square meter commercial rent and lower setup costs compared to Bogotá or Medellín."
+      },
+      {
+        "title": "Appetite for Fast-Casual Innovation",
+        "desc": "Young demographic embracing mobile delivery apps with strong willingness to try tech-driven dining."
+      },
+      {
+        "title": "Perfect Regional Testbed",
+        "desc": "Validating unit economics in Cúcuta de-risks rapid franchise rollout to Bucaramanga, Pereira, and Cali."
+      }
+    ],
+    "cards_es": [
+      {
+        "title": "Alto Tráfico Comercial",
+        "desc": "Ubicaciones estratégicas en Caobos, corredor Ventura Plaza y zonas universitarias garantizan flujo continuo."
+      },
+      {
+        "title": "Bajo Costo Inmobiliario y Laboral",
+        "desc": "Arrendamientos comerciales 35% más económicos frente a Bogotá o Medellín, reduciendo el riesgo inicial."
+      },
+      {
+        "title": "Alta Adopción de Innovación",
+        "desc": "Población joven que usa intensamente apps móviles y busca opciones gastronómicas rápidas y modernas."
+      },
+      {
+        "title": "Puntal de Validación Regional",
+        "desc": "Validar la economía en Cúcuta facilita la expansión inmediata a Bucaramanga, Pereira y Cali."
+      }
+    ],
+    "image": "extracted_media_fastfood/image4.png",
+    "punchline_en": "Low setup CAPEX, high margins, and rapid operational validation.",
+    "punchline_es": "Bajo CAPEX de instalación, altos márgenes y validación operativa inmediata."
+  },
+  {
+    "id": 6,
+    "num": "05",
+    "category_en": "KITCHEN INFRASTRUCTURE",
+    "category_es": "INFRAESTRUCTURA DE COCINA",
+    "title_en": "Automated High-Throughput Equipment",
+    "title_es": "Equipamiento Automatizado de Alto Rendimiento",
+    "lead_en": "Industrial-grade hardware designed for maximum reliability, low energy consumption, and high speed.",
+    "lead_es": "Maquinaria industrial diseñada para máxima fiabilidad, bajo consumo eléctrico y alta velocidad.",
+    "cards_en": [
+      {
+        "title": "Continuous Impingement Conveyor Oven",
+        "desc": "Precision air-jet heating cooks dough evenly from both sides in 150 seconds with programmable temperature profiles."
+      },
+      {
+        "title": "Automated Dough Press & Sheeter",
+        "desc": "Forms uniform 10-inch pizza crusts in 5 seconds without skilled dough-tossers."
+      },
+      {
+        "title": "Refrigerated Prep Table with Scale Well",
+        "desc": "Sensor-integrated topping wells track ingredient weights and enforce exact recipe portioning in real time."
+      },
+      {
+        "title": "Smart Heated Pickup Locker Matrix",
+        "desc": "Maintains orders at 65°C with customer QR-code access for 100% contactless pickup."
+      }
+    ],
+    "cards_es": [
+      {
+        "title": "Horno Continuo de Impacto de Aire",
+        "desc": "Chorros de aire caliente cocinan la masa uniformemente en 150 segundos con control digital de temperatura."
+      },
+      {
+        "title": "Prensa y Formadora Automática de Masa",
+        "desc": "Estira bases perfectas de 25cm en 5 segundos sin necesidad de pizzeros especializados."
+      },
+      {
+        "title": "Mesa Refrigerada con Básculas Integradas",
+        "desc": "Pozuelos con sensores de peso que controlan la cantidad exacta de queso y toppings por pizza."
+      },
+      {
+        "title": "Matriz de Lockers Térmicos Inteligentes",
+        "desc": "Mantiene pedidos a 65°C con apertura mediante código QR para retiro 100% sin contacto."
+      }
+    ],
+    "image": "extracted_media_fastfood/image5.png",
+    "punchline_en": "Engineered for 120 pizzas per hour with only 2 kitchen staff.",
+    "punchline_es": "Diseñado para despachar 120 pizzas por hora con solo 2 personas."
+  },
+  {
+    "id": 7,
+    "num": "06",
+    "category_en": "DIGITAL ECOSYSTEM",
+    "category_es": "ECOSISTEMA DIGITAL",
+    "title_en": "App-First Ordering & Dynamic AI Pricing",
+    "title_es": "App de Pre-Orden y Precios Dinámicos con IA",
+    "lead_en": "A proprietary customer app that predicts order arrival times and balances kitchen demand with dynamic promotions.",
+    "lead_es": "Una app propietaria que predice la hora de llegada del cliente y equilibra la demanda con promociones dinámicas.",
+    "features_en": [
+      "Customer orders and pays in 3 taps on mobile; geolocation alerts kitchen when customer is 3 minutes away",
+      "Zero queueing: pizza comes straight out of the oven into the customer's hands or heated locker",
+      "Dynamic AI pricing offers off-peak discounts (2:00 PM – 5:00 PM) to maximize oven utilization all day",
+      "Gamified loyalty program with personalized combo recommendations based on ordering habits"
+    ],
+    "features_es": [
+      "El cliente pide y paga en 3 toques; la geolocalización avisa a cocina cuando el cliente está a 3 minutos",
+      "Cero filas: la pizza sale del horno directo a las manos del cliente o a su locker térmico",
+      "Precios dinámicos con IA ofrecen descuentos en horas valle (2:00 PM a 5:00 PM) para mantener hornos llenos",
+      "Programa de lealtad gamificado con combos personalizados según el historial de compra"
+    ],
+    "diagram_en": [
+      {
+        "label": "1. Mobile Order",
+        "detail": "Customer customizes pizza in app"
+      },
+      {
+        "label": "2. Geo-Trigger",
+        "detail": "Oven starts when customer approaches"
+      },
+      {
+        "label": "3. 150s Bake",
+        "detail": "Fresh hot pizza at locker pickup"
+      }
+    ],
+    "diagram_es": [
+      {
+        "label": "1. Pedido en App",
+        "detail": "El cliente personaliza su pizza"
+      },
+      {
+        "label": "2. Disparo por Geo",
+        "detail": "El horno se activa al acercarse"
+      },
+      {
+        "label": "3. Horneado 150s",
+        "detail": "Pizza caliente lista en locker"
+      }
+    ],
+    "image": "extracted_media_fastfood/image6.png",
+    "punchline_en": "Turning hungry pedestrians into served customers in under 3 minutes.",
+    "punchline_es": "Convirtiendo transeúntes hambrientos en clientes servidos en menos de 3 minutos."
+  },
+  {
+    "id": 8,
+    "num": "07",
+    "category_en": "MENU ENGINEERING",
+    "category_es": "INGENIERÍA DE MENÚ",
+    "title_en": "Optimized Menu: High Margin, Fast Prep",
+    "title_es": "Menú Optimizado: Alto Margen y Rápida Preparación",
+    "lead_en": "Curated 8-item menu maximizing ingredient overlap to achieve 21.8% food cost and zero food waste.",
+    "lead_es": "Menú curado de 8 referencias maximizando insumos compartidos para lograr 21.8% de costo y cero desperdicio.",
+    "cards_en": [
+      {
+        "title": "Artisan Personal Pizzas (10-inch)",
+        "desc": "4 core crowd-pleasers (Pepperoni Crispy, 4-Cheese BBQ, Hawaiian Supreme, Truffle Mushroom). Average retail: $4.80 USD."
+      },
+      {
+        "title": "Stuffed Folded Calzones & Pockets",
+        "desc": "Uses identical dough and cheeses; prep time 45 seconds, baked in 2.5 minutes. High margin snack driver."
+      },
+      {
+        "title": "Gourmet Garlic & Cheese Bites",
+        "desc": "Prepared from leftover dough trimmings with garlic-herb butter. 88% gross margin side item."
+      },
+      {
+        "title": "Combo Beverages & Gelato",
+        "desc": "High-margin branded sodas, craft sodas, and artisan gelato pots boosting average ticket by 35%."
+      }
+    ],
+    "cards_es": [
+      {
+        "title": "Pizzas Personales Artesanales (25cm)",
+        "desc": "4 favoritas del público (Pepperoni Crispy, 4 Quesos BBQ, Hawaiana Suprema, Champiñón Trufado). Precio: $18.000 COP."
+      },
+      {
+        "title": "Calzones y Pockets Rellenos",
+        "desc": "Mismos insumos y masa; armado en 45 segundos y horneado en 2.5 min. Excelente producto de impulso."
+      },
+      {
+        "title": "Bocaditos de Ajo y Queso",
+        "desc": "Aprovechan sobrantes de masa con mantequilla de hierbas. Margen bruto del 88%."
+      },
+      {
+        "title": "Bebidas en Combo y Gelato",
+        "desc": "Gaseosas artesanales, tés y helados que elevan el ticket promedio en un 35%."
+      }
+    ],
+    "image": "extracted_media_fastfood/image7.png",
+    "punchline_en": "Minimal inventory complexity, maximum kitchen speed and profitability.",
+    "punchline_es": "Mínima complejidad de inventario, máxima velocidad y rentabilidad."
+  },
+  {
+    "id": 9,
+    "num": "08",
+    "category_en": "UNIT ECONOMICS",
+    "category_es": "ECONOMÍA UNITARIA",
+    "title_en": "Store Unit Economics (Cúcuta Pilot Model)",
+    "title_es": "Economía Unitaria por Local (Modelo Piloto Cúcuta)",
+    "lead_en": "Robust financial model delivering 34% net EBITDA margin with a 9-month capital payback period.",
+    "lead_es": "Modelo financiero sólido que entrega 34% de margen EBITDA neto con retorno de inversión en 9 meses.",
+    "streams_en": [
+      {
+        "type": "Monthly Gross Revenue",
+        "tier": "300 pizzas/day avg",
+        "desc": "$43,200 USD / month ($172M COP) across dine-in, takeaway lockers, and delivery apps."
+      },
+      {
+        "type": "Cost of Goods (COGS)",
+        "tier": "21.8% Food Cost",
+        "desc": "$9,420 USD / month covering pre-portioned dough, artisan cheeses, meats, sauces, and eco-packaging."
+      },
+      {
+        "type": "Operating Expenses (OPEX)",
+        "tier": "Rent, Staff & Energy",
+        "desc": "$19,100 USD / month (Rent $2.2k, Staff of 4 $3.8k, Energy $1.6k, Royalty 5% $2.1k, Marketing $1.2k)."
+      }
+    ],
+    "streams_es": [
+      {
+        "type": "Ventas Brutas Mensuales",
+        "tier": "300 pizzas/día prom.",
+        "desc": "$43,200 USD / mes ($172M COP) sumando consumo en barra, lockers y delivery."
+      },
+      {
+        "type": "Costo de Insumos (COGS)",
+        "tier": "21.8% de Insumos",
+        "desc": "$9,420 USD / mes cubriendo masa, quesos, carnes, salsas y empaques ecológicos."
+      },
+      {
+        "type": "Gastos Operativos (OPEX)",
+        "tier": "Arriendo, Nómina y Luz",
+        "desc": "$19,100 USD / mes (Arriendo $2.2k, 4 empleados $3.8k, Servicios $1.6k, Regalía 5% $2.1k, Mkt $1.2k)."
+      }
+    ],
+    "moat_en": "Net EBITDA Profit: $14,680 USD / month (34.0% margin). Annual Store EBITDA: $176,160 USD.",
+    "moat_es": "Utilidad EBITDA Neta: $14,680 USD / mes (Margen del 34.0%). EBITDA Anual por Local: $176,160 USD.",
+    "punchline_en": "Store CAPEX of $68k USD recovered in less than 9 months.",
+    "punchline_es": "CAPEX de $68k USD recuperado en menos de 9 meses de operación."
+  },
+  {
+    "id": 10,
+    "num": "09",
+    "category_en": "PILOT STORE SETUP",
+    "category_es": "CAPEX DEL PILOTO",
+    "title_en": "Initial Pilot Store CAPEX Breakdown ($68,000 USD)",
+    "title_es": "Desglose de CAPEX del Local Piloto ($68,000 USD)",
+    "lead_en": "Detailed capital allocation to build, equip, and launch the flagship Smart QSR store in Cúcuta.",
+    "lead_es": "Asignación detallada de capital para construir, equipar y lanzar el local insignia en Cúcuta.",
+    "cards_en": [
+      {
+        "title": "Conveyor Oven & Heavy Equipment ($26,500)",
+        "desc": "Imported industrial electric conveyor oven, automated dough press, reach-in cooler, and ice machine."
+      },
+      {
+        "title": "Store Fit-Out & Architectural Design ($18,500)",
+        "desc": "Modern cyberpunk industrial fit-out, illuminated signage, kitchen stainless steel counters, and ventilation hoods."
+      },
+      {
+        "title": "Smart Tech & Heated Lockers ($11,000)",
+        "desc": "Digital heated locker module (12 slots), customer POS touchscreens, IoT scales, and high-speed local network."
+      },
+      {
+        "title": "Initial Inventory & Working Capital ($12,000)",
+        "desc": "First month food stock, packaging, local permits, launch marketing blitz, and emergency cash reserve."
+      }
+    ],
+    "cards_es": [
+      {
+        "title": "Horno de Banda y Maquinaria ($26,500 USD)",
+        "desc": "Horno continuo industrial, formadora de masa, mesa refrigerada, congelador y máquina de hielo."
+      },
+      {
+        "title": "Adecuación de Local y Diseño ($18,500 USD)",
+        "desc": "Diseño industrial futurista, aviso iluminado, mesones en acero inoxidable y campanas de extracción."
+      },
+      {
+        "title": "Tecnología y Lockers Inteligentes ($11,000 USD)",
+        "desc": "Módulo de 12 lockers térmicos con QR, pantallas de autopedido, básculas IoT y red local."
+      },
+      {
+        "title": "Inventario Inicial y Capital de Trabajo ($12,000 USD)",
+        "desc": "Stock de insumos del primer mes, empaques, permisos, campaña publicitaria y fondo de contingencia."
+      }
+    ],
+    "image": "extracted_media_fastfood/image8.png",
+    "punchline_en": "Compact 40m² turnkey retail module ready in 45 days.",
+    "punchline_es": "Módulo llave en mano de 40m² listo para operar en 45 días."
+  },
+  {
+    "id": 11,
+    "num": "10",
+    "category_en": "FRANCHISE FLYWHEEL",
+    "category_es": "MODELO DE FRANQUICIA",
+    "title_en": "The Turnkey Franchise Expansion Model",
+    "title_es": "El Modelo de Expansión de Franquicias Llave en Mano",
+    "lead_en": "Standardized store modules allow rapid plug-and-play replication for local and regional franchisee investors.",
+    "lead_es": "Módulos estandarizados permiten replicar locales llave en mano para inversionistas franquiciados.",
+    "cards_en": [
+      {
+        "title": "Turnkey Module Setup",
+        "desc": "Pre-fabricated kitchen layout and pre-configured IoT equipment deployed in 30 days per store."
+      },
+      {
+        "title": "Centralized Commissary Supply",
+        "desc": "Pre-made aged dough balls, signature sauces, and proprietary cheese blends delivered 3x weekly."
+      },
+      {
+        "title": "Automated Franchise Royalty",
+        "desc": "5% royalty collected automatically through the central POS payment gateway with zero auditing disputes."
+      },
+      {
+        "title": "Franchisee Mobile Dashboard",
+        "desc": "Franchise owners track live sales, equipment health, and inventory reorders from anywhere on iOS/Android."
+      }
+    ],
+    "cards_es": [
+      {
+        "title": "Módulos Llave en Mano",
+        "desc": "Layout de cocina prefabricado y equipos IoT preconfigurados listos en 30 días por sede."
+      },
+      {
+        "title": "Centro de Producción Centralizado",
+        "desc": "Masas maduradas, salsas exclusivas y quesos entregados 3 veces por semana a cada punto."
+      },
+      {
+        "title": "Cobro Automático de Regalías",
+        "desc": "5% de regalía deducido de forma transparente por la pasarela de pagos sin disputas contables."
+      },
+      {
+        "title": "Panel Móvil del Franquiciado",
+        "desc": "El inversionista monitorea ventas en vivo, estado de hornos y pedidos desde su celular."
+      }
+    ],
+    "image": "extracted_media_fastfood/image1.png",
+    "punchline_en": "Standardized operations remove operator skill risk for franchisees.",
+    "punchline_es": "La estandarización elimina el riesgo de dependencia en personal especializado."
+  },
+  {
+    "id": 12,
+    "num": "11",
+    "category_en": "EXPANSION ROADMAP",
+    "category_es": "HOJA DE RUTA DE EXPANSIÓN",
+    "title_en": "Regional Rollout: From 1 Pilot to 20 Franchise Stores",
+    "title_es": "Despliegue Regional: De 1 Piloto a 20 Locales Franquiciados",
+    "lead_en": "Disciplined multi-city expansion across Eastern and Central Colombia.",
+    "lead_es": "Expansión disciplinada multiciudad por el oriente y centro de Colombia.",
+    "phases_en": [
+      {
+        "phase": "MONTHS 1–6 · CÚCUTA PILOT",
+        "focus": "Flagship Store & App Launch",
+        "milestones": [
+          "Launch flagship store in Caobos, Cúcuta",
+          "Achieve 300 pizzas/day and 21.8% food cost targets",
+          "Onboard 8,000 app users and 45% pre-order rate"
+        ]
+      },
+      {
+        "phase": "MONTHS 7–12 · REGIONAL CLUSTER",
+        "focus": "4 Additional Stores (Cúcuta & Bucaramanga)",
+        "milestones": [
+          "Open Store #2 in Ventura Plaza and Store #3 in Los Patios",
+          "Expand to Bucaramanga with 2 flagship stores",
+          "Establish centralized dough commissary facility"
+        ]
+      },
+      {
+        "phase": "MONTHS 13–24 · NATIONAL SCALE",
+        "focus": "20 Franchise Units",
+        "milestones": [
+          "Franchise rollout into Medellín, Pereira, and Bogotá",
+          "Achieve $8.6M USD in network-wide annual GMV",
+          "Integrate Arcana signed IoT auditability for remote investors"
+        ]
+      }
+    ],
+    "phases_es": [
+      {
+        "phase": "MESES 1–6 · PILOTO CÚCUTA",
+        "focus": "Local Insignia y Lanzamiento de App",
+        "milestones": [
+          "Apertura del local insignia en Caobos, Cúcuta",
+          "Alcanzar 300 pizzas/día y meta de costo de insumos del 21.8%",
+          "Captar 8,000 usuarios en app con 45% de órdenes por pre-pedido"
+        ]
+      },
+      {
+        "phase": "MESES 7–12 · CLUSTER REGIONAL",
+        "focus": "4 Locales Adicionales (Cúcuta y Bucaramanga)",
+        "milestones": [
+          "Apertura de Sede #2 en Ventura Plaza y Sede #3 en Los Patios",
+          "Expansión a Bucaramanga con 2 locales insignia",
+          "Montaje de centro de producción de masas centralizado"
+        ]
+      },
+      {
+        "phase": "MESES 13–24 · ESCALA NACIONAL",
+        "focus": "20 Franquicias Operativas",
+        "milestones": [
+          "Aperturas en Medellín, Pereira y Bogotá",
+          "Alcanzar $8.6M USD en ventas anuales de la red",
+          "Integración con IoT firmado de Arcana para inversores remotos"
+        ]
+      }
+    ],
+    "punchline_en": "Scale blueprint proven on real store economics.",
+    "punchline_es": "Plan de escala probado con economía de local real."
+  },
+  {
+    "id": 13,
+    "num": "12",
+    "category_en": "RISK ENGINEERING",
+    "category_es": "GESTIÓN DE RIESGOS",
+    "title_en": "Operational Risk Engineering & Fail-Safes",
+    "title_es": "Gestión de Riesgos Operativos y Resiliencia",
+    "lead_en": "Systematic protocols to handle power outages, supplier shortages, and peak traffic surges.",
+    "lead_es": "Protocolos sistemáticos para caídas eléctricas, desabastecimiento y picos masivos de demanda.",
+    "risks_en": [
+      {
+        "risk": "Electrical Grid Fluctuations",
+        "solution": "Dedicated industrial UPS and emergency diesel generator backup keeps conveyor ovens running during power dips."
+      },
+      {
+        "risk": "Ingredient Supply Bottlenecks",
+        "solution": "Dual-supplier contracts for flour, mozzarella, and meats with 15-day safety stock at central hub."
+      },
+      {
+        "risk": "App / Internet Connectivity Loss",
+        "solution": "POS works fully offline with local mesh sync; kitchen continues automated ticket printing seamlessly."
+      },
+      {
+        "risk": "Staff Turnover",
+        "solution": "Standardized 4-step prep stations allow training new kitchen operators in less than 48 hours."
+      }
+    ],
+    "risks_es": [
+      {
+        "risk": "Fluctuaciones Eléctricas en Ciudad",
+        "solution": "UPS industrial y planta eléctrica de respaldo garantizan horneado continuo ante cortes de luz."
+      },
+      {
+        "risk": "Desabastecimiento de Insumos",
+        "solution": "Contratos con dos proveedores clave y stock de seguridad de 15 días en bodega central."
+      },
+      {
+        "risk": "Caídas de Internet en el Local",
+        "solution": "El POS opera 100% offline y sincroniza en segundo plano al restablecer la red."
+      },
+      {
+        "risk": "Rotación de Personal",
+        "solution": "Estaciones estandarizadas de 4 pasos permiten capacitar a un nuevo operador en menos de 48 horas."
+      }
+    ],
+    "image": "extracted_media_fastfood/image5.png",
+    "punchline_en": "Bulletproof restaurant operations engineered for Latin American realities.",
+    "punchline_es": "Operación blindada diseñada para la realidad del mercado latinoamericano."
+  },
+  {
+    "id": 14,
+    "num": "13",
+    "category_en": "INVESTMENT ASK",
+    "category_es": "SOLICITUD DE INVERSIÓN",
+    "title_en": "Pilot Capital Round: $120,000 USD",
+    "title_es": "Ronda de Capital Piloto: $120,000 USD",
+    "lead_en": "Funding the launch of the flagship Cúcuta store, mobile app finalization, and commissary setup.",
+    "lead_es": "Financiando la apertura del local insignia en Cúcuta, app móvil y centro de producción.",
+    "cards_en": [
+      {
+        "title": "$68,000 USD · Flagship Store Launch",
+        "desc": "Turnkey equipment purchase (conveyor oven, prep table), retail fit-out, and initial inventory in Caobos, Cúcuta."
+      },
+      {
+        "title": "$24,000 USD · Mobile App & Tech Ecosystem",
+        "desc": "Finalizing consumer pre-order app, heated locker IoT integration, and dynamic pricing AI engine."
+      },
+      {
+        "title": "$16,000 USD · Central Commissary Setup",
+        "desc": "Industrial mixer, vacuum packagers, and cold-room storage to supply initial store cluster."
+      },
+      {
+        "title": "$12,000 USD · Launch Marketing & Working Capital",
+        "desc": "Hyper-local influencer campaigns, digital ads blitz, and 90-day cash operating buffer."
+      }
+    ],
+    "cards_es": [
+      {
+        "title": "$68,000 USD · Montaje de Sede Insignia",
+        "desc": "Compra de maquinaria (horno continuo, mesas frías), adecuación del local y stock inicial en Caobos, Cúcuta."
+      },
+      {
+        "title": "$24,000 USD · App Móvil y Ecosistema Tech",
+        "desc": "Finalización de app de pre-orden, integración de lockers inteligentes y motor de precios dinámicos."
+      },
+      {
+        "title": "$16,000 USD · Centro de Producción de Masas",
+        "desc": "Amasadora industrial, empacadoras al vacío y cuarto frío para surtir los primeros locales."
+      },
+      {
+        "title": "$12,000 USD · Campaña de Lanzamiento y Reserva",
+        "desc": "Marketing local con creadores de contenido, pauta digital y fondo de maniobra a 90 días."
+      }
+    ],
+    "image": "extracted_media_fastfood/image8.png",
+    "punchline_en": "Targeting 34% net EBITDA and 9-month capital payback on Store #1.",
+    "punchline_es": "Meta: 34% de margen EBITDA neto y retorno de inversión en 9 meses."
+  },
+  {
+    "id": 15,
+    "num": "14",
+    "category_en": "EXECUTIVE CLOSING",
+    "category_es": "CIERRE EJECUTIVO",
+    "title_en": "The Future of Fast-Food is Precision Engineering",
+    "title_es": "El Futuro del Fast-Food es Ingeniería de Precisión",
+    "quote_en": "“We are not just selling artisan pizza. We are building the high-speed operating system for the next generation of food franchises.”",
+    "quote_es": "“No solo vendemos pizza artesanal. Estamos creando el sistema operativo de alta velocidad para la próxima generación de franquicias de comida.”",
+    "pillars_en": [
+      "2.5-Minute Impingement Baking",
+      "App-First Pre-Order Lockers",
+      "21.8% Food Cost Discipline",
+      "34% EBITDA Store Margin",
+      "3i BAIRD LAB FoodTech"
+    ],
+    "pillars_es": [
+      "Horneado Continuo en 2.5 min",
+      "Lockers Térmicos con Pre-Orden",
+      "Disciplina de Costo al 21.8%",
+      "Margen EBITDA de Local del 34%",
+      "FoodTech 3i BAIRD LAB"
+    ],
+    "image": "extracted_media_fastfood/image1.png",
+    "punchline_en": "Smart Fast-Food Franchise · Powered by 3i BAIRD LAB.",
+    "punchline_es": "Smart Fast-Food Franchise · Impulsado por 3i BAIRD LAB."
+  }
+]

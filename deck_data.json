@@ -1,0 +1,1136 @@
+[
+  {
+    "id": 1,
+    "tag_en": "INVESTOR PRESENTATION",
+    "tag_es": "PRESENTACIÓN PARA INVERSORES",
+    "title_en": "Expert Multi-Agent Tutor",
+    "title_es": "Tutor Experto Multi-Agente",
+    "subtitle_en": "An intelligent tutoring system that diagnoses, teaches, evaluates, and adapts. It does not just answer questions. It produces verifiable learning.",
+    "subtitle_es": "Un sistema de tutoría inteligente que diagnostica, enseña, evalúa y adapta. No solo responde preguntas: produce aprendizaje verificable.",
+    "flow_en": [
+      "Diagnose",
+      "Plan",
+      "Teaching",
+      "Evidence",
+      "Adaptation"
+    ],
+    "flow_es": [
+      "Diagnóstico",
+      "Plan",
+      "Enseñanza",
+      "Evidencia",
+      "Adaptación"
+    ],
+    "badge_en": "Seed Pitch Deck · DeepTech AI",
+    "badge_es": "Pitch Deck Semilla · DeepTech IA",
+    "category": "hero"
+  },
+  {
+    "id": 2,
+    "num": "01",
+    "category_en": "OPPORTUNITY",
+    "category_es": "OPORTUNIDAD",
+    "title_en": "The Problem: Answering ≠ Teaching",
+    "title_es": "El Problema: Responder ≠ Enseñar",
+    "lead_en": "Today’s AI answers very well. But answering is not the same as teaching.",
+    "lead_es": "La IA actual responde muy bien. Pero responder no es lo mismo que enseñar.",
+    "bot_chat_en": "“Explain percentages” → Answering gives generic text, but does NOT diagnose starting level, does NOT remember what worked, and confuses an eloquent answer with real mastery.",
+    "bot_chat_es": "“Explícame porcentajes” → El chatbot da un texto genérico, pero NO diagnostica el nivel base, NO recuerda qué funcionó y confunde elocuencia con dominio real.",
+    "pillars_en": [
+      {
+        "title": "Diagnosis",
+        "desc": "Know where the learner starts and uncover prerequisite gaps."
+      },
+      {
+        "title": "Path",
+        "desc": "Define structured learning progressions in strict pedagogical order."
+      },
+      {
+        "title": "Memory",
+        "desc": "Remember evidence, anchors, and misconceptions—not just chat logs."
+      },
+      {
+        "title": "Proof",
+        "desc": "Demonstrate understanding and skill transfer with objective rubrics."
+      }
+    ],
+    "pillars_es": [
+      {
+        "title": "Diagnóstico",
+        "desc": "Saber dónde inicia el alumno e identificar vacíos en prerequisitos."
+      },
+      {
+        "title": "Ruta",
+        "desc": "Definir progresiones de aprendizaje en orden pedagógico óptimo."
+      },
+      {
+        "title": "Memoria",
+        "desc": "Recordar evidencia, anclajes y errores—no solo el texto del chat."
+      },
+      {
+        "title": "Prueba",
+        "desc": "Demostrar comprensión y transferencia mediante rúbricas objetivas."
+      }
+    ],
+    "image": "extracted_media/image1.png",
+    "punchline_en": "Teaching is a system, not a prompt.",
+    "punchline_es": "Enseñar es un sistema, no un prompt."
+  },
+  {
+    "id": 3,
+    "num": "02",
+    "category_en": "TIMING",
+    "category_es": "MOMENTO",
+    "title_en": "Why Now: 3 Converging Capabilities",
+    "title_es": "¿Por qué ahora? La Convergencia de 3 Capacidades",
+    "lead_en": "Three critical technologies are finally mature enough to build a real AI tutor.",
+    "lead_es": "Tres tecnologías clave han madurado lo suficiente para construir un tutor de IA real.",
+    "cards_en": [
+      {
+        "icon": "🧠",
+        "title": "Frontier Models",
+        "desc": "Explain conceptually, adapt dynamic tone, and evaluate complex reasoning at human-expert levels."
+      },
+      {
+        "icon": "🤖",
+        "title": "Multi-Agent Frameworks",
+        "desc": "Coordinate multi-step pedagogical workflows with distinct roles, deterministic rules, and checks."
+      },
+      {
+        "icon": "🕸️",
+        "title": "Graph + Vector Memory",
+        "desc": "Knowledge graphs map concept prerequisite dependencies while vector DBs index validated analogies."
+      }
+    ],
+    "cards_es": [
+      {
+        "icon": "🧠",
+        "title": "Modelos de Frontera",
+        "desc": "Capaces de explicar conceptualmente, modular el tono y evaluar razonamiento a nivel de experto humano."
+      },
+      {
+        "icon": "🤖",
+        "title": "Arquitecturas Multi-Agente",
+        "desc": "Coordinan flujos pedagógicos multi-etapa con roles independientes, reglas deterministas y auditoría."
+      },
+      {
+        "icon": "🕸️",
+        "title": "Grafos + Memoria Vectorial",
+        "desc": "Grafos de conocimiento mapean prerequisitos mientras bases vectoriales indexan analogías comprobadas."
+      }
+    ],
+    "punchline_en": "The opportunity: A tutor that remembers, connects, and verifies.",
+    "punchline_es": "La oportunidad: Un tutor que recuerda, conecta y verifica."
+  },
+  {
+    "id": 4,
+    "num": "03",
+    "category_en": "PRODUCT",
+    "category_es": "PRODUCTO",
+    "title_en": "The Solution: 12 Specialized Agents in 1 System",
+    "title_es": "La Solución: 12 Agentes Especializados en 1 Sistema",
+    "lead_en": "One unified tutor made of 12 specialized AI agents working as a synchronized pedagogical team.",
+    "lead_es": "Un tutor unificado compuesto por 12 agentes de IA especializados trabajando como un equipo sincronizado.",
+    "definition_en": "AI Agent: A specialized AI role with an explicit pedagogical goal, deterministic rules, custom tools, and controlled memory scope.",
+    "definition_es": "Agente de IA: Rol especializado con un objetivo pedagógico explícito, reglas deterministas, herramientas y memoria delimitada.",
+    "steps_en": [
+      "1. Diagnose",
+      "2. Plan",
+      "3. Teach",
+      "4. Assess",
+      "5. Remediate",
+      "6. Update Graph"
+    ],
+    "steps_es": [
+      "1. Diagnosticar",
+      "2. Planificar",
+      "3. Enseñar",
+      "4. Evaluar",
+      "5. Remediar",
+      "6. Actualizar Grafo"
+    ],
+    "image": "extracted_media/image2.png",
+    "punchline_en": "The learner arrives with a goal. The system turns it into a living, explainable path backed by evidence.",
+    "punchline_es": "El estudiante llega con una meta. El sistema la convierte en una ruta viva, explicable y respaldada por evidencia."
+  },
+  {
+    "id": 5,
+    "num": "04",
+    "category_en": "EXPERIENCE",
+    "category_es": "EXPERIENCIA",
+    "title_en": "What a Session Feels Like: A Closed-Loop Journey",
+    "title_es": "Cómo es una Sesión: Un Viaje en Bucle Cerrado",
+    "lead_en": "The experience is a structured learning loop, not an open-ended conversation.",
+    "lead_es": "La experiencia es un bucle de aprendizaje estructurado, no una conversación abierta sin rumbo.",
+    "loop_en": [
+      {
+        "step": "Goal",
+        "desc": "Learner specifies learning objective"
+      },
+      {
+        "step": "Diagnosis",
+        "desc": "Probes prior knowledge and foundational anchors"
+      },
+      {
+        "step": "Plan & Consent",
+        "desc": "Adaptive syllabus proposed; learner accepts or customizes"
+      },
+      {
+        "step": "Active Lesson",
+        "desc": "Scaffolded explanation using analogies and visual cues"
+      },
+      {
+        "step": "Practice & Probe",
+        "desc": "Interactive exercises with multi-tier hints"
+      },
+      {
+        "step": "Rubric Assessment",
+        "desc": "Objective evaluation measuring depth of understanding"
+      },
+      {
+        "step": "Remediation / Unlock",
+        "desc": "If gap detected → targeted fix; if mastered → unlock next topic"
+      }
+    ],
+    "loop_es": [
+      {
+        "step": "Meta",
+        "desc": "El estudiante define su objetivo de aprendizaje"
+      },
+      {
+        "step": "Diagnóstico",
+        "desc": "Evalúa conocimientos previos y anclajes cognitivos"
+      },
+      {
+        "step": "Plan y Consentimiento",
+        "desc": "Ruta adaptativa propuesta; el estudiante acepta o personaliza"
+      },
+      {
+        "step": "Lección Activa",
+        "desc": "Explicación andamiada mediante analogías y ejemplos"
+      },
+      {
+        "step": "Práctica y Retos",
+        "desc": "Ejercicios interactivos con pistas graduadas"
+      },
+      {
+        "step": "Evaluación con Rúbrica",
+        "desc": "Medición objetiva del dominio conceptual real"
+      },
+      {
+        "step": "Remediación / Avance",
+        "desc": "Si hay vacío → remediación inmediata; si domina → desbloquea tema"
+      }
+    ],
+    "image": "extracted_media/image3.png",
+    "punchline_en": "An error changes the path; it does not restart the conversation.",
+    "punchline_es": "Un error cambia la ruta; no reinicia la conversación."
+  },
+  {
+    "id": 6,
+    "num": "05",
+    "category_en": "POSITIONING",
+    "category_es": "POSICIONAMIENTO",
+    "title_en": "What Makes Us Different: Chatbot vs. Multi-Agent Tutor",
+    "title_es": "Nuestra Diferenciación: Chatbot Educativo vs. Tutor Multi-Agente",
+    "lead_en": "The difference is not better conversation. It is how learning is decided, remembered, and proven.",
+    "lead_es": "La diferencia no es hablar mejor. Es cómo el aprendizaje se decide, se recuerda y se demuestra.",
+    "comparison": [
+      {
+        "aspect_en": "Interaction Mode",
+        "aspect_es": "Modo de Interacción",
+        "bot_en": "Open-ended conversation",
+        "bot_es": "Conversación abierta sin rumbo",
+        "tutor_en": "Measurable, goal-oriented path",
+        "tutor_es": "Ruta estructurada hacia metas medibles"
+      },
+      {
+        "aspect_en": "Memory Architecture",
+        "aspect_es": "Arquitectura de Memoria",
+        "bot_en": "Ephemeral context window",
+        "bot_es": "Ventana de contexto efímera",
+        "tutor_en": "Profile + Knowledge Graph + Evidence",
+        "tutor_es": "Perfil + Grafo de Conocimiento + Evidencia"
+      },
+      {
+        "aspect_en": "Explanations",
+        "aspect_es": "Estrategia Pedagógica",
+        "bot_en": "Single generic explanation",
+        "bot_es": "Explicación única y genérica",
+        "tutor_en": "Scaffolded analogies, models & hints",
+        "tutor_es": "Analogías andamiadas, modelos y pistas"
+      },
+      {
+        "aspect_en": "Evaluation",
+        "aspect_es": "Evaluación",
+        "bot_en": "Binary right/wrong or gullible praise",
+        "bot_es": "Binario bien/mal o halagos vacíos",
+        "tutor_en": "Diagnostic rubrics with root-cause logic",
+        "tutor_es": "Rúbricas diagnósticas con análisis de causa raíz"
+      },
+      {
+        "aspect_en": "Factual Safety",
+        "aspect_es": "Seguridad de Fuentes",
+        "bot_en": "Unchecked hallucination risk",
+        "bot_es": "Riesgo alto de alucinaciones",
+        "tutor_en": "Triad: Research → Verify → Curate",
+        "tutor_es": "Tríada: Investigar → Verificar → Curar"
+      },
+      {
+        "aspect_en": "Progression",
+        "aspect_es": "Progresión Curricular",
+        "bot_en": "Moves on when user requests",
+        "bot_es": "Avanza cuando el usuario lo pide",
+        "tutor_en": "Advances only upon proven mastery",
+        "tutor_es": "Avanza únicamente tras maestría demostrada"
+      }
+    ],
+    "punchline_en": "Teaching is a system, not a prompt.",
+    "punchline_es": "Enseñar es un sistema, no un prompt."
+  },
+  {
+    "id": 7,
+    "num": "06",
+    "category_en": "GOVERNANCE",
+    "category_es": "GOBERNANZA",
+    "title_en": "Twelve Specialists Organized in 4 Functional Teams",
+    "title_es": "Doce Especialistas Organizados en 4 Equipos Funcionales",
+    "lead_en": "Separation of duties prevents the system from “approving itself” and guarantees academic rigor.",
+    "lead_es": "La separación de responsabilidades impide que el sistema se autoapruebe y garantiza rigor pedagógico.",
+    "teams_en": [
+      {
+        "num": "1",
+        "name": "COORDINATION",
+        "role": "Understand goal & build the path",
+        "agents": [
+          "Orchestrator (Session state engine)",
+          "Profile & Diagnosis (Detects level & style)",
+          "Curriculum Planner (Prerequisite DAG graph)"
+        ]
+      },
+      {
+        "num": "2",
+        "name": "PEDAGOGY",
+        "role": "Explain, connect & scaffold",
+        "agents": [
+          "Master Tutor (Socratic dialogue engine)",
+          "Connection Engine (Links anchors & analogies)",
+          "Practice Generator (Generates active challenges)"
+        ]
+      },
+      {
+        "num": "3",
+        "name": "EVALUATION",
+        "role": "Assess & fix root causes",
+        "agents": [
+          "Rubric Evaluator (Objective scoring)",
+          "Remediation Agent (Addresses specific gaps)",
+          "Domain Researcher (Finds certified resources)"
+        ]
+      },
+      {
+        "num": "4",
+        "name": "PROTECTION",
+        "role": "Govern truth, sources & safety",
+        "agents": [
+          "Source Curator (Filters accredited assets)",
+          "Fact Verifier (Audits citations & reasoning)",
+          "Safety & Ethics Guard (Enforces safety & escalation)"
+        ]
+      }
+    ],
+    "teams_es": [
+      {
+        "num": "1",
+        "name": "COORDINACIÓN",
+        "role": "Comprender la meta y trazar la ruta",
+        "agents": [
+          "Orquestador (Motor de estado de sesión)",
+          "Diagnóstico y Perfil (Detecta nivel y estilo)",
+          "Planificador Curricular (Grafo DAG de prerequisitos)"
+        ]
+      },
+      {
+        "num": "2",
+        "name": "PEDAGOGÍA",
+        "role": "Explicar, conectar y andamiar",
+        "agents": [
+          "Tutor Maestro (Diálogo socrático guiado)",
+          "Motor de Conexiones (Crea analogías con anclajes)",
+          "Generador de Práctica (Crea desafíos interactivos)"
+        ]
+      },
+      {
+        "num": "3",
+        "name": "EVALUACIÓN",
+        "role": "Evaluar y corregir causas raíz",
+        "agents": [
+          "Evaluador de Rúbricas (Calificación objetiva)",
+          "Agente de Remediación (Ataca el vacío específico)",
+          "Investigador de Dominio (Busca recursos certificados)"
+        ]
+      },
+      {
+        "num": "4",
+        "name": "PROTECCIÓN",
+        "role": "Gobernar verdad, fuentes y seguridad",
+        "agents": [
+          "Curador de Fuentes (Filtra material certificado)",
+          "Verificador de Hechos (Audita citas y afirmaciones)",
+          "Guardián de Seguridad y Ética (Aplica filtros y escalado)"
+        ]
+      }
+    ],
+    "image": "extracted_media/image4.png",
+    "punchline_en": "Separation of duties prevents the system from “approving itself”.",
+    "punchline_es": "La separación de responsabilidades evita que el sistema se autoapruebe."
+  },
+  {
+    "id": 8,
+    "num": "07",
+    "category_en": "PEDAGOGICAL ADVANTAGE",
+    "category_es": "VENTAJA PEDAGÓGICA",
+    "title_en": "Learning Through Connections: Cognitive Anchors",
+    "title_es": "Aprendizaje por Conexiones: Anclajes Cognitivos",
+    "lead_en": "The tutor connects new knowledge to concepts the learner already deeply understands.",
+    "lead_es": "El tutor conecta el nuevo conocimiento con conceptos que el estudiante ya domina sólidamente.",
+    "diagram_en": [
+      {
+        "label": "Known Anchor",
+        "detail": "What is already mastered (e.g., Ratios in cooking or gaming)"
+      },
+      {
+        "label": "Cognitive Bridge",
+        "detail": "Adaptive analogy & personalized mental model"
+      },
+      {
+        "label": "Target Concept",
+        "detail": "New abstract knowledge (e.g., Percentages & Margins)"
+      }
+    ],
+    "diagram_es": [
+      {
+        "label": "Anclaje Conocido",
+        "detail": "Lo que ya domina (ej. Razones y proporciones en cocina/juegos)"
+      },
+      {
+        "label": "Puente Cognitivo",
+        "detail": "Analogía adaptativa y modelo mental personalizado"
+      },
+      {
+        "label": "Concepto Meta",
+        "detail": "Nuevo conocimiento abstracto (ej. Porcentajes y márgenes)"
+      }
+    ],
+    "features_en": [
+      "Empirically verifies whether the cognitive bridge worked in practice",
+      "Reuses previously proven analogies for faster retention",
+      "Explicitly demarcates where the analogy stops to avoid misconceptions",
+      "Network effect: More sessions → richer library of proven pedagogical bridges"
+    ],
+    "features_es": [
+      "Verifica empíricamente si el puente cognitivo funcionó",
+      "Reutiliza analogías exitosas previas para retención acelerada",
+      "Delimita explícitamente dónde termina la analogía para evitar confusiones",
+      "Efecto de red: A más uso → mayor catálogo de puentes pedagógicos validados"
+    ],
+    "image": "extracted_media/image5.png",
+    "punchline_en": "More use → Better, more personalized teaching pathways.",
+    "punchline_es": "A mayor uso → Vías pedagógicas más efectivas y personalizadas."
+  },
+  {
+    "id": 9,
+    "num": "08",
+    "category_en": "STRUCTURED MEMORY",
+    "category_es": "MEMORIA ESTRUCTURADA",
+    "title_en": "Three Memories, Not an Endless Chat Stream",
+    "title_es": "Tres Capas de Memoria: Verdad Estructurada y Auditable",
+    "lead_en": "Conversation is only the interface. Ground truth lives in structured, persistent memory.",
+    "lead_es": "La conversación es solo la interfaz. La verdad reside en memoria estructurada y auditable.",
+    "layers_en": [
+      {
+        "type": "RELATIONAL MEMORY",
+        "tech": "PostgreSQL",
+        "desc": "Learner identity, enrolled goals, current active curriculum path, assessment scores, and rubric evidence history."
+      },
+      {
+        "type": "KNOWLEDGE GRAPH",
+        "tech": "Neo4j / Graph Engine",
+        "desc": "Concept ontology, prerequisite DAG dependencies, mastery depth, and diagnosed misconception nodes."
+      },
+      {
+        "type": "SEMANTIC VECTOR MEMORY",
+        "tech": "PgVector / Milvus",
+        "desc": "Curated explanations, verified source documents, and user-specific proven analogy embeddings."
+      }
+    ],
+    "layers_es": [
+      {
+        "type": "MEMORIA RELACIONAL",
+        "tech": "PostgreSQL",
+        "desc": "Identidad del estudiante, metas activas, plan curricular en curso, calificaciones y evidencia de rúbricas."
+      },
+      {
+        "type": "GRAFO DE CONOCIMIENTO",
+        "tech": "Neo4j / Motor de Grafos",
+        "desc": "Ontología conceptual, grafo DAG de dependencias de prerequisitos, nivel de dominio y nodos de vacíos."
+      },
+      {
+        "type": "MEMORIA VECTORIAL SEMÁNTICA",
+        "tech": "PgVector / Milvus",
+        "desc": "Explicaciones curadas, documentos de fuentes verificadas y embeddings de analogías exitosas."
+      }
+    ],
+    "image": "extracted_media/image6.png",
+    "punchline_en": "Chat is the interface. Truth lives in these 3 persistent memories.",
+    "punchline_es": "El chat es la interfaz. La verdad reside en estas 3 memorias persistentes."
+  },
+  {
+    "id": 10,
+    "num": "09",
+    "category_en": "TRUST & ACCURACY",
+    "category_es": "CONFIANZA Y PRECISIÓN",
+    "title_en": "Trust Architecture: Sources Are Never Improvised",
+    "title_es": "Arquitectura de Confianza: Fuentes Jamás Improvisadas",
+    "lead_en": "Research, verification, and curation are separate pipelines to eliminate hallucinations.",
+    "lead_es": "Investigación, verificación y curación son procesos separados para eliminar alucinaciones.",
+    "pipeline_en": [
+      {
+        "step": "1. Research Agent",
+        "desc": "Discovers high-quality candidate academic materials and primary references."
+      },
+      {
+        "step": "2. Verification Agent",
+        "desc": "Audits citations, checks cross-reference consistency, and scores source confidence."
+      },
+      {
+        "step": "3. Curation Agent",
+        "desc": "Decides what is indexed into memory, versioned, or deprecated."
+      }
+    ],
+    "pipeline_es": [
+      {
+        "step": "1. Agente Investigador",
+        "desc": "Encuentra material académico candidato de alta calidad y referencias primarias."
+      },
+      {
+        "step": "2. Agente Verificador",
+        "desc": "Audita citas, revisa consistencia cruzada y asigna puntaje de confianza."
+      },
+      {
+        "step": "3. Agente Curador",
+        "desc": "Decide qué se indexa en la base de conocimiento, qué se versiona o qué se descarta."
+      }
+    ],
+    "image": "extracted_media/image7.png",
+    "punchline_en": "Sensitive topics → Safety blocks or escalates to human review.",
+    "punchline_es": "Temas sensibles → Seguridad bloquea o escala a revisión humana."
+  },
+  {
+    "id": 11,
+    "num": "10",
+    "category_en": "ARCHITECTURE",
+    "category_es": "ARQUITECTURA",
+    "title_en": "Decoupled Architecture Built to Last",
+    "title_es": "Arquitectura Desacoplada y Preparada para el Futuro",
+    "lead_en": "Pedagogy is the immutable core. AI models and databases are interchangeable plug-and-play adapters.",
+    "lead_es": "La pedagogía es el núcleo inmutable. Modelos de IA y bases de datos son adaptadores intercambiables.",
+    "stack_en": [
+      {
+        "layer": "PEDAGOGICAL CORE",
+        "desc": "Pure domain logic, cognitive models, assessment rubrics, and state transitions."
+      },
+      {
+        "layer": "ORCHESTRATION LAYER",
+        "desc": "Python · LangChain / LangGraph · Event-driven State Machine."
+      },
+      {
+        "layer": "SWAPPABLE LLM ADAPTERS",
+        "desc": "Claude 3.7 / GPT-4o / Gemini 2.5 / DeepSeek (Dynamically routed per task & cost)."
+      },
+      {
+        "layer": "STORAGE ADAPTERS",
+        "desc": "PostgreSQL (Relational) · Neo4j (Graph) · PgVector/Qdrant (Vector)."
+      }
+    ],
+    "stack_es": [
+      {
+        "layer": "NÚCLEO PEDAGÓGICO",
+        "desc": "Lógica de dominio pura, modelos cognitivos, rúbricas de evaluación y máquina de estados."
+      },
+      {
+        "layer": "CAPA DE ORQUESTACIÓN",
+        "desc": "Python · LangChain / LangGraph · Máquina de estados orientada a eventos."
+      },
+      {
+        "layer": "ADAPTADORES DE LLM INTERCAMBIABLES",
+        "desc": "Claude 3.7 / GPT-4o / Gemini 2.5 / DeepSeek (Ruteo dinámico por tarea y costo)."
+      },
+      {
+        "layer": "ADAPTADORES DE DATOS",
+        "desc": "PostgreSQL (Relacional) · Neo4j (Grafos) · PgVector/Qdrant (Vectorial)."
+      }
+    ],
+    "image": "extracted_media/image8.png",
+    "punchline_en": "Changing providers ≠ rewriting how the system teaches.",
+    "punchline_es": "Cambiar de proveedor de LLM ≠ reescribir la lógica pedagógica."
+  },
+  {
+    "id": 12,
+    "num": "11",
+    "category_en": "MARKET & EXPANSION",
+    "category_es": "MERCADO Y EXPANSIÓN",
+    "title_en": "Target Market: Starting with Goal-Driven Learners",
+    "title_es": "Mercado Objetivo: Iniciando con Estudiantes con Metas Claras",
+    "lead_en": "Start with goal-driven learners. Expand to teachers, institutions, and enterprises.",
+    "lead_es": "Iniciar con autodidactas enfocados. Expandir a profesores, instituciones y empresas.",
+    "segments_en": [
+      {
+        "title": "Self-Learners",
+        "target": "B2C Consumers",
+        "desc": "Learn a high-value skill with a structured, step-by-step verified path."
+      },
+      {
+        "title": "Professionals",
+        "target": "Prosumer / B2C",
+        "desc": "Upgrade technical skills with auditable evidence for career advancement."
+      },
+      {
+        "title": "Teachers & Tutors",
+        "target": "B2B Education",
+        "desc": "Extend classroom instruction with automated diagnostic follow-up."
+      },
+      {
+        "title": "Companies",
+        "target": "B2B Enterprise",
+        "desc": "Train workforce for demonstrable competence, not just video attendance."
+      }
+    ],
+    "segments_es": [
+      {
+        "title": "Autodidactas Enfocados",
+        "target": "Consumidores B2C",
+        "desc": "Aprender una habilidad de alto valor con una ruta estructurada y verificada."
+      },
+      {
+        "title": "Profesionales",
+        "target": "Prosumer / B2C",
+        "desc": "Actualizar competencias técnicas con evidencia auditable para crecimiento laboral."
+      },
+      {
+        "title": "Docentes y Tutores",
+        "target": "B2B Educativo",
+        "desc": "Extender la enseñanza del aula con seguimiento diagnóstico automatizado."
+      },
+      {
+        "title": "Empresas",
+        "target": "B2B Corporativo",
+        "desc": "Capacitar colaboradores por competencia real demostrable, no por mera asistencia."
+      }
+    ],
+    "punchline_en": "MVP Strategy: Spanish + tightly scoped domains → Depth before breadth.",
+    "punchline_es": "Estrategia MVP: Español + dominios clave bien acotados → Profundidad antes de amplitud."
+  },
+  {
+    "id": 13,
+    "num": "12",
+    "category_en": "MVP DEMONSTRATION",
+    "category_es": "DEMOSTRACIÓN DEL MVP",
+    "title_en": "The Minimum Viable Product: Proving Real Learning",
+    "title_es": "El Producto Mínimo Viable: Demostrar Aprendizaje Real",
+    "lead_en": "The MVP must prove one decisive thing: Verifiable evidence of learning progression.",
+    "lead_es": "El MVP debe demostrar una sola cosa decisiva: Evidencia verificable de aprendizaje real.",
+    "demo_steps_en": [
+      {
+        "badge": "STAGE 1 · DIAGNOSIS",
+        "title": "Goal: Learn Percentages",
+        "items": [
+          "✓ Masters basic ratio concepts (88% anchor strength)",
+          "△ Inconsistent with fraction conversion",
+          "→ Generates custom personalized learning path"
+        ]
+      },
+      {
+        "badge": "STAGE 2 · LESSON",
+        "title": "“50% Means Half”",
+        "items": [
+          "Connects to mastered cooking ratios and creates a short practice task",
+          "Previously successful analogy retrieved from memory",
+          "Interactive exercise checks conceptual transfer"
+        ]
+      },
+      {
+        "badge": "STAGE 3 · EVIDENCE",
+        "title": "Verifiable Results",
+        "items": [
+          "Result: 83% conceptual mastery demonstrated",
+          "1 specific gap detected in fractional division",
+          "Remediation loop immediately triggered"
+        ]
+      }
+    ],
+    "demo_steps_es": [
+      {
+        "badge": "ETAPA 1 · DIAGNÓSTICO",
+        "title": "Meta: Aprender Porcentajes",
+        "items": [
+          "✓ Domina conceptos de razones (88% solidez de anclaje)",
+          "△ Inseguro en conversión de fracciones",
+          "→ Genera ruta curricular personalizada"
+        ]
+      },
+      {
+        "badge": "ETAPA 2 · LECCIÓN",
+        "title": "“50% Significa la Mitad”",
+        "items": [
+          "Conecta con razones dominadas y genera un micro-reto de práctica",
+          "Recupera analogía previamente exitosa desde la memoria",
+          "Ejercicio interactivo valida la transferencia conceptual"
+        ]
+      },
+      {
+        "badge": "ETAPA 3 · EVIDENCIA",
+        "title": "Resultados Verificables",
+        "items": [
+          "Resultado: 83% de dominio conceptual demostrado",
+          "1 vacío detectado en división de fracciones",
+          "Bucle de remediación disparado de inmediato"
+        ]
+      }
+    ],
+    "punchline_en": "Success = Objective evidence of human learning.",
+    "punchline_es": "Éxito = Evidencia objetiva de aprendizaje humano."
+  },
+  {
+    "id": 14,
+    "num": "13",
+    "category_en": "ROADMAP",
+    "category_es": "HOJA DE RUTA",
+    "title_en": "Product Roadmap: Phased Execution",
+    "title_es": "Hoja de Ruta del Producto: Ejecución por Fases",
+    "lead_en": "Build the pedagogical core once; later phases expand experience and distribution.",
+    "lead_es": "Construir el núcleo pedagógico una vez; las fases posteriores expanden la experiencia y distribución.",
+    "phases_en": [
+      {
+        "phase": "NOW · MVP",
+        "focus": "Complete Multi-Agent Core",
+        "milestones": [
+          "Full 12-agent loop in 1–few core domains",
+          "Verifiable, measurable learning evidence",
+          "Validated cognitive anchor & graph persistence"
+        ]
+      },
+      {
+        "phase": "PHASE 2",
+        "focus": "Experience & Expansion",
+        "milestones": [
+          "Spaced review calendar & progress analytics dashboard",
+          "Multi-language support (ES/EN) & voice interface",
+          "Expanded exercise generator (code, math, logic)"
+        ]
+      },
+      {
+        "phase": "PHASE 3",
+        "focus": "Enterprise & Institutional",
+        "milestones": [
+          "LMS integrations (Canvas, Moodle, Blackboard)",
+          "Teacher cohort orchestration & corporate dashboards",
+          "Multimodal interactive content & collaborative groups"
+        ]
+      }
+    ],
+    "phases_es": [
+      {
+        "phase": "AHORA · MVP",
+        "focus": "Núcleo Multi-Agente Completo",
+        "milestones": [
+          "Bucle completo de 12 agentes en 1-2 dominios clave",
+          "Evidencia medible y verificable de aprendizaje",
+          "Persistencia de anclajes cognitivos y grafos"
+        ]
+      },
+      {
+        "phase": "FASE 2",
+        "focus": "Experiencia y Expansión",
+        "milestones": [
+          "Calendario de repetición espaciada y dashboard de avance",
+          "Soporte multi-idioma (ES/EN) e interfaz de voz",
+          "Generador de ejercicios ampliado (código, mates, lógica)"
+        ]
+      },
+      {
+        "phase": "FASE 3",
+        "focus": "Institucional y Empresas",
+        "milestones": [
+          "Integración con LMS (Canvas, Moodle, Blackboard)",
+          "Portal de orquestación docente y analítica corporativa",
+          "Contenido interactivo multimodal y grupos colaborativos"
+        ]
+      }
+    ],
+    "punchline_en": "Same pedagogical core powering every future modality.",
+    "punchline_es": "El mismo núcleo pedagógico impulsando cada modalidad futura."
+  },
+  {
+    "id": 15,
+    "num": "14",
+    "category_en": "VALUE MODEL",
+    "category_es": "MODELO DE VALOR",
+    "title_en": "Where Value is Created: Monetization & Data Moat",
+    "title_es": "Dónde se Crea Valor: Monetización y Moat de Datos",
+    "lead_en": "Three commercial revenue streams plus a proprietary learning asset that improves with use.",
+    "lead_es": "Tres vías comerciales de ingresos más un activo de aprendizaje propietario que mejora con el uso.",
+    "streams_en": [
+      {
+        "type": "B2C Subscription",
+        "tier": "Self-Learners & Pros",
+        "desc": "Monthly/Annual subscription for personalized tutoring and certified skill mastery."
+      },
+      {
+        "type": "Education B2B",
+        "tier": "Schools & Universities",
+        "desc": "Per-student licensing for institutions needing diagnostic visibility and remediation."
+      },
+      {
+        "type": "Corporate B2B",
+        "tier": "Enterprise Training",
+        "desc": "Upskilling contracts with audit-ready proof of employee competence."
+      }
+    ],
+    "streams_es": [
+      {
+        "type": "Suscripción B2C",
+        "tier": "Autodidactas y Pros",
+        "desc": "Suscripción mensual/anual con tutoría personalizada y certificación de dominio."
+      },
+      {
+        "type": "B2B Educativo",
+        "tier": "Colegios y Universidades",
+        "desc": "Licenciamiento por alumno para instituciones que requieren diagnóstico y apoyo continuo."
+      },
+      {
+        "type": "B2B Corporativo",
+        "tier": "Empresas e Industrias",
+        "desc": "Capacitación corporativa con pruebas auditables de competencia laboral real."
+      }
+    ],
+    "moat_en": "PROPRIETARY ASSET: Each learner’s cognitive graph (Which anchor works · what fails · which analogy helps · what mastery was proven).",
+    "moat_es": "ACTIVO PROPIETARIO: El grafo cognitivo de cada estudiante (Qué anclaje funciona · qué falla · qué analogía ayuda · qué dominio se demostró).",
+    "punchline_en": "Network effect: More sessions → Higher learning velocity across all users.",
+    "punchline_es": "Efecto de red: A más sesiones → Mayor velocidad de aprendizaje en toda la red."
+  },
+  {
+    "id": 16,
+    "num": "15",
+    "category_en": "RISK & CONTROL",
+    "category_es": "RIESGO Y CONTROL",
+    "title_en": "Risks Designed and Controlled From Day One",
+    "title_es": "Riesgos Diseñados y Controlados desde el Día Uno",
+    "lead_en": "We do not promise magic. We design how failures are detected, contained, and escalated.",
+    "lead_es": "No prometemos magia. Diseñamos cómo las fallas son detectadas, contenidas y escaladas.",
+    "risks_en": [
+      {
+        "risk": "Hallucinations",
+        "solution": "Verify sources; cite accredited citations or stay silent."
+      },
+      {
+        "risk": "Unfair Assessment",
+        "solution": "Rubrics + multiple evidence points + human-in-the-loop review."
+      },
+      {
+        "risk": "Token Costs",
+        "solution": "Hierarchical model routing matched to task complexity and budget."
+      },
+      {
+        "risk": "Vendor Lock-in",
+        "solution": "Hexagonal architecture with swappable ports and adapters."
+      },
+      {
+        "risk": "Privacy",
+        "solution": "Consent, tenant isolation, and GDPR/FERPA deletion policies."
+      },
+      {
+        "risk": "Agent Drift",
+        "solution": "Deterministic contracts + strict single orchestrator governance."
+      }
+    ],
+    "risks_es": [
+      {
+        "risk": "Alucinaciones",
+        "solution": "Verificación de fuentes; cita referencias acreditadas o guarda silencio."
+      },
+      {
+        "risk": "Evaluación Injusta",
+        "solution": "Rúbricas + múltiples evidencias + revisión humana disponible."
+      },
+      {
+        "risk": "Costos de Tokens",
+        "solution": "Ruteo jerárquico de modelos según complejidad de tarea y presupuesto."
+      },
+      {
+        "risk": "Atadura a Proveedor",
+        "solution": "Arquitectura hexagonal con puertos y adaptadores intercambiables."
+      },
+      {
+        "risk": "Privacidad",
+        "solution": "Consentimiento, aislamiento de datos y cumplimiento RGPD/FERPA."
+      },
+      {
+        "risk": "Desviación de Agentes",
+        "solution": "Contratos deterministas + gobernanza estricta por un solo orquestador."
+      }
+    ],
+    "punchline_en": "We design how the system fails, not only how it works.",
+    "punchline_es": "Diseñamos cómo falla el sistema, no solo cómo funciona."
+  },
+  {
+    "id": 17,
+    "num": "16",
+    "category_en": "INVESTMENT / PARTNERSHIP",
+    "category_es": "INVERSIÓN / ALIANZAS",
+    "title_en": "What We Are Looking For: Capital & Strategic Partners",
+    "title_es": "Qué Buscamos: Capital y Socios Estratégicos",
+    "lead_en": "Capital or a strategic partnership to build, test, and validate the MVP in a real domain.",
+    "lead_es": "Capital o alianza estratégica para construir, probar y validar el MVP en un dominio real.",
+    "milestones_en": [
+      {
+        "num": "1",
+        "title": "Define First Domain + Rubrics",
+        "desc": "Select flagship topic with established academic standards."
+      },
+      {
+        "num": "2",
+        "title": "Build Agents + Memory + Verification",
+        "desc": "Deploy orchestrator, tri-layer memory, and multi-agent teams."
+      },
+      {
+        "num": "3",
+        "title": "Run a Measurable Pilot",
+        "desc": "Cohort pilot with 200+ active learners with pre/post assessments."
+      },
+      {
+        "num": "4",
+        "title": "Compare Diagnosis vs. Outcome",
+        "desc": "Prove learning velocity gains and gap remediation accuracy."
+      }
+    ],
+    "milestones_es": [
+      {
+        "num": "1",
+        "title": "Definir Primer Dominio + Rúbricas",
+        "desc": "Seleccionar vertical insignia con estándares curriculares formales."
+      },
+      {
+        "num": "2",
+        "title": "Construir Agentes + Memoria + Verificación",
+        "desc": "Desplegar orquestador, memoria tri-capa y equipos de agentes."
+      },
+      {
+        "num": "3",
+        "title": "Ejecutar Piloto Medible",
+        "desc": "Cohorte de 200+ estudiantes con evaluaciones antes y después."
+      },
+      {
+        "num": "4",
+        "title": "Comparar Diagnóstico vs. Resultado",
+        "desc": "Demostrar aceleración de aprendizaje y resolución de vacíos."
+      }
+    ],
+    "punchline_en": "Goal of the capital: Prove that someone learned.",
+    "punchline_es": "Meta del capital: Demostrar que alguien realmente aprendió."
+  },
+  {
+    "id": 18,
+    "num": "17",
+    "category_en": "CLOSING",
+    "category_es": "CIERRE",
+    "title_en": "Infrastructure for Human Learning",
+    "title_es": "Infraestructura para el Aprendizaje Humano",
+    "quote_en": "“The question is not whether AI can explain. The question is whether we can prove that someone learned.”",
+    "quote_es": "“La pregunta no es si la IA puede explicar. La pregunta es si podemos demostrar que alguien aprendió.”",
+    "pillars_en": [
+      "Goal",
+      "Diagnosis",
+      "Teaching",
+      "Evidence",
+      "Adaptation"
+    ],
+    "pillars_es": [
+      "Meta",
+      "Diagnóstico",
+      "Enseñanza",
+      "Evidencia",
+      "Adaptación"
+    ],
+    "punchline_en": "This is not a chatbot. It is infrastructure for learning.",
+    "punchline_es": "Esto no es un chatbot. Es infraestructura para el aprendizaje."
+  },
+  {
+    "id": 19,
+    "num": "18",
+    "category_en": "APPENDIX",
+    "category_es": "APÉNDICE",
+    "title_en": "Frequently Asked Questions (FAQ)",
+    "title_es": "Preguntas Frecuentes (FAQ)",
+    "lead_en": "Short answers to the questions investors are most likely to ask.",
+    "lead_es": "Respuestas directas a las preguntas que más realizan los inversores.",
+    "faqs_en": [
+      {
+        "q": "Why multiple agents?",
+        "a": "Teaching, grading, searching, and verifying have different incentives and requirements. Separation ensures safety and prevents self-approval."
+      },
+      {
+        "q": "What if the AI provider changes?",
+        "a": "Pedagogy is separated from the model; the LLM adapter can be swapped without changing the learning logic or graphs."
+      },
+      {
+        "q": "How do we know learning happened?",
+        "a": "Concept mastery delta, retention over time, skill transfer to new problems, and resolved prerequisite gaps in the graph."
+      },
+      {
+        "q": "Is it for children?",
+        "a": "The architecture allows it, but launch focuses on adult learners to optimize speed, consent, and regulatory compliance."
+      },
+      {
+        "q": "How long does the MVP take?",
+        "a": "12–16 weeks with a focused team, since the scope is strictly scoped to the closed-loop learning cycle."
+      },
+      {
+        "q": "What is the first market?",
+        "a": "High-intent verticals: Technical coding, STEM math, languages, or professional compliance training."
+      }
+    ],
+    "faqs_es": [
+      {
+        "q": "¿Por qué múltiples agentes?",
+        "a": "Enseñar, calificar, buscar y verificar tienen incentivos distintos. La separación garantiza rigor e impide la autoaprobación."
+      },
+      {
+        "q": "¿Qué pasa si cambia el proveedor de IA?",
+        "a": "La pedagogía está separada del modelo; los adaptadores de LLM se reemplazan sin tocar la lógica de aprendizaje ni los grafos."
+      },
+      {
+        "q": "¿Cómo sabemos que hubo aprendizaje?",
+        "a": "Dominio conceptual medido, retención en el tiempo, transferencia a problemas nuevos y vacíos resueltos en el grafo."
+      },
+      {
+        "q": "¿Es para niños (K-12)?",
+        "a": "La arquitectura lo permite plenamente, pero el lanzamiento inicial se enfoca en adultos para mayor velocidad y menor fricción regulatoria."
+      },
+      {
+        "q": "¿Cuánto tarda el MVP?",
+        "a": "Entre 12 y 16 semanas con un equipo enfocado, ya que el alcance está delimitado al ciclo cerrado de aprendizaje."
+      },
+      {
+        "q": "¿Cuál es el primer mercado?",
+        "a": "Verticales de alta intención: Programación técnica, matemáticas STEM, idiomas o capacitación corporativa."
+      }
+    ],
+    "punchline_en": "Q&A Discussion",
+    "punchline_es": "Sesión de Preguntas y Respuestas"
+  },
+  {
+    "id": 20,
+    "num": "19",
+    "category_en": "VISUAL CONTEXT 1",
+    "category_es": "CONTEXTO VISUAL 1",
+    "title_en": "From Chatbot to Tutor: Visual Comparison",
+    "title_es": "De Chatbot a Tutor: Comparación Visual",
+    "lead_en": "A visual comparison of the problem and the market opportunity.",
+    "lead_es": "Comparativa visual entre el problema actual y la oportunidad de mercado.",
+    "image": "extracted_media/image1.png",
+    "punchline_en": "Closed-loop tutoring vs. Open-ended chatbot.",
+    "punchline_es": "Tutoría en bucle cerrado vs. Chatbot abierto."
+  },
+  {
+    "id": 21,
+    "num": "20",
+    "category_en": "VISUAL CONTEXT 2",
+    "category_es": "CONTEXTO VISUAL 2",
+    "title_en": "Product View: An AI-Guided Tutoring Experience",
+    "title_es": "Vista del Producto: Experiencia de Tutoría Guiada por IA",
+    "lead_en": "How the interface presents real-time guidance, feedback, and progress.",
+    "lead_es": "Cómo la interfaz presenta guía en tiempo real, retroalimentación y avance.",
+    "image": "extracted_media/image2.png",
+    "punchline_en": "Intuitive, distraction-free interface built for focused mastery.",
+    "punchline_es": "Interfaz intuitiva y sin distracciones creada para el dominio enfocado."
+  },
+  {
+    "id": 22,
+    "num": "21",
+    "category_en": "VISUAL CONTEXT 3",
+    "category_es": "CONTEXTO VISUAL 3",
+    "title_en": "Learning Cycle: From Goal to Reinforcement",
+    "title_es": "Ciclo de Aprendizaje: De la Meta al Refuerzo",
+    "lead_en": "Continuous tracking, adaptive scaffolding, and diagnostic remediation.",
+    "lead_es": "Seguimiento continuo, andamiaje adaptativo y remediación diagnóstica.",
+    "image": "extracted_media/image3.png",
+    "punchline_en": "A complete, self-correcting pedagogical loop.",
+    "punchline_es": "Un bucle pedagógico completo y autocorrectivo."
+  },
+  {
+    "id": 23,
+    "num": "22",
+    "category_en": "VISUAL CONTEXT 4",
+    "category_es": "CONTEXTO VISUAL 4",
+    "title_en": "Four Teams, One Tutor: Orchestration Topology",
+    "title_es": "Cuatro Equipos, Un Tutor: Topología de Orquestación",
+    "lead_en": "Coordinate, Teach, Measure, and Protect with strict checks and balances.",
+    "lead_es": "Coordinar, Enseñar, Medir y Proteger con estricto balance de controles.",
+    "image": "extracted_media/image4.png",
+    "punchline_en": "Decoupled agents ensuring academic reliability.",
+    "punchline_es": "Agentes desacoplados que aseguran confiabilidad académica."
+  },
+  {
+    "id": 24,
+    "num": "23",
+    "category_en": "VISUAL CONTEXT 5",
+    "category_es": "CONTEXTO VISUAL 5",
+    "title_en": "Learning Through Connections & Analogies",
+    "title_es": "Aprendizaje Mediante Conexiones y Analogías",
+    "lead_en": "New knowledge builds systematically on what the learner already knows.",
+    "lead_es": "El nuevo conocimiento se construye sistemáticamente sobre lo que el estudiante ya domina.",
+    "image": "extracted_media/image5.png",
+    "punchline_en": "Grounded cognitive anchors accelerate retention.",
+    "punchline_es": "Los anclajes cognitivos comprobados aceleran la retención."
+  },
+  {
+    "id": 25,
+    "num": "24",
+    "category_en": "VISUAL CONTEXT 6",
+    "category_es": "CONTEXTO VISUAL 6",
+    "title_en": "Structured Memory: 3 Layers Working as One",
+    "title_es": "Memoria Estructurada: 3 Capas Trabajando como Un Sistema",
+    "lead_en": "Relational, Knowledge Graph, and Semantic Vector memory unified.",
+    "lead_es": "Memoria Relacional, Grafo de Conocimiento y Memoria Vectorial unificadas.",
+    "image": "extracted_media/image6.png",
+    "punchline_en": "Long-term learner state independent of ephemeral chat sessions.",
+    "punchline_es": "Estado del alumno a largo plazo independiente de sesiones de chat efímeras."
+  },
+  {
+    "id": 26,
+    "num": "25",
+    "category_en": "VISUAL CONTEXT 7",
+    "category_es": "CONTEXTO VISUAL 7",
+    "title_en": "Verified Sources: Research, Validate & Curate",
+    "title_es": "Fuentes Verificadas: Investigar, Validar y Curar",
+    "lead_en": "Multi-stage verification pipeline before teaching content to users.",
+    "lead_es": "Tubería de verificación multi-etapa antes de enseñar contenidos al usuario.",
+    "image": "extracted_media/image7.png",
+    "punchline_en": "Academic rigor and safety built into every response.",
+    "punchline_es": "Rigor académico y seguridad integrados en cada respuesta."
+  },
+  {
+    "id": 27,
+    "num": "26",
+    "category_en": "VISUAL CONTEXT 8",
+    "category_es": "CONTEXTO VISUAL 8",
+    "title_en": "Decoupled Architecture: Pedagogical Core",
+    "title_es": "Arquitectura Desacoplada: Núcleo Pedagógico",
+    "lead_en": "Designed to evolve with the AI ecosystem without rewrites.",
+    "lead_es": "Diseñada para evolucionar con el ecosistema de IA sin reescrituras.",
+    "image": "extracted_media/image8.png",
+    "punchline_en": "Future-proof investment in proprietary pedagogical intellectual property.",
+    "punchline_es": "Inversión a prueba de futuro en propiedad intelectual pedagógica propietaria."
+  }
+]
