@@ -2747,7 +2747,7 @@
         </div>
         <div class="deck-container" id="deck-comparativo">
 
-            <section class="slide active" id="comparativo-slide-1" data-slide="1" data-deck="comparativo">
+            <section class="slide active slide-hero-ia" id="comparativo-slide-1" data-slide="1" data-deck="comparativo">
               <div class="hero-cover">
                 <div class="hero-brand-top">| 3i BAIRD LAB · IA LOCAL</div>
                 <div class="hero-glow-badge">
@@ -2762,14 +2762,23 @@
                   <span class="lang-en">Prices, model capacity, developer workflow and a plain-language brief for the client. The right machine depends on model size, privacy, speed and budget.</span>
                   <span class="lang-es">Precios, capacidades de modelos, flujo de trabajo de desarrollador y explicación simple para el cliente. La elección depende del tamaño del modelo, privacidad, velocidad y presupuesto.</span>
                 </p>
-                <div class="hero-flow-ribbon">
-                  <div class="flow-step-pill">RTX 3050</div>
-                  <div class="flow-arrow">→</div>
-                  <div class="flow-step-pill">Mac mini M4</div>
-                  <div class="flow-arrow">→</div>
-                  <div class="flow-step-pill">Ryzen AI Max 128 GB</div>
-                  <div class="flow-arrow">→</div>
-                  <div class="flow-step-pill">GB10 / DGX Spark</div>
+                <div class="ia-machine-strip">
+                  <figure class="ia-machine-shot" onclick="openLightbox('media/ia/ia-gpu.jpg')">
+                    <img src="media/ia/ia-gpu.jpg" alt="RTX 3050">
+                    <figcaption>RTX 3050</figcaption>
+                  </figure>
+                  <figure class="ia-machine-shot" onclick="openLightbox('media/ia/ia-mac.jpg')">
+                    <img src="media/ia/ia-mac.jpg" alt="Mac mini M4">
+                    <figcaption>MAC MINI M4</figcaption>
+                  </figure>
+                  <figure class="ia-machine-shot" onclick="openLightbox('media/ia/ia-minipc.jpg')">
+                    <img src="media/ia/ia-minipc.jpg" alt="Ryzen AI Max 128 GB">
+                    <figcaption>RYZEN AI MAX 128 GB</figcaption>
+                  </figure>
+                  <figure class="ia-machine-shot" onclick="openLightbox('media/ia/ia-dgx.jpg')">
+                    <img src="media/ia/ia-dgx.jpg" alt="GB10 / DGX Spark">
+                    <figcaption>GB10 / DGX SPARK</figcaption>
+                  </figure>
                 </div>
               </div>
             </section>
@@ -2788,25 +2797,37 @@
               </div>
               <div class="slide-body">
                 <div class="cards-grid-4">
-                  <div class="feature-card">
-                    <div class="card-title"><span class="lang-en">Entry</span><span class="lang-es">Entrada</span></div>
-                    <div class="tech-badge">RTX 3050 / Mac M4</div>
-                    <div class="card-desc"><span class="lang-en">Tests, demos and light automations. Low cost, limited capacity.</span><span class="lang-es">Pruebas, demos y automatizaciones ligeras. Bajo costo, menor capacidad.</span></div>
+                  <div class="feature-card hw-photo-card">
+                    <div class="hw-photo" onclick="openLightbox('media/ia/ia-gpu.jpg')"><img src="media/ia/ia-gpu.jpg" alt="RTX 3050 / Mac M4"></div>
+                    <div class="hw-photo-body">
+                      <div class="card-title"><span class="lang-en">Entry</span><span class="lang-es">Entrada</span></div>
+                      <div class="tech-badge">RTX 3050 / Mac M4</div>
+                      <div class="card-desc"><span class="lang-en">Tests, demos and light automations. Low cost, limited capacity.</span><span class="lang-es">Pruebas, demos y automatizaciones ligeras. Bajo costo, menor capacidad.</span></div>
+                    </div>
                   </div>
-                  <div class="feature-card">
-                    <div class="card-title"><span class="lang-en">Intermediate</span><span class="lang-es">Intermedio</span></div>
-                    <div class="tech-badge">64 GB + RTX 3050</div>
-                    <div class="card-desc"><span class="lang-en">RAG, document bases and 8B models with solid local performance.</span><span class="lang-es">RAG, bases documentales y 8B con buen rendimiento. Compensa GPU pequeña con RAM y disco.</span></div>
+                  <div class="feature-card hw-photo-card">
+                    <div class="hw-photo" onclick="openLightbox('media/ia/ia-tower.jpg')"><img src="media/ia/ia-tower.jpg" alt="64 GB + RTX 3050"></div>
+                    <div class="hw-photo-body">
+                      <div class="card-title"><span class="lang-en">Intermediate</span><span class="lang-es">Intermedio</span></div>
+                      <div class="tech-badge">64 GB + RTX 3050</div>
+                      <div class="card-desc"><span class="lang-en">RAG, document bases and 8B models with solid local performance.</span><span class="lang-es">RAG, bases documentales y 8B con buen rendimiento. Compensa GPU pequeña con RAM y disco.</span></div>
+                    </div>
                   </div>
-                  <div class="feature-card highlight-card">
-                    <div class="card-title"><span class="lang-en">Serious local AI</span><span class="lang-es">IA local seria</span></div>
-                    <div class="tech-badge">BOSGAME M5 128 GB</div>
-                    <div class="card-desc"><span class="lang-en">Quantized 32B–70B models and large prototypes. Best memory cost per GB.</span><span class="lang-es">Modelos 32B y 70B quantizados, prototipos grandes. Mejor costo por GB de memoria.</span></div>
+                  <div class="feature-card hw-photo-card highlight-card">
+                    <div class="hw-photo" onclick="openLightbox('media/ia/ia-minipc.jpg')"><img src="media/ia/ia-minipc.jpg" alt="BOSGAME M5 128 GB"></div>
+                    <div class="hw-photo-body">
+                      <div class="card-title"><span class="lang-en">Serious local AI</span><span class="lang-es">IA local seria</span></div>
+                      <div class="tech-badge">BOSGAME M5 128 GB</div>
+                      <div class="card-desc"><span class="lang-en">Quantized 32B–70B models and large prototypes. Best memory cost per GB.</span><span class="lang-es">Modelos 32B y 70B quantizados, prototipos grandes. Mejor costo por GB de memoria.</span></div>
+                    </div>
                   </div>
-                  <div class="feature-card">
-                    <div class="card-title"><span class="lang-en">Pro / Enterprise</span><span class="lang-es">Pro / Enterprise</span></div>
-                    <div class="tech-badge">DGX Spark / GB10</div>
-                    <div class="card-desc"><span class="lang-en">200B inference, 70B fine-tuning and NVIDIA stack. Higher investment, better scale.</span><span class="lang-es">Inferencia 200B, fine-tuning 70B y stack NVIDIA. Mayor inversión, mejor escalamiento.</span></div>
+                  <div class="feature-card hw-photo-card">
+                    <div class="hw-photo" onclick="openLightbox('media/ia/ia-dgx.jpg')"><img src="media/ia/ia-dgx.jpg" alt="DGX Spark / GB10"></div>
+                    <div class="hw-photo-body">
+                      <div class="card-title"><span class="lang-en">Pro / Enterprise</span><span class="lang-es">Pro / Enterprise</span></div>
+                      <div class="tech-badge">DGX Spark / GB10</div>
+                      <div class="card-desc"><span class="lang-en">200B inference, 70B fine-tuning and NVIDIA stack. Higher investment, better scale.</span><span class="lang-es">Inferencia 200B, fine-tuning 70B y stack NVIDIA. Mayor inversión, mejor escalamiento.</span></div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -2828,16 +2849,28 @@
                 <p class="slide-lead"><span class="lang-en">Existing machines can develop, test and run small/medium local AI flows.</span><span class="lang-es">Los equipos existentes sirven para desarrollar, probar y operar flujos de IA local pequeños o medianos.</span></p>
               </div>
               <div class="slide-body">
-                <div class="cards-grid-2">
-                  <div class="feature-card">
-                    <div class="card-title"><span class="lang-en">Current machine A</span><span class="lang-es">Equipo actual A</span></div>
-                    <div class="tech-badge">Ryzen 5 5600X · 32 GB</div>
-                    <div class="card-desc"><span class="lang-en">IDE, light Docker, automations, API, web panel and small models or cloud AI. Base development — not for large models.</span><span class="lang-es">IDE, Docker liviano, automatizaciones, API, panel web y pruebas con IA en la nube o modelos pequeños. Desarrollo base. No ideal para modelos grandes.</span></div>
+                <div class="split-layout">
+                  <div class="cards-grid-2-vertical">
+                    <div class="feature-card hw-photo-card">
+                      <div class="hw-photo" onclick="openLightbox('media/ia/ia-workflow.jpg')"><img src="media/ia/ia-workflow.jpg" alt="Equipo actual A"></div>
+                      <div class="hw-photo-body">
+                        <div class="card-title"><span class="lang-en">Current machine A</span><span class="lang-es">Equipo actual A</span></div>
+                        <div class="tech-badge">Ryzen 5 5600X · 32 GB</div>
+                        <div class="card-desc"><span class="lang-en">IDE, light Docker, automations, API, web panel and small models or cloud AI. Base development — not for large models.</span><span class="lang-es">IDE, Docker liviano, automatizaciones, API, panel web y pruebas con IA en la nube o modelos pequeños. Desarrollo base. No ideal para modelos grandes.</span></div>
+                      </div>
+                    </div>
+                    <div class="feature-card hw-photo-card highlight-card">
+                      <div class="hw-photo" onclick="openLightbox('media/ia/ia-tower.jpg')"><img src="media/ia/ia-tower.jpg" alt="Equipo actual B"></div>
+                      <div class="hw-photo-body">
+                        <div class="card-title"><span class="lang-en">Current machine B</span><span class="lang-es">Equipo actual B</span></div>
+                        <div class="tech-badge">Ryzen 7 5700X · 64 GB · RTX 3050 8 GB · 11.84 TB</div>
+                        <div class="card-desc"><span class="lang-en">Document RAG, local datasets, test servers and comfortable 7B/8B on GPU. Strong for product tests — still not a 128 GB station.</span><span class="lang-es">RAG con documentos, datasets locales, servidores de prueba y modelos 7B/8B en GPU. 8B local cómodo. No reemplaza una estación 128 GB.</span></div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="feature-card highlight-card">
-                    <div class="card-title"><span class="lang-en">Current machine B</span><span class="lang-es">Equipo actual B</span></div>
-                    <div class="tech-badge">Ryzen 7 5700X · 64 GB · RTX 3050 8 GB · 11.84 TB</div>
-                    <div class="card-desc"><span class="lang-en">Document RAG, local datasets, test servers and comfortable 7B/8B on GPU. Strong for product tests — still not a 128 GB station.</span><span class="lang-es">RAG con documentos, datasets locales, servidores de prueba y modelos 7B/8B en GPU. 8B local cómodo. No reemplaza una estación 128 GB.</span></div>
+                  <div class="diagram-preview-box photo-cover" onclick="openLightbox('media/ia/ia-gpu.jpg')">
+                    <img src="media/ia/ia-gpu.jpg" alt="GPU RTX 3050 en estación de desarrollo">
+                    <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> RTX 3050 8 GB</div>
                   </div>
                 </div>
               </div>
@@ -2858,6 +2891,7 @@
                 <h2><span class="lang-en">Reference prices — Colombia may vary with import and tax</span><span class="lang-es">Valores referenciales. En Colombia pueden cambiar por importación e impuestos</span></h2>
               </div>
               <div class="slide-body">
+                <div class="split-layout">
                 <div class="comparison-table-wrapper">
                   <table class="comparison-table">
                     <thead>
@@ -2880,6 +2914,11 @@
                     </tbody>
                   </table>
                 </div>
+                  <div class="diagram-preview-box photo-cover" onclick="openLightbox('media/ia/ia-minipc.jpg')">
+                    <img src="media/ia/ia-minipc.jpg" alt="Estación compacta 128 GB">
+                    <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> 128 GB</div>
+                  </div>
+                </div>
               </div>
               <div class="slide-footer">
                 <div class="punchline-badge"><span class="lang-en">“AI memory” is VRAM or unified memory that actually loads models — the jump from 8/16 GB to 128 GB is the story.</span><span class="lang-es">“Memoria IA” compara VRAM o memoria unificada útil para modelos. El salto de 8/16 GB a 128 GB es la historia.</span></div>
@@ -2898,7 +2937,8 @@
                 <h2><span class="lang-en">AI memory is the bottleneck that sets model size</span><span class="lang-es">La memoria disponible para IA es el factor que más limita el tamaño del modelo</span></h2>
               </div>
               <div class="slide-body">
-                <div class="cards-grid-3">
+                <div class="split-layout">
+                <div class="cards-grid-3" style="grid-template-columns: 1fr;">
                   <div class="feature-card highlight-card" style="text-align:center;">
                     <div class="stat-kpi">15×</div>
                     <div class="card-title">128 GB vs 8 GB</div>
@@ -2913,6 +2953,11 @@
                     <div class="stat-kpi">200B</div>
                     <div class="card-title">DGX Spark</div>
                     <div class="card-desc"><span class="lang-en">Official inference capacity.</span><span class="lang-es">Capacidad oficial de inferencia.</span></div>
+                  </div>
+                </div>
+                  <div class="diagram-preview-box photo-cover" onclick="openLightbox('media/ia/ia-memory.jpg')">
+                    <img src="media/ia/ia-memory.jpg" alt="Memoria IA: el cuello de botella">
+                    <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-es">Memoria IA</span><span class="lang-en">AI memory</span></div>
                   </div>
                 </div>
               </div>
@@ -2934,6 +2979,7 @@
                 <p class="slide-lead"><span class="lang-en">Practical capacity by model size, using quantization when needed. OK = recommended · LIM = possible with offload · NO = not advised.</span><span class="lang-es">Capacidad práctica por tamaño, con quantización cuando aplica. OK = recomendable · LIM = posible con limitaciones · NO = no recomendado.</span></p>
               </div>
               <div class="slide-body">
+                <div class="split-layout">
                 <div class="comparison-table-wrapper">
                   <table class="comparison-table matrix-table">
                     <thead>
@@ -2950,6 +2996,11 @@
                       <tr><td class="aspect">GB10 / DGX / Acer / Dell</td><td class="good">OK</td><td class="good">OK</td><td class="good">OK</td><td class="good">OK</td><td class="good">OK</td><td class="good">OK</td></tr>
                     </tbody>
                   </table>
+                </div>
+                  <div class="diagram-preview-box photo-cover" onclick="openLightbox('media/ia/ia-models.jpg')">
+                    <img src="media/ia/ia-models.jpg" alt="Escala de modelos locales">
+                    <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> 3B → 200B</div>
+                  </div>
                 </div>
               </div>
               <div class="slide-footer">
@@ -2969,6 +3020,8 @@
                 <h2><span class="lang-en">How the fleet is used on a real AI project</span><span class="lang-es">Así se usa el ecosistema de equipos en un proyecto real de IA</span></h2>
               </div>
               <div class="slide-body">
+                <div class="split-layout">
+                  <div>
                 <div class="hero-flow-ribbon" style="justify-content:flex-start;">
                   <div class="flow-step-pill">01 <span class="lang-en">Design</span><span class="lang-es">Diseñar</span></div>
                   <div class="flow-arrow">→</div>
@@ -2982,10 +3035,16 @@
                   <div class="flow-arrow">→</div>
                   <div class="flow-step-pill">06 <span class="lang-en">Deliver</span><span class="lang-es">Entregar</span></div>
                 </div>
-                <div class="cards-grid-3" style="margin-top:18px;">
-                  <div class="feature-card"><div class="card-title">PC / Mac</div><div class="card-desc"><span class="lang-en">Development and demos.</span><span class="lang-es">Desarrollo y demos.</span></div></div>
-                  <div class="feature-card"><div class="card-title">Ryzen 7 64 GB</div><div class="card-desc"><span class="lang-en">Private RAG and internal tests.</span><span class="lang-es">RAG y pruebas internas.</span></div></div>
-                  <div class="feature-card highlight-card"><div class="card-title">BOSGAME / GB10</div><div class="card-desc"><span class="lang-en">Large models and private-client work.</span><span class="lang-es">Modelos grandes y cliente privado.</span></div></div>
+                <div class="cards-grid-3 ia-flow-roles" style="margin-top:18px;">
+                  <div class="feature-card hw-photo-card"><div class="hw-photo" onclick="openLightbox('media/ia/ia-mac.jpg')"><img src="media/ia/ia-mac.jpg" alt="PC / Mac"></div><div class="hw-photo-body"><div class="card-title">PC / Mac</div><div class="card-desc"><span class="lang-en">Development and demos.</span><span class="lang-es">Desarrollo y demos.</span></div></div></div>
+                  <div class="feature-card hw-photo-card"><div class="hw-photo" onclick="openLightbox('media/ia/ia-rag.jpg')"><img src="media/ia/ia-rag.jpg" alt="Ryzen 7 64 GB"></div><div class="hw-photo-body"><div class="card-title">Ryzen 7 64 GB</div><div class="card-desc"><span class="lang-en">Private RAG and internal tests.</span><span class="lang-es">RAG y pruebas internas.</span></div></div></div>
+                  <div class="feature-card hw-photo-card highlight-card"><div class="hw-photo" onclick="openLightbox('media/ia/ia-minipc.jpg')"><img src="media/ia/ia-minipc.jpg" alt="BOSGAME / GB10"></div><div class="hw-photo-body"><div class="card-title">BOSGAME / GB10</div><div class="card-desc"><span class="lang-en">Large models and private-client work.</span><span class="lang-es">Modelos grandes y cliente privado.</span></div></div></div>
+                </div>
+                  </div>
+                  <div class="diagram-preview-box photo-cover" onclick="openLightbox('media/ia/ia-workflow.jpg')">
+                    <img src="media/ia/ia-workflow.jpg" alt="Flujo de trabajo de desarrollador">
+                    <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-es">Flujo real</span><span class="lang-en">Real workflow</span></div>
+                  </div>
                 </div>
               </div>
               <div class="slide-footer">
@@ -3007,10 +3066,10 @@
               </div>
               <div class="slide-body">
                 <div class="cards-grid-4">
-                  <div class="feature-card"><div class="card-title"><span class="lang-en">Hard drive = warehouse</span><span class="lang-es">Disco duro = la bodega</span></div><div class="card-desc"><span class="lang-en">Stores documents, models, databases and evidence.</span><span class="lang-es">Guarda documentos, modelos, bases de datos y evidencias.</span></div></div>
-                  <div class="feature-card highlight-card"><div class="card-title"><span class="lang-en">RAM / VRAM = worktable</span><span class="lang-es">RAM / VRAM = la mesa de trabajo</span></div><div class="card-desc"><span class="lang-en">The larger it is, the more documents and models stay open at once.</span><span class="lang-es">Mientras más grande, más documentos y modelos caben abiertos al mismo tiempo.</span></div></div>
-                  <div class="feature-card"><div class="card-title"><span class="lang-en">GPU / NPU = expert team</span><span class="lang-es">GPU / NPU = el equipo experto</span></div><div class="card-desc"><span class="lang-en">Does the heavy math and speeds up AI answers.</span><span class="lang-es">Hace los cálculos pesados y acelera respuestas de IA.</span></div></div>
-                  <div class="feature-card"><div class="card-title"><span class="lang-en">Software = the method</span><span class="lang-es">Software IA = el método</span></div><div class="card-desc"><span class="lang-en">Prompts, security, permissions, RAG and measurement.</span><span class="lang-es">Ordena prompts, seguridad, permisos, RAG y medición.</span></div></div>
+                  <div class="feature-card hw-photo-card"><div class="hw-photo" onclick="openLightbox('media/ia/ia-rag.jpg')"><img src="media/ia/ia-rag.jpg" alt="Disco duro = bodega"></div><div class="hw-photo-body"><div class="card-title"><span class="lang-en">Hard drive = warehouse</span><span class="lang-es">Disco duro = la bodega</span></div><div class="card-desc"><span class="lang-en">Stores documents, models, databases and evidence.</span><span class="lang-es">Guarda documentos, modelos, bases de datos y evidencias.</span></div></div></div>
+                  <div class="feature-card hw-photo-card highlight-card"><div class="hw-photo" onclick="openLightbox('media/ia/ia-memory.jpg')"><img src="media/ia/ia-memory.jpg" alt="RAM / VRAM = mesa de trabajo"></div><div class="hw-photo-body"><div class="card-title"><span class="lang-en">RAM / VRAM = worktable</span><span class="lang-es">RAM / VRAM = la mesa de trabajo</span></div><div class="card-desc"><span class="lang-en">The larger it is, the more documents and models stay open at once.</span><span class="lang-es">Mientras más grande, más documentos y modelos caben abiertos al mismo tiempo.</span></div></div></div>
+                  <div class="feature-card hw-photo-card"><div class="hw-photo" onclick="openLightbox('media/ia/ia-gpu.jpg')"><img src="media/ia/ia-gpu.jpg" alt="GPU / NPU = equipo experto"></div><div class="hw-photo-body"><div class="card-title"><span class="lang-en">GPU / NPU = expert team</span><span class="lang-es">GPU / NPU = el equipo experto</span></div><div class="card-desc"><span class="lang-en">Does the heavy math and speeds up AI answers.</span><span class="lang-es">Hace los cálculos pesados y acelera respuestas de IA.</span></div></div></div>
+                  <div class="feature-card hw-photo-card"><div class="hw-photo" onclick="openLightbox('media/ia/ia-workflow.jpg')"><img src="media/ia/ia-workflow.jpg" alt="Software IA = el método"></div><div class="hw-photo-body"><div class="card-title"><span class="lang-en">Software = the method</span><span class="lang-es">Software IA = el método</span></div><div class="card-desc"><span class="lang-en">Prompts, security, permissions, RAG and measurement.</span><span class="lang-es">Ordena prompts, seguridad, permisos, RAG y medición.</span></div></div></div>
                 </div>
               </div>
               <div class="slide-footer">
@@ -3031,10 +3090,10 @@
               </div>
               <div class="slide-body">
                 <div class="cards-grid-4">
-                  <div class="feature-card"><div class="card-title"><span class="lang-en">Tight budget</span><span class="lang-es">Presupuesto bajo</span></div><div class="tech-badge">RTX 3050 / Mac mini M4</div><div class="card-desc"><span class="lang-en">Automations, demos, fast prototypes.</span><span class="lang-es">Automatizaciones, demos, prototipos rápidos.</span></div></div>
-                  <div class="feature-card"><div class="card-title"><span class="lang-en">Use what we have</span><span class="lang-es">Aprovechar lo existente</span></div><div class="tech-badge">Ryzen 7 64 GB + RTX 3050</div><div class="card-desc"><span class="lang-en">RAG, large storage and product tests.</span><span class="lang-es">RAG, almacenamiento grande y pruebas de producto.</span></div></div>
-                  <div class="feature-card highlight-card"><div class="card-title"><span class="lang-en">Best cost / capacity jump</span><span class="lang-es">Mejor salto costo/capacidad</span></div><div class="tech-badge">BOSGAME M5 AI 128 GB</div><div class="card-desc"><span class="lang-en">Large quantized models and private local work.</span><span class="lang-es">Modelos grandes quantizados y trabajo local privado.</span></div></div>
-                  <div class="feature-card"><div class="card-title"><span class="lang-en">Enterprise client</span><span class="lang-es">Cliente enterprise</span></div><div class="tech-badge">DGX Spark / Acer / Dell GB10</div><div class="card-desc"><span class="lang-en">NVIDIA stack, 200B inference and vendor support.</span><span class="lang-es">Stack NVIDIA, inferencia 200B y soporte empresarial.</span></div></div>
+                  <div class="feature-card hw-photo-card"><div class="hw-photo" onclick="openLightbox('media/ia/ia-gpu.jpg')"><img src="media/ia/ia-gpu.jpg" alt="Presupuesto bajo"></div><div class="hw-photo-body"><div class="card-title"><span class="lang-en">Tight budget</span><span class="lang-es">Presupuesto bajo</span></div><div class="tech-badge">RTX 3050 / Mac mini M4</div><div class="card-desc"><span class="lang-en">Automations, demos, fast prototypes.</span><span class="lang-es">Automatizaciones, demos, prototipos rápidos.</span></div></div></div>
+                  <div class="feature-card hw-photo-card"><div class="hw-photo" onclick="openLightbox('media/ia/ia-tower.jpg')"><img src="media/ia/ia-tower.jpg" alt="Aprovechar lo existente"></div><div class="hw-photo-body"><div class="card-title"><span class="lang-en">Use what we have</span><span class="lang-es">Aprovechar lo existente</span></div><div class="tech-badge">Ryzen 7 64 GB + RTX 3050</div><div class="card-desc"><span class="lang-en">RAG, large storage and product tests.</span><span class="lang-es">RAG, almacenamiento grande y pruebas de producto.</span></div></div></div>
+                  <div class="feature-card hw-photo-card highlight-card"><div class="hw-photo" onclick="openLightbox('media/ia/ia-minipc.jpg')"><img src="media/ia/ia-minipc.jpg" alt="Mejor salto costo/capacidad"></div><div class="hw-photo-body"><div class="card-title"><span class="lang-en">Best cost / capacity jump</span><span class="lang-es">Mejor salto costo/capacidad</span></div><div class="tech-badge">BOSGAME M5 AI 128 GB</div><div class="card-desc"><span class="lang-en">Large quantized models and private local work.</span><span class="lang-es">Modelos grandes quantizados y trabajo local privado.</span></div></div></div>
+                  <div class="feature-card hw-photo-card"><div class="hw-photo" onclick="openLightbox('media/ia/ia-dgx.jpg')"><img src="media/ia/ia-dgx.jpg" alt="Cliente enterprise"></div><div class="hw-photo-body"><div class="card-title"><span class="lang-en">Enterprise client</span><span class="lang-es">Cliente enterprise</span></div><div class="tech-badge">DGX Spark / Acer / Dell GB10</div><div class="card-desc"><span class="lang-en">NVIDIA stack, 200B inference and vendor support.</span><span class="lang-es">Stack NVIDIA, inferencia 200B y soporte empresarial.</span></div></div></div>
                 </div>
               </div>
               <div class="slide-footer">
@@ -3055,13 +3114,19 @@
                 <p class="slide-lead"><span class="lang-en">Commercial data from official pages or reference stores. FX via Wise / XE. Validate before purchase.</span><span class="lang-es">Datos comerciales de fuentes oficiales o tiendas referenciales. Tasa Wise / XE. Validar antes de comprar.</span></p>
               </div>
               <div class="slide-body">
-                <div class="cards-grid-3">
+                <div class="split-layout">
+                <div class="cards-grid-2">
                   <div class="feature-card"><div class="card-title">BOSGAME M5 AI</div><div class="card-desc">Ryzen AI Max+ 395, 128 GB, 2 TB · USD 2,999 · bosgamepc.com</div></div>
                   <div class="feature-card"><div class="card-title">NVIDIA DGX Spark</div><div class="card-desc">GB10, 1 PFLOP FP4, 128 GB, 4 TB · USD 4,699 · marketplace.nvidia.com</div></div>
                   <div class="feature-card"><div class="card-title">Acer Veriton GN100</div><div class="card-desc">GB10, 128 GB, hasta 4 TB · desde USD 3,999 · acer.com</div></div>
                   <div class="feature-card"><div class="card-title">Dell Pro Max GB10</div><div class="card-desc">128 GB LPDDR5X, 4 TB · USD 6,330.64 · dell.com</div></div>
                   <div class="feature-card"><div class="card-title">Apple Mac mini M4</div><div class="card-desc">M4, 16 GB, SSD 2 TB configurable · apple.com/co/mac-mini</div></div>
                   <div class="feature-card highlight-card"><div class="card-title"><span class="lang-en">Decision</span><span class="lang-es">Decisión</span></div><div class="card-desc"><span class="lang-en">128 GB is the relevant jump for large local models.</span><span class="lang-es">128 GB es el salto relevante para modelos grandes en local.</span></div></div>
+                </div>
+                  <div class="diagram-preview-box photo-cover" onclick="openLightbox('media/ia/ia-client.jpg')">
+                    <img src="media/ia/ia-client.jpg" alt="Briefing ejecutivo con el cliente">
+                    <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> 3i BAIRD LAB</div>
+                  </div>
                 </div>
               </div>
               <div class="slide-footer">
@@ -3458,9 +3523,27 @@
     </div>
 
   <div class="video-theater" id="videoTheater" hidden>
-    <video id="ventureVideo" playsinline>
-      <source src="media/ai-edtech.mp4" type="video/mp4">
-    </video>
+    <div class="video-stage">
+      <video id="ventureVideo" playsinline controls preload="auto" controlslist="nodownload">
+        <source src="media/ai-edtech-hd.mp4" type="video/mp4">
+        <source src="media/ai-edtech.mp4" type="video/mp4">
+      </video>
+      <div class="video-end-card">
+        <h2>AI EDTECH</h2>
+        <p class="lang-es">El video terminó. Puedes verlo otra vez o continuar al pitch.</p>
+        <p class="lang-en">The video ended. Replay it or continue to the pitch.</p>
+        <div class="video-end-actions">
+          <button type="button" class="btn-nav" onclick="replayVentureVideo()">
+            <span class="lang-en">Watch again</span>
+            <span class="lang-es">Ver de nuevo</span>
+          </button>
+          <button type="button" class="btn-nav" onclick="skipVentureVideo()">
+            <span class="lang-en">Go to pitch</span>
+            <span class="lang-es">Ir al pitch</span>
+          </button>
+        </div>
+      </div>
+    </div>
     <div class="video-theater-bar">
       <span class="video-theater-label">3i BAIRD LAB · AI EDTECH</span>
       <div class="video-theater-actions">

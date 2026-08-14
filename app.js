@@ -88,51 +88,54 @@ function updateChromeMeta() {
 }
 
 const SLIDE_BACKGROUNDS = {
-  hub: { default: 'backgrounds/bg-hub.png' },
+  hub: { default: 'backgrounds/bg-hub.jpg' },
   tutor: {
-    default: 'backgrounds/bg-tutor-neural.png',
-    1: 'backgrounds/bg-tutor-lumi.png',
-    2: 'backgrounds/bg-tutor-study.png',
-    3: 'backgrounds/bg-tutor-ai.png',
-    9: 'backgrounds/bg-tutor-ai.png',
-    11: 'backgrounds/bg-closing.png',
-    13: 'backgrounds/bg-closing.png',
-    14: 'backgrounds/bg-tutor-study.png',
-    15: 'backgrounds/bg-closing.png'
+    default: 'backgrounds/bg-tutor-neural.jpg',
+    1: 'backgrounds/bg-tutor-lumi.jpg',
+    2: 'backgrounds/bg-tutor-study.jpg',
+    3: 'backgrounds/bg-tutor-ai.jpg',
+    9: 'backgrounds/bg-tutor-ai.jpg',
+    11: 'backgrounds/bg-closing.jpg',
+    13: 'backgrounds/bg-closing.jpg',
+    14: 'backgrounds/bg-tutor-study.jpg',
+    15: 'backgrounds/bg-closing.jpg'
   },
   fastfood: {
-    default: 'backgrounds/bg-fastfood-store.png',
-    1: 'backgrounds/bg-fastfood-pizza.png',
-    2: 'backgrounds/bg-fastfood-store.png',
-    3: 'backgrounds/bg-fastfood-kitchen.png',
-    4: 'backgrounds/bg-fastfood-kitchen.png',
-    5: 'backgrounds/bg-fastfood-store.png',
-    6: 'backgrounds/bg-fastfood-store.png',
-    10: 'backgrounds/bg-fastfood-kitchen.png',
-    12: 'backgrounds/bg-fastfood-pizza.png',
-    15: 'backgrounds/bg-fastfood-pizza.png'
+    default: 'backgrounds/bg-fastfood-store.jpg',
+    1: 'backgrounds/bg-fastfood-pizza.jpg',
+    2: 'backgrounds/bg-fastfood-store.jpg',
+    3: 'backgrounds/bg-fastfood-kitchen.jpg',
+    4: 'backgrounds/bg-fastfood-kitchen.jpg',
+    5: 'backgrounds/bg-fastfood-store.jpg',
+    6: 'backgrounds/bg-fastfood-store.jpg',
+    10: 'backgrounds/bg-fastfood-kitchen.jpg',
+    12: 'backgrounds/bg-fastfood-pizza.jpg',
+    15: 'backgrounds/bg-fastfood-pizza.jpg'
   },
   arcana: {
-    default: 'backgrounds/bg-arcana-chain.png',
-    1: 'backgrounds/bg-arcana-iot.png',
-    2: 'backgrounds/bg-arcana-iot.png',
-    3: 'backgrounds/bg-arcana-iot.png',
-    4: 'backgrounds/bg-arcana-iot.png',
-    5: 'backgrounds/bg-arcana-iot.png',
-    9: 'backgrounds/bg-arcana-iot.png',
-    11: 'backgrounds/bg-arcana-iot.png',
-    14: 'backgrounds/bg-arcana-iot.png',
-    15: 'backgrounds/bg-closing.png'
+    default: 'backgrounds/bg-arcana-chain.jpg',
+    1: 'backgrounds/bg-arcana-iot.jpg',
+    2: 'backgrounds/bg-arcana-iot.jpg',
+    3: 'backgrounds/bg-arcana-iot.jpg',
+    4: 'backgrounds/bg-arcana-iot.jpg',
+    5: 'backgrounds/bg-arcana-iot.jpg',
+    9: 'backgrounds/bg-arcana-iot.jpg',
+    11: 'backgrounds/bg-arcana-iot.jpg',
+    14: 'backgrounds/bg-arcana-iot.jpg',
+    15: 'backgrounds/bg-closing.jpg'
   },
   comparativo: {
-    default: 'backgrounds/bg-ia-chip.png',
-    1: 'backgrounds/bg-ia-lab.png',
-    2: 'backgrounds/bg-ia-lab.png',
-    3: 'backgrounds/bg-ia-lab.png',
-    5: 'backgrounds/bg-ia-chip.png',
-    7: 'backgrounds/bg-ia-lab.png',
-    9: 'backgrounds/bg-ia-lab.png',
-    10: 'backgrounds/bg-closing.png'
+    default: 'backgrounds/bg-ia-chip.jpg',
+    1: 'backgrounds/bg-ia-lab.jpg',
+    2: 'media/ia/ia-models.jpg',
+    3: 'backgrounds/bg-ia-lab.jpg',
+    4: 'backgrounds/bg-ia-chip.jpg',
+    5: 'media/ia/ia-memory.jpg',
+    6: 'media/ia/ia-models.jpg',
+    7: 'media/ia/ia-workflow.jpg',
+    8: 'media/ia/ia-client.jpg',
+    9: 'backgrounds/bg-ia-lab.jpg',
+    10: 'backgrounds/bg-closing.jpg'
   }
 };
 
@@ -150,10 +153,9 @@ function resolveSlideBackground(slide) {
 function injectThemedBackgrounds() {
   document.querySelectorAll('.slide').forEach((slide) => {
     if (slide.querySelector('.slide-photo-bg')) return;
-    const src = resolveSlideBackground(slide);
     const bg = document.createElement('div');
     bg.className = 'slide-photo-bg';
-    bg.style.backgroundImage = `url("${src}")`;
+    bg.dataset.src = resolveSlideBackground(slide);
     const overlay = document.createElement('div');
     overlay.className = 'slide-photo-overlay';
     slide.insertBefore(bg, slide.firstChild);
@@ -161,21 +163,62 @@ function injectThemedBackgrounds() {
   });
 }
 
-function preloadBackgrounds() {
-  const urls = new Set();
-  Object.values(SLIDE_BACKGROUNDS).forEach((map) => {
-    Object.values(map).forEach((url) => urls.add(url));
-  });
-  urls.forEach((url) => {
-    const img = new Image();
-    img.src = url;
+function loadSlideBackground(slide) {
+  if (!slide) return;
+  const bg = slide.querySelector('.slide-photo-bg');
+  if (!bg || bg.style.backgroundImage || !bg.dataset.src) return;
+  bg.style.backgroundImage = `url("${bg.dataset.src}")`;
+}
+
+function deferSlideImages() {
+  document.querySelectorAll('.slide img').forEach((img) => {
+    if (img.dataset.src) return;
+    const src = img.getAttribute('src');
+    if (!src || src.startsWith('data:')) return;
+    img.dataset.src = src;
+    img.removeAttribute('src');
+    img.decoding = 'async';
   });
 }
 
-// Initialize
+function loadSlideImages(slide) {
+  if (!slide) return;
+  slide.querySelectorAll('img[data-src]').forEach((img) => {
+    if (img.getAttribute('src') === img.dataset.src) return;
+    img.src = img.dataset.src;
+  });
+}
+
+function preloadUrl(url) {
+  if (!url) return;
+  const img = new Image();
+  img.decoding = 'async';
+  img.src = url;
+}
+
+function primeNearbySlides(deckKey, slideNum) {
+  const container = document.getElementById(deckKey === 'hub' ? 'deck-hub' : `deck-${deckKey}`);
+  if (!container) return;
+  container.querySelectorAll('.slide').forEach((slide) => {
+    const sid = parseInt(slide.getAttribute('data-slide') || '1', 10);
+    if (deckKey === 'hub' || Math.abs(sid - slideNum) <= 1) {
+      loadSlideBackground(slide);
+      loadSlideImages(slide);
+    }
+  });
+}
+
+function warmupVideo() {
+  const video = document.getElementById('ventureVideo');
+  if (video) video.preload = 'auto';
+}
+
 function initPlatform() {
   injectThemedBackgrounds();
-  preloadBackgrounds();
+  deferSlideImages();
+  primeNearbySlides('hub', 1);
+  preloadUrl(SLIDE_BACKGROUNDS.hub.default);
+  warmupVideo();
   openExecutiveHub();
   applyLanguage(currentLang);
   setupTouchGestures();
@@ -240,6 +283,7 @@ function launchDeck(deckKey) {
     }
   });
 
+  primeNearbySlides(activeDeck, currentSlide);
   updateSlideDisplay();
 }
 
@@ -314,6 +358,8 @@ function updateSlideDisplay() {
       }
     });
   }
+
+  primeNearbySlides(activeDeck, currentSlide);
 }
 
 // Language Switcher (ES <-> EN)
@@ -409,6 +455,18 @@ function isVideoTheaterOpen() {
   return theater && !theater.hidden;
 }
 
+function setVideoEndedState(ended) {
+  const theater = document.getElementById('videoTheater');
+  if (theater) theater.classList.toggle('is-ended', !!ended);
+}
+
+function enterVideoFullscreen(theater) {
+  const el = theater;
+  const req = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
+  if (!req) return;
+  Promise.resolve(req.call(el)).catch(() => {});
+}
+
 function playVentureVideo(deckKey) {
   const theater = document.getElementById('videoTheater');
   const video = document.getElementById('ventureVideo');
@@ -419,19 +477,33 @@ function playVentureVideo(deckKey) {
 
   pendingDeckAfterVideo = deckKey;
   theater.hidden = false;
+  setVideoEndedState(false);
+  video.controls = true;
+  video.preload = 'auto';
   video.currentTime = 0;
   video.muted = false;
+  enterVideoFullscreen(theater);
+
   const playPromise = video.play();
   if (playPromise && typeof playPromise.catch === 'function') {
     playPromise.catch(() => {
       video.muted = true;
-      video.play().catch(() => launchDeck(deckKey));
+      video.play().catch(() => {});
     });
   }
 
   video.onended = () => {
-    closeVentureVideo(true);
+    setVideoEndedState(true);
   };
+}
+
+function replayVentureVideo() {
+  const video = document.getElementById('ventureVideo');
+  if (!video) return;
+  setVideoEndedState(false);
+  video.currentTime = 0;
+  video.muted = false;
+  video.play().catch(() => {});
 }
 
 function skipVentureVideo() {
@@ -446,7 +518,13 @@ function closeVentureVideo(continueToDeck) {
     video.currentTime = 0;
     video.onended = null;
   }
-  if (theater) theater.hidden = true;
+  if (theater) {
+    theater.hidden = true;
+    theater.classList.remove('is-ended');
+  }
+  if (document.fullscreenElement) {
+    document.exitFullscreen().catch(() => {});
+  }
 
   const nextDeck = pendingDeckAfterVideo;
   pendingDeckAfterVideo = null;
@@ -464,6 +542,13 @@ document.addEventListener('keydown', (e) => {
     } else if (e.key === 'Enter') {
       e.preventDefault();
       skipVentureVideo();
+    } else if (e.key === ' ' || e.code === 'Space') {
+      e.preventDefault();
+      const video = document.getElementById('ventureVideo');
+      if (!video) return;
+      if (video.ended) replayVentureVideo();
+      else if (video.paused) video.play().catch(() => {});
+      else video.pause();
     }
     return;
   }
