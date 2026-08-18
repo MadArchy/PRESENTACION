@@ -24,9 +24,12 @@ presentacion/
 │   │   ├── bg-fastfood-*.jpg       # Vertical FoodTech QSR
 │   │   ├── bg-arcana-*.jpg         # Vertical Arcana Web3 & IoT
 │   │   └── bg-ia-*.jpg             # Hardware e Infraestructura Local
-│   └── media/                      # Videos ejecutivos en HD y fotografías de hardware IA
-│       ├── ai-edtech-hd.mp4        # Video introductorio AI EdTech
-│       └── ia/                     # Galería de workstations y servidores locales
+│   ├── media/                      # Videos ejecutivos en HD y fotografías de hardware IA
+│   │   ├── ai-edtech-hd.mp4        # Video introductorio AI EdTech
+│   │   └── ia/                     # Galería de workstations y servidores locales
+│   ├── extracted_media/            # Diagramas de arquitectura y flujo (AI EdTech Tutor)
+│   ├── extracted_media_arcana/     # Diagramas y esquemas técnicos (Arcana Web3 & IoT)
+│   └── extracted_media_fastfood/   # Diagramas operativos y flujos (Smart Fast-Food)
 │
 ├── 📦 FUENTES Y MATERIALES ORIGINALES (sources/)
 │   ├── pptx/                       # Presentaciones PowerPoint originales
@@ -34,12 +37,11 @@ presentacion/
 │   │   ├── Expert_MultiAgent_Tutor_Investors_EN_VISUAL.pptx
 │   │   ├── Pitch_Investor_Smart_Fast_Food_EN_VISUAL.pptx
 │   │   └── comparativo_equipos_ia_local.pptx
-│   └── raw_media/                  # Videos y capturas en bruto
+│   └── raw_media/                  # Videos y tomas en bruto
 │
 ├── 📊 CAPA DE DATOS Y METADATOS (data/)
 │   ├── decks/                      # Estructura JSON de cada deck (15 slides c/u y comparativo)
-│   ├── extracts/                   # Resúmenes textuales de diapositivas y transcripciones
-│   └── raw_extracted_media/        # Elementos gráficos y vectores extraídos de PPTX
+│   └── extracts/                   # Resúmenes textuales de diapositivas y transcripciones
 │
 └── ⚙️ PIPELINE Y GENERADORES (scripts/)
     ├── generators/                 # Generadores de diapositivas HTML y estructuradores
