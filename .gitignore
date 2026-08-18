@@ -1,10 +1,29 @@
+# Operating System Files
 .DS_Store
 Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Python Cache & Environments
 __pycache__/
-*.pyc
-_pptx_extract/
+*.py[cod]
+*$py.class
+*.env
+.venv/
+env/
+venv/
+ENV/
+
+# IDE & Editor Files
 .vscode/
-"WhatsApp Video "*.mp4
+.idea/
+*.sublime-project
+*.sublime-workspace
 
+# Temporary and Extract Cache
+data/raw_extracted_media/_pptx_extract/
+*.tmp
+*.log
 
-WhatsApp Video*.mp4
+# Raw WhatsApp Video files
+sources/raw_media/WhatsApp Video*.mp4
