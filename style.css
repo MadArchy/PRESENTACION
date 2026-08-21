@@ -103,6 +103,9 @@ html, body {
   transition: background-color var(--transition-normal), color var(--transition-normal);
 }
 
+html[data-lang="es"] .lang-en { display: none !important; }
+html[data-lang="en"] .lang-es { display: none !important; }
+
 /* SVG Vector Icons */
 .ico {
   width: 1.15em;

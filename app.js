@@ -234,18 +234,20 @@ function warmupVideo() {
 }
 
 function setupHubNavigation() {
-  document.querySelectorAll('.venture-pill-btn[data-deck]').forEach((btn) => {
-    btn.addEventListener('click', (event) => {
+  if (document.body.dataset.hubNavBound === '1') return;
+  document.body.dataset.hubNavBound = '1';
+  document.body.addEventListener('click', (event) => {
+    const deckBtn = event.target.closest('.venture-pill-btn[data-deck]');
+    if (deckBtn) {
       event.preventDefault();
-      launchDeck(btn.getAttribute('data-deck'));
-    });
-  });
-
-  document.querySelectorAll('.venture-pill-btn[data-video-deck]').forEach((btn) => {
-    btn.addEventListener('click', (event) => {
+      launchDeck(deckBtn.getAttribute('data-deck'));
+      return;
+    }
+    const videoBtn = event.target.closest('.venture-pill-btn[data-video-deck]');
+    if (videoBtn) {
       event.preventDefault();
-      playVentureVideo(btn.getAttribute('data-video-deck'));
-    });
+      playVentureVideo(videoBtn.getAttribute('data-video-deck'));
+    }
   });
 }
 
