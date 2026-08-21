@@ -4672,11 +4672,11 @@
               <span class="lang-es">Categoría</span><span class="lang-en">Category</span>
             </label>
             <select class="inject-select" id="injectCategory" required>
-              <option value="inversor">💼 Pregunta de Inversor / VC</option>
-              <option value="objecion">⚠️ Objeción o Riesgo Típico</option>
-              <option value="operativa">⚙️ Pregunta Operativa / Técnica</option>
-              <option value="nota">📝 Nota del Presentador / Talking Point</option>
-              <option value="faq">💬 FAQ General</option>
+              <option value="inversor" data-label-es="💼 Pregunta de Inversor / VC" data-label-en="💼 Investor / VC Question">💼 Pregunta de Inversor / VC</option>
+              <option value="objecion" data-label-es="⚠️ Objeción o Riesgo Típico" data-label-en="⚠️ Critical Objection / Risk">⚠️ Objeción o Riesgo Típico</option>
+              <option value="operativa" data-label-es="⚙️ Pregunta Operativa / Técnica" data-label-en="⚙️ Operational / Tech Question">⚙️ Pregunta Operativa / Técnica</option>
+              <option value="nota" data-label-es="📝 Nota del Presentador / Talking Point" data-label-en="📝 Presenter Note / Talking Point">📝 Nota del Presentador / Talking Point</option>
+              <option value="faq" data-label-es="💬 FAQ General" data-label-en="💬 General FAQ">💬 FAQ General</option>
             </select>
           </div>
 
@@ -4684,14 +4684,14 @@
             <label class="inject-label" for="injectQuestion">
               <span class="lang-es">Pregunta o Título del Comentario</span><span class="lang-en">Question or Note Title</span>
             </label>
-            <input type="text" class="inject-input" id="injectQuestion" placeholder="Ej: ¿Qué margen neto se rescata en el primer trimestre?" required autocomplete="off">
+            <input type="text" class="inject-input" id="injectQuestion" placeholder="Ej: ¿Qué margen neto se rescata en el primer trimestre?" data-placeholder-es="Ej: ¿Qué margen neto se rescata en el primer trimestre?" data-placeholder-en="E.g.: What net margin is recovered in Q1?" required autocomplete="off">
           </div>
 
           <div class="inject-form-group">
             <label class="inject-label" for="injectAnswer">
               <span class="lang-es">Puntos Clave / Respuesta Sugerida (Opcional)</span><span class="lang-en">Key Talking Points / Answer (Optional)</span>
             </label>
-            <textarea class="inject-textarea" id="injectAnswer" placeholder="Puntos estratégicos para responder de inmediato..."></textarea>
+            <textarea class="inject-textarea" id="injectAnswer" placeholder="Puntos estratégicos para responder de inmediato..." data-placeholder-es="Puntos estratégicos para responder de inmediato..." data-placeholder-en="Strategic talking points to answer immediately..."></textarea>
           </div>
 
           <div class="inject-actions-row">
@@ -4713,11 +4713,11 @@
           </label>
           <div class="bulk-presets-grid">
             <button type="button" class="preset-card-btn" onclick="injectSlidePresets()">
-              <span class="preset-card-title">✨ Q&amp;A Curado</span>
+              <span class="preset-card-title"><span class="lang-es">✨ Q&amp;A Curado</span><span class="lang-en">✨ Curated Q&amp;A</span></span>
               <span class="preset-card-desc"><span class="lang-es">Inyectar preguntas clave de esta lámina</span><span class="lang-en">Inject curated slide Q&amp;A</span></span>
             </button>
             <button type="button" class="preset-card-btn" onclick="copyCurrentSlideNotes()">
-              <span class="preset-card-title">📋 Copiar Todo</span>
+              <span class="preset-card-title"><span class="lang-es">📋 Copiar Todo</span><span class="lang-en">📋 Copy All</span></span>
               <span class="preset-card-desc"><span class="lang-es">Copiar notas al portapapeles</span><span class="lang-en">Copy notes to clipboard</span></span>
             </button>
           </div>
@@ -4728,7 +4728,7 @@
             <span class="lang-es">Ingesta Masiva (Línea por línea o JSON)</span>
             <span class="lang-en">Bulk Ingestion (Line-by-line or JSON)</span>
           </label>
-          <textarea class="inject-textarea code-area" id="bulkInputArea" placeholder="Pega aquí múltiples preguntas (una por línea):&#10;¿Cómo se auditan los inventarios?&#10;¿Cuál es el costo del hardware?&#10;¿Qué pasa si no hay internet?"></textarea>
+          <textarea class="inject-textarea code-area" id="bulkInputArea" placeholder="Pega aquí múltiples preguntas (una por línea):&#10;¿Cómo se auditan los inventarios?&#10;¿Cuál es el costo del hardware?&#10;¿Qué pasa si no hay internet?" data-placeholder-es="Pega aquí múltiples preguntas (una por línea):&#10;¿Cómo se auditan los inventarios?&#10;¿Cuál es el costo del hardware?&#10;¿Qué pasa si no hay internet?" data-placeholder-en="Paste multiple questions here (one per line):&#10;How are inventories audited?&#10;What is the hardware cost?&#10;What happens if internet drops?"></textarea>
         </div>
 
         <div class="inject-actions-row">

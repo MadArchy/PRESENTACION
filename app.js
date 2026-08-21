@@ -401,6 +401,24 @@ function toggleLanguage() {
   applyLanguage(currentLang);
 }
 
+function updateDrawerFormLanguage(lang) {
+  // Update all input and textarea placeholders with data-placeholder-es / data-placeholder-en
+  document.querySelectorAll('[data-placeholder-es]').forEach((el) => {
+    el.placeholder = lang === 'en'
+      ? (el.getAttribute('data-placeholder-en') || el.placeholder)
+      : (el.getAttribute('data-placeholder-es') || el.placeholder);
+  });
+
+  // Update select options
+  const select = document.getElementById('injectCategory');
+  if (select) {
+    Array.from(select.options).forEach((opt) => {
+      const label = lang === 'en' ? opt.getAttribute('data-label-en') : opt.getAttribute('data-label-es');
+      if (label) opt.textContent = label;
+    });
+  }
+}
+
 function applyLanguage(lang) {
   document.documentElement.setAttribute('data-lang', lang);
   document.querySelectorAll('.lang-opt').forEach((btn) => {
@@ -419,6 +437,9 @@ function applyLanguage(lang) {
     esElements.forEach(el => el.style.display = 'none');
     enElements.forEach(el => el.style.display = '');
   }
+
+  // Update drawer forms, placeholders, and options
+  updateDrawerFormLanguage(lang);
 
   // Live update slide Q&A drawer if active
   if (typeof isCommentsOpen !== 'undefined' && isCommentsOpen) {
@@ -1946,6 +1967,7 @@ function openCommentsDrawer() {
   if (backdrop) backdrop.classList.add('open');
 
   updateCommentsDrawerHeader();
+  updateDrawerFormLanguage(currentLang);
   renderCommentsList();
   updateCommentsCounterBadge();
 }
