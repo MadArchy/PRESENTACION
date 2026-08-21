@@ -11,7 +11,7 @@
 
 let activeDeck = 'hub'; // 'hub', 'tutor', 'fastfood', 'arcana', 'comparativo'
 let currentSlide = 1;
-const DECK_SLIDE_COUNTS = { tutor: 15, fastfood: 15, arcana: 15, comparativo: 10 };
+const DECK_SLIDE_COUNTS = { tutor: 15, fastfood: 15, arcana: 15, restaurante: 10, comparativo: 10 };
 
 function totalSlides() {
   return DECK_SLIDE_COUNTS[activeDeck] || 15;
@@ -66,6 +66,26 @@ const DECK_CONFIG = {
     kicker_es: 'Web3 & IoT · Pitch inversor',
     kicker_en: 'Web3 & IoT · Investor pitch',
     icon: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="m21 16-9 5-9-5V8l9-5 9 5v8Z"/><path d="m3.27 6.96 8.73 4.88 8.73-4.88"/><path d="M12 22.08V12"/></svg>'
+  },
+  restaurante: {
+    title_es: 'Arcana Restaurantes',
+    title_en: 'Arcana Restaurant Ops',
+    kicker_es: 'Arcana · Dueños de Restaurante',
+    kicker_en: 'Arcana · Restaurant Owners',
+    icon: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>'
+  },
+  restaurante: {
+    default: 'backgrounds/bg-fastfood-store.jpg',
+    1: 'backgrounds/bg-fastfood-kitchen.jpg',
+    2: 'backgrounds/bg-fastfood-store.jpg',
+    3: 'backgrounds/bg-arcana-iot.jpg',
+    4: 'backgrounds/bg-fastfood-kitchen.jpg',
+    5: 'backgrounds/bg-fastfood-store.jpg',
+    6: 'backgrounds/bg-fastfood-kitchen.jpg',
+    7: 'backgrounds/bg-arcana-iot.jpg',
+    8: 'backgrounds/bg-closing.jpg',
+    9: 'backgrounds/bg-fastfood-store.jpg',
+    10: 'backgrounds/bg-closing.jpg'
   },
   comparativo: {
     title_es: 'Comparativo IA Local',
@@ -276,7 +296,7 @@ function launchDeck(deckKey) {
   if (gridToggleBtn) gridToggleBtn.style.display = 'inline-flex';
 
   // Update Overview Grid Swapping
-  ['tutor', 'fastfood', 'arcana', 'comparativo'].forEach(key => {
+  ['tutor', 'fastfood', 'arcana', 'restaurante', 'comparativo'].forEach(key => {
     const grid = document.getElementById(`overviewGrid-${key}`);
     if (grid) {
       grid.style.display = key === activeDeck ? 'grid' : 'none';

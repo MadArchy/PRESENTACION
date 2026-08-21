@@ -99,6 +99,9 @@ La plataforma incluye navegación inmersiva para presentaciones en vivo:
    - Red de verificación por hardware, contratos descentralizados y seguridad de datos.
 4. **Infraestructura · Comparativo IA Local** (10 Slides)
    - Análisis comparativo de hardware (DGX Spark, Workstations RTX, Mac Studio) para inferencia y entrenamiento local.
+5. **Hospitality Ops · Arcana Dueño de Restaurante** (10 Slides)
+   - Contabilidad inalterable atada a la realidad física (nevera, báscula, cocina, caja) para dueños de restaurantes y socios remotos.
+
 
 ---
 
