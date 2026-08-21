@@ -1,0 +1,123 @@
+{
+  "deck_id": "comparativo",
+  "title_es": "Infraestructura IA",
+  "title_en": "AI Infrastructure Strategy",
+  "kicker_es": "Estrategia Ejecutiva · 3i BAIRD LAB",
+  "kicker_en": "Executive Strategy · 3i BAIRD LAB",
+  "subtitle_es": "Capacidad, productividad, continuidad 24/7 y crecimiento empresarial escalonado",
+  "subtitle_en": "Capacity, talent productivity, 24/7 continuity and business-driven growth",
+  "total_slides": 10,
+  "source_document": "Estrategia Ejecutiva de Infraestructura para Inteligencia Artificial.md",
+  "slides": [
+    {
+      "id": 1,
+      "num": "01",
+      "tag_es": "PROPUESTA EJECUTIVA",
+      "tag_en": "EXECUTIVE PROPOSAL",
+      "title_es": "Estrategia Ejecutiva de Infraestructura IA",
+      "title_en": "Enterprise AI Infrastructure Strategy",
+      "lead_es": "Capacidad, productividad del talento, continuidad 24/7 y modelo de inversión escalonada por retorno de negocio.",
+      "lead_en": "Capacity, talent productivity, 24/7 operational continuity, and progressive business-driven investment.",
+      "image": "media/ia/ia-datacenter-24-7.jpg"
+    },
+    {
+      "id": 2,
+      "num": "02",
+      "tag_es": "ACTIVOS ACTUALES · TRACCIÓN INMEDIATA",
+      "tag_en": "CURRENT ASSETS · IMMEDIATE TRACTION",
+      "title_es": "¿Qué podemos hacer hoy con la infraestructura actual?",
+      "title_en": "What Can We Build Today with Existing Hardware?",
+      "lead_es": "La infraestructura actual es una plataforma de desarrollo y validación comercial inmediata que no requiere desembolso inicial.",
+      "lead_en": "Our current hardware is a functional development and commercial validation platform that enables rapid productization at zero immediate capex.",
+      "image": "media/ia/ia-workflow.jpg"
+    },
+    {
+      "id": 3,
+      "num": "03",
+      "tag_es": "LÍMITES DE CRECIMIENTO · AUDITORÍA DE RIESGO",
+      "tag_en": "GROWTH BOUNDARIES · RISK AUDIT",
+      "title_es": "¿Dónde están nuestros límites operativos reales?",
+      "title_en": "Where Real Operational Limits Emerge",
+      "lead_es": "Podemos programar cualquier solución, pero los cuellos de botella surgen al escalar volumen, velocidad, concurrencia y privacidad.",
+      "lead_en": "We can develop any software solution, but advanced execution bottlenecks appear as client concurrency, latency, and security demands scale.",
+      "image": "media/ia/ia-memory.jpg"
+    },
+    {
+      "id": 4,
+      "num": "04",
+      "tag_es": "VALOR EJECUTIVO · RETORNO ESTRATÉGICO",
+      "tag_en": "EXECUTIVE VALUE · STRATEGIC ROI",
+      "title_es": "¿Qué ganamos al mejorar y escalar los equipos?",
+      "title_en": "What Do We Gain by Upgrading Hardware?",
+      "lead_es": "No compramos computadores más rápidos; adquirimos capacidad adicional para producir, captar clientes de alto valor y eliminar costos recurrentes.",
+      "lead_en": "We are not purchasing faster computers; we are unlocking institutional capacity to serve larger contracts, eliminate recurring cloud bills, and mitigate risk.",
+      "image": "media/ia/ia-models.jpg"
+    },
+    {
+      "id": 5,
+      "num": "05",
+      "tag_es": "CAPITAL HUMANO · MULTIPLICADOR DE TALENTO",
+      "tag_en": "HUMAN CAPITAL · TALENT MULTIPLIER",
+      "title_es": "Potenciar los equipos significa potenciar a las personas",
+      "title_en": "Empowering Hardware Means Empowering People",
+      "lead_es": "La infraestructura no son simples máquinas; es el multiplicador que elimina tiempos muertos y maximiza la velocidad de entrega del equipo técnico.",
+      "lead_en": "Infrastructure must not be viewed as mere machinery. Eliminating developer idle time drastically compounds output and accelerates delivery cycles.",
+      "image": "media/ia/ia-talent-acceleration.jpg"
+    },
+    {
+      "id": 6,
+      "num": "06",
+      "tag_es": "ASIGNACIÓN DE CAPITAL · PRESUPUESTO ESCALONADO",
+      "tag_en": "CAPEX ALLOCATION · PHASED BUDGET",
+      "title_es": "¿Cuánto cuesta crecer? Modelo de inversión escalonada",
+      "title_en": "Phased Capital Investment Model: How Much to Grow?",
+      "lead_es": "La infraestructura debe crecer por etapas alineadas a los ingresos. No sobredimensionamos capital antes de que los clientes lo justifiquen.",
+      "lead_en": "Infrastructure must scale progressively in sync with contract revenue. We do not over-provision capital before customer demand validates it.",
+      "image": "media/ia/ia-tower.jpg"
+    },
+    {
+      "id": 7,
+      "num": "07",
+      "tag_es": "CRITERIOS DE DECISIÓN · GATILLADORES DE ROI",
+      "tag_en": "DECISION CRITERIA · ROI TRIGGERS",
+      "title_es": "Los 5 gatilladores financieros: ¿Cuándo vale la pena invertir?",
+      "title_en": "The 5 Business Triggers: When Is It Time to Invest?",
+      "lead_es": "La empresa no invierte por novedad tecnológica; invierte cuando la nueva capacidad genera ingresos, reduce costos o abre contratos inmediatos.",
+      "lead_en": "A hardware upgrade is never justified by novelty; it is strictly triggered when capacity unlocks immediate commercial revenue or prevents contractual risk.",
+      "image": "media/ia/ia-client.jpg"
+    },
+    {
+      "id": 8,
+      "num": "08",
+      "tag_es": "RESILIENCIA EMPRESARIAL · 4 PILARES 24/7",
+      "tag_en": "ENTERPRISE RESILIENCE · 24/7 PILLARS",
+      "title_es": "El verdadero objetivo: Una operación tecnológica 24/7",
+      "title_en": "The True Goal: Robust 24/7 Technological Operations",
+      "lead_es": "La potencia pierde su valor si un corte eléctrico, recalentamiento o caída de red deja los servicios fuera de línea. La continuidad es el activo real.",
+      "lead_en": "Raw computational power loses its value if a single power outage, thermal drop, or network failure knocks services offline. Continuity is the foundation of enterprise trust.",
+      "image": "media/ia/ia-datacenter-24-7.jpg"
+    },
+    {
+      "id": 9,
+      "num": "09",
+      "tag_es": "MARCO ESTRATÉGICO · MODELO EN 3 CAPAS",
+      "tag_en": "FRAMEWORK · 3-LAYER MODEL",
+      "title_es": "Modelo de inversión en 3 capas & Matriz de decisión",
+      "title_en": "3-Layer Investment Architecture & Decision Matrix",
+      "lead_es": "Checklist estructurado para evaluar con rigor cualquier adquisición tecnológica antes de comprometer capital.",
+      "lead_en": "A clear structural checklist to evaluate any technological acquisition before allocating company capital.",
+      "image": "media/ia/ia-rag.jpg"
+    },
+    {
+      "id": 10,
+      "num": "10",
+      "tag_es": "HOJA DE RUTA · RESUMEN EJECUTIVO",
+      "tag_en": "STRATEGIC ROADMAP · EXECUTIVE SUMMARY",
+      "title_es": "Hoja de ruta estratégica: Construyendo un activo empresarial",
+      "title_en": "Strategic Growth Roadmap: Building an Enterprise Asset",
+      "lead_es": "El objetivo no es acumular computadores, sino forjar una capacidad tecnológica que potencie al talento, genere ingresos y opere 24/7.",
+      "lead_en": "Our goal is not to accumulate hardware; it is to forge a scalable technological asset that accelerates talent, captures revenue, and operates continuously.",
+      "image": "media/ia/ia-dgx.jpg"
+    }
+  ]
+}

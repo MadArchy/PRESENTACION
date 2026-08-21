@@ -59,6 +59,9 @@
           <button type="button" class="lang-opt" data-lang="en" onclick="setLanguage('en')">EN</button>
         </div>
         <span class="hud-v-divider hud-v-divider-sm" aria-hidden="true"></span>
+        <button class="btn-icon" id="commentsToggleBtn" onclick="toggleCommentsDrawer()" title="Preguntas y comentarios de diapositiva (C)">
+          <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8"/><path d="M8 13h5"/></svg></span>
+        </button>
         <button class="btn-icon" onclick="toggleTheme()" title="Modo claro / oscuro (T)">
           <span id="themeIcon" class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span>
         </button>
@@ -77,6 +80,15 @@
     <!-- Main Deck Presentation Stage -->
     <main class="deck-stage">
       <div class="slide-viewport" id="slideViewport">
+
+        <!-- Floating Discreet Slide Comments / Questions Trigger -->
+        <button class="floating-comments-trigger" id="floatingCommentsBtn" onclick="toggleCommentsDrawer()" title="Preguntas y comentarios de esta diapositiva (C)" style="display: none;">
+          <span class="comments-glow-dot"></span>
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8"/><path d="M8 13h5"/></svg>
+          <span class="lang-es">Preguntas &amp; Notas</span>
+          <span class="lang-en">Q&amp;A / Notes</span>
+          <span class="comments-badge-counter" id="floatingCommentsCount">0</span>
+        </button>
 
         <!-- ===================================================================
              EXECUTIVE VENTURE SELECTION HUB (MATCHING USER'S EXACT REFERENCE)
@@ -161,7 +173,7 @@
                   </button>
                   <button class="venture-pill-btn pill-ia" onclick="launchDeck('comparativo')">
                     <span class="pill-btn-icon gold"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6" rx="1"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></svg></span>
-                    <span class="pill-btn-label">IA LOCAL</span>
+                    <span class="pill-btn-label">INFRAESTRUCTURA IA</span>
                   </button>
                 </div>
               </div>
@@ -2750,398 +2762,588 @@
               </div>
             </section>
         </div>
+                <!-- ===================================================================
+             ESTRATEGIA EJECUTIVA DE INFRAESTRUCTURA PARA IA (10 SLIDES)
+             =================================================================== -->
         <div class="deck-container" id="deck-comparativo">
 
-            <section class="slide active slide-hero-ia" id="comparativo-slide-1" data-slide="1" data-deck="comparativo">
-              <div class="hero-cover">
-                <div class="hero-brand-top">| 3i BAIRD LAB · IA LOCAL</div>
-                <div class="hero-glow-badge">
-                  <span class="lang-en">Executive briefing · 10 slides</span>
-                  <span class="lang-es">Briefing ejecutivo · 10 diapositivas</span>
-                </div>
-                <h1 class="hero-title">
-                  <span class="lang-en">Local AI Hardware Comparison</span>
-                  <span class="lang-es">Comparativo Ejecutivo de Equipos IA Local</span>
-                </h1>
-                <p class="hero-subtitle">
-                  <span class="lang-en">Prices, model capacity, developer workflow and a plain-language brief for the client. The right machine depends on model size, privacy, speed and budget.</span>
-                  <span class="lang-es">Precios, capacidades de modelos, flujo de trabajo de desarrollador y explicación simple para el cliente. La elección depende del tamaño del modelo, privacidad, velocidad y presupuesto.</span>
-                </p>
-                <div class="ia-machine-strip">
-                  <figure class="ia-machine-shot" onclick="openLightbox('media/ia/ia-gpu.jpg')">
-                    <img src="media/ia/ia-gpu.jpg" alt="RTX 3050">
-                    <figcaption>RTX 3050</figcaption>
-                  </figure>
-                  <figure class="ia-machine-shot" onclick="openLightbox('media/ia/ia-mac.jpg')">
-                    <img src="media/ia/ia-mac.jpg" alt="Mac mini M4">
-                    <figcaption>MAC MINI M4</figcaption>
-                  </figure>
-                  <figure class="ia-machine-shot" onclick="openLightbox('media/ia/ia-minipc.jpg')">
-                    <img src="media/ia/ia-minipc.jpg" alt="Ryzen AI Max 128 GB">
-                    <figcaption>RYZEN AI MAX 128 GB</figcaption>
-                  </figure>
-                  <figure class="ia-machine-shot" onclick="openLightbox('media/ia/ia-dgx.jpg')">
-                    <img src="media/ia/ia-dgx.jpg" alt="GB10 / DGX Spark">
-                    <figcaption>GB10 / DGX SPARK</figcaption>
-                  </figure>
-                </div>
+        <!-- SLIDE 1: COVER HERO -->
+        <section class="slide active slide-hero-lumi" id="comparativo-slide-1" data-slide="1" data-deck="comparativo">
+          <div class="hero-cover">
+            <div class="hero-brand-top">| 3i BAIRD LAB · ESTRATEGIA DE INFRAESTRUCTURA IA |</div>
+            <div class="hero-glow-badge">
+              <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6" rx="1"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></svg></span>
+              <span class="lang-en">Executive Strategy · AI Infrastructure, Continuity &amp; Growth · 10 Slides</span>
+              <span class="lang-es">Estrategia Ejecutiva · Infraestructura IA, Continuidad y Crecimiento · 10 Slides</span>
+            </div>
+            <h1 class="hero-title">
+              <span class="lang-en">Enterprise AI Infrastructure Strategy</span>
+              <span class="lang-es">Estrategia Ejecutiva de Infraestructura IA</span>
+            </h1>
+            <p class="hero-subtitle">
+              <span class="lang-en">Capacity, talent productivity, 24/7 operational continuity, and progressive business-driven investment.</span>
+              <span class="lang-es">Capacidad, productividad del talento, continuidad 24/7 y modelo de inversión escalonada por retorno de negocio.</span>
+            </p>
+            <div class="hero-flow-ribbon">
+              <div class="flow-step-pill">
+                <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+                <span class="lang-en">1. Talent &amp; Tools</span>
+                <span class="lang-es">1. Talento Potenciado</span>
               </div>
-            </section>
+              <div class="flow-arrow"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
+              <div class="flow-step-pill">
+                <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6" rx="1"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></svg></span>
+                <span class="lang-en">2. Targeted Compute</span>
+                <span class="lang-es">2. Cómputo Justificado</span>
+              </div>
+              <div class="flow-arrow"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
+              <div class="flow-step-pill">
+                <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>
+                <span class="lang-en">3. 24/7 Continuity</span>
+                <span class="lang-es">3. Continuidad 24/7</span>
+              </div>
+              <div class="flow-arrow"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
+              <div class="flow-step-pill">
+                <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
+                <span class="lang-en">4. Phased Scale</span>
+                <span class="lang-es">4. Escalamiento Rentable</span>
+              </div>
+            </div>
+            <div class="hero-bottom-proof">
+              <span class="proof-tag"><span class="lang-en">CORE EXECUTIVE PRINCIPLE</span><span class="lang-es">PRINCIPIO EJECUTIVO CENTRAL</span></span>
+              <span class="proof-text">
+                <span class="lang-en">We do not buy the most powerful computer just because it exists; we deploy the exact infrastructure required for each business phase.</span>
+                <span class="lang-es">No buscamos comprar el computador más potente; buscamos disponer de la infraestructura adecuada para cada etapa del negocio.</span>
+              </span>
+            </div>
+          </div>
+        </section>
+        
 
-            <section class="slide" id="comparativo-slide-2" data-slide="2" data-deck="comparativo">
-              <div class="slide-top-meta">
-                <div class="slide-tag-group">
-                  <span class="slide-number-pill">01</span>
-                  <span class="slide-category-title"><span class="lang-en">EXECUTIVE SUMMARY</span><span class="lang-es">RESUMEN EJECUTIVO</span></span>
+        <!-- SLIDE 2: WHAT WE CAN DO TODAY -->
+        <section class="slide" id="comparativo-slide-2" data-slide="2" data-deck="comparativo">
+          <div class="slide-top-meta">
+            <span class="slide-badge-category"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> <span class="lang-en">CURRENT ASSETS · IMMEDIATE TRACTION</span><span class="lang-es">ACTIVOS ACTUALES · TRACCIÓN INMEDIATA</span></span>
+            <span class="slide-num-tag">02 / 10</span>
+          </div>
+          <div class="slide-header">
+            <h2><span class="lang-en">What Can We Build Today with Existing Hardware?</span><span class="lang-es">¿Qué podemos hacer hoy con la infraestructura actual?</span></h2>
+            <p class="slide-lead"><span class="lang-en">Our current hardware is a functional development and commercial validation platform that enables rapid productization at zero immediate capex.</span><span class="lang-es">La infraestructura actual es una plataforma de desarrollo y validación comercial inmediata que no requiere desembolso inicial.</span></p>
+          </div>
+          <div class="slide-body">
+            <div class="split-layout">
+              <div class="cards-grid-2x2">
+                <div class="feature-card">
+                  <div class="card-icon-wrapper cyan"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M12 5v13"/><path d="M7 10h10"/><path d="M7 14h10"/></svg></div>
+                  <div class="card-text-group">
+                    <div class="card-title"><span class="lang-en">App Development &amp; Prototyping</span><span class="lang-es">Desarrollo de Apps &amp; Prototipos</span></div>
+                    <div class="card-desc"><span class="lang-en">Full stack creation of client MVPs, internal tools, automations, and functional pilot demonstrators.</span><span class="lang-es">Construcción de MVPs, plataformas web, flujos de automatización y prototipos para clientes.</span></div>
+                  </div>
                 </div>
-                <div class="slide-meta-brand">| 3i BAIRD LAB</div>
+                <div class="feature-card">
+                  <div class="card-icon-wrapper emerald"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg></div>
+                  <div class="card-text-group">
+                    <div class="card-title"><span class="lang-en">Document AI &amp; Enterprise Assistants</span><span class="lang-es">Asistentes &amp; Procesamiento Documental</span></div>
+                    <div class="card-desc"><span class="lang-en">RAG pipelines, enterprise document parsing, intelligent indexing, and conversational agents.</span><span class="lang-es">Bases de conocimiento, indexación de PDFs, extracción estructurada y agentes conversacionales.</span></div>
+                  </div>
+                </div>
+                <div class="feature-card">
+                  <div class="card-icon-wrapper purple"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg></div>
+                  <div class="card-text-group">
+                    <div class="card-title"><span class="lang-en">Cloud AI &amp; Hybrid Orchestration</span><span class="lang-es">Integración Híbrida con IA en la Nube</span></div>
+                    <div class="card-desc"><span class="lang-en">Multi-model connectivity with Claude, OpenAI, and Gemini for heavy reasoning combined with local lightweight logic.</span><span class="lang-es">Conexión con APIs de frontera en la nube combinada con micro-agentes locales.</span></div>
+                  </div>
+                </div>
+                <div class="feature-card">
+                  <div class="card-icon-wrapper gold"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+                  <div class="card-text-group">
+                    <div class="card-title"><span class="lang-en">Commercial Validation &amp; Demos</span><span class="lang-es">Validación Comercial &amp; Demos en Vivo</span></div>
+                    <div class="card-desc"><span class="lang-en">Presenting working pilots to clients, validating business willingness to pay before committing capital.</span><span class="lang-es">Demostraciones en vivo para validar interés comercial y tracción antes de comprar nuevo hardware.</span></div>
+                  </div>
+                </div>
               </div>
-              <div class="slide-header">
-                <h2><span class="lang-en">What to buy depends on the AI you want to run locally</span><span class="lang-es">Qué comprar depende del nivel de IA que se quiere ejecutar localmente</span></h2>
-                <p class="slide-lead"><span class="lang-en">Keep current machines for development and demos. Add a 128 GB station only when large private models are required.</span><span class="lang-es">Conservar los equipos actuales para desarrollo y demos; sumar una estación 128 GB si se busca ejecutar modelos grandes sin depender de la nube.</span></p>
+              <div class="diagram-preview-box" onclick="openLightbox('media/ia/ia-workflow.jpg')">
+                <img src="media/ia/ia-workflow.jpg" alt="Flujo de trabajo actual">
+                <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-en">Zoom Workflow</span><span class="lang-es">Ampliar Flujo</span></div>
               </div>
-              <div class="slide-body">
-                <div class="cards-grid-4">
-                  <div class="feature-card hw-photo-card">
-                    <div class="hw-photo" onclick="openLightbox('media/ia/ia-gpu.jpg')"><img src="media/ia/ia-gpu.jpg" alt="RTX 3050 / Mac M4"></div>
-                    <div class="hw-photo-body">
-                      <div class="card-title"><span class="lang-en">Entry</span><span class="lang-es">Entrada</span></div>
-                      <div class="tech-badge">RTX 3050 / Mac M4</div>
-                      <div class="card-desc"><span class="lang-en">Tests, demos and light automations. Low cost, limited capacity.</span><span class="lang-es">Pruebas, demos y automatizaciones ligeras. Bajo costo, menor capacidad.</span></div>
+            </div>
+          </div>
+          <div class="slide-footer">
+            <div class="punchline-badge">
+              <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg></span>
+              <span class="lang-en">Takeaway: We can start developing, testing, and selling solutions using the exact infrastructure we already own.</span>
+              <span class="lang-es">Mensaje clave: Podemos comenzar a desarrollar, probar y comercializar soluciones utilizando la infraestructura que ya tenemos.</span>
+            </div>
+          </div>
+        </section>
+        
+
+        <!-- SLIDE 3: OPERATIONAL LIMITS & BOTTLENECKS -->
+        <section class="slide" id="comparativo-slide-3" data-slide="3" data-deck="comparativo">
+          <div class="slide-top-meta">
+            <span class="slide-badge-category"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg> <span class="lang-en">GROWTH BOUNDARIES · RISK AUDIT</span><span class="lang-es">LÍMITES DE CRECIMIENTO · AUDITORÍA DE RIESGO</span></span>
+            <span class="slide-num-tag">03 / 10</span>
+          </div>
+          <div class="slide-header">
+            <h2><span class="lang-en">Where Real Operational Limits Emerge</span><span class="lang-es">¿Dónde están nuestros límites operativos reales?</span></h2>
+            <p class="slide-lead"><span class="lang-en">We can develop any software solution, but advanced execution bottlenecks appear as client concurrency, latency, and security demands scale.</span><span class="lang-es">Podemos programar cualquier solución, pero los cuellos de botella surgen al escalar volumen, velocidad, concurrencia y privacidad.</span></p>
+          </div>
+          <div class="slide-body">
+            <div class="split-layout">
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <div class="timeline-v-flow">
+                  <div class="timeline-step-card">
+                    <div class="step-num-bubble gold">01</div>
+                    <div class="step-content">
+                      <div class="step-title"><span class="lang-en">Data Volume &amp; Local Model Scale</span><span class="lang-es">01. Volumen de Datos &amp; Modelos Locales</span></div>
+                      <div class="step-desc"><span class="lang-en">Running 32B–70B parameter models locally requires dedicated VRAM buffers beyond consumer workstations.</span><span class="lang-es">Ejecutar modelos de 32B a 70B parámetros localmente satura la VRAM de equipos convencionales.</span></div>
                     </div>
                   </div>
-                  <div class="feature-card hw-photo-card">
-                    <div class="hw-photo" onclick="openLightbox('media/ia/ia-tower.jpg')"><img src="media/ia/ia-tower.jpg" alt="64 GB + RTX 3050"></div>
-                    <div class="hw-photo-body">
-                      <div class="card-title"><span class="lang-en">Intermediate</span><span class="lang-es">Intermedio</span></div>
-                      <div class="tech-badge">64 GB + RTX 3050</div>
-                      <div class="card-desc"><span class="lang-en">RAG, document bases and 8B models with solid local performance.</span><span class="lang-es">RAG, bases documentales y 8B con buen rendimiento. Compensa GPU pequeña con RAM y disco.</span></div>
+                  <div class="timeline-step-card">
+                    <div class="step-num-bubble gold">02</div>
+                    <div class="step-content">
+                      <div class="step-title"><span class="lang-en">Multi-User &amp; Multi-Project Concurrency</span><span class="lang-es">02. Concurrencia Multi-Usuario &amp; Multi-Proyecto</span></div>
+                      <div class="step-desc"><span class="lang-en">Single machines struggle when simultaneously hosting databases, dev pipelines, and inference servers.</span><span class="lang-es">Los equipos se saturan al correr simultáneamente bases de datos, compilación y servidores de inferencia.</span></div>
                     </div>
                   </div>
-                  <div class="feature-card hw-photo-card highlight-card">
-                    <div class="hw-photo" onclick="openLightbox('media/ia/ia-minipc.jpg')"><img src="media/ia/ia-minipc.jpg" alt="BOSGAME M5 128 GB"></div>
-                    <div class="hw-photo-body">
-                      <div class="card-title"><span class="lang-en">Serious local AI</span><span class="lang-es">IA local seria</span></div>
-                      <div class="tech-badge">BOSGAME M5 128 GB</div>
-                      <div class="card-desc"><span class="lang-en">Quantized 32B–70B models and large prototypes. Best memory cost per GB.</span><span class="lang-es">Modelos 32B y 70B quantizados, prototipos grandes. Mejor costo por GB de memoria.</span></div>
+                  <div class="timeline-step-card">
+                    <div class="step-num-bubble amber">03</div>
+                    <div class="step-content">
+                      <div class="step-title"><span class="lang-en">Strict On-Premise Privacy Compliance</span><span class="lang-es">03. Privacidad On-Premise y Datos Sensibles</span></div>
+                      <div class="step-desc"><span class="lang-en">Enterprise clients prohibit cloud API uploads; processing must occur 100% inside our physical control.</span><span class="lang-es">Clientes corporativos exigen que sus datos financieros/médicos jamás salgan a servidores de terceros.</span></div>
                     </div>
                   </div>
-                  <div class="feature-card hw-photo-card">
-                    <div class="hw-photo" onclick="openLightbox('media/ia/ia-dgx.jpg')"><img src="media/ia/ia-dgx.jpg" alt="DGX Spark / GB10"></div>
-                    <div class="hw-photo-body">
-                      <div class="card-title"><span class="lang-en">Pro / Enterprise</span><span class="lang-es">Pro / Enterprise</span></div>
-                      <div class="tech-badge">DGX Spark / GB10</div>
-                      <div class="card-desc"><span class="lang-en">200B inference, 70B fine-tuning and NVIDIA stack. Higher investment, better scale.</span><span class="lang-es">Inferencia 200B, fine-tuning 70B y stack NVIDIA. Mayor inversión, mejor escalamiento.</span></div>
+                  <div class="timeline-step-card">
+                    <div class="step-num-bubble red">04</div>
+                    <div class="step-content">
+                      <div class="step-title"><span class="lang-en">24/7 Availability &amp; Zero Downtime</span><span class="lang-es">04. Disponibilidad Permanente 24/7 sin Interrupciones</span></div>
+                      <div class="step-desc"><span class="lang-en">Personal laptops cannot act as persistent servers without risking thermal throttling and power cuts.</span><span class="lang-es">Equipos personales no garantizan uptime continuo ante fallas eléctricas o de conexión residencial.</span></div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="slide-footer">
-                <div class="punchline-badge"><span class="lang-en">Not every machine is built for the same job.</span><span class="lang-es">No todos los equipos sirven para lo mismo.</span></div>
+              <div class="diagram-preview-box" onclick="openLightbox('media/ia/ia-memory.jpg')">
+                <img src="media/ia/ia-memory.jpg" alt="Cuello de botella de memoria">
+                <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-en">Zoom Memory Matrix</span><span class="lang-es">Ampliar Matriz VRAM</span></div>
               </div>
-            </section>
+            </div>
+          </div>
+          <div class="slide-footer">
+            <div class="punchline-badge">
+              <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span>
+              <span class="lang-en">Diagnostic: Existing machines do not become obsolete; they get complemented as business demands grow.</span>
+              <span class="lang-es">Diagnóstico: Los equipos actuales no dejan de servir; se complementan cuando el negocio exige mayor escala.</span>
+            </div>
+          </div>
+        </section>
+        
 
-            <section class="slide" id="comparativo-slide-3" data-slide="3" data-deck="comparativo">
-              <div class="slide-top-meta">
-                <div class="slide-tag-group">
-                  <span class="slide-number-pill">02</span>
-                  <span class="slide-category-title"><span class="lang-en">CURRENT FLEET</span><span class="lang-es">EQUIPOS ACTUALES</span></span>
+        <!-- SLIDE 4: BUSINESS GAINS FROM INFRASTRUCTURE SCALE -->
+        <section class="slide" id="comparativo-slide-4" data-slide="4" data-deck="comparativo">
+          <div class="slide-top-meta">
+            <span class="slide-badge-category"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg> <span class="lang-en">EXECUTIVE VALUE · STRATEGIC ROI</span><span class="lang-es">VALOR EJECUTIVO · RETORNO ESTRATÉGICO</span></span>
+            <span class="slide-num-tag">04 / 10</span>
+          </div>
+          <div class="slide-header">
+            <h2><span class="lang-en">What Do We Gain by Upgrading Hardware?</span><span class="lang-es">¿Qué ganamos al mejorar y escalar los equipos?</span></h2>
+            <p class="slide-lead"><span class="lang-en">We are not purchasing faster computers; we are unlocking institutional capacity to serve larger contracts, eliminate recurring cloud bills, and mitigate risk.</span><span class="lang-es">No compramos computadores más rápidos; adquirimos capacidad adicional para producir, captar clientes de alto valor y eliminar costos recurrentes.</span></p>
+          </div>
+          <div class="slide-body">
+            <div class="split-layout">
+              <div class="cards-grid-2x2">
+                <div class="metric-card gold">
+                  <div class="metric-val">+300%</div>
+                  <div class="metric-label"><span class="lang-en">Concurrent Processing Capacity</span><span class="lang-es">Capacidad de Cómputo Simultáneo</span></div>
+                  <div class="metric-desc"><span class="lang-en">Execute heavy inference, fine-tuning, embeddings, and database services in parallel without lag.</span><span class="lang-es">Ejecución simultánea de inferencia pesada, fine-tuning y bases vectoriales sin degradación.</span></div>
                 </div>
-                <div class="slide-meta-brand">| 3i BAIRD LAB</div>
+                <div class="metric-card emerald">
+                  <div class="metric-val">100%</div>
+                  <div class="metric-label"><span class="lang-en">Confidential Data Retention</span><span class="lang-es">Retención Total de Datos Confidenciales</span></div>
+                  <div class="metric-desc"><span class="lang-en">Zero third-party data leakage. Proprietary enterprise knowledge stays strictly inside company custody.</span><span class="lang-es">Cero fuga de información sensible. Los datos propietarios del cliente permanecen bajo custodia local.</span></div>
+                </div>
+                <div class="metric-card cyan">
+                  <div class="metric-val">-65%</div>
+                  <div class="metric-label"><span class="lang-en">Recurring Cloud API Cost Reduction</span><span class="lang-es">Reducción de Costos Recurrentes en Nube</span></div>
+                  <div class="metric-desc"><span class="lang-en">Replace unpredictable monthly token billing with amortized local hardware at fixed operational cost.</span><span class="lang-es">Sustitución de facturas variables por consumo de tokens por infraestructura propia amortizada.</span></div>
+                </div>
+                <div class="metric-card purple">
+                  <div class="metric-val">Enterprise</div>
+                  <div class="metric-label"><span class="lang-en">Institutional Contract Readiness</span><span class="lang-es">Capacidad de Cierre para Clientes Corporativos</span></div>
+                  <div class="metric-desc"><span class="lang-en">Comply with enterprise security audits, dedicated SLAs, and high-volume real-time client throughput.</span><span class="lang-es">Cumplimiento de auditorías corporativas de seguridad, SLAs dedicados y mayor volumen transaccional.</span></div>
+                </div>
               </div>
-              <div class="slide-header">
-                <h2><span class="lang-en">Starting point: useful for product, not for large private models</span><span class="lang-es">Punto de partida: sirven para crear producto, no para modelos grandes</span></h2>
-                <p class="slide-lead"><span class="lang-en">Existing machines can develop, test and run small/medium local AI flows.</span><span class="lang-es">Los equipos existentes sirven para desarrollar, probar y operar flujos de IA local pequeños o medianos.</span></p>
+              <div class="diagram-preview-box" onclick="openLightbox('media/ia/ia-models.jpg')">
+                <img src="media/ia/ia-models.jpg" alt="Capacidad de modelos">
+                <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-en">Zoom Model Spectrum</span><span class="lang-es">Ampliar Rango de Modelos</span></div>
               </div>
-              <div class="slide-body">
-                <div class="split-layout">
-                  <div class="cards-grid-2-vertical">
-                    <div class="feature-card hw-photo-card">
-                      <div class="hw-photo" onclick="openLightbox('media/ia/ia-workflow.jpg')"><img src="media/ia/ia-workflow.jpg" alt="Equipo actual A"></div>
-                      <div class="hw-photo-body">
-                        <div class="card-title"><span class="lang-en">Current machine A</span><span class="lang-es">Equipo actual A</span></div>
-                        <div class="tech-badge">Ryzen 5 5600X · 32 GB</div>
-                        <div class="card-desc"><span class="lang-en">IDE, light Docker, automations, API, web panel and small models or cloud AI. Base development — not for large models.</span><span class="lang-es">IDE, Docker liviano, automatizaciones, API, panel web y pruebas con IA en la nube o modelos pequeños. Desarrollo base. No ideal para modelos grandes.</span></div>
-                      </div>
+            </div>
+          </div>
+          <div class="slide-footer">
+            <div class="punchline-badge">
+              <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
+              <span class="lang-en">Strategic Law: The investment increases our organizational bandwidth to capture bigger projects and higher revenue.</span>
+              <span class="lang-es">Regla estratégica: La inversión aumenta nuestra capacidad para atender proyectos más grandes, clientes más exigentes y operaciones más complejas.</span>
+            </div>
+          </div>
+        </section>
+        
+
+        <!-- SLIDE 5: TALENT PRODUCTIVITY ACCELERATION -->
+        <section class="slide" id="comparativo-slide-5" data-slide="5" data-deck="comparativo">
+          <div class="slide-top-meta">
+            <span class="slide-badge-category"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> <span class="lang-en">HUMAN CAPITAL · TALENT MULTIPLIER</span><span class="lang-es">CAPITAL HUMANO · MULTIPLICADOR DE TALENTO</span></span>
+            <span class="slide-num-tag">05 / 10</span>
+          </div>
+          <div class="slide-header">
+            <h2><span class="lang-en">Empowering Hardware Means Empowering People</span><span class="lang-es">Potenciar los equipos significa potenciar a las personas</span></h2>
+            <p class="slide-lead"><span class="lang-en">Infrastructure must not be viewed as mere machinery. Eliminating developer idle time drastically compounds output and accelerates delivery cycles.</span><span class="lang-es">La infraestructura no son simples máquinas; es el multiplicador que elimina tiempos muertos y maximiza la velocidad de entrega del equipo técnico.</span></p>
+          </div>
+          <div class="slide-body">
+            <div class="split-layout">
+              <div style="display: flex; flex-direction: column; gap: 10px;">
+                <div class="cards-grid-2x2" style="grid-template-columns: 1fr 1fr;">
+                  <div class="feature-card">
+                    <div class="card-icon-wrapper emerald"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                    <div class="card-text-group">
+                      <div class="card-title"><span class="lang-en">-70% Idle Waiting Time</span><span class="lang-es">-70% Tiempo Muerto de Espera</span></div>
+                      <div class="card-desc"><span class="lang-en">Instant local prompt debugging, vector searches, and code compilation without cloud latency lag.</span><span class="lang-es">Pruebas e inferencia instantáneas sin esperar cola en servidores remotos.</span></div>
                     </div>
-                    <div class="feature-card hw-photo-card highlight-card">
-                      <div class="hw-photo" onclick="openLightbox('media/ia/ia-tower.jpg')"><img src="media/ia/ia-tower.jpg" alt="Equipo actual B"></div>
-                      <div class="hw-photo-body">
-                        <div class="card-title"><span class="lang-en">Current machine B</span><span class="lang-es">Equipo actual B</span></div>
-                        <div class="tech-badge">Ryzen 7 5700X · 64 GB · RTX 3050 8 GB · 11.84 TB</div>
-                        <div class="card-desc"><span class="lang-en">Document RAG, local datasets, test servers and comfortable 7B/8B on GPU. Strong for product tests — still not a 128 GB station.</span><span class="lang-es">RAG con documentos, datasets locales, servidores de prueba y modelos 7B/8B en GPU. 8B local cómodo. No reemplaza una estación 128 GB.</span></div>
-                      </div>
+                  </div>
+                  <div class="feature-card">
+                    <div class="card-icon-wrapper cyan"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+                    <div class="card-text-group">
+                      <div class="card-title"><span class="lang-en">3x Iteration Frequency</span><span class="lang-es">3x Frecuencia de Iteración</span></div>
+                      <div class="card-desc"><span class="lang-en">Developers run comprehensive test suites and edge case evaluations in minutes instead of overnight.</span><span class="lang-es">Más pruebas, prototipos más sólidos y detección inmediata de errores de código.</span></div>
                     </div>
                   </div>
-                  <div class="diagram-preview-box photo-cover" onclick="openLightbox('media/ia/ia-gpu.jpg')">
-                    <img src="media/ia/ia-gpu.jpg" alt="GPU RTX 3050 en estación de desarrollo">
-                    <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> RTX 3050 8 GB</div>
+                </div>
+                <div class="feature-card highlight-card">
+                  <div class="card-icon-wrapper gold"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg></div>
+                  <div class="card-text-group">
+                    <div class="card-title"><span class="lang-en">The Executive Productivity Equation:</span><span class="lang-es">La Ecuación de Productividad Empresarial:</span></div>
+                    <div class="card-desc" style="font-size: 0.92rem; color: #fff; font-weight: 600;">
+                      <span class="lang-en">Better Hardware → Zero Idle Lag → Higher Developer Velocity → More Client Projects Delivered per Quarter</span>
+                      <span class="lang-es">Mejor equipo → Menos tiempo perdido → Mayor productividad del personal → Mayor capacidad para facturar proyectos</span>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="slide-footer">
-                <div class="punchline-badge"><span class="lang-en">Privacy + large models + fast answers require 128 GB.</span><span class="lang-es">Privacidad + modelos grandes + respuesta rápida exigen 128 GB.</span></div>
+              <div class="diagram-preview-box" onclick="openLightbox('media/ia/ia-talent-acceleration.jpg')">
+                <img src="media/ia/ia-talent-acceleration.jpg" alt="Aceleración de talento y productividad">
+                <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-en">Zoom Talent Workstation</span><span class="lang-es">Ampliar Estación de Trabajo</span></div>
               </div>
-            </section>
+            </div>
+          </div>
+          <div class="slide-footer">
+            <div class="punchline-badge">
+              <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg></span>
+              <span class="lang-en">Principle: We do not merely buy faster hardware; we directly elevate the execution throughput of our human talent.</span>
+              <span class="lang-es">Principio: No solamente mejoramos computadores; aumentamos la capacidad de ejecución y valor de nuestros trabajadores.</span>
+            </div>
+          </div>
+        </section>
+        
 
-            <section class="slide" id="comparativo-slide-4" data-slide="4" data-deck="comparativo">
-              <div class="slide-top-meta">
-                <div class="slide-tag-group">
-                  <span class="slide-number-pill">03</span>
-                  <span class="slide-category-title"><span class="lang-en">PRICE &amp; CAPACITY</span><span class="lang-es">PRECIOS Y CAPACIDADES</span></span>
-                </div>
-                <div class="slide-meta-brand">| 3i BAIRD LAB</div>
-              </div>
-              <div class="slide-header">
-                <h2><span class="lang-en">Reference prices — Colombia may vary with import and tax</span><span class="lang-es">Valores referenciales. En Colombia pueden cambiar por importación e impuestos</span></h2>
-              </div>
-              <div class="slide-body">
-                <div class="split-layout">
-                <div class="comparison-table-wrapper">
-                  <table class="comparison-table">
-                    <thead>
-                      <tr>
-                        <th><span class="lang-en">System</span><span class="lang-es">Equipo</span></th>
-                        <th><span class="lang-en">AI memory</span><span class="lang-es">Memoria IA</span></th>
-                        <th><span class="lang-en">Storage</span><span class="lang-es">Disco</span></th>
-                        <th>USD</th>
-                        <th>COP</th>
-                        <th><span class="lang-en">Role</span><span class="lang-es">Uso</span></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr><td class="aspect">PC RTX 3050</td><td>32 GB / 8 GB VRAM</td><td>512 GB SSD</td><td>$850</td><td>$2,7 M</td><td><span class="lang-en">Entry</span><span class="lang-es">Entrada</span></td></tr>
-                      <tr><td class="aspect">Mac mini M4</td><td>16 GB unified</td><td>2 TB SSD</td><td>$1,399</td><td>$4,4 M</td><td>Dev</td></tr>
-                      <tr><td class="aspect">BOSGAME M5 AI</td><td>128 GB LPDDR5X</td><td>2 TB SSD</td><td>$2,999</td><td>$9,4 M</td><td class="good"><span class="lang-en">Serious local AI</span><span class="lang-es">IA local seria</span></td></tr>
-                      <tr><td class="aspect">Acer GN100 GB10</td><td>128 GB unified</td><td>up to 4 TB</td><td>$3,999</td><td>$12,6 M</td><td>Workstation</td></tr>
-                      <tr><td class="aspect">NVIDIA DGX Spark</td><td>128 GB unified</td><td>4 TB NVMe</td><td>$4,699</td><td>$14,8 M</td><td>Fine-tuning</td></tr>
-                      <tr><td class="aspect">Dell Pro Max GB10</td><td>128 GB LPDDR5X</td><td>4 TB NVMe</td><td>$6,331</td><td>$19,9 M</td><td><span class="lang-en">Enterprise + support</span><span class="lang-es">Empresa + soporte</span></td></tr>
-                    </tbody>
-                  </table>
-                </div>
-                  <div class="diagram-preview-box photo-cover" onclick="openLightbox('media/ia/ia-minipc.jpg')">
-                    <img src="media/ia/ia-minipc.jpg" alt="Estación compacta 128 GB">
-                    <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> 128 GB</div>
+        <!-- SLIDE 6: PHASED INVESTMENT STRUCTURE -->
+        <section class="slide" id="comparativo-slide-6" data-slide="6" data-deck="comparativo">
+          <div class="slide-top-meta">
+            <span class="slide-badge-category"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> <span class="lang-en">CAPEX ALLOCATION · PHASED BUDGET</span><span class="lang-es">ASIGNACIÓN DE CAPITAL · PRESUPUESTO ESCALONADO</span></span>
+            <span class="slide-num-tag">06 / 10</span>
+          </div>
+          <div class="slide-header">
+            <h2><span class="lang-en">Phased Capital Investment Model: How Much to Grow?</span><span class="lang-es">¿Cuánto cuesta crecer? Modelo de inversión escalonada</span></h2>
+            <p class="slide-lead"><span class="lang-en">Infrastructure must scale progressively in sync with contract revenue. We do not over-provision capital before customer demand validates it.</span><span class="lang-es">La infraestructura debe crecer por etapas alineadas a los ingresos. No sobredimensionamos capital antes de que los clientes lo justifiquen.</span></p>
+          </div>
+          <div class="slide-body">
+            <div class="split-layout">
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <div class="timeline-v-flow">
+                  <div class="timeline-step-card">
+                    <div class="step-num-bubble emerald">N0</div>
+                    <div class="step-content">
+                      <div class="step-title"><span class="lang-en">Level 0: Existing Baseline (US$ 0)</span><span class="lang-es">Nivel 0: Infraestructura Actual (US$ 0)</span></div>
+                      <div class="step-desc"><span class="lang-en">Already available. Used for software dev, lightweight 7B/8B testing, document indexing, and client demos.</span><span class="lang-es">Ya disponible. Desarrollo, prototipos, pruebas internas, integraciones API y validación comercial inicial.</span></div>
+                    </div>
+                  </div>
+                  <div class="timeline-step-card">
+                    <div class="step-num-bubble cyan">N1</div>
+                    <div class="step-content">
+                      <div class="step-title"><span class="lang-en">Level 1: Intermediate AI Node (US$ 2,500 – 3,500)</span><span class="lang-es">Nivel 1: Estación IA Intermedia (US$ 2.500 – 3.500)</span></div>
+                      <div class="step-desc"><span class="lang-en">High memory workstation (64GB–128GB). Unlocks serious local AI, RAG embeddings, and privacy projects.</span><span class="lang-es">Equipos con alto buffer de memoria unificada/RAM. Permite IA local seria, privacidad y proyectos de mayor volumen.</span></div>
+                    </div>
+                  </div>
+                  <div class="timeline-step-card">
+                    <div class="step-num-bubble purple">N2</div>
+                    <div class="step-content">
+                      <div class="step-title"><span class="lang-en">Level 2: Professional AI Workstation (US$ 4,000 – 6,500)</span><span class="lang-es">Nivel 2: Estación IA Profesional (US$ 4.000 – 6.500)</span></div>
+                      <div class="step-desc"><span class="lang-en">Enterprise-grade GPUs (RTX 4090 / Mac Studio / GB10). Serves 70B quantized models, fine-tuning, and heavy client loads.</span><span class="lang-es">Workstations dedicadas de alto rendimiento. Modelos 70B, fine-tuning local y contratos corporativos.</span></div>
+                    </div>
+                  </div>
+                  <div class="timeline-step-card">
+                    <div class="step-num-bubble gold">N3</div>
+                    <div class="step-content">
+                      <div class="step-title"><span class="lang-en">Level 3: Centralized Enterprise Server (Custom Scale)</span><span class="lang-es">Nivel 3: Servidor Empresarial Centralizado (A Medida)</span></div>
+                      <div class="step-desc"><span class="lang-en">Rack-mount servers with redundant power, fiber SAN, and 24/7 clustered high availability for scaled SaaS.</span><span class="lang-es">Servidor en rack, red de alta velocidad y operación continua centralizada para múltiples clientes en producción.</span></div>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="slide-footer">
-                <div class="punchline-badge"><span class="lang-en">“AI memory” is VRAM or unified memory that actually loads models — the jump from 8/16 GB to 128 GB is the story.</span><span class="lang-es">“Memoria IA” compara VRAM o memoria unificada útil para modelos. El salto de 8/16 GB a 128 GB es la historia.</span></div>
+              <div class="diagram-preview-box" onclick="openLightbox('media/ia/ia-tower.jpg')">
+                <img src="media/ia/ia-tower.jpg" alt="Estaciones de trabajo escalonadas">
+                <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-en">Zoom Hardware Tiers</span><span class="lang-es">Ampliar Niveles de Hardware</span></div>
               </div>
-            </section>
+            </div>
+          </div>
+          <div class="slide-footer">
+            <div class="punchline-badge">
+              <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
+              <span class="lang-en">Takeaway: We do not need to buy the entire infrastructure on day one. We invest strictly in verified, revenue-generating steps.</span>
+              <span class="lang-es">Mensaje clave: No necesitamos comprar toda la infraestructura desde el comienzo; invertimos por etapas justificadas por el negocio.</span>
+            </div>
+          </div>
+        </section>
+        
 
-            <section class="slide" id="comparativo-slide-5" data-slide="5" data-deck="comparativo">
-              <div class="slide-top-meta">
-                <div class="slide-tag-group">
-                  <span class="slide-number-pill">04</span>
-                  <span class="slide-category-title"><span class="lang-en">THE STAT THAT MATTERS</span><span class="lang-es">LECTURA ESTADÍSTICA</span></span>
-                </div>
-                <div class="slide-meta-brand">| 3i BAIRD LAB</div>
-              </div>
-              <div class="slide-header">
-                <h2><span class="lang-en">AI memory is the bottleneck that sets model size</span><span class="lang-es">La memoria disponible para IA es el factor que más limita el tamaño del modelo</span></h2>
-              </div>
-              <div class="slide-body">
-                <div class="split-layout">
-                <div class="cards-grid-3" style="grid-template-columns: 1fr;">
-                  <div class="feature-card highlight-card" style="text-align:center;">
-                    <div class="stat-kpi">15×</div>
-                    <div class="card-title">128 GB vs 8 GB</div>
-                    <div class="card-desc"><span class="lang-en">More AI memory versus RTX 3050.</span><span class="lang-es">Más memoria IA frente a RTX 3050 8 GB.</span></div>
-                  </div>
-                  <div class="feature-card" style="text-align:center;">
-                    <div class="stat-kpi">~$23/GB</div>
-                    <div class="card-title">BOSGAME M5</div>
-                    <div class="card-desc"><span class="lang-en">Best relative cost on 128 GB.</span><span class="lang-es">Mejor costo relativo en 128 GB.</span></div>
-                  </div>
-                  <div class="feature-card" style="text-align:center;">
-                    <div class="stat-kpi">200B</div>
-                    <div class="card-title">DGX Spark</div>
-                    <div class="card-desc"><span class="lang-en">Official inference capacity.</span><span class="lang-es">Capacidad oficial de inferencia.</span></div>
+        <!-- SLIDE 7: WHEN IS INVESTMENT JUSTIFIED? -->
+        <section class="slide" id="comparativo-slide-7" data-slide="7" data-deck="comparativo">
+          <div class="slide-top-meta">
+            <span class="slide-badge-category"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> <span class="lang-en">DECISION CRITERIA · ROI TRIGGERS</span><span class="lang-es">CRITERIOS DE DECISIÓN · GATILLADORES DE ROI</span></span>
+            <span class="slide-num-tag">07 / 10</span>
+          </div>
+          <div class="slide-header">
+            <h2><span class="lang-en">The 5 Business Triggers: When Is It Time to Invest?</span><span class="lang-es">Los 5 gatilladores financieros: ¿Cuándo vale la pena invertir?</span></h2>
+            <p class="slide-lead"><span class="lang-en">A hardware upgrade is never justified by novelty; it is strictly triggered when capacity unlocks immediate commercial revenue or prevents contractual risk.</span><span class="lang-es">La empresa no invierte por novedad tecnológica; invierte cuando la nueva capacidad genera ingresos, reduce costos o abre contratos inmediatos.</span></p>
+          </div>
+          <div class="slide-body">
+            <div class="split-layout">
+              <div class="cards-grid-2x2">
+                <div class="feature-card">
+                  <div class="card-icon-wrapper gold"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+                  <div class="card-text-group">
+                    <div class="card-title"><span class="lang-en">1. High-Value Client Demands</span><span class="lang-es">1. Clientes con Requisitos Mayores</span></div>
+                    <div class="card-desc"><span class="lang-en">Client contract requires sub-second response times, dedicated instances, high concurrency, or custom model fine-tuning.</span><span class="lang-es">Aparecen contratos que exigen alta velocidad, múltiples usuarios concurrentes o modelos dedicados.</span></div>
                   </div>
                 </div>
-                  <div class="diagram-preview-box photo-cover" onclick="openLightbox('media/ia/ia-memory.jpg')">
-                    <img src="media/ia/ia-memory.jpg" alt="Memoria IA: el cuello de botella">
-                    <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-es">Memoria IA</span><span class="lang-en">AI memory</span></div>
+                <div class="feature-card">
+                  <div class="card-icon-wrapper purple"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></div>
+                  <div class="card-text-group">
+                    <div class="card-title"><span class="lang-en">2. Absolute Privacy Mandate</span><span class="lang-es">2. Privacidad y Soberanía de Datos</span></div>
+                    <div class="card-desc"><span class="lang-en">Enterprise compliance prevents client datasets from traversing public clouds (Banking, Legal, Healthcare).</span><span class="lang-es">El cliente exige por contrato que sus datos jamás salgan de la infraestructura física bajo nuestro control.</span></div>
+                  </div>
+                </div>
+                <div class="feature-card">
+                  <div class="card-icon-wrapper cyan"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></div>
+                  <div class="card-text-group">
+                    <div class="card-title"><span class="lang-en">3. Cloud API Crossover Point</span><span class="lang-es">3. Punto de Cruce de Facturas Cloud</span></div>
+                    <div class="card-desc"><span class="lang-en">Monthly cloud token bills surpass the 6-month hardware amortization cost. Local execution becomes instantly profitable.</span><span class="lang-es">El gasto mensual en APIs de nube supera el costo de amortizar un equipo local propio en 6 meses.</span></div>
+                  </div>
+                </div>
+                <div class="feature-card">
+                  <div class="card-icon-wrapper emerald"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                  <div class="card-text-group">
+                    <div class="card-title"><span class="lang-en">4. 24/7 Production Deployment</span><span class="lang-es">4. Operación Permanente en Vivo</span></div>
+                    <div class="card-desc"><span class="lang-en">Live services transition from internal testing to production SLAs requiring non-stop uptime and redundancy.</span><span class="lang-es">La plataforma pasa de fase prototipo a servicio en producción que debe estar disponible día y noche.</span></div>
                   </div>
                 </div>
               </div>
-              <div class="slide-footer">
-                <div class="punchline-badge"><span class="lang-en">Simplified for an executive decision — not a substitute for task benchmarks.</span><span class="lang-es">Comparación simplificada para decisión ejecutiva; no sustituye benchmarks por tarea.</span></div>
+              <div class="diagram-preview-box" onclick="openLightbox('media/ia/ia-client.jpg')">
+                <img src="media/ia/ia-client.jpg" alt="Explicación y propuesta al cliente">
+                <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-en">Zoom Client Case</span><span class="lang-es">Ampliar Propuesta Cliente</span></div>
               </div>
-            </section>
+            </div>
+          </div>
+          <div class="slide-footer">
+            <div class="punchline-badge">
+              <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
+              <span class="lang-en">Investment Rule: We invest when new capacity generates revenue, reduces recurrent cost, or unlocks opportunities we cannot otherwise seize.</span>
+              <span class="lang-es">Regla de inversión: Invertimos cuando la nueva capacidad genera ingresos, reduce costos, eleva productividad o permite captar clientes que hoy no podemos asumir.</span>
+            </div>
+          </div>
+        </section>
+        
 
-            <section class="slide" id="comparativo-slide-6" data-slide="6" data-deck="comparativo">
-              <div class="slide-top-meta">
-                <div class="slide-tag-group">
-                  <span class="slide-number-pill">05</span>
-                  <span class="slide-category-title"><span class="lang-en">MODEL MATRIX</span><span class="lang-es">MODELOS</span></span>
+        <!-- SLIDE 8: 24/7 CONTINUITY AND THE 4 PILLARS -->
+        <section class="slide" id="comparativo-slide-8" data-slide="8" data-deck="comparativo">
+          <div class="slide-top-meta">
+            <span class="slide-badge-category"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg> <span class="lang-en">ENTERPRISE RESILIENCE · 24/7 PILLARS</span><span class="lang-es">RESILIENCIA EMPRESARIAL · 4 PILARES 24/7</span></span>
+            <span class="slide-num-tag">08 / 10</span>
+          </div>
+          <div class="slide-header">
+            <h2><span class="lang-en">The True Goal: Robust 24/7 Technological Operations</span><span class="lang-es">El verdadero objetivo: Una operación tecnológica 24/7</span></h2>
+            <p class="slide-lead"><span class="lang-en">Raw computational power loses its value if a single power outage, thermal drop, or network failure knocks services offline. Continuity is the foundation of enterprise trust.</span><span class="lang-es">La potencia pierde su valor si un corte eléctrico, recalentamiento o caída de red deja los servicios fuera de línea. La continuidad es el activo real.</span></p>
+          </div>
+          <div class="slide-body">
+            <div class="split-layout">
+              <div class="cards-grid-2x2">
+                <div class="feature-card">
+                  <div class="card-icon-wrapper emerald"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+                  <div class="card-text-group">
+                    <div class="card-title"><span class="lang-en">Pillar 1: Empowered Talent</span><span class="lang-es">Pilar 1: Talento Potenciado</span></div>
+                    <div class="card-desc"><span class="lang-en">Ergonomic, responsive workstations equipped with modern AI development tooling and zero lag.</span><span class="lang-es">Mejores herramientas de trabajo que multiplican la productividad del personal y aceleran entregas.</span></div>
+                  </div>
                 </div>
-                <div class="slide-meta-brand">| 3i BAIRD LAB</div>
-              </div>
-              <div class="slide-header">
-                <h2><span class="lang-en">Which models we can actually run</span><span class="lang-es">Qué modelos podemos trabajar</span></h2>
-                <p class="slide-lead"><span class="lang-en">Practical capacity by model size, using quantization when needed. OK = recommended · LIM = possible with offload · NO = not advised.</span><span class="lang-es">Capacidad práctica por tamaño, con quantización cuando aplica. OK = recomendable · LIM = posible con limitaciones · NO = no recomendado.</span></p>
-              </div>
-              <div class="slide-body">
-                <div class="split-layout">
-                <div class="comparison-table-wrapper">
-                  <table class="comparison-table matrix-table">
-                    <thead>
-                      <tr>
-                        <th><span class="lang-en">System</span><span class="lang-es">Sistema</span></th>
-                        <th>3B</th><th>7B / 8B</th><th>14B</th><th>32B</th><th>70B</th><th>200B</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr><td class="aspect">RTX 3050 8GB</td><td class="good">OK</td><td class="good">OK</td><td class="lim">LIM</td><td class="bad">NO</td><td class="bad">NO</td><td class="bad">NO</td></tr>
-                      <tr><td class="aspect">Mac mini M4 16GB</td><td class="good">OK</td><td class="good">OK</td><td class="lim">LIM</td><td class="bad">NO</td><td class="bad">NO</td><td class="bad">NO</td></tr>
-                      <tr><td class="aspect">Ryzen 7 + 64GB</td><td class="good">OK</td><td class="good">OK</td><td class="lim">LIM</td><td class="lim">LIM</td><td class="bad">NO</td><td class="bad">NO</td></tr>
-                      <tr><td class="aspect">BOSGAME M5 128GB</td><td class="good">OK</td><td class="good">OK</td><td class="good">OK</td><td class="good">OK</td><td class="lim">LIM</td><td class="bad">NO</td></tr>
-                      <tr><td class="aspect">GB10 / DGX / Acer / Dell</td><td class="good">OK</td><td class="good">OK</td><td class="good">OK</td><td class="good">OK</td><td class="good">OK</td><td class="good">OK</td></tr>
-                    </tbody>
-                  </table>
+                <div class="feature-card">
+                  <div class="card-icon-wrapper cyan"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6" rx="1"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></svg></div>
+                  <div class="card-text-group">
+                    <div class="card-title"><span class="lang-en">Pillar 2: Compute Capacity</span><span class="lang-es">Pilar 2: Capacidad Tecnológica</span></div>
+                    <div class="card-desc"><span class="lang-en">Scalable GPU VRAM, fast NVMe arrays, and dedicated local models for complex institutional workloads.</span><span class="lang-es">Hardware especializado en IA, procesamiento masivo y bases de datos para proyectos exigentes.</span></div>
+                  </div>
                 </div>
-                  <div class="diagram-preview-box photo-cover" onclick="openLightbox('media/ia/ia-models.jpg')">
-                    <img src="media/ia/ia-models.jpg" alt="Escala de modelos locales">
-                    <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> 3B → 200B</div>
+                <div class="feature-card">
+                  <div class="card-icon-wrapper gold"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+                  <div class="card-text-group">
+                    <div class="card-title"><span class="lang-en">Pillar 3: Protected Power</span><span class="lang-es">Pilar 3: Continuidad Eléctrica</span></div>
+                    <div class="card-desc"><span class="lang-en">Double-conversion online UPS, surge suppression, automated voltage regulation, and safe automated shutdown.</span><span class="lang-es">Sistemas UPS de respaldo, supresión de picos, regulación de voltaje y apagado seguro ante apagones.</span></div>
+                  </div>
+                </div>
+                <div class="feature-card">
+                  <div class="card-icon-wrapper purple"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg></div>
+                  <div class="card-text-group">
+                    <div class="card-title"><span class="lang-en">Pillar 4: Redundant Network</span><span class="lang-es">Pilar 4: Conectividad Redundante</span></div>
+                    <div class="card-desc"><span class="lang-en">Dual WAN fiber providers with instant automatic failover, enterprise routers, and 24/7 uptime monitoring.</span><span class="lang-es">Doble proveedor de Internet con conmutación automática de respaldo y monitoreo permanente de red.</span></div>
                   </div>
                 </div>
               </div>
-              <div class="slide-footer">
-                <div class="punchline-badge"><span class="lang-en">8–16 GB is for learning and demos. 128 GB is for large models and sensitive data without the cloud.</span><span class="lang-es">8–16 GB sirven para aprender y demostrar. 128 GB sirven para modelos grandes y datos sensibles sin subir todo a la nube.</span></div>
+              <div class="diagram-preview-box" onclick="openLightbox('media/ia/ia-datacenter-24-7.jpg')">
+                <img src="media/ia/ia-datacenter-24-7.jpg" alt="Centro de operaciones y continuidad 24/7">
+                <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-en">Zoom 24/7 Center</span><span class="lang-es">Ampliar Centro 24/7</span></div>
               </div>
-            </section>
+            </div>
+          </div>
+          <div class="slide-footer">
+            <div class="punchline-badge">
+              <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span>
+              <span class="lang-en">Formula: Better Tools + Resilient Infrastructure = Maximum Output + High Capacity + Zero Operational Risk.</span>
+              <span class="lang-es">Fórmula empresarial: Mejores herramientas + Mejor infraestructura = Mayor productividad + Mayor capacidad + Menor riesgo operativo.</span>
+            </div>
+          </div>
+        </section>
+        
 
-            <section class="slide" id="comparativo-slide-7" data-slide="7" data-deck="comparativo">
-              <div class="slide-top-meta">
-                <div class="slide-tag-group">
-                  <span class="slide-number-pill">06</span>
-                  <span class="slide-category-title"><span class="lang-en">WORKFLOW</span><span class="lang-es">FLUJO DE TRABAJO</span></span>
-                </div>
-                <div class="slide-meta-brand">| 3i BAIRD LAB</div>
-              </div>
-              <div class="slide-header">
-                <h2><span class="lang-en">How the fleet is used on a real AI project</span><span class="lang-es">Así se usa el ecosistema de equipos en un proyecto real de IA</span></h2>
-              </div>
-              <div class="slide-body">
-                <div class="split-layout">
-                  <div>
-                <div class="hero-flow-ribbon" style="justify-content:flex-start;">
-                  <div class="flow-step-pill">01 <span class="lang-en">Design</span><span class="lang-es">Diseñar</span></div>
-                  <div class="flow-arrow">→</div>
-                  <div class="flow-step-pill">02 <span class="lang-en">Build</span><span class="lang-es">Desarrollar</span></div>
-                  <div class="flow-arrow">→</div>
-                  <div class="flow-step-pill">03 <span class="lang-en">Test AI</span><span class="lang-es">Probar IA</span></div>
-                  <div class="flow-arrow">→</div>
-                  <div class="flow-step-pill">04 RAG</div>
-                  <div class="flow-arrow">→</div>
-                  <div class="flow-step-pill">05 <span class="lang-en">Scale</span><span class="lang-es">Escalar</span></div>
-                  <div class="flow-arrow">→</div>
-                  <div class="flow-step-pill">06 <span class="lang-en">Deliver</span><span class="lang-es">Entregar</span></div>
-                </div>
-                <div class="cards-grid-3 ia-flow-roles" style="margin-top:18px;">
-                  <div class="feature-card hw-photo-card"><div class="hw-photo" onclick="openLightbox('media/ia/ia-mac.jpg')"><img src="media/ia/ia-mac.jpg" alt="PC / Mac"></div><div class="hw-photo-body"><div class="card-title">PC / Mac</div><div class="card-desc"><span class="lang-en">Development and demos.</span><span class="lang-es">Desarrollo y demos.</span></div></div></div>
-                  <div class="feature-card hw-photo-card"><div class="hw-photo" onclick="openLightbox('media/ia/ia-rag.jpg')"><img src="media/ia/ia-rag.jpg" alt="Ryzen 7 64 GB"></div><div class="hw-photo-body"><div class="card-title">Ryzen 7 64 GB</div><div class="card-desc"><span class="lang-en">Private RAG and internal tests.</span><span class="lang-es">RAG y pruebas internas.</span></div></div></div>
-                  <div class="feature-card hw-photo-card highlight-card"><div class="hw-photo" onclick="openLightbox('media/ia/ia-minipc.jpg')"><img src="media/ia/ia-minipc.jpg" alt="BOSGAME / GB10"></div><div class="hw-photo-body"><div class="card-title">BOSGAME / GB10</div><div class="card-desc"><span class="lang-en">Large models and private-client work.</span><span class="lang-es">Modelos grandes y cliente privado.</span></div></div></div>
-                </div>
+        <!-- SLIDE 9: 3-LAYER INVESTMENT MODEL & DECISION CHECKLIST -->
+        <section class="slide" id="comparativo-slide-9" data-slide="9" data-deck="comparativo">
+          <div class="slide-top-meta">
+            <span class="slide-badge-category"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg> <span class="lang-en">FRAMEWORK · 3-LAYER MODEL</span><span class="lang-es">MARCO ESTRATÉGICO · MODELO EN 3 CAPAS</span></span>
+            <span class="slide-num-tag">09 / 10</span>
+          </div>
+          <div class="slide-header">
+            <h2><span class="lang-en">3-Layer Investment Architecture &amp; Decision Matrix</span><span class="lang-es">Modelo de inversión en 3 capas &amp; Matriz de decisión</span></h2>
+            <p class="slide-lead"><span class="lang-en">A clear structural checklist to evaluate any technological acquisition before allocating company capital.</span><span class="lang-es">Checklist estructurado para evaluar con rigor cualquier adquisición tecnológica antes de comprometer capital.</span></p>
+          </div>
+          <div class="slide-body">
+            <div class="split-layout">
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <div class="timeline-v-flow">
+                  <div class="timeline-step-card">
+                    <div class="step-num-bubble cyan">C1</div>
+                    <div class="step-content">
+                      <div class="step-title"><span class="lang-en">LAYER 1 — PEOPLE (Talent Productivity)</span><span class="lang-es">CAPA 1 — PERSONAS (Productividad del Talento)</span></div>
+                      <div class="step-desc"><span class="lang-en">Investment in high-speed workstations. Result: faster developers, rapid prototypes, and more shipped projects.</span><span class="lang-es">Inversión en mejores estaciones. Resultado: desarrolladores más veloces y productivos.</span></div>
+                    </div>
                   </div>
-                  <div class="diagram-preview-box photo-cover" onclick="openLightbox('media/ia/ia-workflow.jpg')">
-                    <img src="media/ia/ia-workflow.jpg" alt="Flujo de trabajo de desarrollador">
-                    <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-es">Flujo real</span><span class="lang-en">Real workflow</span></div>
+                  <div class="timeline-step-card">
+                    <div class="step-num-bubble gold">C2</div>
+                    <div class="step-content">
+                      <div class="step-title"><span class="lang-en">LAYER 2 — TECHNOLOGY (Compute &amp; Storage)</span><span class="lang-es">CAPA 2 — TECNOLOGÍA (Capacidad de Cómputo)</span></div>
+                      <div class="step-desc"><span class="lang-en">Investment in dedicated AI hardware, VRAM, and servers. Result: capacity to execute higher-tier client contracts.</span><span class="lang-es">Inversión en estaciones de IA, VRAM y servidores. Resultado: capacidad para proyectos de mayor nivel.</span></div>
+                    </div>
+                  </div>
+                  <div class="timeline-step-card">
+                    <div class="step-num-bubble emerald">C3</div>
+                    <div class="step-content">
+                      <div class="step-title"><span class="lang-en">LAYER 3 — CONTINUITY (24/7 Operations)</span><span class="lang-es">CAPA 3 — CONTINUIDAD (Operación 24/7)</span></div>
+                      <div class="step-desc"><span class="lang-en">Investment in UPS, dual WAN, cooling, monitoring, and automated backups. Result: non-stop institutional uptime.</span><span class="lang-es">Inversión en energía protegida, Internet redundante, monitoreo y copias de seguridad continuas.</span></div>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="slide-footer">
-                <div class="punchline-badge"><span class="lang-en">Build cheap and fast first. Add power only when the business case requires it.</span><span class="lang-es">Primero construimos barato y rápido; después subimos de potencia solo cuando el caso de negocio lo justifica.</span></div>
-              </div>
-            </section>
-
-            <section class="slide" id="comparativo-slide-8" data-slide="8" data-deck="comparativo">
-              <div class="slide-top-meta">
-                <div class="slide-tag-group">
-                  <span class="slide-number-pill">07</span>
-                  <span class="slide-category-title"><span class="lang-en">PLAIN LANGUAGE</span><span class="lang-es">EXPLICACIÓN SIMPLE</span></span>
-                </div>
-                <div class="slide-meta-brand">| 3i BAIRD LAB</div>
-              </div>
-              <div class="slide-header">
-                <h2><span class="lang-en">How to explain it to a client</span><span class="lang-es">Cómo explicarlo a un cliente</span></h2>
-                <p class="slide-lead"><span class="lang-en">A simple analogy avoids technical jargon.</span><span class="lang-es">Una analogía sencilla evita hablarle al cliente en lenguaje técnico.</span></p>
-              </div>
-              <div class="slide-body">
-                <div class="cards-grid-4">
-                  <div class="feature-card hw-photo-card"><div class="hw-photo" onclick="openLightbox('media/ia/ia-rag.jpg')"><img src="media/ia/ia-rag.jpg" alt="Disco duro = bodega"></div><div class="hw-photo-body"><div class="card-title"><span class="lang-en">Hard drive = warehouse</span><span class="lang-es">Disco duro = la bodega</span></div><div class="card-desc"><span class="lang-en">Stores documents, models, databases and evidence.</span><span class="lang-es">Guarda documentos, modelos, bases de datos y evidencias.</span></div></div></div>
-                  <div class="feature-card hw-photo-card highlight-card"><div class="hw-photo" onclick="openLightbox('media/ia/ia-memory.jpg')"><img src="media/ia/ia-memory.jpg" alt="RAM / VRAM = mesa de trabajo"></div><div class="hw-photo-body"><div class="card-title"><span class="lang-en">RAM / VRAM = worktable</span><span class="lang-es">RAM / VRAM = la mesa de trabajo</span></div><div class="card-desc"><span class="lang-en">The larger it is, the more documents and models stay open at once.</span><span class="lang-es">Mientras más grande, más documentos y modelos caben abiertos al mismo tiempo.</span></div></div></div>
-                  <div class="feature-card hw-photo-card"><div class="hw-photo" onclick="openLightbox('media/ia/ia-gpu.jpg')"><img src="media/ia/ia-gpu.jpg" alt="GPU / NPU = equipo experto"></div><div class="hw-photo-body"><div class="card-title"><span class="lang-en">GPU / NPU = expert team</span><span class="lang-es">GPU / NPU = el equipo experto</span></div><div class="card-desc"><span class="lang-en">Does the heavy math and speeds up AI answers.</span><span class="lang-es">Hace los cálculos pesados y acelera respuestas de IA.</span></div></div></div>
-                  <div class="feature-card hw-photo-card"><div class="hw-photo" onclick="openLightbox('media/ia/ia-workflow.jpg')"><img src="media/ia/ia-workflow.jpg" alt="Software IA = el método"></div><div class="hw-photo-body"><div class="card-title"><span class="lang-en">Software = the method</span><span class="lang-es">Software IA = el método</span></div><div class="card-desc"><span class="lang-en">Prompts, security, permissions, RAG and measurement.</span><span class="lang-es">Ordena prompts, seguridad, permisos, RAG y medición.</span></div></div></div>
-                </div>
-              </div>
-              <div class="slide-footer">
-                <div class="punchline-badge"><span class="lang-en">Basic answers: a small machine. Private documents, large models and constant speed: a 128 GB station.</span><span class="lang-es">Respuestas básicas: equipo pequeño. Documentos privados, modelos grandes y velocidad constante: estación de 128 GB.</span></div>
-              </div>
-            </section>
-
-            <section class="slide" id="comparativo-slide-9" data-slide="9" data-deck="comparativo">
-              <div class="slide-top-meta">
-                <div class="slide-tag-group">
-                  <span class="slide-number-pill">08</span>
-                  <span class="slide-category-title"><span class="lang-en">RECOMMENDATION</span><span class="lang-es">RECOMENDACIÓN</span></span>
-                </div>
-                <div class="slide-meta-brand">| 3i BAIRD LAB</div>
-              </div>
-              <div class="slide-header">
-                <h2><span class="lang-en">Choose by budget, privacy and model size</span><span class="lang-es">Seleccionar por presupuesto, privacidad y tamaño del modelo</span></h2>
-              </div>
-              <div class="slide-body">
-                <div class="cards-grid-4">
-                  <div class="feature-card hw-photo-card"><div class="hw-photo" onclick="openLightbox('media/ia/ia-gpu.jpg')"><img src="media/ia/ia-gpu.jpg" alt="Presupuesto bajo"></div><div class="hw-photo-body"><div class="card-title"><span class="lang-en">Tight budget</span><span class="lang-es">Presupuesto bajo</span></div><div class="tech-badge">RTX 3050 / Mac mini M4</div><div class="card-desc"><span class="lang-en">Automations, demos, fast prototypes.</span><span class="lang-es">Automatizaciones, demos, prototipos rápidos.</span></div></div></div>
-                  <div class="feature-card hw-photo-card"><div class="hw-photo" onclick="openLightbox('media/ia/ia-tower.jpg')"><img src="media/ia/ia-tower.jpg" alt="Aprovechar lo existente"></div><div class="hw-photo-body"><div class="card-title"><span class="lang-en">Use what we have</span><span class="lang-es">Aprovechar lo existente</span></div><div class="tech-badge">Ryzen 7 64 GB + RTX 3050</div><div class="card-desc"><span class="lang-en">RAG, large storage and product tests.</span><span class="lang-es">RAG, almacenamiento grande y pruebas de producto.</span></div></div></div>
-                  <div class="feature-card hw-photo-card highlight-card"><div class="hw-photo" onclick="openLightbox('media/ia/ia-minipc.jpg')"><img src="media/ia/ia-minipc.jpg" alt="Mejor salto costo/capacidad"></div><div class="hw-photo-body"><div class="card-title"><span class="lang-en">Best cost / capacity jump</span><span class="lang-es">Mejor salto costo/capacidad</span></div><div class="tech-badge">BOSGAME M5 AI 128 GB</div><div class="card-desc"><span class="lang-en">Large quantized models and private local work.</span><span class="lang-es">Modelos grandes quantizados y trabajo local privado.</span></div></div></div>
-                  <div class="feature-card hw-photo-card"><div class="hw-photo" onclick="openLightbox('media/ia/ia-dgx.jpg')"><img src="media/ia/ia-dgx.jpg" alt="Cliente enterprise"></div><div class="hw-photo-body"><div class="card-title"><span class="lang-en">Enterprise client</span><span class="lang-es">Cliente enterprise</span></div><div class="tech-badge">DGX Spark / Acer / Dell GB10</div><div class="card-desc"><span class="lang-en">NVIDIA stack, 200B inference and vendor support.</span><span class="lang-es">Stack NVIDIA, inferencia 200B y soporte empresarial.</span></div></div></div>
-                </div>
-              </div>
-              <div class="slide-footer">
-                <div class="punchline-badge"><span class="lang-en">1) Develop on current machines · 2) Buy BOSGAME M5 for serious local AI · 3) Move to GB10 for enterprise or real fine-tuning.</span><span class="lang-es">1) Usar equipos actuales para desarrollo · 2) Comprar BOSGAME M5 si se requiere IA local grande · 3) Pasar a GB10 con clientes enterprise o fine-tuning serio.</span></div>
-              </div>
-            </section>
-
-            <section class="slide" id="comparativo-slide-10" data-slide="10" data-deck="comparativo">
-              <div class="slide-top-meta">
-                <div class="slide-tag-group">
-                  <span class="slide-number-pill">09</span>
-                  <span class="slide-category-title"><span class="lang-en">SOURCES</span><span class="lang-es">FUENTES</span></span>
-                </div>
-                <div class="slide-meta-brand">| 3i BAIRD LAB</div>
-              </div>
-              <div class="slide-header">
-                <h2><span class="lang-en">Sources and assumptions</span><span class="lang-es">Fuentes y supuestos</span></h2>
-                <p class="slide-lead"><span class="lang-en">Commercial data from official pages or reference stores. FX via Wise / XE. Validate before purchase.</span><span class="lang-es">Datos comerciales de fuentes oficiales o tiendas referenciales. Tasa Wise / XE. Validar antes de comprar.</span></p>
-              </div>
-              <div class="slide-body">
-                <div class="split-layout">
-                <div class="cards-grid-2">
-                  <div class="feature-card"><div class="card-title">BOSGAME M5 AI</div><div class="card-desc">Ryzen AI Max+ 395, 128 GB, 2 TB · USD 2,999 · bosgamepc.com</div></div>
-                  <div class="feature-card"><div class="card-title">NVIDIA DGX Spark</div><div class="card-desc">GB10, 1 PFLOP FP4, 128 GB, 4 TB · USD 4,699 · marketplace.nvidia.com</div></div>
-                  <div class="feature-card"><div class="card-title">Acer Veriton GN100</div><div class="card-desc">GB10, 128 GB, hasta 4 TB · desde USD 3,999 · acer.com</div></div>
-                  <div class="feature-card"><div class="card-title">Dell Pro Max GB10</div><div class="card-desc">128 GB LPDDR5X, 4 TB · USD 6,330.64 · dell.com</div></div>
-                  <div class="feature-card"><div class="card-title">Apple Mac mini M4</div><div class="card-desc">M4, 16 GB, SSD 2 TB configurable · apple.com/co/mac-mini</div></div>
-                  <div class="feature-card highlight-card"><div class="card-title"><span class="lang-en">Decision</span><span class="lang-es">Decisión</span></div><div class="card-desc"><span class="lang-en">128 GB is the relevant jump for large local models.</span><span class="lang-es">128 GB es el salto relevante para modelos grandes en local.</span></div></div>
-                </div>
-                  <div class="diagram-preview-box photo-cover" onclick="openLightbox('media/ia/ia-client.jpg')">
-                    <img src="media/ia/ia-client.jpg" alt="Briefing ejecutivo con el cliente">
-                    <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> 3i BAIRD LAB</div>
+                <div class="feature-card" style="padding: 8px 12px;">
+                  <div class="card-icon-wrapper purple"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+                  <div class="card-text-group">
+                    <div class="card-title"><span class="lang-en">5-Question Filter:</span><span class="lang-es">Filtro de 5 Preguntas:</span></div>
+                    <div class="card-desc"><span class="lang-en">1. Can we do it with what we have? 2. Where is the bottleneck? 3. What do we gain? 4. What is the cost vs benefit? 5. Does the business demand it today?</span><span class="lang-es">1. ¿Podemos hacerlo con lo actual? 2. ¿Dónde está el límite? 3. ¿Qué ganamos? 4. ¿Costo vs beneficio? 5. ¿El negocio lo exige hoy?</span></div>
                   </div>
                 </div>
               </div>
-              <div class="slide-footer">
-                <div class="punchline-badge"><span class="lang-en">3i BAIRD LAB · Local AI workstation briefing</span><span class="lang-es">3i BAIRD LAB · Briefing de estaciones IA local</span></div>
+              <div class="diagram-preview-box" onclick="openLightbox('media/ia/ia-rag.jpg')">
+                <img src="media/ia/ia-rag.jpg" alt="Arquitectura en 3 capas">
+                <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-en">Zoom Architecture</span><span class="lang-es">Ampliar Arquitectura</span></div>
               </div>
-            </section>
+            </div>
+          </div>
+          <div class="slide-footer">
+            <div class="punchline-badge">
+              <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg></span>
+              <span class="lang-en">Framework Rule: First develop with what we have. Invest when the business proves it requires higher capacity.</span>
+              <span class="lang-es">Principio rector: Primero desarrollamos con lo que tenemos; invertimos cuando el negocio demuestra que necesita más capacidad.</span>
+            </div>
+          </div>
+        </section>
+        
+
+        <!-- SLIDE 10: ROADMAP & EXECUTIVE CLOSING -->
+        <section class="slide" id="comparativo-slide-10" data-slide="10" data-deck="comparativo">
+          <div class="slide-top-meta">
+            <span class="slide-badge-category"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg> <span class="lang-en">STRATEGIC ROADMAP · EXECUTIVE SUMMARY</span><span class="lang-es">HOJA DE RUTA · RESUMEN EJECUTIVO</span></span>
+            <span class="slide-num-tag">10 / 10</span>
+          </div>
+          <div class="slide-header">
+            <h2><span class="lang-en">Strategic Growth Roadmap: Building an Enterprise Asset</span><span class="lang-es">Hoja de ruta estratégica: Construyendo un activo empresarial</span></h2>
+            <p class="slide-lead"><span class="lang-en">Our goal is not to accumulate hardware; it is to forge a scalable technological asset that accelerates talent, captures revenue, and operates continuously.</span><span class="lang-es">El objetivo no es acumular computadores, sino forjar una capacidad tecnológica que potencie al talento, genere ingresos y opere 24/7.</span></p>
+          </div>
+          <div class="slide-body">
+            <div class="split-layout">
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <div class="timeline-v-flow">
+                  <div class="timeline-step-card">
+                    <div class="step-num-bubble cyan">01</div>
+                    <div class="step-content">
+                      <div class="step-title"><span class="lang-en">01. Immediate Phase: Exploit Current Assets</span><span class="lang-es">01. Fase Inmediata: Explotar Activos Actuales</span></div>
+                      <div class="step-desc"><span class="lang-en">Develop software solutions, prototypes, integrations, and secure early client validation at zero added capex.</span><span class="lang-es">Desarrollar soluciones, prototipos y validar comercialmente proyectos sin compras prematuras.</span></div>
+                    </div>
+                  </div>
+                  <div class="timeline-step-card">
+                    <div class="step-num-bubble gold">02</div>
+                    <div class="step-content">
+                      <div class="step-title"><span class="lang-en">02. Growth Trigger: Identify Real Boundary</span><span class="lang-es">02. Gatillador de Crecimiento: Identificar el Límite</span></div>
+                      <div class="step-desc"><span class="lang-en">Detect concrete demand bottlenecks in local model size, concurrency, privacy compliance, or latency.</span><span class="lang-es">Detectar cuellos de botella reales en tamaño de modelos, privacidad requerida o concurrencia de clientes.</span></div>
+                    </div>
+                  </div>
+                  <div class="timeline-step-card">
+                    <div class="step-num-bubble emerald">03</div>
+                    <div class="step-content">
+                      <div class="step-title"><span class="lang-en">03. Scaled Phase: Enterprise 24/7 Continuity</span><span class="lang-es">03. Fase de Escala: Continuidad Empresarial 24/7</span></div>
+                      <div class="step-desc"><span class="lang-en">Deploy dedicated AI nodes backed by UPS power, dual WAN, and strict institutional SLA monitoring.</span><span class="lang-es">Incorporar estaciones y servidores con respaldo eléctrico UPS, doble conexión y estabilidad continua.</span></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="feature-card highlight-card" style="padding: 10px 14px;">
+                  <div class="card-icon-wrapper gold"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg></div>
+                  <div class="card-text-group">
+                    <div class="card-title"><span class="lang-en">Executive Closing Takeaway:</span><span class="lang-es">Mensaje Ejecutivo Final:</span></div>
+                    <div class="card-desc" style="font-size: 0.92rem; color: #fff; font-weight: 600;">
+                      <span class="lang-en">Infrastructure upgrades stop being mere technology expenses; they become direct investments in our company's productive, commercial, and operational power.</span>
+                      <span class="lang-es">Comprar infraestructura deja de ser un gasto tecnológico y pasa a convertirse en una inversión directa en la capacidad productiva, comercial y operativa de la empresa.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="diagram-preview-box" onclick="openLightbox('media/ia/ia-dgx.jpg')">
+                <img src="media/ia/ia-dgx.jpg" alt="Escalamiento empresarial">
+                <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-en">Zoom Enterprise Scale</span><span class="lang-es">Ampliar Escala Empresarial</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="slide-footer">
+            <div class="punchline-badge">
+              <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
+              <span class="lang-en">Progression: People → Technology → Continuity → Clients → Scalable Growth.</span>
+              <span class="lang-es">Ruta progresiva: Personas → Tecnología → Continuidad → Clientes → Escalamiento.</span>
+            </div>
+          </div>
+        </section>
+        
         </div>
 
-
-        <!-- DECK: ARCANA RESTAURANTE (10 Slides) -->
         <div class="deck-container" id="deck-restaurante">
           
         <!-- SLIDE 1: COVER HERO -->
@@ -3880,6 +4082,7 @@
 
       <div class="keyboard-hints">
         <span><kbd class="kbd-badge">←</kbd><kbd class="kbd-badge">→</kbd></span>
+        <span><kbd class="kbd-badge">C</kbd> <span class="lang-en">Q&amp;A</span><span class="lang-es">Notas / Q&amp;A</span></span>
         <span><kbd class="kbd-badge">F</kbd> <span class="lang-en">Full screen</span><span class="lang-es">Pantalla</span></span>
       </div>
     </footer>
@@ -4224,19 +4427,78 @@
     </div>
   </div>
 
-    <div class="overview-grid" id="overviewGrid-comparativo" style="display: none;">
-          <div class="overview-thumb-card" data-deck="comparativo" onclick="goToSlide(1)"><div class="thumb-num">SLIDE 01 / 10</div><div class="thumb-title"><span class="lang-en">Local AI Hardware Comparison</span><span class="lang-es">Comparativo Ejecutivo de Equipos IA Local</span></div></div>
-          <div class="overview-thumb-card" data-deck="comparativo" onclick="goToSlide(2)"><div class="thumb-num">SLIDE 02 / 10</div><div class="thumb-title"><span class="lang-en">What to buy depends on the AI you run locally</span><span class="lang-es">Qué comprar depende del nivel de IA local</span></div></div>
-          <div class="overview-thumb-card" data-deck="comparativo" onclick="goToSlide(3)"><div class="thumb-num">SLIDE 03 / 10</div><div class="thumb-title"><span class="lang-en">Current fleet</span><span class="lang-es">Equipos actuales</span></div></div>
-          <div class="overview-thumb-card" data-deck="comparativo" onclick="goToSlide(4)"><div class="thumb-num">SLIDE 04 / 10</div><div class="thumb-title"><span class="lang-en">Prices and capacity</span><span class="lang-es">Precios y capacidades</span></div></div>
-          <div class="overview-thumb-card" data-deck="comparativo" onclick="goToSlide(5)"><div class="thumb-num">SLIDE 05 / 10</div><div class="thumb-title"><span class="lang-en">AI memory is the bottleneck</span><span class="lang-es">La memoria IA es el cuello de botella</span></div></div>
-          <div class="overview-thumb-card" data-deck="comparativo" onclick="goToSlide(6)"><div class="thumb-num">SLIDE 06 / 10</div><div class="thumb-title"><span class="lang-en">Model matrix</span><span class="lang-es">Qué modelos podemos trabajar</span></div></div>
-          <div class="overview-thumb-card" data-deck="comparativo" onclick="goToSlide(7)"><div class="thumb-num">SLIDE 07 / 10</div><div class="thumb-title"><span class="lang-en">Developer workflow</span><span class="lang-es">Flujo de trabajo</span></div></div>
-          <div class="overview-thumb-card" data-deck="comparativo" onclick="goToSlide(8)"><div class="thumb-num">SLIDE 08 / 10</div><div class="thumb-title"><span class="lang-en">How to explain it to a client</span><span class="lang-es">Cómo explicarlo a un cliente</span></div></div>
-          <div class="overview-thumb-card" data-deck="comparativo" onclick="goToSlide(9)"><div class="thumb-num">SLIDE 09 / 10</div><div class="thumb-title"><span class="lang-en">Decision scenarios</span><span class="lang-es">Escenarios de decisión</span></div></div>
-          <div class="overview-thumb-card" data-deck="comparativo" onclick="goToSlide(10)"><div class="thumb-num">SLIDE 10 / 10</div><div class="thumb-title"><span class="lang-en">Sources and assumptions</span><span class="lang-es">Fuentes y supuestos</span></div></div>
+        <div class="overview-grid" id="overviewGrid-comparativo" style="display: none;">
+          <div class="overview-thumb-card" data-deck="comparativo" onclick="goToSlide(1)">
+            <div class="thumb-num">SLIDE 01 / 10 · <span class="lang-en">EXECUTIVE PROPOSAL</span><span class="lang-es">PROPUESTA EJECUTIVA</span></div>
+            <div class="thumb-title">
+              <span class="lang-en">Enterprise AI Infrastructure Strategy</span>
+              <span class="lang-es">Estrategia Ejecutiva de Infraestructura IA</span>
+            </div>
+          </div>
+          <div class="overview-thumb-card" data-deck="comparativo" onclick="goToSlide(2)">
+            <div class="thumb-num">SLIDE 02 / 10 · <span class="lang-en">CURRENT ASSETS</span><span class="lang-es">CAPACIDAD ACTUAL</span></div>
+            <div class="thumb-title">
+              <span class="lang-en">What Can We Build Today with Existing Hardware?</span>
+              <span class="lang-es">¿Qué podemos hacer hoy con la infraestructura actual?</span>
+            </div>
+          </div>
+          <div class="overview-thumb-card" data-deck="comparativo" onclick="goToSlide(3)">
+            <div class="thumb-num">SLIDE 03 / 10 · <span class="lang-en">GROWTH LIMITS</span><span class="lang-es">LÍMITES OPERATIVOS</span></div>
+            <div class="thumb-title">
+              <span class="lang-en">Where Real Operational Limits Emerge</span>
+              <span class="lang-es">Dónde están nuestros límites operativos reales</span>
+            </div>
+          </div>
+          <div class="overview-thumb-card" data-deck="comparativo" onclick="goToSlide(4)">
+            <div class="thumb-num">SLIDE 04 / 10 · <span class="lang-en">BUSINESS VALUE</span><span class="lang-es">GANANCIA EMPRESARIAL</span></div>
+            <div class="thumb-title">
+              <span class="lang-en">What Do We Gain by Upgrading Hardware?</span>
+              <span class="lang-es">Qué ganamos al mejorar y escalar los equipos</span>
+            </div>
+          </div>
+          <div class="overview-thumb-card" data-deck="comparativo" onclick="goToSlide(5)">
+            <div class="thumb-num">SLIDE 05 / 10 · <span class="lang-en">HUMAN TALENT</span><span class="lang-es">TALENTO & PERSONAS</span></div>
+            <div class="thumb-title">
+              <span class="lang-en">Empowering Hardware Means Empowering People</span>
+              <span class="lang-es">Potenciar los equipos = Potenciar a las personas</span>
+            </div>
+          </div>
+          <div class="overview-thumb-card" data-deck="comparativo" onclick="goToSlide(6)">
+            <div class="thumb-num">SLIDE 06 / 10 · <span class="lang-en">PHASED BUDGET</span><span class="lang-es">MODELO DE INVERSIÓN</span></div>
+            <div class="thumb-title">
+              <span class="lang-en">Phased Capital Investment Model: How Much to Grow?</span>
+              <span class="lang-es">¿Cuánto cuesta crecer? Inversión por etapas</span>
+            </div>
+          </div>
+          <div class="overview-thumb-card" data-deck="comparativo" onclick="goToSlide(7)">
+            <div class="thumb-num">SLIDE 07 / 10 · <span class="lang-en">ROI TRIGGERS</span><span class="lang-es">GATILLADORES ROI</span></div>
+            <div class="thumb-title">
+              <span class="lang-en">The 5 Business Triggers: When Is It Time to Invest?</span>
+              <span class="lang-es">Los 5 gatilladores financieros para invertir</span>
+            </div>
+          </div>
+          <div class="overview-thumb-card" data-deck="comparativo" onclick="goToSlide(8)">
+            <div class="thumb-num">SLIDE 08 / 10 · <span class="lang-en">24/7 CONTINUITY</span><span class="lang-es">CONTINUIDAD 24/7</span></div>
+            <div class="thumb-title">
+              <span class="lang-en">The True Goal: Robust 24/7 Technological Operations</span>
+              <span class="lang-es">El verdadero objetivo: Operación tecnológica 24/7</span>
+            </div>
+          </div>
+          <div class="overview-thumb-card" data-deck="comparativo" onclick="goToSlide(9)">
+            <div class="thumb-num">SLIDE 09 / 10 · <span class="lang-en">3-LAYER MODEL</span><span class="lang-es">MODELO EN 3 CAPAS</span></div>
+            <div class="thumb-title">
+              <span class="lang-en">3-Layer Investment Architecture & Decision Matrix</span>
+              <span class="lang-es">Modelo en 3 capas & Matriz de decisión</span>
+            </div>
+          </div>
+          <div class="overview-thumb-card" data-deck="comparativo" onclick="goToSlide(10)">
+            <div class="thumb-num">SLIDE 10 / 10 · <span class="lang-en">STRATEGIC ROADMAP</span><span class="lang-es">HOJA DE RUTA</span></div>
+            <div class="thumb-title">
+              <span class="lang-en">Strategic Growth Roadmap: Building an Enterprise Asset</span>
+              <span class="lang-es">Hoja de ruta estratégica: Construir un activo empresarial</span>
+            </div>
+          </div>
     </div>
-
 
     <div class="overview-grid" id="overviewGrid-restaurante" style="display: none;">
           <div class="overview-thumb-card" data-deck="restaurante" onclick="goToSlide(1)">
@@ -4354,6 +4616,140 @@
       <img id="lightboxImg" src="" alt="Zoomed Diagram">
     </div>
   </div>
+
+  <!-- Slide Comments, Questions & Ingestion Drawer Overlay -->
+  <div class="comments-drawer-backdrop" id="commentsDrawerBackdrop" onclick="closeCommentsDrawer()"></div>
+  <aside class="comments-drawer" id="commentsDrawer" aria-hidden="true">
+    <div class="comments-drawer-header">
+      <div class="comments-header-info">
+        <div class="comments-header-tag" id="commentsDeckTag">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+          <span id="commentsDeckKicker">3i BAIRD LAB · SLIDE Q&amp;A</span>
+        </div>
+        <div class="comments-header-title" id="commentsSlideTitle">Preguntas &amp; Comentarios</div>
+        <div class="comments-header-sub" id="commentsSlideSubtitle">Diapositiva activa</div>
+      </div>
+      <button class="comments-close-btn" onclick="closeCommentsDrawer()" title="Cerrar panel (Esc)"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+    </div>
+
+    <div class="comments-tabs-nav">
+      <button class="comments-tab-btn active" id="tabBtnList" onclick="switchCommentsTab('list')">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span class="lang-es">Preguntas</span><span class="lang-en">Questions</span>
+        <span class="comments-tab-count" id="tabCountBadge">0</span>
+      </button>
+      <button class="comments-tab-btn" id="tabBtnInject" onclick="switchCommentsTab('inject')">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M12 5v14M5 12h14"/></svg>
+        <span class="lang-es">Inyectar</span><span class="lang-en">Inject</span>
+      </button>
+      <button class="comments-tab-btn" id="tabBtnBulk" onclick="switchCommentsTab('bulk')">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        <span class="lang-es">Ingesta Rápida</span><span class="lang-en">Bulk / Presets</span>
+      </button>
+    </div>
+
+    <div class="comments-drawer-body">
+      <!-- TAB 1: List of Questions & Comments -->
+      <div class="comments-tab-panel active" id="panelList">
+        <div class="comments-filter-bar">
+          <button class="filter-chip active" onclick="filterComments('all', this)"><span class="lang-es">Todas</span><span class="lang-en">All</span></button>
+          <button class="filter-chip" onclick="filterComments('inversor', this)">💼 <span class="lang-es">Inversor</span><span class="lang-en">Investor</span></button>
+          <button class="filter-chip" onclick="filterComments('objecion', this)">⚠️ <span class="lang-es">Objeciones</span><span class="lang-en">Objections</span></button>
+          <button class="filter-chip" onclick="filterComments('operativa', this)">⚙️ <span class="lang-es">Operativa</span><span class="lang-en">Ops/Tech</span></button>
+          <button class="filter-chip" onclick="filterComments('nota', this)">📝 <span class="lang-es">Notas</span><span class="lang-en">Notes</span></button>
+        </div>
+
+        <div id="commentsListContainer" class="comments-cards-list">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- TAB 2: Inject Single Question / Comment -->
+      <div class="comments-tab-panel" id="panelInject">
+        <form id="injectSingleForm" onsubmit="handleInjectSingle(event)" class="inject-form-group">
+          <div class="inject-form-group">
+            <label class="inject-label" for="injectCategory">
+              <span class="lang-es">Categoría</span><span class="lang-en">Category</span>
+            </label>
+            <select class="inject-select" id="injectCategory" required>
+              <option value="inversor">💼 Pregunta de Inversor / VC</option>
+              <option value="objecion">⚠️ Objeción o Riesgo Típico</option>
+              <option value="operativa">⚙️ Pregunta Operativa / Técnica</option>
+              <option value="nota">📝 Nota del Presentador / Talking Point</option>
+              <option value="faq">💬 FAQ General</option>
+            </select>
+          </div>
+
+          <div class="inject-form-group">
+            <label class="inject-label" for="injectQuestion">
+              <span class="lang-es">Pregunta o Título del Comentario</span><span class="lang-en">Question or Note Title</span>
+            </label>
+            <input type="text" class="inject-input" id="injectQuestion" placeholder="Ej: ¿Qué margen neto se rescata en el primer trimestre?" required autocomplete="off">
+          </div>
+
+          <div class="inject-form-group">
+            <label class="inject-label" for="injectAnswer">
+              <span class="lang-es">Puntos Clave / Respuesta Sugerida (Opcional)</span><span class="lang-en">Key Talking Points / Answer (Optional)</span>
+            </label>
+            <textarea class="inject-textarea" id="injectAnswer" placeholder="Puntos estratégicos para responder de inmediato..."></textarea>
+          </div>
+
+          <div class="inject-actions-row">
+            <button type="submit" class="btn-inject-primary">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+              <span class="lang-es">Inyectar en esta Diapositiva</span>
+              <span class="lang-en">Inject into Active Slide</span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- TAB 3: Bulk Ingestion & Presets -->
+      <div class="comments-tab-panel" id="panelBulk">
+        <div class="inject-form-group">
+          <label class="inject-label">
+            <span class="lang-es">Cargar Presets Inteligentes para esta Diapositiva</span>
+            <span class="lang-en">Load Curated Presets for Current Slide</span>
+          </label>
+          <div class="bulk-presets-grid">
+            <button type="button" class="preset-card-btn" onclick="injectSlidePresets()">
+              <span class="preset-card-title">✨ Q&amp;A Curado</span>
+              <span class="preset-card-desc"><span class="lang-es">Inyectar preguntas clave de esta lámina</span><span class="lang-en">Inject curated slide Q&amp;A</span></span>
+            </button>
+            <button type="button" class="preset-card-btn" onclick="copyCurrentSlideNotes()">
+              <span class="preset-card-title">📋 Copiar Todo</span>
+              <span class="preset-card-desc"><span class="lang-es">Copiar notas al portapapeles</span><span class="lang-en">Copy notes to clipboard</span></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="inject-form-group" style="margin-top: 10px;">
+          <label class="inject-label" for="bulkInputArea">
+            <span class="lang-es">Ingesta Masiva (Línea por línea o JSON)</span>
+            <span class="lang-en">Bulk Ingestion (Line-by-line or JSON)</span>
+          </label>
+          <textarea class="inject-textarea code-area" id="bulkInputArea" placeholder="Pega aquí múltiples preguntas (una por línea):&#10;¿Cómo se auditan los inventarios?&#10;¿Cuál es el costo del hardware?&#10;¿Qué pasa si no hay internet?"></textarea>
+        </div>
+
+        <div class="inject-actions-row">
+          <button type="button" class="btn-inject-primary" onclick="handleBulkInject()">
+            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            <span class="lang-es">Procesar e Inyectar</span>
+            <span class="lang-en">Process &amp; Inject</span>
+          </button>
+          <button type="button" class="btn-inject-secondary" onclick="exportAllDeckNotes()">
+            <span class="lang-es">Exportar JSON</span><span class="lang-en">Export JSON</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="comments-toast" id="commentsToast">
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 12 2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+      <span id="commentsToastMsg">Pregunta inyectada con éxito</span>
+    </div>
+  </aside>
 
   <!-- Presentation Logic Script -->
   <script src="app.js"></script>

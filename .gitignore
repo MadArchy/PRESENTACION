@@ -27,3 +27,7 @@ data/raw_extracted_media/_pptx_extract/
 
 # Raw WhatsApp Video files
 sources/raw_media/WhatsApp Video*.mp4
+
+# Temporary scratch files
+scratch/
+
