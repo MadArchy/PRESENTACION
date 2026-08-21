@@ -233,12 +233,29 @@ function warmupVideo() {
   if (video) video.preload = 'auto';
 }
 
+function setupHubNavigation() {
+  document.querySelectorAll('.venture-pill-btn[data-deck]').forEach((btn) => {
+    btn.addEventListener('click', (event) => {
+      event.preventDefault();
+      launchDeck(btn.getAttribute('data-deck'));
+    });
+  });
+
+  document.querySelectorAll('.venture-pill-btn[data-video-deck]').forEach((btn) => {
+    btn.addEventListener('click', (event) => {
+      event.preventDefault();
+      playVentureVideo(btn.getAttribute('data-video-deck'));
+    });
+  });
+}
+
 function initPlatform() {
   injectThemedBackgrounds();
   deferSlideImages();
   primeNearbySlides('hub', 1);
   preloadUrl(SLIDE_BACKGROUNDS.hub.default);
   warmupVideo();
+  setupHubNavigation();
   openExecutiveHub();
   applyLanguage(currentLang);
   setupTouchGestures();
@@ -420,9 +437,10 @@ function updateDrawerFormLanguage(lang) {
 }
 
 function applyLanguage(lang) {
-  document.documentElement.setAttribute('data-lang', lang);
+  currentLang = lang === 'en' ? 'en' : 'es';
+  document.documentElement.setAttribute('data-lang', currentLang);
   document.querySelectorAll('.lang-opt').forEach((btn) => {
-    btn.classList.toggle('is-active', btn.getAttribute('data-lang') === lang);
+    btn.classList.toggle('is-active', btn.getAttribute('data-lang') === currentLang);
   });
 
   updateChromeMeta();
@@ -430,7 +448,7 @@ function applyLanguage(lang) {
   const esElements = document.querySelectorAll('.lang-es');
   const enElements = document.querySelectorAll('.lang-en');
 
-  if (lang === 'es') {
+  if (currentLang === 'es') {
     esElements.forEach(el => el.style.display = '');
     enElements.forEach(el => el.style.display = 'none');
   } else {
@@ -439,7 +457,7 @@ function applyLanguage(lang) {
   }
 
   // Update drawer forms, placeholders, and options
-  updateDrawerFormLanguage(lang);
+  updateDrawerFormLanguage(currentLang);
 
   // Live update slide Q&A drawer if active
   if (typeof isCommentsOpen !== 'undefined' && isCommentsOpen) {
@@ -1834,6 +1852,37 @@ const CURATED_SLIDE_QA = {
   }
 };
 
+function getActiveLang() {
+  const htmlLang = document.documentElement.getAttribute('data-lang');
+  return htmlLang === 'en' ? 'en' : (htmlLang === 'es' ? 'es' : currentLang);
+}
+
+function getCommentQuestion(item, lang = getActiveLang()) {
+  if (!item) return '';
+  if (lang === 'en') {
+    return item.question_en || item.question_es || item.question || '';
+  }
+  return item.question_es || item.question_en || item.question || '';
+}
+
+function getCommentAnswer(item, lang = getActiveLang()) {
+  if (!item) return '';
+  if (lang === 'en') {
+    return item.answer_en || item.answer_es || item.answer || '';
+  }
+  return item.answer_es || item.answer_en || item.answer || '';
+}
+
+function hydrateNoteFromPreset(item, preset) {
+  if (!item || !preset) return item;
+  if (preset.question_es) item.question_es = preset.question_es;
+  if (preset.question_en) item.question_en = preset.question_en;
+  if (preset.answer_es) item.answer_es = preset.answer_es;
+  if (preset.answer_en) item.answer_en = preset.answer_en;
+  if (preset.category) item.category = preset.category;
+  return item;
+}
+
 function getSlideNotesKey(deck, slide) {
   return `baird_notes_${deck}_${slide}`;
 }
@@ -1849,18 +1898,25 @@ function getSlideNotes(deck, slide) {
     try {
       const parsed = JSON.parse(stored);
       if (Array.isArray(parsed) && parsed.length > 0) {
+        let migrated = false;
         if (presets && Array.isArray(presets)) {
           const presetMap = new Map(presets.map(p => [p.id, p]));
           parsed.forEach(item => {
-            if (presetMap.has(item.id)) {
-              const p = presetMap.get(item.id);
-              if (p.question_es && !item.question_es) item.question_es = p.question_es;
-              if (p.question_en && !item.question_en) item.question_en = p.question_en;
-              if (p.answer_es && !item.answer_es) item.answer_es = p.answer_es;
-              if (p.answer_en && !item.answer_en) item.answer_en = p.answer_en;
+            const before = JSON.stringify(item);
+            if (item.id && presetMap.has(item.id)) {
+              hydrateNoteFromPreset(item, presetMap.get(item.id));
+            } else {
+              const itemQuestion = (item.question_es || item.question || '').trim().toLowerCase();
+              const match = presets.find(p => {
+                const presetQuestion = (p.question_es || p.question || '').trim().toLowerCase();
+                return itemQuestion && presetQuestion === itemQuestion;
+              });
+              if (match) hydrateNoteFromPreset(item, match);
             }
+            if (JSON.stringify(item) !== before) migrated = true;
           });
         }
+        if (migrated) saveSlideNotes(deck, slide, parsed);
         return parsed;
       }
     } catch (e) {
@@ -1914,28 +1970,20 @@ function toggleCommentsDrawer() {
   else openCommentsDrawer();
 }
 
-function openCommentsDrawer() {
-  if (activeDeck === 'hub') return;
-  isCommentsOpen = true;
-
-  const drawer = document.getElementById('commentsDrawer');
-  const backdrop = document.getElementById('commentsDrawerBackdrop');
-  if (drawer) drawer.classList.add('open');
-  if (backdrop) backdrop.classList.add('open');
-
 function updateCommentsDrawerHeader() {
   if (activeDeck === 'hub') return;
+  const lang = getActiveLang();
   const meta = DECK_CONFIG[activeDeck] || DECK_CONFIG.hub;
   const kickerEl = document.getElementById('commentsDeckKicker');
   const titleEl = document.getElementById('commentsSlideTitle');
   const subEl = document.getElementById('commentsSlideSubtitle');
 
-  const deckName = currentLang === 'es' ? (meta.title_es || activeDeck) : (meta.title_en || activeDeck);
+  const deckName = lang === 'es' ? (meta.title_es || activeDeck) : (meta.title_en || activeDeck);
   if (kickerEl) kickerEl.textContent = `3i BAIRD LAB · ${deckName.toUpperCase()}`;
 
   // Get active slide title in current language
-  let activeSlideHeading = currentLang === 'es' 
-    ? `Diapositiva ${currentSlide} / ${totalSlides()}` 
+  let activeSlideHeading = lang === 'es'
+    ? `Diapositiva ${currentSlide} / ${totalSlides()}`
     : `Slide ${currentSlide} / ${totalSlides()}`;
 
   const activeContainer = document.getElementById(`deck-${activeDeck}`);
@@ -1944,7 +1992,7 @@ function updateCommentsDrawerHeader() {
     if (curSlideEl) {
       const h2 = curSlideEl.querySelector('h2');
       if (h2) {
-        const langEl = h2.querySelector(`.lang-${currentLang}`);
+        const langEl = h2.querySelector(`.lang-${lang}`);
         if (langEl) activeSlideHeading = langEl.textContent.trim();
         else activeSlideHeading = h2.textContent.trim();
       }
@@ -1952,8 +2000,8 @@ function updateCommentsDrawerHeader() {
   }
 
   if (titleEl) titleEl.textContent = `SLIDE ${currentSlide < 10 ? '0' + currentSlide : currentSlide}: ${activeSlideHeading}`;
-  if (subEl) subEl.textContent = currentLang === 'es' 
-    ? 'Preguntas inyectadas, puntos clave y comentarios del presentador' 
+  if (subEl) subEl.textContent = lang === 'es'
+    ? 'Preguntas inyectadas, puntos clave y comentarios del presentador'
     : 'Injected questions, key talking points and presenter notes';
 }
 
@@ -2005,6 +2053,7 @@ function renderCommentsList() {
   const container = document.getElementById('commentsListContainer');
   if (!container) return;
 
+  const lang = getActiveLang();
   const notes = getSlideNotes(activeDeck, currentSlide);
   let filtered = notes;
   if (currentCommentFilter !== 'all') {
@@ -2018,10 +2067,10 @@ function renderCommentsList() {
     container.innerHTML = `
       <div class="comments-empty-state">
         <div class="comments-empty-icon">💬</div>
-        <div class="comments-empty-title">${currentLang === 'es' ? 'Sin preguntas en esta diapositiva' : 'No questions for this slide'}</div>
-        <div class="comments-empty-desc">${currentLang === 'es' ? 'Usa la pestaña "Inyectar" o "Ingesta Rápida" para agregar preguntas clave, objeciones o notas.' : 'Use the "Inject" or "Bulk" tab to add key questions, objections, or talking points.'}</div>
+        <div class="comments-empty-title">${lang === 'es' ? 'Sin preguntas en esta diapositiva' : 'No questions for this slide'}</div>
+        <div class="comments-empty-desc">${lang === 'es' ? 'Usa la pestaña "Inyectar" o "Ingesta Rápida" para agregar preguntas clave, objeciones o notas.' : 'Use the "Inject" or "Bulk" tab to add key questions, objections, or talking points.'}</div>
         <button class="btn-inject-secondary" style="margin-top: 6px;" onclick="switchCommentsTab('inject')">
-          ➕ ${currentLang === 'es' ? 'Inyectar Primera Pregunta' : 'Inject First Question'}
+          ➕ ${lang === 'es' ? 'Inyectar Primera Pregunta' : 'Inject First Question'}
         </button>
       </div>
     `;
@@ -2031,33 +2080,28 @@ function renderCommentsList() {
   container.innerHTML = filtered.map(item => {
     const catClass = item.category || 'inversor';
     const catLabel = {
-      inversor: currentLang === 'es' ? '💼 Inversor' : '💼 Investor',
-      objecion: currentLang === 'es' ? '⚠️ Objeción' : '⚠️ Objection',
-      operativa: currentLang === 'es' ? '⚙️ Operativa' : '⚙️ Ops/Tech',
-      nota: currentLang === 'es' ? '📝 Nota' : '📝 Note',
-      faq: currentLang === 'es' ? '💬 FAQ' : '💬 FAQ'
+      inversor: lang === 'es' ? '💼 Inversor' : '💼 Investor',
+      objecion: lang === 'es' ? '⚠️ Objeción' : '⚠️ Objection',
+      operativa: lang === 'es' ? '⚙️ Operativa' : '⚙️ Ops/Tech',
+      nota: lang === 'es' ? '📝 Nota' : '📝 Note',
+      faq: lang === 'es' ? '💬 FAQ' : '💬 FAQ'
     }[catClass] || catClass.toUpperCase();
 
-    const qText = currentLang === 'en'
-      ? (item.question_en || item.question || item.question_es)
-      : (item.question_es || item.question || item.question_en);
-
-    const aText = currentLang === 'en'
-      ? (item.answer_en || item.answer || item.answer_es)
-      : (item.answer_es || item.answer || item.answer_en);
+    const qText = getCommentQuestion(item, lang);
+    const aText = getCommentAnswer(item, lang);
 
     return `
       <div class="comment-card ${item.pinned ? 'is-pinned' : ''}" data-id="${item.id}">
         <div class="comment-card-top">
           <span class="comment-type-tag ${catClass}">${catLabel}</span>
           <div class="comment-card-actions">
-            <button class="comment-action-btn btn-pin ${item.pinned ? 'active' : ''}" onclick="togglePinComment('${item.id}')" title="${item.pinned ? (currentLang === 'es' ? 'Desfijar' : 'Unpin') : (currentLang === 'es' ? 'Fijar arriba' : 'Pin to top')}">
+            <button class="comment-action-btn btn-pin ${item.pinned ? 'active' : ''}" onclick="togglePinComment('${item.id}')" title="${item.pinned ? (lang === 'es' ? 'Desfijar' : 'Unpin') : (lang === 'es' ? 'Fijar arriba' : 'Pin to top')}">
               <svg class="ico" viewBox="0 0 24 24" fill="${item.pinned ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2"><path d="M12 2v8"/><path d="m18 10-6-6-6 6"/><path d="M5 22h14"/><path d="M12 14v8"/></svg>
             </button>
-            <button class="comment-action-btn" onclick="copyCommentText('${item.id}')" title="${currentLang === 'es' ? 'Copiar texto' : 'Copy text'}">
+            <button class="comment-action-btn" onclick="copyCommentText('${item.id}')" title="${lang === 'es' ? 'Copiar texto' : 'Copy text'}">
               <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
             </button>
-            <button class="comment-action-btn btn-delete" onclick="deleteComment('${item.id}')" title="${currentLang === 'es' ? 'Eliminar' : 'Delete'}">
+            <button class="comment-action-btn btn-delete" onclick="deleteComment('${item.id}')" title="${lang === 'es' ? 'Eliminar' : 'Delete'}">
               <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
             </button>
           </div>
@@ -2065,7 +2109,7 @@ function renderCommentsList() {
         <div class="comment-text-question">${escapeHtml(qText)}</div>
         ${aText ? `<div class="comment-text-answer">💡 ${escapeHtml(aText)}</div>` : ''}
         <div class="comment-card-meta">
-          <span>${item.timestamp || (currentLang === 'es' ? 'Inyectada' : 'Injected')}</span>
+          <span>${item.timestamp || (lang === 'es' ? 'Inyectada' : 'Injected')}</span>
           <span>${activeDeck.toUpperCase()} · #${currentSlide}</span>
         </div>
       </div>
@@ -2082,14 +2126,24 @@ function handleInjectSingle(event) {
   if (!qEl || !qEl.value.trim()) return;
 
   const notes = getSlideNotes(activeDeck, currentSlide);
+  const questionText = qEl.value.trim();
+  const answerText = aEl ? aEl.value.trim() : '';
   const newItem = {
     id: 'note_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
     category: catEl ? catEl.value : 'inversor',
-    question: qEl.value.trim(),
-    answer: aEl ? aEl.value.trim() : '',
+    question: questionText,
+    answer: answerText,
     pinned: false,
     timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
   };
+
+  if (getActiveLang() === 'en') {
+    newItem.question_en = questionText;
+    newItem.answer_en = answerText;
+  } else {
+    newItem.question_es = questionText;
+    newItem.answer_es = answerText;
+  }
 
   notes.unshift(newItem);
   saveSlideNotes(activeDeck, currentSlide, notes);
@@ -2167,18 +2221,20 @@ function injectSlidePresets() {
 
   const notes = getSlideNotes(activeDeck, currentSlide);
 
-  // Avoid duplicates by question text
-  const existingQuestions = new Set(notes.map(n => n.question.toLowerCase().trim()));
+  // Avoid duplicates by preset id or question text
+  const existingIds = new Set(notes.map(n => n.id).filter(Boolean));
+  const existingQuestions = new Set(notes.map(n => getCommentQuestion(n, 'es').toLowerCase().trim()));
   let added = 0;
 
   presets.forEach(p => {
-    if (!existingQuestions.has(p.question.toLowerCase().trim())) {
-      notes.push({
-        ...p,
-        id: 'note_' + Date.now() + '_' + Math.floor(Math.random() * 1000)
-      });
-      added++;
-    }
+    const presetQuestion = getCommentQuestion(p, 'es').toLowerCase().trim();
+    if (p.id && existingIds.has(p.id)) return;
+    if (existingQuestions.has(presetQuestion)) return;
+
+    notes.push({ ...p, id: p.id || ('note_' + Date.now() + '_' + Math.floor(Math.random() * 1000)) });
+    existingIds.add(p.id);
+    existingQuestions.add(presetQuestion);
+    added++;
   });
 
   saveSlideNotes(activeDeck, currentSlide, notes);
@@ -2194,9 +2250,9 @@ function copyCurrentSlideNotes() {
   }
 
   const text = notes.map((n, i) => {
-    const qText = currentLang === 'en' ? (n.question_en || n.question) : (n.question_es || n.question);
-    const aText = currentLang === 'en' ? (n.answer_en || n.answer) : (n.answer_es || n.answer);
-    return `${i + 1}. [${n.category.toUpperCase()}] ${qText}\n${aText ? '   ' + (currentLang === 'es' ? 'R: ' : 'A: ') + aText + '\n' : ''}`;
+    const qText = getCommentQuestion(n);
+    const aText = getCommentAnswer(n);
+    return `${i + 1}. [${n.category.toUpperCase()}] ${qText}\n${aText ? '   ' + (getActiveLang() === 'es' ? 'R: ' : 'A: ') + aText + '\n' : ''}`;
   }).join('\n');
 
   navigator.clipboard.writeText(text).then(() => {
@@ -2211,11 +2267,11 @@ function copyCommentText(id) {
   const item = notes.find(n => n.id === id);
   if (!item) return;
 
-  const qText = currentLang === 'en' ? (item.question_en || item.question) : (item.question_es || item.question);
-  const aText = currentLang === 'en' ? (item.answer_en || item.answer) : (item.answer_es || item.answer);
+  const qText = getCommentQuestion(item);
+  const aText = getCommentAnswer(item);
 
-  const prefixQ = currentLang === 'es' ? 'Pregunta: ' : 'Question: ';
-  const prefixA = currentLang === 'es' ? '\nPuntos Clave / Respuesta: ' : '\nKey Points / Answer: ';
+  const prefixQ = getActiveLang() === 'es' ? 'Pregunta: ' : 'Question: ';
+  const prefixA = getActiveLang() === 'es' ? '\nPuntos Clave / Respuesta: ' : '\nKey Points / Answer: ';
   const text = `${prefixQ}${qText}${aText ? prefixA + aText : ''}`;
 
   navigator.clipboard.writeText(text).then(() => {
@@ -2287,5 +2343,27 @@ function escapeHtml(str) {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;');
 }
+
+Object.assign(window, {
+  launchDeck,
+  playVentureVideo,
+  openExecutiveHub,
+  goToSlide,
+  nextSlide,
+  prevSlide,
+  setLanguage,
+  toggleLanguage,
+  toggleTheme,
+  toggleFullscreen,
+  toggleOverview,
+  openLightbox,
+  closeLightbox,
+  closeLightboxDirect,
+  replayVentureVideo,
+  skipVentureVideo,
+  closeVentureVideo,
+  toggleCommentsDrawer,
+  closeCommentsDrawer,
+});
 
 window.addEventListener('DOMContentLoaded', initPlatform);

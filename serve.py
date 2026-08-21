@@ -20,7 +20,11 @@ class PresentationHandler(SimpleHTTPRequestHandler):
     }
 
     def end_headers(self):
-        self.send_header("Cache-Control", "public, max-age=86400")
+        path = self.path.split("?", 1)[0].lower()
+        if path.endswith((".js", ".html", ".css")):
+            self.send_header("Cache-Control", "no-cache, must-revalidate")
+        else:
+            self.send_header("Cache-Control", "public, max-age=86400")
         super().end_headers()
 
     def log_message(self, format, *args):
