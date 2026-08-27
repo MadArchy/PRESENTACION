@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Venture Hub OS Legacy Capabilities Baseline",
+  "version": "0.1.0",
+  "commit": "c03372b0de439ef591acc1a50efb545e2affaba2",
+  "protectedDecks": [
+    { "key": "hub", "title_es": "Selección Ejecutiva", "title_en": "Executive Selection", "slides": 1, "kicker": "Briefing confidencial" },
+    { "key": "tutor", "title_es": "Tutor Multi-Agente", "title_en": "Multi-Agent Tutor", "slides": 15, "kicker": "AI EdTech · Pitch inversor" },
+    { "key": "fastfood", "title_es": "Franquicia Smart QSR", "title_en": "Smart Fast-Food", "slides": 15, "kicker": "FoodTech QSR · Pitch piloto" },
+    { "key": "arcana", "title_es": "Arcana Trust Network", "title_en": "Arcana Trust Network", "slides": 15, "kicker": "Web3 & IoT · Pitch inversor" },
+    { "key": "restaurante", "title_es": "Arcana Restaurantes", "title_en": "Arcana Restaurant Ops", "slides": 10, "kicker": "Arcana · Dueños de Restaurante" },
+    { "key": "comparativo", "title_es": "Infraestructura IA", "title_en": "AI Infrastructure", "slides": 10, "kicker": "Estrategia Ejecutiva · 3i BAIRD LAB" }
+  ],
+  "audienceProfiles": [
+    { "id": "investor", "label_es": "Inversor", "label_en": "Investor", "icon": "💼", "focusTag": "ENFOQUE INVERSOR" },
+    { "id": "b2b", "label_es": "B2B Corp", "label_en": "B2B Corp", "icon": "🏢", "focusTag": "ENFOQUE B2B" },
+    { "id": "tech", "label_es": "CTO / Tech", "label_en": "CTO / Tech", "icon": "⚡", "focusTag": "ENFOQUE TECH" }
+  ],
+  "keyboardShortcuts": {
+    "nextSlide": ["ArrowRight", "PageDown", " ", "n", "N"],
+    "prevSlide": ["ArrowLeft", "PageUp", "Backspace"],
+    "firstSlide": ["Home"],
+    "lastSlide": ["End"],
+    "returnHub": ["m", "M", "h", "H"],
+    "toggleOverview": ["g", "G", "o", "O"],
+    "toggleComments": ["c", "C", "q", "Q"],
+    "cycleAudience": ["a", "A"],
+    "togglePitchTimer": ["p", "P"],
+    "toggleLaser": ["k", "K"],
+    "toggleTheme": ["t", "T"],
+    "toggleLanguage": ["l", "L"],
+    "toggleFullscreen": ["f", "F"],
+    "closeModal": ["Escape"]
+  },
+  "runtimeIntegrity": {
+    "entrypoint": "index.html",
+    "script": "app.js",
+    "styles": "style.css",
+    "server": "serve.py",
+    "port": 8765
+  }
+}

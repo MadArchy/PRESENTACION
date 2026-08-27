@@ -1,0 +1,64 @@
+{
+  "$schema": "../../narrative-profile.schema.json",
+  "id": "technical-deepdive",
+  "name": "Technical Architecture Review",
+  "profileVersion": "1.0",
+  "audience": "TECHNICAL",
+  "supportedObjectives": ["ARCHITECTURE_REVIEW", "INFORM", "VALIDATE"],
+  "mandatorySections": ["PROBLEM", "SOLUTION", "PRODUCT", "TECHNOLOGY", "RISKS", "ROADMAP"],
+  "sectionPriorities": {
+    "IDENTITY": 50,
+    "EXECUTIVE_SUMMARY": 80,
+    "PROBLEM": 95,
+    "CUSTOMER": 70,
+    "WHY_NOW": 75,
+    "SOLUTION": 95,
+    "MARKET": 40,
+    "PRODUCT": 95,
+    "BUSINESS_MODEL": 50,
+    "COMPETITION": 60,
+    "TRACTION": 65,
+    "FINANCIALS": 40,
+    "TECHNOLOGY": 100,
+    "RISKS": 90,
+    "ROADMAP": 85,
+    "TEAM": 70,
+    "ASK": 30
+  },
+  "roleMappings": {
+    "IDENTITY": "CONTEXT",
+    "EXECUTIVE_SUMMARY": "CONTEXT",
+    "PROBLEM": "PROBLEM",
+    "CUSTOMER": "CONTEXT",
+    "WHY_NOW": "TENSION",
+    "SOLUTION": "SOLUTION",
+    "MARKET": "CONTEXT",
+    "PRODUCT": "SOLUTION",
+    "BUSINESS_MODEL": "ECONOMICS",
+    "COMPETITION": "DIFFERENTIATION",
+    "TRACTION": "PROOF",
+    "FINANCIALS": "ECONOMICS",
+    "TECHNOLOGY": "SOLUTION",
+    "RISKS": "RISK",
+    "ROADMAP": "EXECUTION",
+    "TEAM": "EXECUTION",
+    "ASK": "DECISION"
+  },
+  "objectiveModifiers": {
+    "ARCHITECTURE_REVIEW": {
+      "PRODUCT": 25,
+      "TECHNOLOGY": 35,
+      "RISKS": 20,
+      "ROADMAP": 15,
+      "FINANCIALS": -30,
+      "ASK": -40
+    }
+  },
+  "durationBudgets": {
+    "THREE_MINUTES": { "minSteps": 4, "maxSteps": 6, "targetSeconds": 180 },
+    "FIVE_MINUTES": { "minSteps": 6, "maxSteps": 9, "targetSeconds": 300 },
+    "TEN_MINUTES": { "minSteps": 9, "maxSteps": 14, "targetSeconds": 600 },
+    "TWENTY_MINUTES": { "minSteps": 12, "maxSteps": 18, "targetSeconds": 1200 },
+    "DEEP_DIVE": { "minSteps": 10, "maxSteps": 25, "targetSeconds": 1800 }
+  }
+}

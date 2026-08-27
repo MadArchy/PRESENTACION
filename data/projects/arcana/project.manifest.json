@@ -1,0 +1,22 @@
+{
+  "$schema": "../../project.schema.json",
+  "id": "arcana",
+  "slug": "arcana",
+  "name": "Arcana Trust Network",
+  "description": "Zero-knowledge verification and cryptographic hardware ledger for verifiable physical IoT operations.",
+  "status": "pilot",
+  "schemaVersion": "1.0",
+  "projectVersion": "0.1.0",
+  "defaultLanguage": "es",
+  "languages": ["es", "en"],
+  "theme": "arcana-purple",
+  "capabilities": ["presentation"],
+  "totalSlides": 15,
+  "kicker": {
+    "es": "Web3 & IoT · Pitch inversor",
+    "en": "Web3 & IoT · Investor pitch"
+  },
+  "entrypoints": {
+    "legacyDeck": "arcana"
+  }
+}

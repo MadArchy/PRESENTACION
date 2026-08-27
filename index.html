@@ -74,6 +74,37 @@
       </div>
 
       <div class="hud-actions">
+        <!-- Audience Profile Switcher -->
+        <div class="audience-switch" role="group" aria-label="Perfil de Audiencia">
+          <button type="button" class="audience-opt is-active" id="audOptInvestor" data-audience="investor" onclick="setAudience('investor')" title="Perfil: Inversionista / VC (A)">
+            <span class="aud-icon">💼</span>
+            <span class="aud-label"><span class="lang-es">Inversor</span><span class="lang-en">Investor</span></span>
+          </button>
+          <button type="button" class="audience-opt" id="audOptB2B" data-audience="b2b" onclick="setAudience('b2b')" title="Perfil: Cliente Corporativo / B2B (A)">
+            <span class="aud-icon">🏢</span>
+            <span class="aud-label"><span class="lang-es">B2B Corp</span><span class="lang-en">B2B Corp</span></span>
+          </button>
+          <button type="button" class="audience-opt" id="audOptTech" data-audience="tech" onclick="setAudience('tech')" title="Perfil: CTO / DeepTech (A)">
+            <span class="aud-icon">⚡</span>
+            <span class="aud-label"><span class="lang-es">CTO / Tech</span><span class="lang-en">CTO / Tech</span></span>
+          </button>
+        </div>
+
+        <span class="hud-v-divider hud-v-divider-sm" aria-hidden="true"></span>
+
+        <!-- Boardroom Pitch Clock Button -->
+        <button class="btn-icon btn-pitch-timer" id="pitchTimerToggleBtn" onclick="togglePitchTimerPanel()" title="Temporizador de Pitch Ejecutivo (P)">
+          <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+          <span class="pitch-timer-display" id="pitchTimerHudTime">10:00</span>
+        </button>
+
+        <!-- Executive Laser Pointer Button -->
+        <button class="btn-icon" id="laserPointerToggleBtn" onclick="toggleLaserPointer()" title="Puntero Láser / Foco Ejecutivo (K)">
+          <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="3"/><path d="m19 5-3 3M5 19l3-3M5 5l3 3M19 19l-3-3"/></svg></span>
+        </button>
+
+        <span class="hud-v-divider hud-v-divider-sm" aria-hidden="true"></span>
+
         <div class="lang-switch" role="group" aria-label="Idioma">
           <button type="button" class="lang-opt is-active" data-lang="es" onclick="setLanguage('es')">ES</button>
           <button type="button" class="lang-opt" data-lang="en" onclick="setLanguage('en')">EN</button>
@@ -99,6 +130,22 @@
 
     <!-- Main Deck Presentation Stage -->
     <main class="deck-stage">
+      <!-- Mobile Edge Navigation Triggers -->
+      <button class="mobile-nav-edge mobile-nav-prev" id="mobileEdgePrev" onclick="prevSlide()" aria-label="Diapositiva anterior" title="Anterior">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <button class="mobile-nav-edge mobile-nav-next" id="mobileEdgeNext" onclick="nextSlide()" aria-label="Diapositiva siguiente" title="Siguiente">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+      </button>
+
+      <!-- Mobile Gesture Navigation Hint -->
+      <div class="mobile-swipe-hint" id="mobileSwipeHint">
+        <span>‹</span>
+        <span class="lang-es">Desliza para navegar</span>
+        <span class="lang-en">Swipe to navigate</span>
+        <span>›</span>
+      </div>
+
       <div class="slide-viewport" id="slideViewport">
 
         <!-- Floating Discreet Slide Comments / Questions Trigger -->
@@ -715,7 +762,7 @@
                         <div class="card-icon-wrapper purple"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M12 5v13"/><path d="M7 10h10"/><path d="M7 14h10"/></svg></div>
                         <div class="card-text-group">
                           <div class="card-title"><span class="lang-en">Agent Orchestration Core</span><span class="lang-es">Núcleo de Orquestación</span></div>
-                          <div class="card-desc"><span class="lang-en">LangGraph & Rust state machine with sub-120ms token-to-decision routing.</span><span class="lang-es">Máquina de estados en LangGraph y Rust con enrutamiento de decisiones < 120ms.</span></div>
+                          <div class="card-desc"><span class="lang-en">LangGraph & Rust state machine with sub-120ms token-to-decision routing.</span><span class="lang-es">Máquina de estados en LangGraph y Rust con enrutamiento de decisiones &lt; 120ms.</span></div>
                         </div>
                       </div>
                       <div class="feature-card compact">
@@ -736,7 +783,7 @@
                         <div class="card-icon-wrapper purple"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg></div>
                         <div class="card-text-group">
                           <div class="card-title"><span class="lang-en">Real-Time Streaming Voice</span><span class="lang-es">Voz Conversacional en Tiempo Real</span></div>
-                          <div class="card-desc"><span class="lang-en">WebRTC sub-250ms conversational audio synthesis for natural spoken Socratic tutoring.</span><span class="lang-es">Síntesis de audio WebRTC < 250ms para tutoría socrática hablada natural.</span></div>
+                          <div class="card-desc"><span class="lang-en">WebRTC sub-250ms conversational audio synthesis for natural spoken Socratic tutoring.</span><span class="lang-es">Síntesis de audio WebRTC &lt; 250ms para tutoría socrática hablada natural.</span></div>
                         </div>
                       </div></div>
                   <div class="diagram-preview-box" onclick="openLightbox('extracted_media/image7.png')">
@@ -1103,7 +1150,7 @@
                 </h1>
                 <p class="hero-subtitle">
                   <span class="lang-en">Pioneering the automated Smart QSR model in Cúcuta: Express pizza baked in 2.5 minutes, app-first pre-ordering, zero peak-hour queues, and sub-23% food cost.</span>
-                  <span class="lang-es">Pioneros en el modelo QSR inteligente en Cúcuta: Pizza express horneada en 2.5 minutos, app de pre-orden, cero filas en hora pico y costo de insumos < 23%.</span>
+                  <span class="lang-es">Pioneros en el modelo QSR inteligente en Cúcuta: Pizza express horneada en 2.5 minutos, app de pre-orden, cero filas en hora pico y costo de insumos &lt; 23%.</span>
                 </p>
                 <div class="hero-flow-ribbon">
                   
@@ -1279,7 +1326,7 @@
                   <tr>
                     <td class="aspect"><span class="lang-en">Food Cost % (COGS)</span><span class="lang-es">Costo de Insumos (COGS)</span></td>
                     <td class="bad"><span class="status-cross">✕</span><span class="lang-en">32% – 38%</span><span class="lang-es">32% a 38%</span></td>
-                    <td class="good"><span class="status-check">✓</span><span class="lang-en">21.8% (Target < 23%)</span><span class="lang-es">21.8% (Meta < 23%)</span></td>
+                    <td class="good"><span class="status-check">✓</span><span class="lang-en">21.8% (Target &lt; 23%)</span><span class="lang-es">21.8% (Meta &lt; 23%)</span></td>
                   </tr>
                   <tr>
                     <td class="aspect"><span class="lang-en">Peak Hourly Capacity</span><span class="lang-es">Capacidad Pico / Hora</span></td>
@@ -2307,7 +2354,7 @@
                         <div class="card-icon-wrapper purple"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg></div>
                         <div class="card-text-group">
                           <div class="card-title"><span class="lang-en">3. Polygon Notarization</span><span class="lang-es">3. Notarización en Polygon</span></div>
-                          <div class="card-desc"><span class="lang-en">Permanent on-chain daily seal (<$0.02)</span><span class="lang-es">Sello permanente on-chain (<$0.02)</span></div>
+                          <div class="card-desc"><span class="lang-en">Permanent on-chain daily seal (&lt;$0.02)</span><span class="lang-es">Sello permanente on-chain (&lt;$0.02)</span></div>
                         </div>
                       </div></div>
                     <ul class="features-bullet-list"><li class="feature-bullet"><span class="bullet-glow">✦</span> <div><span class="lang-en">Thousands of sensor readings hashed into a single 32-byte cryptographic Merkle root</span><span class="lang-es">Miles de lecturas de sensores se comprimen en una única raíz de Merkle de 32 bytes</span></div></li><li class="feature-bullet"><span class="bullet-glow">✦</span> <div><span class="lang-en">Notarization on Polygon blockchain takes 2 seconds and costs less than $0.02 USD per store</span><span class="lang-es">La notarización en Polygon toma 2 segundos y cuesta menos de $0.02 USD por local</span></div></li><li class="feature-bullet"><span class="bullet-glow">✦</span> <div><span class="lang-en">Creates a permanent mathematical audit trail that neither store manager nor franchise can alter</span><span class="lang-es">Genera un historial contable permanente que ni el administrador ni la franquicia pueden modificar</span></div></li><li class="feature-bullet"><span class="bullet-glow">✦</span> <div><span class="lang-en">One-click verification on Polygonscan proves reported financial results match hardware telemetry</span><span class="lang-es">Verificación pública en Polygonscan con un clic demostrando que los ingresos coinciden con el hardware</span></div></li></ul>
@@ -4771,7 +4818,57 @@
     </div>
   </aside>
 
+
+
+  <!-- Boardroom Pitch Timer Popover Modal -->
+  <div class="pitch-timer-popover" id="pitchTimerPopover" aria-hidden="true">
+    <div class="pitch-timer-header">
+      <div class="pitch-timer-title-group">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span class="lang-es">Temporizador Ejecutivo</span>
+        <span class="lang-en">Boardroom Pitch Clock</span>
+      </div>
+      <button class="pitch-timer-close" onclick="togglePitchTimerPanel()" title="Cerrar (Esc)">&times;</button>
+    </div>
+    
+    <div class="pitch-timer-display-card">
+      <div class="pitch-timer-time-large" id="pitchTimerMainDisplay">10:00</div>
+      <div class="pitch-timer-progress-track">
+        <div class="pitch-timer-progress-fill" id="pitchTimerProgressFill" style="width: 100%;"></div>
+      </div>
+      <div class="pitch-timer-meta" id="pitchTimerPresetLabel">Investor Pitch (10 min)</div>
+    </div>
+
+    <div class="pitch-timer-presets">
+      <button type="button" class="preset-pill-btn" onclick="setPitchTimerPreset(180, 'Elevator Pitch (3 min)')">3m</button>
+      <button type="button" class="preset-pill-btn" onclick="setPitchTimerPreset(300, 'Executive Briefing (5 min)')">5m</button>
+      <button type="button" class="preset-pill-btn active" onclick="setPitchTimerPreset(600, 'Investor Pitch (10 min)')">10m</button>
+      <button type="button" class="preset-pill-btn" onclick="setPitchTimerPreset(1200, 'Boardroom Deep-Dive (20 min)')">20m</button>
+      <button type="button" class="preset-pill-btn" onclick="setPitchTimerPreset(0, 'Cronómetro Libre (Count Up)')">&infin;</button>
+    </div>
+
+    <div class="pitch-timer-controls">
+      <button type="button" class="btn-timer-primary" id="pitchTimerPlayBtn" onclick="togglePitchTimerRun()">
+        <span id="pitchTimerPlayIconWrap"><svg class="ico" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></span>
+        <span id="pitchTimerPlayText"><span class="lang-es">Iniciar</span><span class="lang-en">Start</span></span>
+      </button>
+      <button type="button" class="btn-timer-secondary" onclick="resetPitchTimer()">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+        <span class="lang-es">Reiniciar</span><span class="lang-en">Reset</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Virtual Laser Pointer Element & Click Ripple -->
+  <div class="laser-pointer-dot" id="laserPointerDot" aria-hidden="true">
+    <div class="laser-pointer-core"></div>
+    <div class="laser-pointer-halo"></div>
+  </div>
+  <div class="laser-spotlight-overlay" id="laserSpotlightOverlay" aria-hidden="true"></div>
+
   <!-- Presentation Logic Script -->
   <script src="app.js?v=20260821c" onerror="(function(){var n=document.createElement('div');n.style.cssText='position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.85);color:#fff;font:600 1rem/1.5 system-ui;padding:24px;text-align:center';n.innerHTML='No se pudo cargar la app.<br>Recarga con <strong>Ctrl+Shift+R</strong> o abre:<br><code style=&quot;color:#7dd3fc&quot;>https://madarchy.github.io/PRESENTACION/</code>';document.body.appendChild(n);})();"></script>
+  <!-- Venture Hub OS Modern Hexagonal Module Entrypoint -->
+  <script type="module" src="/src/main.ts"></script>
 </body>
 </html>

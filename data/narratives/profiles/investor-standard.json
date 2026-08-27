@@ -1,0 +1,63 @@
+{
+  "$schema": "../../narrative-profile.schema.json",
+  "id": "investor-standard",
+  "name": "Investor Standard Pitch",
+  "profileVersion": "1.0",
+  "audience": "INVESTOR",
+  "supportedObjectives": ["RAISE_CAPITAL", "INFORM", "PERSUADE"],
+  "mandatorySections": ["EXECUTIVE_SUMMARY", "PROBLEM", "SOLUTION", "MARKET", "BUSINESS_MODEL", "ASK"],
+  "sectionPriorities": {
+    "IDENTITY": 60,
+    "EXECUTIVE_SUMMARY": 100,
+    "PROBLEM": 95,
+    "CUSTOMER": 80,
+    "WHY_NOW": 90,
+    "SOLUTION": 95,
+    "MARKET": 90,
+    "PRODUCT": 80,
+    "BUSINESS_MODEL": 95,
+    "COMPETITION": 85,
+    "TRACTION": 95,
+    "FINANCIALS": 85,
+    "TECHNOLOGY": 75,
+    "RISKS": 70,
+    "ROADMAP": 80,
+    "TEAM": 85,
+    "ASK": 100
+  },
+  "roleMappings": {
+    "IDENTITY": "OPENING",
+    "EXECUTIVE_SUMMARY": "OPENING",
+    "PROBLEM": "PROBLEM",
+    "CUSTOMER": "CONTEXT",
+    "WHY_NOW": "OPPORTUNITY",
+    "SOLUTION": "SOLUTION",
+    "MARKET": "OPPORTUNITY",
+    "PRODUCT": "SOLUTION",
+    "BUSINESS_MODEL": "ECONOMICS",
+    "COMPETITION": "DIFFERENTIATION",
+    "TRACTION": "PROOF",
+    "FINANCIALS": "ECONOMICS",
+    "TECHNOLOGY": "DIFFERENTIATION",
+    "RISKS": "RISK",
+    "ROADMAP": "EXECUTION",
+    "TEAM": "EXECUTION",
+    "ASK": "ASK"
+  },
+  "objectiveModifiers": {
+    "RAISE_CAPITAL": {
+      "MARKET": 15,
+      "BUSINESS_MODEL": 20,
+      "TRACTION": 25,
+      "ASK": 30,
+      "FINANCIALS": 20
+    }
+  },
+  "durationBudgets": {
+    "THREE_MINUTES": { "minSteps": 4, "maxSteps": 6, "targetSeconds": 180 },
+    "FIVE_MINUTES": { "minSteps": 6, "maxSteps": 8, "targetSeconds": 300 },
+    "TEN_MINUTES": { "minSteps": 8, "maxSteps": 12, "targetSeconds": 600 },
+    "TWENTY_MINUTES": { "minSteps": 12, "maxSteps": 18, "targetSeconds": 1200 },
+    "DEEP_DIVE": { "minSteps": 10, "maxSteps": 25, "targetSeconds": 1800 }
+  }
+}

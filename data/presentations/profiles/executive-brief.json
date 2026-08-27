@@ -1,0 +1,20 @@
+{
+  "id": "executive-brief",
+  "profileVersion": "1.0",
+  "name": "Executive Briefing Profile",
+  "audience": "EXECUTIVE",
+  "description": "Concise, decision-oriented presentation profile optimized for C-suite steering committees and board briefings.",
+  "preferredDensity": "COMPACT",
+  "scenePreferences": {
+    "IDENTITY": "EXECUTIVE_HERO",
+    "EXECUTIVE_SUMMARY": "DECISION_FRAME",
+    "PROBLEM": "PROBLEM_FRAME",
+    "SOLUTION": "SOLUTION_OVERVIEW",
+    "PRODUCT": "PRODUCT_OVERVIEW",
+    "BUSINESS_MODEL": "BUSINESS_MODEL",
+    "FINANCIALS": "FINANCIAL_OVERVIEW",
+    "RISKS": "RISK_OVERVIEW",
+    "ROADMAP": "ROADMAP",
+    "ASK": "DECISION_FRAME"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "id": "technical-deepdive",
+  "profileVersion": "1.0",
+  "name": "Technical Architecture Deep Dive",
+  "audience": "TECHNICAL",
+  "description": "Exhaustive systems architecture, security, data flows, and infrastructure review profile.",
+  "preferredDensity": "SPACIOUS",
+  "scenePreferences": {
+    "IDENTITY": "EXECUTIVE_HERO",
+    "EXECUTIVE_SUMMARY": "SECTION_DIVIDER",
+    "PROBLEM": "PROBLEM_FRAME",
+    "CUSTOMER": "PROBLEM_FRAME",
+    "SOLUTION": "SOLUTION_OVERVIEW",
+    "PRODUCT": "PRODUCT_OVERVIEW",
+    "TECHNOLOGY": "ARCHITECTURE_MAP",
+    "RISKS": "RISK_OVERVIEW",
+    "ROADMAP": "ROADMAP",
+    "TEAM": "TEAM"
+  }
+}

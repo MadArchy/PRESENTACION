@@ -1,0 +1,105 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions for security invariants
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isUser(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isUserActive() {
+      return isAuthenticated() && (
+        !exists(/databases/$(database)/documents/users/$(request.auth.uid)) ||
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.status == 'ACTIVE'
+      );
+    }
+
+    function isPlatformAdmin() {
+      return isAuthenticated() && isUserActive() && request.auth.token.platformAdmin == true;
+    }
+
+    function isOrgMember(orgId) {
+      return isAuthenticated() && isUserActive() && (
+        isPlatformAdmin() ||
+        (exists(/databases/$(database)/documents/organizations/$(orgId)/members/$(request.auth.uid)) &&
+         get(/databases/$(database)/documents/organizations/$(orgId)/members/$(request.auth.uid)).data.status == 'ACTIVE')
+      );
+    }
+
+    function isOrgAdmin(orgId) {
+      return isAuthenticated() && isUserActive() && (
+        isPlatformAdmin() ||
+        (isOrgMember(orgId) && 
+         get(/databases/$(database)/documents/organizations/$(orgId)/members/$(request.auth.uid)).data.role in ['ORG_OWNER', 'ORG_ADMIN'])
+      );
+    }
+
+    function hasProjectAccess(orgId, projectId) {
+      return isAuthenticated() && isUserActive() && (
+        isPlatformAdmin() ||
+        (isOrgMember(orgId) && get(/databases/$(database)/documents/organizations/$(orgId)/members/$(request.auth.uid)).data.role == 'ORG_OWNER') ||
+        (isOrgMember(orgId) &&
+         exists(/databases/$(database)/documents/organizations/$(orgId)/projectAccess/$(orgId + '_' + projectId + '_' + request.auth.uid)) &&
+         get(/databases/$(database)/documents/organizations/$(orgId)/projectAccess/$(orgId + '_' + projectId + '_' + request.auth.uid)).data.status == 'ACTIVE')
+      );
+    }
+
+    // Default deny for all unmatched collections
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // User profiles
+    match /users/{userId} {
+      allow read: if isAuthenticated() && (isUser(userId) || isPlatformAdmin());
+      allow write: if isUser(userId) && isUserActive();
+    }
+
+    // Organizations
+    match /organizations/{orgId} {
+      allow read: if isOrgMember(orgId);
+      allow write: if false; // Mutated only through trusted security functions
+
+      // Organization Members
+      match /members/{memberId} {
+        allow read: if isOrgMember(orgId);
+        allow write: if false; // Privileged role mutation requires trusted security function
+      }
+
+      // Project Access Assignments
+      match /projectAccess/{assignmentId} {
+        allow read: if isOrgMember(orgId);
+        allow write: if false; // Privileged project access mutation requires trusted security function
+      }
+
+      // Append-Only Security Audit Events
+      match /auditEvents/{eventId} {
+        allow read: if isOrgAdmin(orgId);
+        allow create, update, delete: if false; // Authoritative audit events written only by trusted server functions
+      }
+
+      // Organization Administration Metadata (Profile, Settings, Usage)
+      match /admin/{docId} {
+        allow read: if isOrgMember(orgId);
+        allow write: if false; // Mutated only through trusted admin functions
+      }
+
+      // Project Administration Metadata
+      match /projects/{projectId}/admin/{docId} {
+        allow read: if hasProjectAccess(orgId, projectId);
+        allow write: if false; // Mutated only through trusted admin functions
+      }
+    }
+
+    // Security Policies & Role Permission Catalogs (Read-Only)
+    match /securityPolicies/{policyId} {
+      allow read: if isAuthenticated() && isUserActive();
+      allow write: if false;
+    }
+
+  }
+}

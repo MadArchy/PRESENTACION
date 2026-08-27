@@ -1,0 +1,29 @@
+{
+  "name": "venture-hub-os",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Venture Hub OS — Executive Project Intelligence & Presentation Platform",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "test": "node tests/unit_runner.cjs && node tests/security_verification_runner.cjs && node tests/secure_storage_verification_runner.cjs && node tests/administration_verification_runner.cjs && node tests/production_hardening_verification_runner.cjs && node tests/final_acceptance_runner.cjs && node tests/data_room_verification_runner.cjs && node tests/copilot_verification_runner.cjs",
+    "test:architecture": "node tests/architecture/dependency_rules_runner.cjs",
+    "test:security": "node tests/security_verification_runner.cjs",
+    "test:storage": "node tests/secure_storage_verification_runner.cjs",
+    "test:admin": "node tests/administration_verification_runner.cjs",
+    "test:prod": "node tests/production_hardening_verification_runner.cjs",
+    "test:acceptance": "node tests/final_acceptance_runner.cjs",
+    "test:copilot": "node tests/copilot_verification_runner.cjs",
+    "test:dataroom": "node tests/data_room_verification_runner.cjs",
+    "test:e2e": "node tests/final_acceptance_runner.cjs && node tests/administration_verification_runner.cjs && node tests/production_hardening_verification_runner.cjs && node tests/secure_storage_verification_runner.cjs && node tests/security_verification_runner.cjs && node tests/data_room_verification_runner.cjs && node tests/copilot_verification_runner.cjs && node tests/e2e/presenter_runner.cjs && node tests/e2e/presentation_runner.cjs && node tests/e2e/governance_runner.cjs && node tests/e2e/narrative_builder_runner.cjs && node tests/e2e/preservation_runner.cjs",
+    "test:legacy": "node tests/e2e/preservation_runner.cjs",
+    "verify": "node tests/architecture/dependency_rules_runner.cjs && node tests/unit_runner.cjs && node tests/security_verification_runner.cjs && node tests/secure_storage_verification_runner.cjs && node tests/administration_verification_runner.cjs && node tests/production_hardening_verification_runner.cjs && node tests/final_acceptance_runner.cjs && node tests/data_room_verification_runner.cjs && node tests/copilot_verification_runner.cjs && node tests/e2e/presenter_runner.cjs && node tests/e2e/presentation_runner.cjs && node tests/e2e/governance_runner.cjs && node tests/e2e/narrative_builder_runner.cjs && node tests/e2e/preservation_runner.cjs"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vite": "^5.4.21"
+  }
+}

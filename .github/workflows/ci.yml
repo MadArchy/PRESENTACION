@@ -1,0 +1,39 @@
+name: Venture Hub OS CI
+
+on:
+  push:
+    branches: [main, 'phase/**']
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci || npm install
+
+      - name: Typecheck (Strict TypeScript)
+        run: npm run typecheck
+
+      - name: Architecture Dependency Tests
+        run: npm run test:architecture
+
+      - name: Domain & Unit Tests
+        run: npm run test
+
+      - name: Legacy Preservation Suite (Phase 0)
+        run: npm run test:legacy
+
+      - name: Production Build
+        run: npm run build

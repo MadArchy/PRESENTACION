@@ -71,21 +71,25 @@ http://127.0.0.1:8765/
 
 ---
 
-## ⌨️ Controles y Atajos de Teclado
+## ⌨️ Controles y Atajos de Teclado (Executive Boardroom Controls)
 
-La plataforma incluye navegación inmersiva para presentaciones en vivo:
+La plataforma incluye herramientas inmersivas diseñadas para salas de juntas y presentaciones de alto nivel:
 
 | Tecla | Acción |
 | :--- | :--- |
 | <kbd>→</kbd> / <kbd>Espacio</kbd> / <kbd>PgDn</kbd> | Siguiente diapositiva |
 | <kbd>←</kbd> / <kbd>PgUp</kbd> | Diapositiva anterior |
 | <kbd>Home</kbd> / <kbd>End</kbd> | Primera / Última diapositiva |
-| <kbd>G</kbd> | Abrir/Cerrar Grid General (Slide Overview) |
+| <kbd>A</kbd> | Alternar **Perfil de Audiencia** (**Inversor / VC** 💼, **B2B Corp** 🏢, **CTO / Tech** ⚡) |
+| <kbd>P</kbd> | Abrir / Controlar **Temporizador Ejecutivo (Pitch Clock)** (Presets de 3m, 5m, 10m, 20m, &infin;) |
+| <kbd>K</kbd> | Activar / Desactivar **Puntero Láser Virtual & Foco Ejecutivo** con onda de choque al hacer click |
+| <kbd>C</kbd> / <kbd>Q</kbd> | Abrir / Cerrar Drawer de **Preguntas, Objeciones y Notas de Orador** |
+| <kbd>G</kbd> | Abrir / Cerrar Grid General (Slide Overview) |
 | <kbd>M</kbd> | Regresar al Hub Ejecutivo Principal (Menú) |
 | <kbd>L</kbd> | Alternar Idioma en tiempo real (**ES** / **EN**) |
 | <kbd>T</kbd> | Alternar Tema (**Dark** / **Light**) |
 | <kbd>F</kbd> | Pantalla Completa (**Fullscreen**) |
-| <kbd>Esc</kbd> | Cerrar Modales / Video / Overview / Volver al Hub |
+| <kbd>Esc</kbd> | Cerrar Modales / Popovers / Video / Overview / Volver al Hub |
 
 ---
 

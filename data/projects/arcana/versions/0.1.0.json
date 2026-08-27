@@ -1,0 +1,440 @@
+{
+  "$schema": "../../../project-twin.schema.json",
+  "id": "arcana",
+  "slug": "arcana",
+  "name": "Arcana Trust Network",
+  "shortName": "Arcana",
+  "type": "DEEPTECH",
+  "status": "pilot",
+  "schemaVersion": "1.0",
+  "currentVersion": "0.1.0",
+  "defaultLanguage": "es",
+  "languages": ["es", "en"],
+  "theme": "arcana-purple",
+  "createdAt": "2026-08-20T10:00:00Z",
+  "updatedAt": "2026-08-26T15:00:00Z",
+  "kicker": {
+    "es": "Web3 & IoT · Pitch inversor",
+    "en": "Web3 & IoT · Investor pitch"
+  },
+  "metadata": {
+    "ecosystem": "3i BAIRD LAB · VENTURES",
+    "blockchain": "Polygon L2",
+    "hardwareTarget": "Edge Microcontrollers & POS Integrations"
+  },
+  "versions": [
+    {
+      "id": "arcana-v0.1.0",
+      "projectId": "arcana",
+      "version": "0.1.0",
+      "status": "pilot",
+      "createdAt": "2026-08-20T10:00:00Z",
+      "createdBy": "migration",
+      "changeSummary": "Initial canonical Project Twin migration from repository baseline sources.",
+      "sections": [
+        {
+          "id": "sec-identity",
+          "type": "IDENTITY",
+          "title": {
+            "es": "Identidad y Marca",
+            "en": "Identity & Brand"
+          },
+          "status": "VALIDATED",
+          "schemaVersion": "1.0",
+          "content": {
+            "tagline": {
+              "es": "Infraestructura descentralizada de confianza y notarización criptográfica para operaciones físicas y retail.",
+              "en": "Decentralized trust infrastructure and cryptographic notarization for physical operations and retail."
+            },
+            "foundedYear": 2026,
+            "stage": "Seed / Pilot",
+            "headquarters": "Cúcuta, Colombia / Remote",
+            "brandAttributes": ["Cryptographic Integrity", "Edge IoT", "Zero-Knowledge Audits", "Physical Truth"],
+            "website": "https://madarchy.github.io/PRESENTACION/"
+          },
+          "sourceRefs": [
+            { "type": "legacy-deck", "reference": "arcana-slide-1" },
+            { "type": "document", "reference": "sources/pptx/Arcana_Investor_Presentation_EN_VISUAL.pptx" }
+          ],
+          "updatedAt": "2026-08-26T15:00:00Z"
+        },
+        {
+          "id": "sec-executive-summary",
+          "type": "EXECUTIVE_SUMMARY",
+          "title": {
+            "es": "Resumen Ejecutivo",
+            "en": "Executive Summary"
+          },
+          "status": "VALIDATED",
+          "schemaVersion": "1.0",
+          "content": {
+            "elevatorPitch": {
+              "es": "Arcana conecta el hardware físico de locales comerciales con un libro mayor inmutable en Polygon para eliminar el fraude operativo y el descuadre contable.",
+              "en": "Arcana bridges physical retail hardware to an immutable ledger on Polygon to eliminate operational fraud and accounting discrepancies."
+            },
+            "coreValueProposition": {
+              "es": "Cada día operativo se convierte en un capítulo contable cerrado, sellado matemáticamente y verificable públicamente con un costo menor a $0.02 USD por local.",
+              "en": "Every operational day becomes a closed, mathematically sealed, publicly verifiable accounting chapter at less than $0.02 USD per store."
+            },
+            "keyHighlights": [
+              "Sellos diarios on-chain en Polygon PoS L2",
+              "Microcontroladores Edge con buffer local tolerante a cortes de red",
+              "Reducción demostrada de pérdidas invisibles en restaurantes y franquicias",
+              "Dashboard ejecutivo de auditoría en tiempo real"
+            ],
+            "targetAudienceFocus": {
+              "investor": "Retorno de inversión claro mediante SaaS B2B y monetización por nodo/verificación.",
+              "b2b": "Cero reconciliaciones manuales nocturnas y eliminación del fraude de comandas.",
+              "tech": "Arquitectura basada en Merkle Trees, Rust daemons y firmas criptográficas Ed25519."
+            }
+          },
+          "sourceRefs": [
+            { "type": "legacy-deck", "reference": "arcana-slide-2" }
+          ],
+          "updatedAt": "2026-08-26T15:00:00Z"
+        },
+        {
+          "id": "sec-problem",
+          "type": "PROBLEM",
+          "title": {
+            "es": "Problema del Mercado",
+            "en": "Market Problem"
+          },
+          "status": "VALIDATED",
+          "schemaVersion": "1.0",
+          "content": {
+            "problemStatement": {
+              "es": "Los restaurantes y franquicias sufren entre 8% y 18% de fuga de ingresos debido a cancelaciones no registradas, inventario no cotejado y auditorías manuales manipulables.",
+              "en": "Restaurants and franchises suffer 8% to 18% revenue leakage due to unrecorded cancellations, unverified inventory, and manipulable manual audits."
+            },
+            "affectedSegments": [
+              "Dueños de franquicias gastronómicas",
+              "Cadenas de retail físico multicomercio",
+              "Operadores logísticos de última milla"
+            ],
+            "currentInefficiencies": [
+              "Cierres de caja en papel o planillas Excel fácilmente editables",
+              "Falta de enlace directo entre el sensor físico y el software de facturación",
+              "Auditorías retroactivas tardías que descubren fraudes semanas después"
+            ],
+            "financialImpact": "Pérdida anual estimada de hasta $12,000 USD por cada punto de venta en franquicias medianas.",
+            "urgencyDriver": "La digitalización del delivery y múltiples canales de cobro han multiplicado los vectores de fuga sin aumentar la visibilidad del dueño."
+          },
+          "sourceRefs": [
+            { "type": "legacy-deck", "reference": "arcana-slide-3" }
+          ],
+          "updatedAt": "2026-08-26T15:00:00Z"
+        },
+        {
+          "id": "sec-customer",
+          "type": "CUSTOMER",
+          "title": {
+            "es": "Cliente Objetivo y Personas",
+            "en": "Target Customer & Personas"
+          },
+          "status": "VALIDATED",
+          "schemaVersion": "1.0",
+          "content": {
+            "idealCustomerProfile": "Cadenas de restaurantes, franquicias QSR y tiendas físicas con 3 o más sucursales que operan en efectivo y plataformas digitales.",
+            "primaryBuyerPersona": "Director Financiero / Propietario de Franquicia que busca control remoto total sin depender de la honestidad de administradores de turno.",
+            "userPersonas": [
+              "Auditor de Franquicia: Requiere validar cierres diarios con un solo clic",
+              "Administrador de Local: Registra operaciones con hardware inviolable",
+              "Inversionista de Franquicia: Exige transparencia de dividendos basada en telemetría"
+            ],
+            "tamSamSomContext": "Enfoque inicial en el mercado gastronómico y retail de Colombia y México."
+          },
+          "sourceRefs": [
+            { "type": "legacy-deck", "reference": "arcana-slide-4" }
+          ],
+          "updatedAt": "2026-08-26T15:00:00Z"
+        },
+        {
+          "id": "sec-solution",
+          "type": "SOLUTION",
+          "title": {
+            "es": "Solución y Propuesta de Valor",
+            "en": "Solution & Value Proposition"
+          },
+          "status": "VALIDATED",
+          "schemaVersion": "1.0",
+          "content": {
+            "solutionOverview": {
+              "es": "Módulos de telemetría física en cada local que empaquetan cada evento en árboles de Merkle y los anclan en Polygon para crear un historial inmutable.",
+              "en": "Physical telemetry modules in each store packaging every event into Merkle trees and anchoring them on Polygon to create an immutable history."
+            },
+            "coreCapabilities": [
+              "Notarización criptográfica en 2 segundos por cierre diario",
+              "Verificación pública transparente en Polygonscan",
+              "Detección inmediata de inconsistencias entre caja y producción",
+              "Alertas automáticas en caso de desconexión o manipulación del hardware"
+            ],
+            "keyDifferentiators": [
+              "Costo ultra bajo (<$0.02 USD por notarización)",
+              "Tolerancia total a fallas de internet con almacenamiento local encriptado",
+              "Independiente del software POS existente"
+            ],
+            "unfairAdvantage": "Protocolo de compresión de estado que reduce miles de transacciones a una sola raíz de 32 bytes."
+          },
+          "sourceRefs": [
+            { "type": "legacy-deck", "reference": "arcana-slide-5" }
+          ],
+          "updatedAt": "2026-08-26T15:00:00Z"
+        },
+        {
+          "id": "sec-why-now",
+          "type": "WHY_NOW",
+          "title": {
+            "es": "¿Por Qué Ahora?",
+            "en": "Why Now?"
+          },
+          "status": "VALIDATED",
+          "schemaVersion": "1.0",
+          "content": {
+            "marketTailwinds": [
+              "Consolidación de redes Layer 2 con tarifas de gas inferiores a $0.01 USD",
+              "Adopción masiva de microcontroladores de bajo costo con aceleración criptográfica por hardware",
+              "Demanda urgente de los franquiciadores por auditoría remota post-pandemia"
+            ],
+            "technologicalInflectionPoint": "La combinación de Polygon PoS + hardware seguro de bajo costo hace económicamente viable notarizar cada local individualmente.",
+            "regulatoryOrMacroDriver": "Crecientes regulaciones de trazabilidad fiscal y facturación electrónica en América Latina."
+          },
+          "sourceRefs": [
+            { "type": "legacy-deck", "reference": "arcana-slide-6" }
+          ],
+          "updatedAt": "2026-08-26T15:00:00Z"
+        },
+        {
+          "id": "sec-product",
+          "type": "PRODUCT",
+          "title": {
+            "es": "Arquitectura de Producto",
+            "en": "Product Architecture"
+          },
+          "status": "VALIDATED",
+          "schemaVersion": "1.0",
+          "content": {
+            "architectureOverview": "Pipeline de 4 niveles: Nodos Edge IoT -> Daemon Agregador Local -> Contratos de Notarización Polygon -> Suite Ejecutiva Web.",
+            "coreModules": [
+              {
+                "name": "Arcana Edge Sentinel",
+                "description": "Hardware IoT compacto con secure enclave y buffer offline.",
+                "status": "pilot"
+              },
+              {
+                "name": "Merkle Hash Daemon",
+                "description": "Servicio ligero en Rust que construye el árbol de Merkle localmente.",
+                "status": "pilot"
+              },
+              {
+                "name": "Polygon Ledger Contract",
+                "description": "Smart contract que recibe la raíz del día y emite evento de notarización.",
+                "status": "production"
+              },
+              {
+                "name": "Executive Trust Cockpit",
+                "description": "Plataforma web para dueños de franquicias con verificación en un clic.",
+                "status": "pilot"
+              }
+            ],
+            "integrations": ["Polygon PoS", "Sistemas POS tradicionales", "Polygonscan Explorer", "Webhooks"]
+          },
+          "sourceRefs": [
+            { "type": "legacy-deck", "reference": "arcana-slide-7" }
+          ],
+          "updatedAt": "2026-08-26T15:00:00Z"
+        },
+        {
+          "id": "sec-business-model",
+          "type": "BUSINESS_MODEL",
+          "title": {
+            "es": "Modelo de Negocio",
+            "en": "Business Model"
+          },
+          "status": "VALIDATED",
+          "schemaVersion": "1.0",
+          "content": {
+            "monetizationStreams": [
+              {
+                "name": "Hardware Node Kit",
+                "type": "hardware",
+                "pricingStructure": "$250 USD pago único por cada local instalado"
+              },
+              {
+                "name": "Franchise Telemetry SaaS",
+                "type": "saas",
+                "pricingStructure": "$49 USD / mes por sucursal activa con soporte y dashboard"
+              },
+              {
+                "name": "On-Demand Verification API",
+                "type": "enterprise_license",
+                "pricingStructure": "$0.05 USD por consulta de auditoría para bancos o auditores externos"
+              }
+            ],
+            "unitEconomics": {
+              "cac": "$180 USD por franquiciado",
+              "ltv": "$1,760 USD (estimado a 36 meses)",
+              "grossMargin": "78% en ingresos recurrentes",
+              "paybackPeriod": "3.5 meses"
+            }
+          },
+          "sourceRefs": [
+            { "type": "legacy-deck", "reference": "arcana-slide-8" }
+          ],
+          "updatedAt": "2026-08-26T15:00:00Z"
+        },
+        {
+          "id": "sec-technology",
+          "type": "TECHNOLOGY",
+          "title": {
+            "es": "Tecnología e Infraestructura",
+            "en": "Technology & Infrastructure"
+          },
+          "status": "VALIDATED",
+          "schemaVersion": "1.0",
+          "content": {
+            "techStack": ["Polygon PoS", "Rust", "TypeScript", "Solidity", "ESP32 C/C++", "Vite"],
+            "hardwareSpecs": [
+              "ESP32-S3 con Secure Boot v2 y acelerador AES por hardware",
+              "Memoria Flash SPI protegida contra lectura",
+              "RTC con batería de respaldo para sellos de tiempo inviolables"
+            ],
+            "cryptographicOrAiPrimitives": [
+              "Árboles de Merkle binarios con SHA-256",
+              "Firmas digitales Ed25519 en el hardware",
+              "Hashes de estado de 32 bytes anclados on-chain"
+            ],
+            "securityAndCompliance": [
+              "Cero almacenamiento de datos personales de clientes (únicamente hashes de telemetría)",
+              "Auditoría de smart contracts",
+              "Firmware firmado criptográficamente"
+            ]
+          },
+          "sourceRefs": [
+            { "type": "legacy-deck", "reference": "arcana-slide-9" }
+          ],
+          "updatedAt": "2026-08-26T15:00:00Z"
+        },
+        {
+          "id": "sec-risks",
+          "type": "RISKS",
+          "title": {
+            "es": "Matriz de Riesgos y Mitigaciones",
+            "en": "Risk Matrix & Mitigations"
+          },
+          "status": "VALIDATED",
+          "schemaVersion": "1.0",
+          "content": {
+            "identifiedRisks": [
+              {
+                "risk": "Cortes de energía o internet en locales físicos",
+                "severity": "MEDIUM",
+                "mitigation": "Buffer local en memoria no volátil que almacena hasta 30 días de operaciones y sincroniza automáticamente al restablecer conexión."
+              },
+              {
+                "risk": "Resistencia del personal de local a la instalación de sensores",
+                "severity": "LOW",
+                "mitigation": "Dispositivos discretos plug-and-play sin pantallas que operan de forma no intrusiva."
+              },
+              {
+                "risk": "Variaciones en el costo de gas en blockchain",
+                "severity": "LOW",
+                "mitigation": "Uso de L2 (Polygon) con agregación diaria de miles de eventos en una única transacción de costo insignificante."
+              }
+            ]
+          },
+          "sourceRefs": [
+            { "type": "legacy-deck", "reference": "arcana-slide-10" }
+          ],
+          "updatedAt": "2026-08-26T15:00:00Z"
+        },
+        {
+          "id": "sec-roadmap",
+          "type": "ROADMAP",
+          "title": {
+            "es": "Hoja de Ruta y Próximos Pasos",
+            "en": "Roadmap & Next Steps"
+          },
+          "status": "VALIDATED",
+          "schemaVersion": "1.0",
+          "content": {
+            "phases": [
+              {
+                "quarterOrPhase": "Fase 1 (Q1 2026)",
+                "milestones": [
+                  "Desarrollo del smart contract en Polygon Testnet",
+                  "Prototipo de hardware ESP32 y Merkle daemon",
+                  "Piloto cerrado en 5 locales de prueba en Cúcuta"
+                ],
+                "status": "COMPLETED"
+              },
+              {
+                "quarterOrPhase": "Fase 2 (Q2-Q3 2026)",
+                "milestones": [
+                  "Despliegue en Polygon Mainnet",
+                  "Lanzamiento de Arcana Franchise Dashboard",
+                  "Expansión a 50 sucursales activas"
+                ],
+                "status": "IN_PROGRESS"
+              },
+              {
+                "quarterOrPhase": "Fase 3 (Q4 2026)",
+                "milestones": [
+                  "Integración con ERPs corporativos y bancos",
+                  "Alcanzar 250 sucursales en Colombia y México",
+                  "Certificación de auditoría externa"
+                ],
+                "status": "PLANNED"
+              }
+            ]
+          },
+          "sourceRefs": [
+            { "type": "legacy-deck", "reference": "arcana-slide-11" }
+          ],
+          "updatedAt": "2026-08-26T15:00:00Z"
+        },
+        {
+          "id": "sec-ask",
+          "type": "ASK",
+          "title": {
+            "es": "Ronda de Inversión y Destino de Fondos",
+            "en": "Investment Ask & Use of Funds"
+          },
+          "status": "VALIDATED",
+          "schemaVersion": "1.0",
+          "content": {
+            "targetAmount": "$350,000 USD",
+            "instrument": "SAFE",
+            "runwayMonths": 18,
+            "useOfFunds": [
+              {
+                "category": "Ingeniería de Hardware y Firmware",
+                "percentage": 40,
+                "allocationGoal": "Industrialización de 500 kits de hardware y certificaciones"
+              },
+              {
+                "category": "Expansión Comercial y Ventas B2B",
+                "percentage": 35,
+                "allocationGoal": "Equipo de ventas directas a franquicias en Colombia y México"
+              },
+              {
+                "category": "Infraestructura Cloud y Smart Contracts",
+                "percentage": 15,
+                "allocationGoal": "Auditorías de seguridad, nodos dedicados y SLA empresarial"
+              },
+              {
+                "category": "Operaciones y Legal",
+                "percentage": 10,
+                "allocationGoal": "Estructuración corporativa y protección de propiedad intelectual"
+              }
+            ]
+          },
+          "sourceRefs": [
+            { "type": "legacy-deck", "reference": "arcana-slide-12" }
+          ],
+          "updatedAt": "2026-08-26T15:00:00Z"
+        }
+      ]
+    }
+  ]
+}

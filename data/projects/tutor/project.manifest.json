@@ -1,0 +1,22 @@
+{
+  "$schema": "../../project.schema.json",
+  "id": "tutor",
+  "slug": "tutor",
+  "name": "Expert Multi-Agent Tutor",
+  "description": "Autonomous enterprise-grade tutoring engine powered by 12 collaborative AI agents, knowledge graphs, and verifiable learning proof.",
+  "status": "pilot",
+  "schemaVersion": "1.0",
+  "projectVersion": "0.1.0",
+  "defaultLanguage": "es",
+  "languages": ["es", "en"],
+  "theme": "tutor-cyan",
+  "capabilities": ["presentation", "video"],
+  "totalSlides": 15,
+  "kicker": {
+    "es": "AI EdTech · Pitch inversor",
+    "en": "AI EdTech · Investor pitch"
+  },
+  "entrypoints": {
+    "legacyDeck": "tutor"
+  }
+}

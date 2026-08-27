@@ -1,0 +1,22 @@
+{
+  "$schema": "../../project.schema.json",
+  "id": "comparativo",
+  "slug": "comparativo",
+  "name": "Estrategia Ejecutiva de Infraestructura para IA",
+  "description": "Executive benchmark and progressive hardware financing strategy across 3 commercial stages.",
+  "status": "active",
+  "schemaVersion": "1.0",
+  "projectVersion": "0.1.0",
+  "defaultLanguage": "es",
+  "languages": ["es", "en"],
+  "theme": "comparativo-gold",
+  "capabilities": ["presentation"],
+  "totalSlides": 10,
+  "kicker": {
+    "es": "Estrategia Ejecutiva · 3i BAIRD LAB",
+    "en": "Executive Strategy · 3i BAIRD LAB"
+  },
+  "entrypoints": {
+    "legacyDeck": "comparativo"
+  }
+}

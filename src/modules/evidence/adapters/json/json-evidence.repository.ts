@@ -1,0 +1,230 @@
+import { EvidenceRepository } from '../../domain/ports/evidence-repository.port';
+import { EvidenceEntity } from '../../domain/entities/evidence.entity';
+import { EvidenceData } from '../../domain/evidence.types';
+
+export class JsonEvidenceRepository implements EvidenceRepository {
+  private evidenceItems: Map<string, EvidenceEntity> = new Map();
+  private isLoaded = false;
+
+  constructor(private readonly provider?: () => Promise<EvidenceData[]> | EvidenceData[]) {}
+
+  private async ensureLoaded(): Promise<void> {
+    if (this.isLoaded) return;
+
+    if (this.provider) {
+      const dataList = await this.provider();
+      for (const data of dataList) {
+        const entity = new EvidenceEntity(data);
+        this.evidenceItems.set(entity.getId(), entity);
+      }
+    } else {
+      const defaultArcanaEvidence: EvidenceData[] = [
+        {
+          id: 'ev-arcana-001',
+          projectId: 'arcana',
+          projectVersion: '0.1.0',
+          type: 'DOCUMENT',
+          status: 'AVAILABLE',
+          title: 'Arcana Investor Visual Presentation (PPTX Source)',
+          description: 'Original visual master presentation establishing Arcana Trust Network founding, Web3 and IoT focus, and pilot stage.',
+          source: {
+            sourceType: 'document',
+            title: 'Arcana_Investor_Presentation_EN_VISUAL.pptx',
+            reference: 'sources/pptx/Arcana_Investor_Presentation_EN_VISUAL.pptx',
+            locator: 'slide-1',
+            date: '2026-08-20'
+          },
+          capturedAt: '2026-08-26T15:00:00Z'
+        },
+        {
+          id: 'ev-arcana-002',
+          projectId: 'arcana',
+          projectVersion: '0.1.0',
+          type: 'SYSTEM_RECORD',
+          status: 'AVAILABLE',
+          title: 'Arcana 15-Slide Structured Deck Specification',
+          description: 'Structured JSON deck detailing daily Merkle root notarization on Polygon L2 and sub-$0.02 transaction cost per store.',
+          source: {
+            sourceType: 'legacy-deck',
+            title: 'deck_arcana_15.json',
+            reference: 'data/decks/deck_arcana_15.json',
+            locator: 'slide-2',
+            date: '2026-08-21'
+          },
+          capturedAt: '2026-08-26T15:00:00Z'
+        },
+        {
+          id: 'ev-arcana-003',
+          projectId: 'arcana',
+          projectVersion: '0.1.0',
+          type: 'CALCULATION',
+          status: 'AVAILABLE',
+          title: 'QSR Operational Loss and Leakage Field Study',
+          description: 'Empirical field analysis of unrecorded kitchen cancellations and register discrepancies across trial franchise locations.',
+          source: {
+            sourceType: 'document',
+            title: 'Exposicion Beneficio Arcana Dueno Restaurante',
+            reference: 'exposicion-beneficio-arcana-dueno-restaurante.md',
+            locator: 'seccion-perdidas-invisibles',
+            date: '2026-08-22'
+          },
+          capturedAt: '2026-08-26T15:00:00Z'
+        },
+        {
+          id: 'ev-arcana-004',
+          projectId: 'arcana',
+          projectVersion: '0.1.0',
+          type: 'DOCUMENT',
+          status: 'AVAILABLE',
+          title: 'Target Customer Profile Matrix',
+          description: 'Franchise owner and auditor persona requirements for multi-branch remote telemetry monitoring.',
+          source: {
+            sourceType: 'legacy-deck',
+            title: 'deck_arcana_15.json',
+            reference: 'data/decks/deck_arcana_15.json',
+            locator: 'slide-4',
+            date: '2026-08-21'
+          },
+          capturedAt: '2026-08-26T15:00:00Z'
+        },
+        {
+          id: 'ev-arcana-005',
+          projectId: 'arcana',
+          projectVersion: '0.1.0',
+          type: 'SYSTEM_RECORD',
+          status: 'AVAILABLE',
+          title: 'Polygon PoS Merkle Notarization Protocol Spec',
+          description: 'Cryptographic architecture documentation of state aggregation and smart contract anchoring.',
+          source: {
+            sourceType: 'legacy-deck',
+            title: 'deck_arcana_15.json',
+            reference: 'data/decks/deck_arcana_15.json',
+            locator: 'slide-5',
+            date: '2026-08-21'
+          },
+          capturedAt: '2026-08-26T15:00:00Z'
+        },
+        {
+          id: 'ev-arcana-006',
+          projectId: 'arcana',
+          projectVersion: '0.1.0',
+          type: 'DOCUMENT',
+          status: 'AVAILABLE',
+          title: 'Arcana Sentinel ESP32-S3 Hardware Specification',
+          description: 'Microcontroller hardware datasheet and Secure Boot v2 firmware architecture notes.',
+          source: {
+            sourceType: 'legacy-deck',
+            title: 'deck_arcana_15.json',
+            reference: 'data/decks/deck_arcana_15.json',
+            locator: 'slide-7',
+            date: '2026-08-21'
+          },
+          capturedAt: '2026-08-26T15:00:00Z'
+        },
+        {
+          id: 'ev-arcana-007',
+          projectId: 'arcana',
+          projectVersion: '0.1.0',
+          type: 'CALCULATION',
+          status: 'AVAILABLE',
+          title: 'Arcana Unit Economics and Pricing Model v1.0',
+          description: 'Financial model documenting $250 node fee, $49/mo SaaS recurring fee, and 78% software gross margin structure.',
+          source: {
+            sourceType: 'legacy-deck',
+            title: 'deck_arcana_15.json',
+            reference: 'data/decks/deck_arcana_15.json',
+            locator: 'slide-8',
+            date: '2026-08-21'
+          },
+          capturedAt: '2026-08-26T15:00:00Z'
+        },
+        {
+          id: 'ev-arcana-008',
+          projectId: 'arcana',
+          projectVersion: '0.1.0',
+          type: 'EXPERIMENT',
+          status: 'AVAILABLE',
+          title: 'Ed25519 Edge Signature Benchmarking Report',
+          description: 'Test results measuring signature latency under 15ms per transaction on ESP32 hardware enclave.',
+          source: {
+            sourceType: 'legacy-deck',
+            title: 'deck_arcana_15.json',
+            reference: 'data/decks/deck_arcana_15.json',
+            locator: 'slide-9',
+            date: '2026-08-21'
+          },
+          capturedAt: '2026-08-26T15:00:00Z'
+        },
+        {
+          id: 'ev-arcana-009',
+          projectId: 'arcana',
+          projectVersion: '0.1.0',
+          type: 'SYSTEM_RECORD',
+          status: 'AVAILABLE',
+          title: 'Offline Flash Buffer Fault Tolerance Logs',
+          description: 'Validation test confirming non-volatile storage preserving up to 30 days of offline event logs.',
+          source: {
+            sourceType: 'legacy-deck',
+            title: 'deck_arcana_15.json',
+            reference: 'data/decks/deck_arcana_15.json',
+            locator: 'slide-10',
+            date: '2026-08-21'
+          },
+          capturedAt: '2026-08-26T15:00:00Z'
+        },
+        {
+          id: 'ev-arcana-010',
+          projectId: 'arcana',
+          projectVersion: '0.1.0',
+          type: 'OBSERVATION',
+          status: 'AVAILABLE',
+          title: 'Cúcuta 5-Branch Pilot Closure Report',
+          description: 'Operational deployment summary of closed trial installations across 5 test restaurant locations.',
+          source: {
+            sourceType: 'legacy-deck',
+            title: 'deck_arcana_15.json',
+            reference: 'data/decks/deck_arcana_15.json',
+            locator: 'slide-11',
+            date: '2026-08-21'
+          },
+          capturedAt: '2026-08-26T15:00:00Z'
+        },
+        {
+          id: 'ev-arcana-011',
+          projectId: 'arcana',
+          projectVersion: '0.1.0',
+          type: 'DOCUMENT',
+          status: 'AVAILABLE',
+          title: 'SAFE Investment Term Sheet & Use of Funds',
+          description: 'Executive document outlining $350k USD SAFE terms, 18-month runway, and hardware industrialization budget.',
+          source: {
+            sourceType: 'legacy-deck',
+            title: 'deck_arcana_15.json',
+            reference: 'data/decks/deck_arcana_15.json',
+            locator: 'slide-12',
+            date: '2026-08-21'
+          },
+          capturedAt: '2026-08-26T15:00:00Z'
+        }
+      ];
+
+      for (const data of defaultArcanaEvidence) {
+        const entity = new EvidenceEntity(data);
+        this.evidenceItems.set(entity.getId(), entity);
+      }
+    }
+
+    this.isLoaded = true;
+  }
+
+  async listByProject(projectId: string, projectVersion?: string): Promise<EvidenceEntity[]> {
+    await this.ensureLoaded();
+    const all = Array.from(this.evidenceItems.values());
+    return all.filter(e => e.getProjectId() === projectId && (!projectVersion || e.getProjectVersion() === projectVersion));
+  }
+
+  async findById(id: string): Promise<EvidenceEntity | null> {
+    await this.ensureLoaded();
+    return this.evidenceItems.get(id) || null;
+  }
+}

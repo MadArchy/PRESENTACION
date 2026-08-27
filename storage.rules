@@ -1,0 +1,83 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // Helper functions for security invariants
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isUserActive() {
+      return isAuthenticated() && (
+        !firestore.exists(/databases/(default)/documents/users/$(request.auth.uid)) ||
+        firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.status == 'ACTIVE'
+      );
+    }
+
+    function isPlatformAdmin() {
+      return isAuthenticated() && isUserActive() && request.auth.token.platformAdmin == true;
+    }
+
+    function isOrgMember(orgId) {
+      return isAuthenticated() && isUserActive() && (
+        isPlatformAdmin() ||
+        (firestore.exists(/databases/(default)/documents/organizations/$(orgId)/members/$(request.auth.uid)) &&
+         firestore.get(/databases/(default)/documents/organizations/$(orgId)/members/$(request.auth.uid)).data.status == 'ACTIVE')
+      );
+    }
+
+    function hasProjectAccess(orgId, projectId) {
+      return isAuthenticated() && isUserActive() && (
+        isPlatformAdmin() ||
+        (isOrgMember(orgId) && firestore.get(/databases/(default)/documents/organizations/$(orgId)/members/$(request.auth.uid)).data.role == 'ORG_OWNER') ||
+        (isOrgMember(orgId) &&
+         firestore.exists(/databases/(default)/documents/organizations/$(orgId)/projectAccess/$(orgId + '_' + projectId + '_' + request.auth.uid)) &&
+         firestore.get(/databases/(default)/documents/organizations/$(orgId)/projectAccess/$(orgId + '_' + projectId + '_' + request.auth.uid)).data.status == 'ACTIVE')
+      );
+    }
+
+    function getProjectRole(orgId, projectId) {
+      return firestore.get(/databases/(default)/documents/organizations/$(orgId)/projectAccess/$(orgId + '_' + projectId + '_' + request.auth.uid)).data.role;
+    }
+
+    function isAllowedMediaType() {
+      return request.resource.contentType in [
+        'application/pdf',
+        'text/plain',
+        'text/markdown',
+        'text/csv',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+        'image/png',
+        'image/jpeg',
+        'image/webp'
+      ];
+    }
+
+    function isAllowedSize() {
+      return request.resource.size <= 50 * 1024 * 1024;
+    }
+
+    // Default deny for all paths
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+
+    // Tenant and Project Scoped Secure Storage Pattern
+    match /organizations/{orgId}/projects/{projectId}/data-room/{fileId}/versions/{versionId}/{fileName} {
+      
+      // READ: Requires active authentication, active membership, project access, available file status
+      allow read: if isAuthenticated() && isUserActive() && isOrgMember(orgId) && hasProjectAccess(orgId, projectId);
+
+      // UPLOAD / CREATE: Allowed only for project editors/admins with valid media type and size constraints
+      allow create: if isAuthenticated() && isUserActive() && isOrgMember(orgId) && hasProjectAccess(orgId, projectId) &&
+                    (isPlatformAdmin() || getProjectRole(orgId, projectId) in ['PROJECT_ADMIN', 'PROJECT_EDITOR']) &&
+                    isAllowedMediaType() && isAllowedSize();
+
+      // DIRECT CLIENT UPDATE / DELETE FORBIDDEN
+      allow update, delete: if false;
+    }
+
+  }
+}

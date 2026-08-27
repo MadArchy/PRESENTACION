@@ -1,0 +1,412 @@
+[
+  {
+    "relativePath": "app.js",
+    "byteSize": 131230,
+    "sha256": "5b196c420b9b1a3a5fa1c82d20fdab8effa62805f1669f088082446c47a1dd1e"
+  },
+  {
+    "relativePath": "assets/ai-edtech-BqQ1B0iA.mp4",
+    "byteSize": 1717547,
+    "sha256": "e8d69e5ee24b98e2dfc05ad4ebf022efcfeb12887b34bb1134a4f13b60831ce0"
+  },
+  {
+    "relativePath": "assets/ai-edtech-hd-fBecSby6.mp4",
+    "byteSize": 8574826,
+    "sha256": "188ebd371e47a1fa3a39400f535e422c8983964e68cca5837af6fb34c5a6ede4"
+  },
+  {
+    "relativePath": "assets/ia-client-BKi4kad6.jpg",
+    "byteSize": 120274,
+    "sha256": "85ec103e5b2d1db5fe16e7083a521f4aeb051231208f070d48228949103ebfe3"
+  },
+  {
+    "relativePath": "assets/ia-datacenter-24-7-BaU8pZKB.jpg",
+    "byteSize": 935227,
+    "sha256": "2fe24b96a16cedd198a4a5878fd8944974c1b15ced69c4ff41d9dc352bcdfdc0"
+  },
+  {
+    "relativePath": "assets/ia-dgx-CVJynWz3.jpg",
+    "byteSize": 48744,
+    "sha256": "cf9ee7f0a36b97c64873d0eec6dc957f774271dcd6fe70613cbb168b20568017"
+  },
+  {
+    "relativePath": "assets/ia-memory-K0fxE8gF.jpg",
+    "byteSize": 282103,
+    "sha256": "e986b1abef3d9dbe294cd05cc8fa52af531639b730c40c5f9e01f80506f2a4cc"
+  },
+  {
+    "relativePath": "assets/ia-models-LVhvUxGl.jpg",
+    "byteSize": 228475,
+    "sha256": "22b97f6a1c1cf24077509ff83f54ee1728ec2ad27172c209ded4c92815dd7747"
+  },
+  {
+    "relativePath": "assets/ia-rag-Bebi-IG8.jpg",
+    "byteSize": 152752,
+    "sha256": "cab342e739323c71e3d69518bf23717086b8dc99f3472a2e2f56a3e01d6e55fc"
+  },
+  {
+    "relativePath": "assets/ia-talent-acceleration-DnNgUu5q.jpg",
+    "byteSize": 768562,
+    "sha256": "fd70795edaf4b33424595f98bc5b61b629ef9c19a8703a3213148a79c5a52633"
+  },
+  {
+    "relativePath": "assets/ia-tower-BTnySfaL.jpg",
+    "byteSize": 42147,
+    "sha256": "426c00e93a23295d623a93556cab61e383d3fcd6dcf1874f24ff004a006f9c25"
+  },
+  {
+    "relativePath": "assets/ia-workflow-BzUQq4kL.jpg",
+    "byteSize": 154061,
+    "sha256": "edbf3ecf23e5ac6125e29de686f1db922c8053500a22ca4de852599a36d49d88"
+  },
+  {
+    "relativePath": "assets/image-2-1-K9VEGuI2.png",
+    "byteSize": 2134496,
+    "sha256": "8d4f16bb56e83d42bed66ad79c91601ef94d44712fbc55a59f8d68d53d6e3367"
+  },
+  {
+    "relativePath": "assets/image-3-1-CUL64rQ6.png",
+    "byteSize": 2014028,
+    "sha256": "3d3946e949a395df9560cef9590197eadd043a98bd9d8f9f515863349cb52514"
+  },
+  {
+    "relativePath": "assets/image-4-1-C1MnIEYL.png",
+    "byteSize": 1837501,
+    "sha256": "99c4a410d6a7813fa930a13840de85f4d9da9ee4a7b66e05bad20b28723b8d9c"
+  },
+  {
+    "relativePath": "assets/image-5-1-DhrFtuES.png",
+    "byteSize": 1752929,
+    "sha256": "339e529c8cabff2bee05c4778454f11f2335055b818e669b11020390e6582873"
+  },
+  {
+    "relativePath": "assets/image1-ByPaghJw.png",
+    "byteSize": 3272944,
+    "sha256": "890b19ffb32de69027c6f5617897177ddf94a550ab1caa94d23067b33c4d5f93"
+  },
+  {
+    "relativePath": "assets/image1-DJzxbrSx.png",
+    "byteSize": 1691692,
+    "sha256": "0e1c866477e10b9e2285a6ecf973e4429c0213b24ca3c7aeae947a7230c824c7"
+  },
+  {
+    "relativePath": "assets/image2-Bipru189.png",
+    "byteSize": 1535673,
+    "sha256": "1f8b4c41a4e8a8739538fc2c17bc536dbafc4ab587ed2a7f9887e28055987905"
+  },
+  {
+    "relativePath": "assets/image2-ChF2N7nz.png",
+    "byteSize": 1633561,
+    "sha256": "fdef56b8dabc300a9f4763a3d72cfaaee4c597f48acc0e10618e1c87574a4e11"
+  },
+  {
+    "relativePath": "assets/image2-DrpBTnTt.png",
+    "byteSize": 2769074,
+    "sha256": "d901bc112bb187608cad9191fd4f7154cc2e35b26b0a0789a2c5ecc0def4dd06"
+  },
+  {
+    "relativePath": "assets/image3-CCm67Jfs.png",
+    "byteSize": 2860097,
+    "sha256": "e70e4bf74fd32a4a774633b18b7f4297406bb7e3e9c133db35b8d09fc16da614"
+  },
+  {
+    "relativePath": "assets/image3-C_9zKaO-.png",
+    "byteSize": 2404907,
+    "sha256": "6e0f0c6e55273c9b718ba650b7aa82d36de1060a3ecc7c22f681b5c3d2bc4fe4"
+  },
+  {
+    "relativePath": "assets/image3-CuRrHROt.png",
+    "byteSize": 1660003,
+    "sha256": "1142380bf5c9035a8198ff550f84766a5f5d4fa338cc84e54d8de7e1ad7d13b7"
+  },
+  {
+    "relativePath": "assets/image4-Cdx2VBA_.png",
+    "byteSize": 1746382,
+    "sha256": "c2cb20b4d433de448555c31fa94081363cd1385cc8459950d1c778035526fd03"
+  },
+  {
+    "relativePath": "assets/image4-D6rhSc5O.png",
+    "byteSize": 3184777,
+    "sha256": "4586a6ea1ce56d2296cb4d79aa5e10befcc9d660bf0fc6e7f2cea97228fac6ba"
+  },
+  {
+    "relativePath": "assets/image4-DS8U9Ln9.png",
+    "byteSize": 2385816,
+    "sha256": "837ddee0d9337ef2ebba5ba64450ff9ecd8de0f09d6c422a8bf9f8ea0b284cc1"
+  },
+  {
+    "relativePath": "assets/image5-Cg-Nalbz.png",
+    "byteSize": 1720454,
+    "sha256": "6a0475096deb8f4cad6ef30df72305b44e9c8faaf1e442b08cdc74489b630399"
+  },
+  {
+    "relativePath": "assets/image5-CggQ5nLB.png",
+    "byteSize": 3450905,
+    "sha256": "fd2e3d0381858f897c16a30b07b141f3ae806a3bca89a4d67de1a7414c3e8075"
+  },
+  {
+    "relativePath": "assets/image5-DetQdy3B.png",
+    "byteSize": 2214942,
+    "sha256": "20252e3009b7136d0e1d6524ec74d28731634195fbfdeecb101549252c267dbc"
+  },
+  {
+    "relativePath": "assets/image6-BIEaIMxP.png",
+    "byteSize": 1633801,
+    "sha256": "2b3c5a33980e1a7714dc64a407beaf243a4680eb3dd498e54e0291013bd62e32"
+  },
+  {
+    "relativePath": "assets/image6-CIwTElW_.png",
+    "byteSize": 2332085,
+    "sha256": "94d50738c6f345cf155e483a06d02563b3560557c0d3fbeb5bf38d3b74a09b0a"
+  },
+  {
+    "relativePath": "assets/image6-OG41vyj9.png",
+    "byteSize": 2594258,
+    "sha256": "92ba116e7073a8e9d9569665ec5d67b25402ec552711ad4a7449d0cccbb69ef7"
+  },
+  {
+    "relativePath": "assets/image7-DqGgnNlE.png",
+    "byteSize": 2410957,
+    "sha256": "473c54bfdc03d859afb6c8c08dd1d92836f34e279e3f26ef47c59dce60b401ac"
+  },
+  {
+    "relativePath": "assets/image7-DulwtzeE.png",
+    "byteSize": 2437330,
+    "sha256": "eab81ad75aaba69e7a87e5380801c7310d325ea305d33eb96bc4dd1274f0245f"
+  },
+  {
+    "relativePath": "assets/image7-eiheHacM.png",
+    "byteSize": 1484967,
+    "sha256": "79c7fff17509ff85741eb05ba880706a643ee2bb9a171c21892b018f0cd1933f"
+  },
+  {
+    "relativePath": "assets/image8-Cc5uM8_C.png",
+    "byteSize": 3073185,
+    "sha256": "0a04e271930a501a3fad50bf3af43d57294d44e4570ea9998db3f186eb8a6fab"
+  },
+  {
+    "relativePath": "assets/image8-DdF35ODl.png",
+    "byteSize": 1688147,
+    "sha256": "08f1fd8fff050e30980404a195ca8cfa18990e7185ed75d17366f759f4369f4f"
+  },
+  {
+    "relativePath": "assets/main-DM2SmSmO.js",
+    "byteSize": 428001,
+    "sha256": "244a9067e8aba6267e8b82938913ccd8e2e4ab0ab487864144970acb0f4e4ab7"
+  },
+  {
+    "relativePath": "assets/main-mUr00fYx.css",
+    "byteSize": 73710,
+    "sha256": "fa6e198556cc4aec601e88d232a613e5e2f6300686820179e25e14eb1902bcc3"
+  },
+  {
+    "relativePath": "backgrounds/bg-arcana-chain.jpg",
+    "byteSize": 174647,
+    "sha256": "17617173ee029d91be9e2fbb020d6bac9f7eb2d33a093609b4fc88a7784a35ab"
+  },
+  {
+    "relativePath": "backgrounds/bg-arcana-chain.png",
+    "byteSize": 1936981,
+    "sha256": "8da9f1d5f6fc26472ca7817d9498b61a184902e10161651a9333f513f4d8194e"
+  },
+  {
+    "relativePath": "backgrounds/bg-arcana-iot.jpg",
+    "byteSize": 210695,
+    "sha256": "a9b7cef998525556a72f9241b8f2bd00b516ff18b76ceaf84d85bd4b651870fe"
+  },
+  {
+    "relativePath": "backgrounds/bg-arcana-iot.png",
+    "byteSize": 2427731,
+    "sha256": "c0ec3820b12ed4cda23f3ca7a918b6672e100f6542a441b66b33a5a7d5fe6dc6"
+  },
+  {
+    "relativePath": "backgrounds/bg-closing.jpg",
+    "byteSize": 192710,
+    "sha256": "b68e88fe6589e262ded70fe5734f2ee97eba389f89954e337cba0b956437399e"
+  },
+  {
+    "relativePath": "backgrounds/bg-closing.png",
+    "byteSize": 2110303,
+    "sha256": "6b16a437b342266c3c0e7a78b143d3c33fd560d03b2550236be9cf082083171b"
+  },
+  {
+    "relativePath": "backgrounds/bg-fastfood-kitchen.jpg",
+    "byteSize": 129325,
+    "sha256": "b17e1e53cbb3c470a86f776233eef6926a1da4f2b7930652efb686bb16a1d0e6"
+  },
+  {
+    "relativePath": "backgrounds/bg-fastfood-kitchen.png",
+    "byteSize": 1741890,
+    "sha256": "12436bf354daf3919db1da916ea420208c309066c8983693cc02a24b8c05e9ba"
+  },
+  {
+    "relativePath": "backgrounds/bg-fastfood-pizza.jpg",
+    "byteSize": 204282,
+    "sha256": "195f15ab43378b27aa75de1875c8de351ee45f39e64bf7bd620e3cf54a618e5b"
+  },
+  {
+    "relativePath": "backgrounds/bg-fastfood-pizza.png",
+    "byteSize": 2130408,
+    "sha256": "79919a387db64abedf0d4b9d57808e73ef15e395a3621f10a70d435f5c222d3e"
+  },
+  {
+    "relativePath": "backgrounds/bg-fastfood-store.jpg",
+    "byteSize": 282831,
+    "sha256": "23d8967d88b74d9d79ff010aa7765492f3b08c20ca0e4940a62f36503958b1cb"
+  },
+  {
+    "relativePath": "backgrounds/bg-fastfood-store.png",
+    "byteSize": 2052661,
+    "sha256": "3bfa07175039531b70164305178c196ec4ad9626380ad310b05d1452ec3c4c07"
+  },
+  {
+    "relativePath": "backgrounds/bg-hub.jpg",
+    "byteSize": 245895,
+    "sha256": "60b48a507d0794580fdefe3955b9bb10fabf3dddb824e2e5cfeb5c63fa35c98d"
+  },
+  {
+    "relativePath": "backgrounds/bg-hub.png",
+    "byteSize": 2066402,
+    "sha256": "b11a37165198e204957ca837c377222dda6cc0e6e181bf00d028df99afc35934"
+  },
+  {
+    "relativePath": "backgrounds/bg-ia-chip.jpg",
+    "byteSize": 183175,
+    "sha256": "5a9efb1d8e845d9cdce0b5ab3b0be650d741ef67df0d44fa59e4821c9a6e6382"
+  },
+  {
+    "relativePath": "backgrounds/bg-ia-chip.png",
+    "byteSize": 1763516,
+    "sha256": "5475eb3f1010929f663b50ad080e8eaf035a0f631018b0750481026202f247bd"
+  },
+  {
+    "relativePath": "backgrounds/bg-ia-lab.jpg",
+    "byteSize": 133436,
+    "sha256": "b1b0def16f4fe8625cf2380cdb7bf5a5f1481a152db2ef8d016c936d862b9759"
+  },
+  {
+    "relativePath": "backgrounds/bg-ia-lab.png",
+    "byteSize": 1640270,
+    "sha256": "6a172466a311c98b81d0129e69bbbccd2111f908bc0b319e2fec1ee58a23af5a"
+  },
+  {
+    "relativePath": "backgrounds/bg-tutor-ai.jpg",
+    "byteSize": 123579,
+    "sha256": "54aa5273590f27f3b4402382d109d27904812291787f429644c99caeb00f688c"
+  },
+  {
+    "relativePath": "backgrounds/bg-tutor-ai.png",
+    "byteSize": 1766499,
+    "sha256": "63621f525c652f078943b080f7496f1e9d6e22f27db9c710dc241313eaa7c821"
+  },
+  {
+    "relativePath": "backgrounds/bg-tutor-lumi.jpg",
+    "byteSize": 97792,
+    "sha256": "46b86257f0279c2c8f6843072743ad46c557869619925614ad02536c7a70c3a0"
+  },
+  {
+    "relativePath": "backgrounds/bg-tutor-lumi.png",
+    "byteSize": 95954,
+    "sha256": "e7918b29f7914afd658e71e5ab612a007fce0db1416a3b25cefca261055ad8e5"
+  },
+  {
+    "relativePath": "backgrounds/bg-tutor-neural.jpg",
+    "byteSize": 231528,
+    "sha256": "423f38c4d4b8b8544f90174a73643489eade3db7b0d1b94cb8cb48e3a886cfa6"
+  },
+  {
+    "relativePath": "backgrounds/bg-tutor-neural.png",
+    "byteSize": 1791871,
+    "sha256": "86b2ba77c5af99e7da15881b4fabc7a37d17ec2fe0cc9814534c21babaddf57f"
+  },
+  {
+    "relativePath": "backgrounds/bg-tutor-study.jpg",
+    "byteSize": 98732,
+    "sha256": "4f63da4e883ea1ad7dd208def95541965971bdef180462896caa99bc9092d0f0"
+  },
+  {
+    "relativePath": "backgrounds/bg-tutor-study.png",
+    "byteSize": 1604846,
+    "sha256": "61c4c51b93076b7f4d9414ba0b0993b3b3fe5dbeaad15ce41f0a65cf60f9d68e"
+  },
+  {
+    "relativePath": "index.html",
+    "byteSize": 485410,
+    "sha256": "4dfd26796f7a3d11e0c1d40925c7bdc0e3c81f561351bfe1e17512fb7127e25e"
+  },
+  {
+    "relativePath": "media/ai-edtech-hd.mp4",
+    "byteSize": 8574826,
+    "sha256": "188ebd371e47a1fa3a39400f535e422c8983964e68cca5837af6fb34c5a6ede4"
+  },
+  {
+    "relativePath": "media/ai-edtech.mp4",
+    "byteSize": 1717547,
+    "sha256": "e8d69e5ee24b98e2dfc05ad4ebf022efcfeb12887b34bb1134a4f13b60831ce0"
+  },
+  {
+    "relativePath": "media/ia/ia-client.jpg",
+    "byteSize": 120274,
+    "sha256": "85ec103e5b2d1db5fe16e7083a521f4aeb051231208f070d48228949103ebfe3"
+  },
+  {
+    "relativePath": "media/ia/ia-datacenter-24-7.jpg",
+    "byteSize": 935227,
+    "sha256": "2fe24b96a16cedd198a4a5878fd8944974c1b15ced69c4ff41d9dc352bcdfdc0"
+  },
+  {
+    "relativePath": "media/ia/ia-dgx.jpg",
+    "byteSize": 48744,
+    "sha256": "cf9ee7f0a36b97c64873d0eec6dc957f774271dcd6fe70613cbb168b20568017"
+  },
+  {
+    "relativePath": "media/ia/ia-gpu.jpg",
+    "byteSize": 62023,
+    "sha256": "e04ae629b179bed78698d04a856ed41456656e49cd89be658a86e3a2fbcfac0d"
+  },
+  {
+    "relativePath": "media/ia/ia-mac.jpg",
+    "byteSize": 42917,
+    "sha256": "50f881d7d954cf7b8611bc311dd1616cf5a5e2cfbb7fbe685533238864bc037b"
+  },
+  {
+    "relativePath": "media/ia/ia-memory.jpg",
+    "byteSize": 282103,
+    "sha256": "e986b1abef3d9dbe294cd05cc8fa52af531639b730c40c5f9e01f80506f2a4cc"
+  },
+  {
+    "relativePath": "media/ia/ia-minipc.jpg",
+    "byteSize": 46557,
+    "sha256": "4887c128ef888ad299b43c892cda1ff2de1977573ea7cc4ea9de15f19a23e418"
+  },
+  {
+    "relativePath": "media/ia/ia-models.jpg",
+    "byteSize": 228475,
+    "sha256": "22b97f6a1c1cf24077509ff83f54ee1728ec2ad27172c209ded4c92815dd7747"
+  },
+  {
+    "relativePath": "media/ia/ia-rag.jpg",
+    "byteSize": 152752,
+    "sha256": "cab342e739323c71e3d69518bf23717086b8dc99f3472a2e2f56a3e01d6e55fc"
+  },
+  {
+    "relativePath": "media/ia/ia-talent-acceleration.jpg",
+    "byteSize": 768562,
+    "sha256": "fd70795edaf4b33424595f98bc5b61b629ef9c19a8703a3213148a79c5a52633"
+  },
+  {
+    "relativePath": "media/ia/ia-tower.jpg",
+    "byteSize": 42147,
+    "sha256": "426c00e93a23295d623a93556cab61e383d3fcd6dcf1874f24ff004a006f9c25"
+  },
+  {
+    "relativePath": "media/ia/ia-workflow.jpg",
+    "byteSize": 154061,
+    "sha256": "edbf3ecf23e5ac6125e29de686f1db922c8053500a22ca4de852599a36d49d88"
+  },
+  {
+    "relativePath": "style.css",
+    "byteSize": 103985,
+    "sha256": "7b268c219e6432387d12c2dbd503593c09cdae282482f036af3d2d9f32d8f1bb"
+  }
+]

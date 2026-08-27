@@ -1,0 +1,22 @@
+{
+  "$schema": "../../project.schema.json",
+  "id": "restaurante",
+  "slug": "restaurante",
+  "name": "Arcana Restaurantes Ops",
+  "description": "Anti-fraud telemetry and automated inventory settlement chapter for multi-branch restaurant owners.",
+  "status": "validation",
+  "schemaVersion": "1.0",
+  "projectVersion": "0.1.0",
+  "defaultLanguage": "es",
+  "languages": ["es", "en"],
+  "theme": "restaurante-amber",
+  "capabilities": ["presentation"],
+  "totalSlides": 10,
+  "kicker": {
+    "es": "Arcana · Dueños de Restaurante",
+    "en": "Arcana · Restaurant Owners"
+  },
+  "entrypoints": {
+    "legacyDeck": "restaurante"
+  }
+}

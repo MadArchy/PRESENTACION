@@ -1,0 +1,27 @@
+{
+  "id": "investor-executive",
+  "profileVersion": "1.0",
+  "name": "Investor Executive Master Profile",
+  "audience": "INVESTOR",
+  "description": "High-impact visual presentation profile optimized for angel, VC, and private equity venture pitches.",
+  "preferredDensity": "STANDARD",
+  "scenePreferences": {
+    "IDENTITY": "EXECUTIVE_HERO",
+    "EXECUTIVE_SUMMARY": "SECTION_DIVIDER",
+    "PROBLEM": "PROBLEM_FRAME",
+    "WHY_NOW": "WHY_NOW",
+    "CUSTOMER": "PROBLEM_FRAME",
+    "SOLUTION": "SOLUTION_OVERVIEW",
+    "PRODUCT": "PRODUCT_OVERVIEW",
+    "MARKET": "MARKET_OVERVIEW",
+    "BUSINESS_MODEL": "BUSINESS_MODEL",
+    "COMPETITION": "COMPETITIVE_LANDSCAPE",
+    "TRACTION": "TRACTION",
+    "FINANCIALS": "FINANCIAL_OVERVIEW",
+    "TECHNOLOGY": "TECHNOLOGY_OVERVIEW",
+    "RISKS": "RISK_OVERVIEW",
+    "ROADMAP": "ROADMAP",
+    "TEAM": "TEAM",
+    "ASK": "ASK"
+  }
+}

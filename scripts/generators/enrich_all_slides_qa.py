@@ -245,8 +245,8 @@ def update_app_js():
     js_qa_str = "const CURATED_SLIDE_QA = " + json.dumps(CURATED_SLIDE_QA, indent=2, ensure_ascii=False) + ";"
 
     # Regex replace CURATED_SLIDE_QA block
-    pattern = r"const CURATED_SLIDE_QA = \{[\s\S]*?\n\};\n\nfunction getSlideNotesKey"
-    replacement = js_qa_str + "\n\nfunction getSlideNotesKey"
+    pattern = r"const CURATED_SLIDE_QA = \{[\s\S]*?\n\};\n\nfunction getActiveLang"
+    replacement = js_qa_str + "\n\nfunction getActiveLang"
 
     if re.search(pattern, code):
         new_code = re.sub(pattern, replacement, code)

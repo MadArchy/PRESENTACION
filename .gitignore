@@ -31,3 +31,6 @@ sources/raw_media/WhatsApp Video*.mp4
 # Temporary scratch files
 scratch/
 
+# Node & Dependencies
+node_modules/
+

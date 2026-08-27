@@ -1,0 +1,22 @@
+{
+  "$schema": "../../project.schema.json",
+  "id": "fastfood",
+  "slug": "fastfood",
+  "name": "Smart Fast-Food Franchise",
+  "description": "Edge-AI and computer vision orchestration system for high-volume quick service restaurant operations.",
+  "status": "pilot",
+  "schemaVersion": "1.0",
+  "projectVersion": "0.1.0",
+  "defaultLanguage": "es",
+  "languages": ["es", "en"],
+  "theme": "fastfood-emerald",
+  "capabilities": ["presentation"],
+  "totalSlides": 15,
+  "kicker": {
+    "es": "FoodTech QSR · Pitch piloto",
+    "en": "FoodTech QSR · Pilot pitch"
+  },
+  "entrypoints": {
+    "legacyDeck": "fastfood"
+  }
+}
