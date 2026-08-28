@@ -273,6 +273,7 @@ function initPlatform() {
   warmupSpeechVoices();
   setupHubVentureCards();
   initPresentationLlmSession();
+  bindCommentsDrawerTriggers();
 }
 
 function setupHubVentureCards() {
@@ -501,6 +502,11 @@ function updateSlideDisplay(direction = 'next') {
   updateCommentsCounterBadge();
   if (isCommentsOpen) {
     openCommentsDrawer();
+  }
+
+  if (window.VentureHubBridge && typeof window.VentureHubBridge.syncSpeechSlide === 'function') {
+    // Speech engine uses the same 1-based slide numbers as notes/Q&A
+    window.VentureHubBridge.syncSpeechSlide(currentSlide);
   }
 
   primeNearbySlides(activeDeck, currentSlide);
@@ -1219,10 +1225,8 @@ document.addEventListener('keydown', (e) => {
     case 'C':
     case 'q':
     case 'Q':
-      if (activeDeck !== 'hub') {
-        e.preventDefault();
-        toggleCommentsDrawer();
-      }
+      e.preventDefault();
+      toggleCommentsDrawer();
       break;
     case 'a':
     case 'A':
@@ -1248,8 +1252,10 @@ document.addEventListener('keydown', (e) => {
       break;
     case 'l':
     case 'L':
-      e.preventDefault();
-      toggleLanguage();
+      if (!e.shiftKey && !e.altKey && !e.ctrlKey && !e.metaKey) {
+        e.preventDefault();
+        toggleLanguage();
+      }
       break;
     case 't':
     case 'T':
@@ -1291,10 +1297,10 @@ let touchStartTime = 0;
 
 function setupTouchGestures() {
   const stage = document.getElementById('slideViewport') || document.body;
+  const ignoreSel = 'input, textarea, select, button, a, .pitch-timer-popover, .comments-drawer, .comments-drawer-body, .overview-drawer, #transcriptDrawerMount, .transcript-drawer, .live-subtitles-hud';
 
   document.addEventListener('touchstart', (e) => {
-    // Ignore touches in text inputs, textareas, and buttons
-    if (e.target.closest('input, textarea, select, button, .pitch-timer-popover')) return;
+    if (e.target.closest(ignoreSel)) return;
     if (e.touches && e.touches.length === 1) {
       touchStartX = e.touches[0].clientX;
       touchStartY = e.touches[0].clientY;
@@ -1303,7 +1309,7 @@ function setupTouchGestures() {
   }, { passive: true });
 
   document.addEventListener('touchend', (e) => {
-    if (e.target.closest('input, textarea, select, button, .pitch-timer-popover')) return;
+    if (e.target.closest(ignoreSel)) return;
     if (!e.changedTouches || e.changedTouches.length === 0) return;
 
     const touchEndX = e.changedTouches[0].clientX;
@@ -1312,7 +1318,7 @@ function setupTouchGestures() {
     const diffY = touchEndY - touchStartY;
     const elapsed = Date.now() - touchStartTime;
 
-    // 1. Swipe Down to close open drawers on mobile
+    // Swipe down closes drawers / transcript on mobile
     if (diffY > 80 && Math.abs(diffY) > Math.abs(diffX) * 1.5) {
       if (isCommentsOpen) {
         closeCommentsDrawer();
@@ -1322,19 +1328,25 @@ function setupTouchGestures() {
         toggleOverview();
         return;
       }
+      const transcriptMount = document.getElementById('transcriptDrawerMount');
+      if (transcriptMount && transcriptMount.style.display !== 'none') {
+        if (window.VentureHubBridge && typeof window.VentureHubBridge.closeTranscriptDrawer === 'function') {
+          window.VentureHubBridge.closeTranscriptDrawer();
+        }
+        return;
+      }
     }
 
-    // 2. Horizontal Swipe for Slide Navigation (when drawers are closed)
+    // Horizontal swipe for slides (drawers closed, not on hub)
     if (!isCommentsOpen && !isOverviewOpen && activeDeck !== 'hub') {
       const isFastSwipe = elapsed < 350 && Math.abs(diffX) > 30;
       const isLongSwipe = Math.abs(diffX) > 55;
 
       if ((isFastSwipe || isLongSwipe) && Math.abs(diffX) > Math.abs(diffY) * 1.15) {
-        if (diffX < 0) {
-          nextSlide();
-        } else {
-          prevSlide();
-        }
+        const hint = document.getElementById('mobileSwipeHint');
+        if (hint) hint.style.display = 'none';
+        if (diffX < 0) nextSlide();
+        else prevSlide();
       }
     }
   }, { passive: true });
@@ -2810,16 +2822,44 @@ async function translateText(text, fromLang, toLang) {
   const clean = String(text || '').trim();
   if (!clean || fromLang === toLang) return clean;
 
-  const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(clean)}&langpair=${fromLang}|${toLang}`;
-  const response = await fetch(url);
-  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  const host = typeof location !== 'undefined' ? location.hostname : '';
+  const useProxy = host === 'localhost' || host === '127.0.0.1';
+  const baseOverride = (typeof window !== 'undefined' && window.__TRANSLATE_API_BASE__)
+    ? String(window.__TRANSLATE_API_BASE__).replace(/\/$/, '')
+    : '';
+  const paidUrl = `${baseOverride || ''}/translate-api?q=${encodeURIComponent(clean)}&from=${fromLang}&to=${toLang}`;
 
-  const data = await response.json();
-  if (data.responseStatus === 200 && data.responseData?.translatedText) {
-    const translated = String(data.responseData.translatedText).trim();
-    if (translated && translated.toUpperCase() !== clean.toUpperCase()) return translated;
-    if (translated) return translated;
+  const tryFetch = async (url, ms) => {
+    const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    const timeoutId = controller ? setTimeout(() => controller.abort(), ms) : null;
+    try {
+      const response = await fetch(url, controller ? { signal: controller.signal } : undefined);
+      if (timeoutId) clearTimeout(timeoutId);
+      if (!response.ok) return null;
+      return await response.json();
+    } catch (err) {
+      if (timeoutId) clearTimeout(timeoutId);
+      return null;
+    }
+  };
+
+  // 1) Paid / same-origin API (DeepL or Google via proxy)
+  const paid = await tryFetch(paidUrl, 2500);
+  if (paid?.translatedText && !paid.error) {
+    return String(paid.translatedText).trim();
   }
+
+  // 2) MyMemory (proxy on localhost, direct off-host)
+  const path = `/get?q=${encodeURIComponent(clean)}&langpair=${fromLang}|${toLang}`;
+  const mymUrl = useProxy
+    ? `/translate-mymemory${path}`
+    : `https://api.mymemory.translated.net${path}`;
+  const data = await tryFetch(mymUrl, 4000);
+  if (data?.responseStatus === 200 && data.responseData?.translatedText) {
+    const translated = String(data.responseData.translatedText).trim();
+    if (translated && !translated.includes('MYMEMORY WARNING')) return translated;
+  }
+
   throw new Error('Translation unavailable');
 }
 
@@ -2923,7 +2963,7 @@ function getSlideNotesKey(deck, slide) {
 }
 
 function getSlideNotes(deck, slide) {
-  if (!deck || deck === 'hub') return [];
+  if (!deck) return [];
   const key = getSlideNotesKey(deck, slide);
   const stored = localStorage.getItem(key);
   const deckPresets = CURATED_SLIDE_QA[deck];
@@ -2979,7 +3019,7 @@ function getSlideNotes(deck, slide) {
 }
 
 function saveSlideNotes(deck, slide, notesArray) {
-  if (!deck || deck === 'hub') return;
+  if (!deck) return;
   const key = getSlideNotesKey(deck, slide);
   localStorage.setItem(key, JSON.stringify(notesArray));
   updateCommentsCounterBadge();
@@ -3079,24 +3119,102 @@ function updateCommentsCounterBadge() {
   }
 }
 
+function isCommentsDrawerVisible() {
+  const drawer = document.getElementById('commentsDrawer');
+  return !!(drawer && drawer.classList.contains('open'));
+}
+
 function toggleCommentsDrawer() {
-  if (activeDeck === 'hub') return;
+  // Heal stuck state: flag says open but panel is not on screen
+  if (isCommentsOpen && !isCommentsDrawerVisible()) {
+    isCommentsOpen = false;
+  }
   if (isCommentsOpen) closeCommentsDrawer();
   else openCommentsDrawer();
 }
 
+function paintCommentsDrawerOpen() {
+  const drawer = document.getElementById('commentsDrawer');
+  const backdrop = document.getElementById('commentsDrawerBackdrop');
+  if (!drawer) return false;
+
+  // Close transcript overlay first — it can sit above the notes panel
+  const transcriptMount = document.getElementById('transcriptDrawerMount');
+  if (transcriptMount && transcriptMount.style.display !== 'none') {
+    if (window.VentureHubBridge && typeof window.VentureHubBridge.closeTranscriptDrawer === 'function') {
+      window.VentureHubBridge.closeTranscriptDrawer();
+    } else {
+      transcriptMount.style.display = 'none';
+    }
+  }
+
+  isCommentsOpen = true;
+  drawer.classList.add('open');
+  drawer.setAttribute('aria-hidden', 'false');
+  // Let CSS own transform (desktop: X, mobile sheet: Y). Clear any stale inline override.
+  drawer.style.removeProperty('transform');
+  drawer.style.visibility = 'visible';
+  if (backdrop) {
+    backdrop.classList.add('open');
+    backdrop.style.opacity = '1';
+    backdrop.style.pointerEvents = 'auto';
+  }
+  return true;
+}
+
+function openCommentsDrawer() {
+  markQaDiscovered();
+
+  if (!paintCommentsDrawerOpen()) {
+    showToast(getActiveLang() === 'es'
+      ? 'No se encontró el panel de notas'
+      : 'Notes panel not found');
+    isCommentsOpen = false;
+    return;
+  }
+
+  try {
+    updateCommentsDrawerHeader();
+    updateDrawerFormLanguage(currentLang);
+    switchCommentsTab(activeCommentTab || 'list');
+    renderCommentsList();
+    updateCommentsCounterBadge();
+    renderQaOutboxStrip();
+    flushQaOutbox().catch(() => {});
+    if (activeDeck !== 'hub') {
+      scheduleCommentsTranslation(activeDeck, currentSlide, getActiveLang());
+    }
+  } catch (err) {
+    console.error('[comments] openCommentsDrawer failed:', err);
+    // Panel already painted — keep it open so the user is never stuck with a dead click
+  }
+}
+
 function updateCommentsDrawerHeader() {
-  if (activeDeck === 'hub') return;
   const lang = getActiveLang();
-  const meta = DECK_CONFIG[activeDeck] || DECK_CONFIG.hub;
   const kickerEl = document.getElementById('commentsDeckKicker');
   const titleEl = document.getElementById('commentsSlideTitle');
   const subEl = document.getElementById('commentsSlideSubtitle');
 
+  if (activeDeck === 'hub') {
+    if (kickerEl) kickerEl.textContent = '3i BAIRD LAB · HUB';
+    if (titleEl) {
+      titleEl.textContent = lang === 'es'
+        ? 'Preguntas & Sugerencias'
+        : 'Questions & Feedback';
+    }
+    if (subEl) {
+      subEl.textContent = lang === 'es'
+        ? 'Abre un deck para ver notas por diapositiva, o deja una sugerencia general en Inyectar'
+        : 'Open a deck for per-slide notes, or leave general feedback in Inject';
+    }
+    return;
+  }
+
+  const meta = DECK_CONFIG[activeDeck] || DECK_CONFIG.hub;
   const deckName = lang === 'es' ? (meta.title_es || activeDeck) : (meta.title_en || activeDeck);
   if (kickerEl) kickerEl.textContent = `3i BAIRD LAB · ${deckName.toUpperCase()}`;
 
-  // Get active slide title in current language
   let activeSlideHeading = lang === 'es'
     ? `Diapositiva ${currentSlide} / ${totalSlides()}`
     : `Slide ${currentSlide} / ${totalSlides()}`;
@@ -3120,31 +3238,50 @@ function updateCommentsDrawerHeader() {
     : 'Injected questions, key talking points and presenter notes';
 }
 
-function openCommentsDrawer() {
-  if (activeDeck === 'hub') return;
-  isCommentsOpen = true;
-  markQaDiscovered();
-
-  const drawer = document.getElementById('commentsDrawer');
-  const backdrop = document.getElementById('commentsDrawerBackdrop');
-  if (drawer) drawer.classList.add('open');
-  if (backdrop) backdrop.classList.add('open');
-
-  updateCommentsDrawerHeader();
-  updateDrawerFormLanguage(currentLang);
-  renderCommentsList();
-  updateCommentsCounterBadge();
-  renderQaOutboxStrip();
-  flushQaOutbox();
-  scheduleCommentsTranslation(activeDeck, currentSlide, getActiveLang());
-}
-
 function closeCommentsDrawer() {
   isCommentsOpen = false;
   const drawer = document.getElementById('commentsDrawer');
   const backdrop = document.getElementById('commentsDrawerBackdrop');
-  if (drawer) drawer.classList.remove('open');
-  if (backdrop) backdrop.classList.remove('open');
+  if (drawer) {
+    drawer.classList.remove('open');
+    drawer.setAttribute('aria-hidden', 'true');
+    drawer.style.removeProperty('transform');
+    drawer.style.visibility = '';
+  }
+  if (backdrop) {
+    backdrop.classList.remove('open');
+    backdrop.style.opacity = '';
+    backdrop.style.pointerEvents = '';
+  }
+}
+
+function bindCommentsDrawerTriggers() {
+  const openers = [
+    document.getElementById('commentsToggleBtn'),
+    document.getElementById('floatingCommentsBtn')
+  ].filter(Boolean);
+
+  openers.forEach((btn) => {
+    btn.removeAttribute('onclick');
+    btn.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      toggleCommentsDrawer();
+    });
+  });
+
+  const closers = [
+    document.getElementById('commentsDrawerBackdrop'),
+    document.querySelector('.comments-close-btn')
+  ].filter(Boolean);
+
+  closers.forEach((el) => {
+    el.removeAttribute('onclick');
+    el.addEventListener('click', (event) => {
+      event.preventDefault();
+      closeCommentsDrawer();
+    });
+  });
 }
 
 function switchCommentsTab(tabName) {
@@ -3189,13 +3326,22 @@ function renderCommentsList() {
   filtered.sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
 
   if (filtered.length === 0) {
+    const hubHint = activeDeck === 'hub';
     container.innerHTML = `
       <div class="comments-empty-state">
         <div class="comments-empty-icon">💬</div>
-        <div class="comments-empty-title">${lang === 'es' ? 'Sin preguntas en esta diapositiva' : 'No questions for this slide'}</div>
-        <div class="comments-empty-desc">${lang === 'es' ? 'Usa la pestaña "Inyectar" o "Ingesta Rápida" para agregar preguntas clave, objeciones o notas.' : 'Use the "Inject" or "Bulk" tab to add key questions, objections, or talking points.'}</div>
+        <div class="comments-empty-title">${hubHint
+          ? (lang === 'es' ? 'Elige un deck para ver Q&A por slide' : 'Pick a deck to see per-slide Q&A')
+          : (lang === 'es' ? 'Sin preguntas en esta diapositiva' : 'No questions for this slide')}</div>
+        <div class="comments-empty-desc">${hubHint
+          ? (lang === 'es'
+            ? 'Desde el hub puedes dejar una sugerencia general en la pestaña Inyectar, o abre un venture para notas por diapositiva.'
+            : 'From the hub you can leave general feedback in Inject, or open a venture for per-slide notes.')
+          : (lang === 'es'
+            ? 'Usa la pestaña "Inyectar" o "Ingesta Rápida" para agregar preguntas clave, objeciones o notas.'
+            : 'Use the "Inject" or "Bulk" tab to add key questions, objections, or talking points.')}</div>
         <button class="btn-inject-secondary" style="margin-top: 6px;" onclick="switchCommentsTab('inject')">
-          ➕ ${lang === 'es' ? 'Inyectar Primera Pregunta' : 'Inject First Question'}
+          ➕ ${lang === 'es' ? (hubHint ? 'Dejar sugerencia' : 'Inyectar Primera Pregunta') : (hubHint ? 'Leave feedback' : 'Inject First Question')}
         </button>
       </div>
     `;
@@ -3226,7 +3372,7 @@ function renderCommentsList() {
           <span class="comment-type-tag ${catClass}">${catLabel}</span>
           <div class="comment-card-actions">
             ${needsTranslate || translateFailed ? `
-            <button class="comment-action-btn btn-translate" onclick="translateCommentById('${item.id}')" title="${lang === 'es' ? 'Traducir al español' : 'Translate to English'}">
+            <button class="comment-action-btn btn-translate" onclick="translateCommentById('${item.id}')" title="${lang === 'es' ? 'Traducir al idioma actual' : 'Translate to current language'}">
               <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
             </button>` : ''}
             <button class="comment-action-btn btn-pin ${item.pinned ? 'active' : ''}" onclick="togglePinComment('${item.id}')" title="${item.pinned ? (lang === 'es' ? 'Desfijar' : 'Unpin') : (lang === 'es' ? 'Fijar arriba' : 'Pin to top')}">
@@ -4667,6 +4813,9 @@ function speakExecutiveText(text, mode, options = {}) {
     if (options.partOfTour) briefingEngine.deckTourActive = true;
 
     utterance.onstart = () => {
+      if (window.VentureHubBridge && typeof window.VentureHubBridge.pauseLiveSpeechForTts === 'function') {
+        window.VentureHubBridge.pauseLiveSpeechForTts();
+      }
       startBriefingProgressEstimate(text);
       syncPitchTimerWithNarration('start');
       let msg;
@@ -4689,6 +4838,9 @@ function speakExecutiveText(text, mode, options = {}) {
     };
 
     utterance.onend = () => {
+      if (window.VentureHubBridge && typeof window.VentureHubBridge.resumeLiveSpeechAfterTts === 'function') {
+        window.VentureHubBridge.resumeLiveSpeechAfterTts();
+      }
       if (briefingEngine.deckTourActive && briefingEngine.autoAdvance) {
         scheduleDeckTourAdvance();
         return;
@@ -4697,6 +4849,9 @@ function speakExecutiveText(text, mode, options = {}) {
     };
 
     utterance.onerror = () => {
+      if (window.VentureHubBridge && typeof window.VentureHubBridge.resumeLiveSpeechAfterTts === 'function') {
+        window.VentureHubBridge.resumeLiveSpeechAfterTts();
+      }
       briefingEngine.deckTourActive = false;
       finishBriefingPlayback(lang === 'es' ? 'No se pudo reproducir el audio.' : 'Could not play audio.');
     };
@@ -4719,6 +4874,9 @@ function stopExecutiveBriefing() {
   briefingEngine.deckTourActive = false;
   briefingEngine.paused = false;
   briefingEngine.timerPausedForNarration = false;
+  if (window.VentureHubBridge && typeof window.VentureHubBridge.resumeLiveSpeechAfterTts === 'function') {
+    window.VentureHubBridge.resumeLiveSpeechAfterTts();
+  }
   updateBriefingUI('idle', currentLang === 'es' ? 'Audio detenido.' : 'Audio stopped.');
   updateAudioTourBar();
   setTimeout(() => updateBriefingUI('idle', ''), 1800);
@@ -5255,6 +5413,54 @@ async function askPresentationEngine() {
     if (btn) btn.disabled = false;
   }
 }
+
+function toastSpeech(messageEs, messageEn) {
+  const msg = (typeof getActiveLang === 'function' ? getActiveLang() : currentLang) === 'en'
+    ? messageEn
+    : messageEs;
+  if (typeof showToast === 'function') showToast(msg);
+}
+
+window.__toggleLiveSpeechHud = function toggleLiveSpeechHud() {
+  const bridge = window.VentureHubBridge;
+  if (!bridge || typeof bridge.toggleLiveSpeech !== 'function') {
+    toastSpeech(
+      'Motor de escucha aún cargando. Espera un segundo e intenta de nuevo.',
+      'Speech engine still loading. Wait a second and try again.'
+    );
+    return;
+  }
+  Promise.resolve(bridge.toggleLiveSpeech()).catch((err) => {
+    const raw = String(err?.message || err || '');
+    if (/not supported|SpeechRecognition/i.test(raw)) {
+      toastSpeech(
+        'Escucha solo funciona en Chrome o Edge con micrófono.',
+        'Live listen works in Chrome or Edge with a microphone.'
+      );
+      return;
+    }
+    if (/NotAllowed|permission|denied/i.test(raw)) {
+      toastSpeech(
+        'Permiso de micrófono denegado. Actívalo en el navegador.',
+        'Microphone permission denied. Enable it in the browser.'
+      );
+      return;
+    }
+    toastSpeech('No se pudo iniciar el motor de escucha.', 'Could not start the speech engine.');
+  });
+};
+
+window.__toggleTranscriptHud = function toggleTranscriptHud() {
+  const bridge = window.VentureHubBridge;
+  if (!bridge || typeof bridge.toggleTranscriptDrawer !== 'function') {
+    toastSpeech(
+      'Panel de transcripción aún cargando.',
+      'Transcript panel still loading.'
+    );
+    return;
+  }
+  bridge.toggleTranscriptDrawer();
+};
 
 Object.assign(window, {
   launchDeck,

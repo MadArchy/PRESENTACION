@@ -1,0 +1,13 @@
+name = "translate-api"
+main = "translate-api.js"
+compatibility_date = "2024-11-01"
+
+# Secrets (do not put real keys here):
+#   npx wrangler secret put DEEPL_API_KEY
+#   npx wrangler secret put GOOGLE_TRANSLATE_KEY
+#   npx wrangler secret put GEMMA_API_KEY
+
+[vars]
+# GEMMA_TRANSLATE_URL = "https://your-host/api/v1/chat/completions"
+# GEMMA_MODEL = "gemma"
+# GEMMA_TRANSLATE_FIRST = "1"

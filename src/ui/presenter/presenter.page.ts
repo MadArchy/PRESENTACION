@@ -12,7 +12,7 @@ export function renderPresenterPage(
   presentation: PresentationDefinitionEntity,
   context: PresenterContext,
   renderer: PresentationRenderer,
-  activeTab: 'NOTES' | 'TRUST' | 'QA' = 'NOTES',
+  activeTab: 'NOTES' | 'TRUST' | 'QA' | 'SPEECH' = 'NOTES',
   isOverviewOpen = false
 ): string {
   const session = context.session;
@@ -60,6 +60,12 @@ export function renderPresenterPage(
 
         <!-- Right: Session Actions & Navigation -->
         <div style="display: flex; align-items: center; gap: 8px;">
+          <!-- Mic / Speech Toggle -->
+          <button onclick="window.VentureHubBridge.toggleLiveSpeech()" style="background: rgba(6,182,212,0.15); border: 1px solid rgba(6,182,212,0.4); color: #38bdf8; font-weight: 600; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.78rem; display: flex; align-items: center; gap: 6px;" title="Activar/Desactivar Escucha en Vivo (Shift+L)">
+            <span>🎙️</span>
+            <span>Escucha ES/EN</span>
+          </button>
+
           <!-- Play / Pause Toggle -->
           <button onclick="window.VentureHubBridge.togglePresenterPlayPause()" style="background: ${status === 'RUNNING' ? '#f59e0b' : 'var(--gold)'}; border: none; color: #000; font-weight: 700; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 0.8rem;">
             ${status === 'RUNNING' ? '⏸ Pausar' : (status === 'PAUSED' ? '▶ Reanudar' : '▶ Iniciar')}
@@ -99,17 +105,20 @@ export function renderPresenterPage(
             </div>
           </div>
 
-          <!-- Bottom Navigation Bar for Current Scene -->
-          <div style="height: 48px; background: #0f172a; border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; padding: 0 14px; display: flex; justify-content: space-between; align-items: center;">
-            <button onclick="window.VentureHubBridge.prevPresenterScene()" ${currentIndex === 0 ? 'disabled' : ''} style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); color: #f8fafc; padding: 5px 14px; border-radius: 4px; cursor: pointer; font-size: 0.78rem; opacity: ${currentIndex === 0 ? '0.4' : '1'};">
-              ← Escena Anterior
-            </button>
-            <span style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--gold);">
-              ${currentIndex + 1} / ${total}
-            </span>
-            <button onclick="window.VentureHubBridge.nextPresenterScene()" ${currentIndex === total - 1 ? 'disabled' : ''} style="background: var(--gold); border: none; color: #000; font-weight: 700; padding: 5px 18px; border-radius: 4px; cursor: pointer; font-size: 0.78rem; opacity: ${currentIndex === total - 1 ? '0.4' : '1'};">
-              Siguiente Escena →
-            </button>
+          <!-- Quick Navigation Ribbon -->
+          <div style="height: 48px; background: #0f172a; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px;">
+            <div style="display: flex; gap: 8px;">
+              <button onclick="window.VentureHubBridge.prevPresenterScene()" ${currentIndex === 0 ? 'disabled' : ''} style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #f8fafc; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 0.8rem;">
+                ◀ Anterior
+              </button>
+              <button onclick="window.VentureHubBridge.nextPresenterScene()" ${currentIndex >= total - 1 ? 'disabled' : ''} style="background: var(--gold); border: none; color: #000; font-weight: 700; padding: 6px 16px; border-radius: 6px; cursor: pointer; font-size: 0.8rem;">
+                Siguiente ▶
+              </button>
+            </div>
+
+            <div style="font-family: var(--font-mono); font-size: 0.75rem; color: #94a3b8;">
+              Escena ${currentIndex + 1} de ${total}
+            </div>
           </div>
 
         </div>
@@ -146,6 +155,9 @@ export function renderPresenterPage(
               <button onclick="window.VentureHubBridge.setPresenterTab('NOTES')" style="flex: 1; padding: 10px; background: ${activeTab === 'NOTES' ? 'rgba(255,255,255,0.05)' : 'transparent'}; border: none; border-bottom: 2px solid ${activeTab === 'NOTES' ? 'var(--gold)' : 'transparent'}; color: ${activeTab === 'NOTES' ? '#ffffff' : '#94a3b8'}; font-weight: 600; font-size: 0.8rem; cursor: pointer;">
                 📝 Notas (${context.notes.length})
               </button>
+              <button onclick="window.VentureHubBridge.setPresenterTab('SPEECH')" style="flex: 1; padding: 10px; background: ${activeTab === 'SPEECH' ? 'rgba(255,255,255,0.05)' : 'transparent'}; border: none; border-bottom: 2px solid ${activeTab === 'SPEECH' ? 'var(--gold)' : 'transparent'}; color: ${activeTab === 'SPEECH' ? '#ffffff' : '#94a3b8'}; font-weight: 600; font-size: 0.8rem; cursor: pointer;">
+                🎙️ Escucha
+              </button>
               <button onclick="window.VentureHubBridge.setPresenterTab('TRUST')" style="flex: 1; padding: 10px; background: ${activeTab === 'TRUST' ? 'rgba(255,255,255,0.05)' : 'transparent'}; border: none; border-bottom: 2px solid ${activeTab === 'TRUST' ? 'var(--gold)' : 'transparent'}; color: ${activeTab === 'TRUST' ? '#ffffff' : '#94a3b8'}; font-weight: 600; font-size: 0.8rem; cursor: pointer;">
                 🛡️ Trust (${context.trustAlerts.length})
               </button>
@@ -157,6 +169,19 @@ export function renderPresenterPage(
             <!-- Tab Content -->
             <div style="flex: 1; overflow-y: auto; padding: 14px;">
               ${activeTab === 'NOTES' ? renderSpeakerNotes(context.notes) : ''}
+              ${activeTab === 'SPEECH' ? `
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                  <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.03); padding: 8px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.07);">
+                    <div style="font-size: 0.78rem; font-weight: 600;">Monitor de Voz Bilingüe</div>
+                    <button onclick="window.VentureHubBridge.openTranscriptDrawer()" style="background: rgba(6,182,212,0.15); border: 1px solid rgba(6,182,212,0.3); color: #38bdf8; padding: 3px 8px; border-radius: 4px; font-size: 0.72rem; cursor: pointer;">
+                      Abrir Minutas ↗
+                    </button>
+                  </div>
+                  <div id="cockpitLiveSpeechFeed" style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.4; background: #080d1a; padding: 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); min-height: 120px;">
+                    <div style="color: #64748b; font-style: italic; font-size: 0.78rem;">El texto hablado en español o inglés aparecerá transcrito y traducido en tiempo real en la barra de subtítulos y minutas.</div>
+                  </div>
+                </div>
+              ` : ''}
               ${activeTab === 'TRUST' ? renderPresenterTrustPanel(context.trustAlerts, presentation.getTrustSummary()) : ''}
               ${activeTab === 'QA' ? renderPresenterQaPanel(context.qaCards) : ''}
             </div>

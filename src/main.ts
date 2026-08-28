@@ -87,6 +87,13 @@ import { ProductionReadinessEntity } from './modules/production/domain/entities/
 import { RuntimeEnvironmentAdapter } from './modules/production/adapters/config/runtime-environment.adapter';
 import { renderProductionReadiness } from './ui/production/production-readiness.component';
 
+import { WebSpeechAdapter } from './modules/speech-intelligence/adapters/web-speech.adapter';
+import { BilingualTranslatorAdapter } from './modules/speech-intelligence/adapters/bilingual-translator.adapter';
+import { BilingualTranslationUseCase } from './modules/speech-intelligence/application/bilingual-translation.use-case';
+import { ListenLiveSpeechUseCase } from './modules/speech-intelligence/application/listen-live-speech.use-case';
+import { ExportTranscriptUseCase } from './modules/speech-intelligence/application/export-transcript.use-case';
+import { SpeechUIController } from './ui/speech/speech-ui.controller';
+
 import { InMemoryEventBus } from './modules/shared/events/event-bus';
 import { logger } from './platform/logging/logger';
 import { APP_CONFIG } from './platform/config/app.config';
@@ -183,7 +190,7 @@ export class VentureHubApp {
 
   // Active Presenter Cockpit State
   private activePresenterSession: PresenterSessionEntity | null = null;
-  private activePresenterTab: 'NOTES' | 'TRUST' | 'QA' = 'NOTES';
+  private activePresenterTab: 'NOTES' | 'TRUST' | 'QA' | 'SPEECH' = 'NOTES';
   private isPresenterOverviewOpen = false;
   private presenterTimerInterval: any = null;
 
@@ -230,6 +237,14 @@ export class VentureHubApp {
   private readonly adminStore: InMemoryAdministrationStore;
   private readonly healthAdapter: FirebasePlatformHealthAdapter;
   private readonly adminUseCases: AdministrationUseCases;
+
+  // Live Speech Intelligence & Dual-Language Subtitles (Phase 012)
+  private readonly speechTranslatorAdapter: BilingualTranslatorAdapter;
+  private readonly webSpeechAdapter: WebSpeechAdapter;
+  private readonly bilingualTranslationUseCase: BilingualTranslationUseCase;
+  private readonly listenLiveSpeechUseCase: ListenLiveSpeechUseCase;
+  private readonly exportTranscriptUseCase: ExportTranscriptUseCase;
+  private readonly speechUIController: SpeechUIController;
 
   constructor() {
     this.eventBus = new InMemoryEventBus();
@@ -371,10 +386,21 @@ export class VentureHubApp {
       this.diligenceRequestRepository,
       this.claimRepository
     );
+
+    // Live Speech & Dual-Language Transcripts
+    this.speechTranslatorAdapter = new BilingualTranslatorAdapter();
+    this.webSpeechAdapter = new WebSpeechAdapter();
+    this.bilingualTranslationUseCase = new BilingualTranslationUseCase(this.speechTranslatorAdapter);
+    this.listenLiveSpeechUseCase = new ListenLiveSpeechUseCase(this.webSpeechAdapter, this.bilingualTranslationUseCase);
+    this.exportTranscriptUseCase = new ExportTranscriptUseCase();
+    this.speechUIController = new SpeechUIController(this.listenLiveSpeechUseCase, this.exportTranscriptUseCase);
   }
 
   async initialize(): Promise<void> {
     logger.info(`Booting ${APP_CONFIG.appName} v${APP_CONFIG.version} (Schema v${APP_CONFIG.schemaVersion})`);
+
+    // Expose speech bridge IMMEDIATELY so HUD Escucha works before projects finish loading
+    this.exposeSpeechBridge();
 
     // Subscribe to domain events
     this.eventBus.subscribe('project.loaded', (payload: any) => {
@@ -444,8 +470,9 @@ export class VentureHubApp {
         }
       });
 
-      // Expose bridge for browser integration and legacy runtime
+      // Expose full bridge for browser integration and legacy runtime
       (window as any).VentureHubBridge = {
+        ...(window as any).VentureHubBridge,
         app: this,
         listProjects: () => this.listProjectsUseCase.execute(),
         getProject: (id: string) => this.getProjectUseCase.execute({ idOrSlug: id }),
@@ -549,6 +576,24 @@ export class VentureHubApp {
         getProductionReadiness: () => ProductionReadinessEntity.evaluateReadiness(RuntimeEnvironmentAdapter.getConfig().environment, ProductionReadinessEntity.getStandardChecks()),
         getRuntimeEnvironmentConfig: () => RuntimeEnvironmentAdapter.getConfig(),
         renderProductionReadinessDashboard: () => renderProductionReadiness(ProductionReadinessEntity.evaluateReadiness(RuntimeEnvironmentAdapter.getConfig().environment, ProductionReadinessEntity.getStandardChecks())),
+
+        // Live Speech Intelligence & Subtitle Bridge APIs (Phase 012)
+        toggleLiveSpeech: () => this.speechUIController.toggleLiveSpeech(),
+        setSpeechLanguage: (lang: 'es' | 'en') => this.speechUIController.setSpeechLanguage(lang),
+        toggleSpeechLanguage: () => this.speechUIController.toggleSpeechLanguage(),
+        toggleSubtitlesBar: (show?: boolean) => this.speechUIController.toggleSubtitlesVisibility(show),
+        openTranscriptDrawer: () => this.speechUIController.openDrawer(),
+        closeTranscriptDrawer: () => this.speechUIController.closeDrawer(),
+        toggleTranscriptDrawer: () => this.speechUIController.toggleDrawer(),
+        filterTranscript: (q: string) => this.speechUIController.filterTranscript(q),
+        copyTranscriptToClipboard: () => this.speechUIController.copyToClipboard(),
+        copySingleUtterance: (id: string) => this.speechUIController.copySingleUtterance(id),
+        downloadTranscriptMarkdown: () => this.speechUIController.downloadMarkdown(),
+        downloadTranscriptTxt: () => this.speechUIController.downloadTxt(),
+        clearTranscriptSession: () => this.speechUIController.clearSession(),
+        syncSpeechSlide: (idx: number) => this.speechUIController.setSlide(idx),
+        pauseLiveSpeechForTts: () => this.speechUIController.pauseListeningForTts(),
+        resumeLiveSpeechAfterTts: () => this.speechUIController.resumeListeningAfterTts(),
 
         openWorkspace: (slug: string) => this.openWorkspace(slug),
         openNarrativeWorkspace: (slug: string, req?: Partial<NarrativeRequest>) => this.openNarrativeWorkspace(slug, req),
@@ -1064,6 +1109,7 @@ export class VentureHubApp {
     if (!this.activePresenterSession || !this.activePresentation) return;
     const total = this.activePresentation.getScenes().length;
     this.activePresenterSession.next(total);
+    this.speechUIController.setSlide(this.activePresenterSession.getCurrentSceneIndex());
     this.renderCurrentPresenterCockpit();
   }
 
@@ -1071,6 +1117,7 @@ export class VentureHubApp {
     if (!this.activePresenterSession || !this.activePresentation) return;
     const total = this.activePresentation.getScenes().length;
     this.activePresenterSession.prev(total);
+    this.speechUIController.setSlide(this.activePresenterSession.getCurrentSceneIndex());
     this.renderCurrentPresenterCockpit();
   }
 
@@ -1078,11 +1125,12 @@ export class VentureHubApp {
     if (!this.activePresenterSession || !this.activePresentation) return;
     const total = this.activePresentation.getScenes().length;
     this.activePresenterSession.goToScene(index, total);
+    this.speechUIController.setSlide(index);
     this.isPresenterOverviewOpen = false;
     this.renderCurrentPresenterCockpit();
   }
 
-  setPresenterTab(tab: 'NOTES' | 'TRUST' | 'QA'): void {
+  setPresenterTab(tab: 'NOTES' | 'TRUST' | 'QA' | 'SPEECH'): void {
     this.activePresenterTab = tab;
     this.renderCurrentPresenterCockpit();
   }
@@ -1133,6 +1181,7 @@ export class VentureHubApp {
       this.activePresentation = presentation;
       this.activeSceneIndex = 0;
       this.isPresentationOverviewOpen = false;
+      this.speechUIController.setSlide(0);
 
       this.renderCurrentPresentation();
       logger.info(`Launched V2 presentation for '${slug}' (${presentation.getScenes().length} scenes)`);
@@ -1159,6 +1208,7 @@ export class VentureHubApp {
     if (!this.activePresentation) return;
     if (this.activeSceneIndex < this.activePresentation.getScenes().length - 1) {
       this.activeSceneIndex++;
+      this.speechUIController.setSlide(this.activeSceneIndex);
       this.renderCurrentPresentation();
     }
   }
@@ -1167,6 +1217,7 @@ export class VentureHubApp {
     if (!this.activePresentation) return;
     if (this.activeSceneIndex > 0) {
       this.activeSceneIndex--;
+      this.speechUIController.setSlide(this.activeSceneIndex);
       this.renderCurrentPresentation();
     }
   }
@@ -1175,6 +1226,7 @@ export class VentureHubApp {
     if (!this.activePresentation) return;
     if (index >= 0 && index < this.activePresentation.getScenes().length) {
       this.activeSceneIndex = index;
+      this.speechUIController.setSlide(index);
       this.isPresentationOverviewOpen = false;
       this.renderCurrentPresentation();
     }
@@ -1508,6 +1560,30 @@ export class VentureHubApp {
     mount.style.cssText = 'position:fixed;inset:0;z-index:9999;display:none;background:#030712;overflow:auto;';
     document.body.appendChild(mount);
     return mount;
+  }
+
+  /** Speech HUD must work even if project loading is slow/fails. */
+  private exposeSpeechBridge(): void {
+    if (typeof window === 'undefined') return;
+    const prev = (window as any).VentureHubBridge || {};
+    (window as any).VentureHubBridge = {
+      ...prev,
+      toggleLiveSpeech: () => this.speechUIController.toggleLiveSpeech(),
+      toggleSpeechLanguage: () => this.speechUIController.toggleSpeechLanguage(),
+      toggleSubtitlesBar: (show?: boolean) => this.speechUIController.toggleSubtitlesVisibility(show),
+      openTranscriptDrawer: () => this.speechUIController.openDrawer(),
+      closeTranscriptDrawer: () => this.speechUIController.closeDrawer(),
+      toggleTranscriptDrawer: () => this.speechUIController.toggleDrawer(),
+      filterTranscript: (q: string) => this.speechUIController.filterTranscript(q),
+      copyTranscriptToClipboard: () => this.speechUIController.copyToClipboard(),
+      copySingleUtterance: (id: string) => this.speechUIController.copySingleUtterance(id),
+      downloadTranscriptMarkdown: () => this.speechUIController.downloadMarkdown(),
+      downloadTranscriptTxt: () => this.speechUIController.downloadTxt(),
+      clearTranscriptSession: () => this.speechUIController.clearSession(),
+      syncSpeechSlide: (idx: number) => this.speechUIController.setSlide(idx),
+      pauseLiveSpeechForTts: () => this.speechUIController.pauseListeningForTts(),
+      resumeLiveSpeechAfterTts: () => this.speechUIController.resumeListeningAfterTts()
+    };
   }
 }
 
