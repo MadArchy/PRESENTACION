@@ -25,7 +25,7 @@
   </script>
   <title>Presentación Ejecutiva · Venture Selection Hub · 3i BAIRD LAB</title>
   <meta name="description" content="3i BAIRD LAB Presentación Ejecutiva: Venture Selection Hub para AI EdTech, FoodTech QSR y Web3 & IoT.">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=20260827d">
 </head>
 <body>
 
@@ -113,6 +113,9 @@
         <button class="btn-icon" id="commentsToggleBtn" onclick="toggleCommentsDrawer()" title="Preguntas y comentarios de diapositiva (C)">
           <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8"/><path d="M8 13h5"/></svg></span>
         </button>
+        <button class="btn-icon" id="voiceBriefingBtn" onclick="toggleExecutiveBriefing()" title="Escuchar briefing o slide activa (V)">
+          <span id="voiceBriefingIcon" class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
+        </button>
         <button class="btn-icon" onclick="toggleTheme()" title="Modo claro / oscuro (T)">
           <span id="themeIcon" class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span>
         </button>
@@ -148,23 +151,13 @@
 
       <div class="slide-viewport" id="slideViewport">
 
-        <!-- Floating Discreet Slide Comments / Questions Trigger -->
-        <button class="floating-comments-trigger" id="floatingCommentsBtn" onclick="toggleCommentsDrawer()" title="Preguntas y comentarios de esta diapositiva (C)" style="display: none;">
-          <span class="comments-glow-dot"></span>
-          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8"/><path d="M8 13h5"/></svg>
-          <span class="lang-es">Preguntas &amp; Notas</span>
-          <span class="lang-en">Q&amp;A / Notes</span>
-          <span class="comments-badge-counter" id="floatingCommentsCount">0</span>
-        </button>
-
         <!-- ===================================================================
              EXECUTIVE VENTURE SELECTION HUB (MATCHING USER'S EXACT REFERENCE)
              =================================================================== -->
         <div class="deck-container active" id="deck-hub">
           <section class="slide active executive-hub-slide" id="hub-landing-slide" data-deck="hub" data-slide="1">
-            <div class="executive-hub-layout">
+            <div class="executive-hub-layout hub-v2-layout">
 
-              <!-- Left Column: Typography, Details, and 3 Glowing Venture Pills -->
               <div class="hub-left-content">
                 <div class="hub-brand-lockup">
                   <div class="hub-crest" aria-hidden="true">
@@ -203,66 +196,208 @@
                   </div>
                 </div>
 
-                <h1 class="hub-hero-headline">
-                  <span class="lang-en">Executive<br>Presentation</span>
-                  <span class="lang-es">Presentación<br>Ejecutiva</span>
-                </h1>
+                <div class="hub-exec-header">
+                  <h1 class="hub-hero-headline">
+                    <span class="lang-en">Executive Venture<br>Command Center</span>
+                    <span class="lang-es">Centro de Mando<br>Ventures Ejecutivo</span>
+                  </h1>
+                  <p class="hub-hero-tagline">
+                    <span class="lang-en">Five investable theses. One strategic portfolio. Choose your lane — or listen to the full briefing.</span>
+                    <span class="lang-es">Cinco tesis invertibles. Un portafolio estratégico. Elige tu línea de interés — o escucha el briefing completo.</span>
+                  </p>
+                </div>
 
-                <div class="hub-hairline-divider"></div>
+                <div class="hub-briefing-narrator is-collapsed" id="hubBriefingNarrator" aria-live="polite">
+                  <div class="hub-briefing-controls">
+                    <button type="button" class="hub-briefing-btn hub-briefing-btn-primary" id="hubBriefingPlayBtn" onclick="toggleExecutiveBriefing()" aria-label="Play briefing">
+                      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                      <span class="lang-en">Listen</span><span class="lang-es">Escuchar</span>
+                    </button>
+                    <button type="button" class="hub-briefing-btn" id="hubBriefingPauseBtn" onclick="pauseExecutiveBriefing()" hidden aria-label="Pause">
+                      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                    </button>
+                    <button type="button" class="hub-briefing-btn" id="hubBriefingStopBtn" onclick="stopExecutiveBriefing()" hidden aria-label="Stop">
+                      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="1"/></svg>
+                    </button>
+                    <button type="button" class="hub-briefing-btn hub-briefing-btn-toggle" id="hubBriefingToggleBtn" onclick="toggleBriefingDetails()" aria-expanded="false" aria-controls="hubBriefingDetails" title="Opciones de audio" aria-label="Opciones de audio">
+                      <svg class="ico hub-briefing-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+                    </button>
+                  </div>
+                  <div class="hub-briefing-details" id="hubBriefingDetails" hidden>
+                    <div class="hub-briefing-copy">
+                      <span class="hub-briefing-kicker"><span class="lang-en">AUDIO BRIEFING ENGINE</span><span class="lang-es">MOTOR DE BRIEFING AUDIO</span></span>
+                      <p class="hub-briefing-desc">
+                        <span class="lang-en">Listen to a lane-specific briefing, or press <kbd>V</kbd> on any slide. <kbd>Shift+V</kbd> starts a full audio deck tour.</span>
+                        <span class="lang-es">Escucha un briefing por línea de interés, o pulsa <kbd>V</kbd> en cualquier slide. <kbd>Shift+V</kbd> inicia un tour de audio completo.</span>
+                      </p>
+                    </div>
+                    <div class="hub-briefing-options">
+                      <label class="hub-briefing-option">
+                        <input type="checkbox" id="briefingAutoAdvance" checked onchange="setBriefingOption('autoAdvance', this.checked)">
+                        <span class="lang-en">Auto-advance slides in deck tour</span>
+                        <span class="lang-es">Auto-avance en tour de deck</span>
+                      </label>
+                      <label class="hub-briefing-option">
+                        <input type="checkbox" id="briefingSyncTimer" checked onchange="setBriefingOption('syncPitchTimer', this.checked)">
+                        <span class="lang-en">Sync pitch timer (P) with narration</span>
+                        <span class="lang-es">Sincronizar temporizador (P) con narración</span>
+                      </label>
+                      <label class="hub-briefing-option hub-briefing-voice-row">
+                        <span class="lang-en">English voice</span><span class="lang-es">Voz en inglés</span>
+                        <select id="briefingVoiceEn" class="hub-briefing-voice-select" onchange="setBriefingVoice('en', this.value)" aria-label="English narrator voice">
+                          <option value="">Auto (recommended)</option>
+                        </select>
+                      </label>
+                      <label class="hub-briefing-option hub-briefing-voice-row">
+                        <span class="lang-en">Spanish voice</span><span class="lang-es">Voz en español</span>
+                        <select id="briefingVoiceEs" class="hub-briefing-voice-select" onchange="setBriefingVoice('es', this.value)" aria-label="Spanish narrator voice">
+                          <option value="">Auto (recomendada)</option>
+                        </select>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="hub-briefing-progress" id="hubBriefingProgress" hidden>
+                    <div class="hub-briefing-progress-fill" id="hubBriefingProgressFill"></div>
+                  </div>
+                  <p class="hub-briefing-status" id="hubBriefingStatus"></p>
+                </div>
 
-                <p class="hub-hero-description">
-                  <span class="lang-en">Strategic evaluation of investment opportunities in AI EdTech, FoodTech QSR, Web3 &amp; IoT and local AI hardware</span>
-                  <span class="lang-es">Evaluación estratégica de oportunidades en AI EdTech, FoodTech QSR, Web3 &amp; IoT e IA local</span>
-                </p>
+                <div class="hub-interest-section">
+                  <div class="hub-lane-header">
+                    <h2 class="hub-lane-title">
+                      <span class="lang-en">Select Your Interest Lane</span>
+                      <span class="lang-es">Selecciona tu Línea de Interés</span>
+                    </h2>
+                    <div class="hub-lane-tabs" role="tablist" aria-label="Interest lanes">
+                      <button type="button" class="hub-lane-tab is-active" data-lane="all" onclick="filterHubInterestLane('all')" role="tab" aria-selected="true">
+                        <span class="lang-en">All</span><span class="lang-es">Todas</span>
+                      </button>
+                      <button type="button" class="hub-lane-tab" data-lane="growth" onclick="filterHubInterestLane('growth')" role="tab">
+                        <span class="lang-en">Growth &amp; EdTech</span><span class="lang-es">Crecimiento &amp; EdTech</span>
+                      </button>
+                      <button type="button" class="hub-lane-tab" data-lane="operations" onclick="filterHubInterestLane('operations')" role="tab">
+                        <span class="lang-en">Operations &amp; QSR</span><span class="lang-es">Operaciones &amp; QSR</span>
+                      </button>
+                      <button type="button" class="hub-lane-tab" data-lane="deeptech" onclick="filterHubInterestLane('deeptech')" role="tab">
+                        <span class="lang-en">Deep Tech &amp; Trust</span><span class="lang-es">Deep Tech &amp; Confianza</span>
+                      </button>
+                    </div>
+                  </div>
 
-                <!-- 3 Glowing Venture Pills Exactly as in Image -->
-                <div class="hub-venture-pills-row">
-                  <!-- Pill 1: AI EDTECH -->
-                  <button type="button" class="venture-pill-btn pill-edtech" data-video-deck="tutor" onclick="playVentureVideo('tutor')" title="Reproducir video AI EdTech">
-                    <span class="pill-btn-icon cyan"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M12 5v13"/><path d="M7 10h10"/><path d="M7 14h10"/></svg></span>
-                    <span class="pill-btn-label">AI EDTECH</span>
-                  </button>
+                  <div class="hub-venture-grid" id="hubVentureGrid">
+                    <article class="hub-venture-card" data-lane="growth" data-interest="edtech">
+                      <header class="hub-card-top">
+                        <span class="hub-card-lane pill-edtech"><span class="lang-en">Growth · EdTech</span><span class="lang-es">Crecimiento · EdTech</span></span>
+                        <span class="hub-card-meta">15 <span class="lang-en">slides</span><span class="lang-es">slides</span></span>
+                      </header>
+                      <h3 class="hub-card-title">LUMI</h3>
+                      <p class="hub-card-hook">
+                        <span class="lang-en">Multi-agent AI tutoring that scales elite 1:1 instruction — investor-grade EdTech with defensible learning loops.</span>
+                        <span class="lang-es">Tutoría multi-agente con IA que escala instrucción 1:1 de élite — EdTech invertible con bucles de aprendizaje defendibles.</span>
+                      </p>
+                      <div class="hub-card-signals">
+                        <span class="hub-signal">AI EdTech</span>
+                        <span class="hub-signal">B2C + B2B</span>
+                      </div>
+                      <button type="button" class="hub-card-cta pill-edtech" data-video-deck="tutor" onclick="playVentureVideo('tutor')">
+                        <span class="lang-en">Watch pitch reel</span><span class="lang-es">Ver reel de pitch</span>
+                        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+                      </button>
+                    </article>
 
-                  <!-- Pill 2: FOODTECH QSR -->
-                  <button type="button" class="venture-pill-btn pill-foodtech" data-deck="fastfood" onclick="launchDeck('fastfood')">
-                    <span class="pill-btn-icon emerald"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11h.01"/><path d="M12 15h.01"/><path d="M16 16h.01"/><path d="M2 19h20"/><path d="M20 15a8 8 0 0 0-16 0"/><path d="M12 4v3"/></svg></span>
-                    <span class="pill-btn-label">FOODTECH QSR</span>
-                  </button>
+                    <article class="hub-venture-card" data-lane="operations" data-interest="qsr">
+                      <header class="hub-card-top">
+                        <span class="hub-card-lane pill-foodtech"><span class="lang-en">Operations · QSR</span><span class="lang-es">Operaciones · QSR</span></span>
+                        <span class="hub-card-meta">15 <span class="lang-en">slides</span><span class="lang-es">slides</span></span>
+                      </header>
+                      <h3 class="hub-card-title">FOODTECH QSR</h3>
+                      <p class="hub-card-hook">
+                        <span class="lang-en">Smart franchise OS: kitchen telemetry, margin control, and unit-economics visibility for multi-store operators.</span>
+                        <span class="lang-es">OS de franquicia inteligente: telemetría de cocina, control de margen y visibilidad de unit economics para operadores multi-local.</span>
+                      </p>
+                      <div class="hub-card-signals">
+                        <span class="hub-signal">FoodTech</span>
+                        <span class="hub-signal">Franchise</span>
+                      </div>
+                      <button type="button" class="hub-card-cta pill-foodtech" data-deck="fastfood" onclick="launchDeck('fastfood')">
+                        <span class="lang-en">Open deck</span><span class="lang-es">Abrir deck</span>
+                        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+                      </button>
+                    </article>
 
-                  <!-- Pill 3: WEB3 & IOT -->
-                  <button type="button" class="venture-pill-btn pill-web3" data-deck="arcana" onclick="launchDeck('arcana')">
-                    <span class="pill-btn-icon purple"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 16-9 5-9-5V8l9-5 9 5v8Z"/><path d="m3.27 6.96 8.73 4.88 8.73-4.88"/><path d="M12 22.08V12"/></svg></span>
-                    <span class="pill-btn-label">WEB3 &amp; IOT</span>
-                  </button>
-                  <button type="button" class="venture-pill-btn pill-restaurante" data-deck="restaurante" onclick="launchDeck('restaurante')">
-                    <span class="pill-btn-icon amber"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg></span>
-                    <span class="pill-btn-label">ARCANA RESTAURANTES</span>
-                  </button>
-                  <button type="button" class="venture-pill-btn pill-ia" data-deck="comparativo" onclick="launchDeck('comparativo')">
-                    <span class="pill-btn-icon gold"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6" rx="1"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></svg></span>
-                    <span class="pill-btn-label">INFRAESTRUCTURA IA</span>
-                  </button>
+                    <article class="hub-venture-card" data-lane="deeptech" data-interest="web3">
+                      <header class="hub-card-top">
+                        <span class="hub-card-lane pill-web3"><span class="lang-en">Deep Tech · Trust</span><span class="lang-es">Deep Tech · Confianza</span></span>
+                        <span class="hub-card-meta">15 <span class="lang-en">slides</span><span class="lang-es">slides</span></span>
+                      </header>
+                      <h3 class="hub-card-title">WEB3 &amp; IoT</h3>
+                      <p class="hub-card-hook">
+                        <span class="lang-en">Arcana: trust-by-construction supply chain — signed sensor trails and notarized closes for auditable operations.</span>
+                        <span class="lang-es">Arcana: cadena de suministro con confianza por diseño — rastros IoT firmados y cierres notarizados para operaciones auditables.</span>
+                      </p>
+                      <div class="hub-card-signals">
+                        <span class="hub-signal">Web3</span>
+                        <span class="hub-signal">IoT</span>
+                      </div>
+                      <button type="button" class="hub-card-cta pill-web3" data-deck="arcana" onclick="launchDeck('arcana')">
+                        <span class="lang-en">Open deck</span><span class="lang-es">Abrir deck</span>
+                        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+                      </button>
+                    </article>
+
+                    <article class="hub-venture-card" data-lane="operations" data-interest="restaurant">
+                      <header class="hub-card-top">
+                        <span class="hub-card-lane pill-restaurante"><span class="lang-en">Operations · Restaurants</span><span class="lang-es">Operaciones · Restaurantes</span></span>
+                        <span class="hub-card-meta">10 <span class="lang-en">slides</span><span class="lang-es">slides</span></span>
+                      </header>
+                      <h3 class="hub-card-title">ARCANA RESTAURANTES</h3>
+                      <p class="hub-card-hook">
+                        <span class="lang-en">Owner-first ops brief: prove leakage, recover EBITDA, and close the gap between bought, cooked, and sold.</span>
+                        <span class="lang-es">Briefing para dueños: demostrar fuga, recuperar EBITDA y cerrar la brecha entre lo comprado, cocinado y vendido.</span>
+                      </p>
+                      <div class="hub-card-signals">
+                        <span class="hub-signal">B2B</span>
+                        <span class="hub-signal">HACCP</span>
+                      </div>
+                      <button type="button" class="hub-card-cta pill-restaurante" data-deck="restaurante" onclick="launchDeck('restaurante')">
+                        <span class="lang-en">Open deck</span><span class="lang-es">Abrir deck</span>
+                        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+                      </button>
+                    </article>
+
+                    <article class="hub-venture-card" data-lane="deeptech" data-interest="infra">
+                      <header class="hub-card-top">
+                        <span class="hub-card-lane pill-ia"><span class="lang-en">Capital · AI Infra</span><span class="lang-es">Capital · Infra IA</span></span>
+                        <span class="hub-card-meta">14 <span class="lang-en">slides</span><span class="lang-es">slides</span></span>
+                      </header>
+                      <h3 class="hub-card-title"><span class="lang-en">AI INFRASTRUCTURE</span><span class="lang-es">INFRAESTRUCTURA IA</span></h3>
+                      <p class="hub-card-hook">
+                        <span class="lang-en">Stop renting intelligence. Own capacity from $5k to $150k — faster agents, local trust, and hours reclaimed.</span>
+                        <span class="lang-es">Deja de alquilar inteligencia. Posee capacidad de $5k a $150k — agentes más rápidos, confianza local y horas recuperadas.</span>
+                      </p>
+                      <div class="hub-card-signals">
+                        <span class="hub-signal">CapEx</span>
+                        <span class="hub-signal">CTO/CFO</span>
+                      </div>
+                      <button type="button" class="hub-card-cta pill-ia" data-deck="comparativo" onclick="launchDeck('comparativo')">
+                        <span class="lang-en">Open deck</span><span class="lang-es">Abrir deck</span>
+                        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+                      </button>
+                    </article>
+                  </div>
                 </div>
               </div>
 
-              <!-- Right Column: Glowing Isometric Holographic Diamond Prism -->
-              <div class="hub-right-visual">
+              <div class="hub-right-visual hub-v2-visual">
                 <div class="hologram-prism-wrapper">
-                  <!-- Vertical Light Beam -->
                   <div class="vertical-light-beam"></div>
-
-                  <!-- Stacked Isometric Prism Layers -->
                   <div class="prism-diamond-layer layer-outer"></div>
                   <div class="prism-diamond-layer layer-mid"></div>
                   <div class="prism-diamond-layer layer-core"></div>
                   <div class="prism-glowing-center"></div>
-
-                  <!-- Glowing Holographic Waves -->
                   <svg class="hologram-cyber-waves" viewBox="0 0 700 500" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M0 420 C 150 410, 300 440, 450 360 C 550 300, 600 240, 700 180" stroke="url(#cyberGrad1)" stroke-width="2.5" stroke-opacity="0.8" />
                     <path d="M0 440 C 180 430, 320 460, 480 370 C 580 310, 620 250, 700 200" stroke="url(#cyberGrad2)" stroke-width="1.8" stroke-opacity="0.6" />
-                    <path d="M0 460 C 200 450, 340 475, 510 380 C 600 320, 640 260, 700 220" stroke="url(#cyberGrad1)" stroke-width="1.2" stroke-opacity="0.4" />
-                    <path d="M0 480 C 220 465, 360 485, 540 390 C 620 330, 660 270, 700 240" stroke="url(#cyberGrad2)" stroke-width="0.8" stroke-opacity="0.3" />
                     <defs>
                       <linearGradient id="cyberGrad1" x1="0%" y1="100%" x2="100%" y2="0%">
                         <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.2"/>
@@ -2832,586 +2967,531 @@
                 <!-- ===================================================================
              ESTRATEGIA EJECUTIVA DE INFRAESTRUCTURA PARA IA (10 SLIDES)
              =================================================================== -->
-        <div class="deck-container" id="deck-comparativo">
+                <div class="deck-container" id="deck-comparativo">
 
-        <!-- SLIDE 1: COVER HERO -->
+        <!-- SLIDE 1: COVER -->
         <section class="slide active slide-hero-lumi" id="comparativo-slide-1" data-slide="1" data-deck="comparativo">
           <div class="hero-cover">
-            <div class="hero-brand-top">| 3i BAIRD LAB · ESTRATEGIA DE INFRAESTRUCTURA IA |</div>
+            <div class="hero-brand-top">| 3i BAIRD LAB · CAPITAL · AI INFRASTRUCTURE |</div>
             <div class="hero-glow-badge">
-              <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6" rx="1"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></svg></span>
-              <span class="lang-en">Executive Strategy · AI Infrastructure, Continuity &amp; Growth · 10 Slides</span>
-              <span class="lang-es">Estrategia Ejecutiva · Infraestructura IA, Continuidad y Crecimiento · 10 Slides</span>
+              <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6" rx="1"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></svg></span>
+              <span class="lang-en">Investor Brief · Own Capacity · 14 Slides</span>
+              <span class="lang-es">Briefing Inversor · Capacidad Propia · 14 Slides</span>
             </div>
             <h1 class="hero-title">
-              <span class="lang-en">Enterprise AI Infrastructure Strategy</span>
-              <span class="lang-es">Estrategia Ejecutiva de Infraestructura IA</span>
+              <span class="lang-en">Stop Renting Intelligence.<br>Start Owning Capacity.</span>
+              <span class="lang-es">Deja de alquilar inteligencia.<br>Empieza a poseer capacidad.</span>
             </h1>
             <p class="hero-subtitle">
-              <span class="lang-en">Capacity, talent productivity, 24/7 operational continuity, and progressive business-driven investment.</span>
-              <span class="lang-es">Capacidad, productividad del talento, continuidad 24/7 y modelo de inversión escalonada por retorno de negocio.</span>
+              <span class="lang-en">A simple thesis for investors: local AI hardware is not an IT expense — it is the asset that makes our ventures faster, safer, and ours.</span>
+              <span class="lang-es">Tesis simple para inversores: el hardware de IA local no es un gasto de IT — es el activo que hace nuestras ventures más rápidas, más seguras y nuestras.</span>
             </p>
             <div class="hero-flow-ribbon">
-              <div class="flow-step-pill">
-                <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
-                <span class="lang-en">1. Talent &amp; Tools</span>
-                <span class="lang-es">1. Talento Potenciado</span>
-              </div>
+              <div class="flow-step-pill"><span class="lang-en">1. What we do today</span><span class="lang-es">1. Lo que hacemos hoy</span></div>
               <div class="flow-arrow"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
-              <div class="flow-step-pill">
-                <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6" rx="1"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></svg></span>
-                <span class="lang-en">2. Targeted Compute</span>
-                <span class="lang-es">2. Cómputo Justificado</span>
-              </div>
+              <div class="flow-step-pill"><span class="lang-en">2. Where we break</span><span class="lang-es">2. Dónde nos rompemos</span></div>
               <div class="flow-arrow"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
-              <div class="flow-step-pill">
-                <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>
-                <span class="lang-en">3. 24/7 Continuity</span>
-                <span class="lang-es">3. Continuidad 24/7</span>
-              </div>
+              <div class="flow-step-pill"><span class="lang-en">3. What $5k–$150k unlocks</span><span class="lang-es">3. Qué abre $5k–$150k</span></div>
               <div class="flow-arrow"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
-              <div class="flow-step-pill">
-                <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
-                <span class="lang-en">4. Phased Scale</span>
-                <span class="lang-es">4. Escalamiento Rentable</span>
-              </div>
+              <div class="flow-step-pill"><span class="lang-en">4. Rest + scale</span><span class="lang-es">4. Descanso + escala</span></div>
             </div>
             <div class="hero-bottom-proof">
-              <span class="proof-tag"><span class="lang-en">CORE EXECUTIVE PRINCIPLE</span><span class="lang-es">PRINCIPIO EJECUTIVO CENTRAL</span></span>
+              <span class="proof-tag"><span class="lang-en">BOARDROOM LINE</span><span class="lang-es">FRASE DE DIRECTORIO</span></span>
               <span class="proof-text">
-                <span class="lang-en">We do not buy the most powerful computer just because it exists; we deploy the exact infrastructure required for each business phase.</span>
-                <span class="lang-es">No buscamos comprar el computador más potente; buscamos disponer de la infraestructura adecuada para cada etapa del negocio.</span>
+                <span class="lang-en">Every hour we rent someone else's brain, we pay twice: once in cash, again in dependency.</span>
+                <span class="lang-es">Cada hora que alquilamos el cerebro de otro, pagamos dos veces: en efectivo y en dependencia.</span>
               </span>
             </div>
           </div>
         </section>
-        
 
-        <!-- SLIDE 2: WHAT WE CAN DO TODAY -->
+        <!-- SLIDE 2: THESIS -->
         <section class="slide" id="comparativo-slide-2" data-slide="2" data-deck="comparativo">
           <div class="slide-top-meta">
-            <span class="slide-badge-category"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> <span class="lang-en">CURRENT ASSETS · IMMEDIATE TRACTION</span><span class="lang-es">ACTIVOS ACTUALES · TRACCIÓN INMEDIATA</span></span>
-            <span class="slide-num-tag">02 / 10</span>
+            <span class="slide-badge-category"><span class="lang-en">INVESTMENT THESIS</span><span class="lang-es">TESIS DE INVERSIÓN</span></span>
+            <span class="slide-num-tag">02 / 14</span>
           </div>
           <div class="slide-header">
-            <h2><span class="lang-en">What Can We Build Today with Existing Hardware?</span><span class="lang-es">¿Qué podemos hacer hoy con la infraestructura actual?</span></h2>
-            <p class="slide-lead"><span class="lang-en">Our current hardware is a functional development and commercial validation platform that enables rapid productization at zero immediate capex.</span><span class="lang-es">La infraestructura actual es una plataforma de desarrollo y validación comercial inmediata que no requiere desembolso inicial.</span></p>
+            <h2><span class="lang-en">One idea. Four outcomes.</span><span class="lang-es">Una idea. Cuatro resultados.</span></h2>
+            <p class="slide-lead"><span class="lang-en">If we invest in our own AI machines and tools, we move faster, keep data closer, run more agents, and reclaim human hours — without surrendering the stack to a monthly invoice.</span><span class="lang-es">Si invertimos en nuestras propias máquinas y herramientas de IA, vamos más rápido, mantenemos los datos cerca, corremos más agentes y recuperamos horas humanas — sin entregar el stack a una factura mensual.</span></p>
+          </div>
+          <div class="slide-body">
+            <div class="split-layout">
+              <div class="cards-grid-2x2">
+                <div class="metric-card cyan">
+                  <div class="metric-val"><span class="lang-en">Faster</span><span class="lang-es">Más rápido</span></div>
+                  <div class="metric-desc"><span class="lang-en">Less waiting on rented models. More shipping.</span><span class="lang-es">Menos espera a modelos alquilados. Más entrega.</span></div>
+                </div>
+                <div class="metric-card emerald">
+                  <div class="metric-val"><span class="lang-en">Safer</span><span class="lang-es">Más seguro</span></div>
+                  <div class="metric-desc"><span class="lang-en">Sensitive work stays local by design.</span><span class="lang-es">El trabajo sensible permanece local por diseño.</span></div>
+                </div>
+                <div class="metric-card gold">
+                  <div class="metric-val"><span class="lang-en">Ours</span><span class="lang-es">Nuestro</span></div>
+                  <div class="metric-desc"><span class="lang-en">Capacity becomes a balance-sheet asset, not a subscription.</span><span class="lang-es">La capacidad se vuelve activo, no suscripción.</span></div>
+                </div>
+                <div class="metric-card purple">
+                  <div class="metric-val"><span class="lang-en">Human</span><span class="lang-es">Humano</span></div>
+                  <div class="metric-desc"><span class="lang-en">Agents carry load so the team can rest without missing goals.</span><span class="lang-es">Los agentes cargan el peso para que el equipo descanse sin fallar metas.</span></div>
+                </div>
+              </div>
+              <div class="diagram-preview-box" onclick="openLightbox('media/ia/ia-own-capacity.jpg')">
+                <img src="media/ia/ia-own-capacity.jpg" alt="Capacidad propia de IA">
+                <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-en">Zoom Asset</span><span class="lang-es">Ampliar Activo</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="slide-footer">
+            <div class="punchline-badge">
+              <span class="lang-en">Depth: Speed without ownership is rented advantage. Ownership compounds.</span>
+              <span class="lang-es">Profundidad: La velocidad sin propiedad es ventaja alquilada. La propiedad compone.</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- SLIDE 3: TODAY -->
+        <section class="slide" id="comparativo-slide-3" data-slide="3" data-deck="comparativo">
+          <div class="slide-top-meta">
+            <span class="slide-badge-category"><span class="lang-en">CURRENT CAPACITY · HONEST BASELINE</span><span class="lang-es">CAPACIDAD ACTUAL · LÍNEA HONESTA</span></span>
+            <span class="slide-num-tag">03 / 14</span>
+          </div>
+          <div class="slide-header">
+            <h2><span class="lang-en">What we can already ship today</span><span class="lang-es">Lo que ya podemos entregar hoy</span></h2>
+            <p class="slide-lead"><span class="lang-en">We are not starting from zero. We are starting from a working floor — useful, real, and limited.</span><span class="lang-es">No partimos de cero. Partimos de un piso operativo — útil, real y limitado.</span></p>
           </div>
           <div class="slide-body">
             <div class="split-layout">
               <div class="cards-grid-2x2">
                 <div class="feature-card">
-                  <div class="card-icon-wrapper cyan"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M12 5v13"/><path d="M7 10h10"/><path d="M7 14h10"/></svg></div>
-                  <div class="card-text-group">
-                    <div class="card-title"><span class="lang-en">App Development &amp; Prototyping</span><span class="lang-es">Desarrollo de Apps &amp; Prototipos</span></div>
-                    <div class="card-desc"><span class="lang-en">Full stack creation of client MVPs, internal tools, automations, and functional pilot demonstrators.</span><span class="lang-es">Construcción de MVPs, plataformas web, flujos de automatización y prototipos para clientes.</span></div>
-                  </div>
+                  <div class="card-title"><span class="lang-en">Simple software</span><span class="lang-es">Programas simples</span></div>
+                  <div class="card-desc"><span class="lang-en">Functional apps and internal tools that move work forward now.</span><span class="lang-es">Apps funcionales y herramientas internas que ya mueven trabajo.</span></div>
                 </div>
                 <div class="feature-card">
-                  <div class="card-icon-wrapper emerald"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg></div>
-                  <div class="card-text-group">
-                    <div class="card-title"><span class="lang-en">Document AI &amp; Enterprise Assistants</span><span class="lang-es">Asistentes &amp; Procesamiento Documental</span></div>
-                    <div class="card-desc"><span class="lang-en">RAG pipelines, enterprise document parsing, intelligent indexing, and conversational agents.</span><span class="lang-es">Bases de conocimiento, indexación de PDFs, extracción estructurada y agentes conversacionales.</span></div>
-                  </div>
+                  <div class="card-title"><span class="lang-en">Websites &amp; small paid platforms</span><span class="lang-es">Webs y pequeñas plataformas de pago</span></div>
+                  <div class="card-desc"><span class="lang-en">Commercial surfaces we can design, launch, and operate.</span><span class="lang-es">Superficies comerciales que podemos diseñar, lanzar y operar.</span></div>
                 </div>
                 <div class="feature-card">
-                  <div class="card-icon-wrapper purple"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg></div>
-                  <div class="card-text-group">
-                    <div class="card-title"><span class="lang-en">Cloud AI &amp; Hybrid Orchestration</span><span class="lang-es">Integración Híbrida con IA en la Nube</span></div>
-                    <div class="card-desc"><span class="lang-en">Multi-model connectivity with Claude, OpenAI, and Gemini for heavy reasoning combined with local lightweight logic.</span><span class="lang-es">Conexión con APIs de frontera en la nube combinada con micro-agentes locales.</span></div>
-                  </div>
+                  <div class="card-title"><span class="lang-en">Agents (limited)</span><span class="lang-es">Agentes (limitados)</span></div>
+                  <div class="card-desc"><span class="lang-en">A few agents can run — including some 24/7 — until the machine saturates.</span><span class="lang-es">Algunos agentes pueden correr — incluso 24/7 — hasta que la máquina se satura.</span></div>
                 </div>
                 <div class="feature-card">
-                  <div class="card-icon-wrapper gold"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
-                  <div class="card-text-group">
-                    <div class="card-title"><span class="lang-en">Commercial Validation &amp; Demos</span><span class="lang-es">Validación Comercial &amp; Demos en Vivo</span></div>
-                    <div class="card-desc"><span class="lang-en">Presenting working pilots to clients, validating business willingness to pay before committing capital.</span><span class="lang-es">Demostraciones en vivo para validar interés comercial y tracción antes de comprar nuevo hardware.</span></div>
-                  </div>
+                  <div class="card-title"><span class="lang-en">Very small AIs</span><span class="lang-es">IAs muy pequeñas</span></div>
+                  <div class="card-desc"><span class="lang-en">Light local models for assistive work — not serious custom training at scale.</span><span class="lang-es">Modelos locales ligeros para asistencia — no entrenamiento serio a escala.</span></div>
                 </div>
               </div>
               <div class="diagram-preview-box" onclick="openLightbox('media/ia/ia-workflow.jpg')">
                 <img src="media/ia/ia-workflow.jpg" alt="Flujo de trabajo actual">
-                <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-en">Zoom Workflow</span><span class="lang-es">Ampliar Flujo</span></div>
+                <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-en">Zoom Today</span><span class="lang-es">Ampliar Hoy</span></div>
               </div>
             </div>
           </div>
           <div class="slide-footer">
             <div class="punchline-badge">
-              <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg></span>
-              <span class="lang-en">Takeaway: We can start developing, testing, and selling solutions using the exact infrastructure we already own.</span>
-              <span class="lang-es">Mensaje clave: Podemos comenzar a desarrollar, probar y comercializar soluciones utilizando la infraestructura que ya tenemos.</span>
+              <span class="lang-en">Honest line: We can build. We cannot yet multiply without breaking.</span>
+              <span class="lang-es">Línea honesta: Podemos construir. Todavía no podemos multiplicar sin romperse.</span>
             </div>
           </div>
         </section>
-        
 
-        <!-- SLIDE 3: OPERATIONAL LIMITS & BOTTLENECKS -->
-        <section class="slide" id="comparativo-slide-3" data-slide="3" data-deck="comparativo">
+        <!-- SLIDE 4: TRAINING WALL -->
+        <section class="slide" id="comparativo-slide-4" data-slide="4" data-deck="comparativo">
           <div class="slide-top-meta">
-            <span class="slide-badge-category"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg> <span class="lang-en">GROWTH BOUNDARIES · RISK AUDIT</span><span class="lang-es">LÍMITES DE CRECIMIENTO · AUDITORÍA DE RIESGO</span></span>
-            <span class="slide-num-tag">03 / 10</span>
+            <span class="slide-badge-category"><span class="lang-en">THE WALL · TRAINING COST</span><span class="lang-es">EL MURO · COSTO DE ENTRENAMIENTO</span></span>
+            <span class="slide-num-tag">04 / 14</span>
           </div>
           <div class="slide-header">
-            <h2><span class="lang-en">Where Real Operational Limits Emerge</span><span class="lang-es">¿Dónde están nuestros límites operativos reales?</span></h2>
-            <p class="slide-lead"><span class="lang-en">We can develop any software solution, but advanced execution bottlenecks appear as client concurrency, latency, and security demands scale.</span><span class="lang-es">Podemos programar cualquier solución, pero los cuellos de botella surgen al escalar volumen, velocidad, concurrencia y privacidad.</span></p>
+            <h2><span class="lang-en">Training custom models costs time — and rented brains</span><span class="lang-es">Entrenar modelos a medida cuesta tiempo — y cerebros alquilados</span></h2>
+            <p class="slide-lead"><span class="lang-en">Today, shaping an AI to our needs often means paying another AI to help train it. That loop is slow, expensive, and never truly ours.</span><span class="lang-es">Hoy, moldear una IA a nuestra medida suele significar pagar otra IA para ayudarnos a entrenarla. Ese ciclo es lento, caro y nunca del todo nuestro.</span></p>
           </div>
           <div class="slide-body">
             <div class="split-layout">
-              <div style="display: flex; flex-direction: column; gap: 8px;">
-                <div class="timeline-v-flow">
-                  <div class="timeline-step-card">
-                    <div class="step-num-bubble gold">01</div>
-                    <div class="step-content">
-                      <div class="step-title"><span class="lang-en">Data Volume &amp; Local Model Scale</span><span class="lang-es">01. Volumen de Datos &amp; Modelos Locales</span></div>
-                      <div class="step-desc"><span class="lang-en">Running 32B–70B parameter models locally requires dedicated VRAM buffers beyond consumer workstations.</span><span class="lang-es">Ejecutar modelos de 32B a 70B parámetros localmente satura la VRAM de equipos convencionales.</span></div>
-                    </div>
+              <div class="timeline-v-flow">
+                <div class="timeline-step-card">
+                  <div class="step-num-bubble gold">01</div>
+                  <div class="step-content">
+                    <div class="step-title"><span class="lang-en">Time burns</span><span class="lang-es">El tiempo se quema</span></div>
+                    <div class="step-desc"><span class="lang-en">Training and iterating custom models consumes days the team already works at 12–15 hours.</span><span class="lang-es">Entrenar e iterar modelos a medida consume días de un equipo que ya trabaja 12–15 horas.</span></div>
                   </div>
-                  <div class="timeline-step-card">
-                    <div class="step-num-bubble gold">02</div>
-                    <div class="step-content">
-                      <div class="step-title"><span class="lang-en">Multi-User &amp; Multi-Project Concurrency</span><span class="lang-es">02. Concurrencia Multi-Usuario &amp; Multi-Proyecto</span></div>
-                      <div class="step-desc"><span class="lang-en">Single machines struggle when simultaneously hosting databases, dev pipelines, and inference servers.</span><span class="lang-es">Los equipos se saturan al correr simultáneamente bases de datos, compilación y servidores de inferencia.</span></div>
-                    </div>
+                </div>
+                <div class="timeline-step-card">
+                  <div class="step-num-bubble amber">02</div>
+                  <div class="step-content">
+                    <div class="step-title"><span class="lang-en">Cash burns</span><span class="lang-es">El efectivo se quema</span></div>
+                    <div class="step-desc"><span class="lang-en">Paid frontier models become a toll booth on every serious training cycle — about US$5,000 on average.</span><span class="lang-es">Los modelos de frontera de pago se convierten en peaje en cada ciclo serio de entrenamiento — un promedio de unos US$5.000.</span></div>
                   </div>
-                  <div class="timeline-step-card">
-                    <div class="step-num-bubble amber">03</div>
-                    <div class="step-content">
-                      <div class="step-title"><span class="lang-en">Strict On-Premise Privacy Compliance</span><span class="lang-es">03. Privacidad On-Premise y Datos Sensibles</span></div>
-                      <div class="step-desc"><span class="lang-en">Enterprise clients prohibit cloud API uploads; processing must occur 100% inside our physical control.</span><span class="lang-es">Clientes corporativos exigen que sus datos financieros/médicos jamás salgan a servidores de terceros.</span></div>
-                    </div>
-                  </div>
-                  <div class="timeline-step-card">
-                    <div class="step-num-bubble red">04</div>
-                    <div class="step-content">
-                      <div class="step-title"><span class="lang-en">24/7 Availability &amp; Zero Downtime</span><span class="lang-es">04. Disponibilidad Permanente 24/7 sin Interrupciones</span></div>
-                      <div class="step-desc"><span class="lang-en">Personal laptops cannot act as persistent servers without risking thermal throttling and power cuts.</span><span class="lang-es">Equipos personales no garantizan uptime continuo ante fallas eléctricas o de conexión residencial.</span></div>
-                    </div>
+                </div>
+                <div class="timeline-step-card">
+                  <div class="step-num-bubble red">03</div>
+                  <div class="step-content">
+                    <div class="step-title"><span class="lang-en">Dependency grows</span><span class="lang-es">La dependencia crece</span></div>
+                    <div class="step-desc"><span class="lang-en">The more we rely on rented intelligence, the harder it is to own the advantage.</span><span class="lang-es">Cuanto más dependemos de inteligencia alquilada, más difícil es poseer la ventaja.</span></div>
                   </div>
                 </div>
               </div>
               <div class="diagram-preview-box" onclick="openLightbox('media/ia/ia-memory.jpg')">
-                <img src="media/ia/ia-memory.jpg" alt="Cuello de botella de memoria">
-                <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-en">Zoom Memory Matrix</span><span class="lang-es">Ampliar Matriz VRAM</span></div>
+                <img src="media/ia/ia-memory.jpg" alt="Límite de capacidad de entrenamiento">
+                <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-en">Zoom Limit</span><span class="lang-es">Ampliar Límite</span></div>
               </div>
             </div>
           </div>
           <div class="slide-footer">
             <div class="punchline-badge">
-              <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span>
-              <span class="lang-en">Diagnostic: Existing machines do not become obsolete; they get complemented as business demands grow.</span>
-              <span class="lang-es">Diagnóstico: Los equipos actuales no dejan de servir; se complementan cuando el negocio exige mayor escala.</span>
+              <span class="lang-en">Investor truth: Recurring AI bills buy access. Hardware buys an asset.</span>
+              <span class="lang-es">Verdad de inversor: Las facturas de IA compran acceso. El hardware compra un activo.</span>
             </div>
           </div>
         </section>
-        
 
-        <!-- SLIDE 4: BUSINESS GAINS FROM INFRASTRUCTURE SCALE -->
-        <section class="slide" id="comparativo-slide-4" data-slide="4" data-deck="comparativo">
-          <div class="slide-top-meta">
-            <span class="slide-badge-category"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg> <span class="lang-en">EXECUTIVE VALUE · STRATEGIC ROI</span><span class="lang-es">VALOR EJECUTIVO · RETORNO ESTRATÉGICO</span></span>
-            <span class="slide-num-tag">04 / 10</span>
-          </div>
-          <div class="slide-header">
-            <h2><span class="lang-en">What Do We Gain by Upgrading Hardware?</span><span class="lang-es">¿Qué ganamos al mejorar y escalar los equipos?</span></h2>
-            <p class="slide-lead"><span class="lang-en">We are not purchasing faster computers; we are unlocking institutional capacity to serve larger contracts, eliminate recurring cloud bills, and mitigate risk.</span><span class="lang-es">No compramos computadores más rápidos; adquirimos capacidad adicional para producir, captar clientes de alto valor y eliminar costos recurrentes.</span></p>
-          </div>
-          <div class="slide-body">
-            <div class="split-layout">
-              <div class="cards-grid-2x2">
-                <div class="metric-card gold">
-                  <div class="metric-val">+300%</div>
-                  <div class="metric-label"><span class="lang-en">Concurrent Processing Capacity</span><span class="lang-es">Capacidad de Cómputo Simultáneo</span></div>
-                  <div class="metric-desc"><span class="lang-en">Execute heavy inference, fine-tuning, embeddings, and database services in parallel without lag.</span><span class="lang-es">Ejecución simultánea de inferencia pesada, fine-tuning y bases vectoriales sin degradación.</span></div>
-                </div>
-                <div class="metric-card emerald">
-                  <div class="metric-val">100%</div>
-                  <div class="metric-label"><span class="lang-en">Confidential Data Retention</span><span class="lang-es">Retención Total de Datos Confidenciales</span></div>
-                  <div class="metric-desc"><span class="lang-en">Zero third-party data leakage. Proprietary enterprise knowledge stays strictly inside company custody.</span><span class="lang-es">Cero fuga de información sensible. Los datos propietarios del cliente permanecen bajo custodia local.</span></div>
-                </div>
-                <div class="metric-card cyan">
-                  <div class="metric-val">-65%</div>
-                  <div class="metric-label"><span class="lang-en">Recurring Cloud API Cost Reduction</span><span class="lang-es">Reducción de Costos Recurrentes en Nube</span></div>
-                  <div class="metric-desc"><span class="lang-en">Replace unpredictable monthly token billing with amortized local hardware at fixed operational cost.</span><span class="lang-es">Sustitución de facturas variables por consumo de tokens por infraestructura propia amortizada.</span></div>
-                </div>
-                <div class="metric-card purple">
-                  <div class="metric-val">Enterprise</div>
-                  <div class="metric-label"><span class="lang-en">Institutional Contract Readiness</span><span class="lang-es">Capacidad de Cierre para Clientes Corporativos</span></div>
-                  <div class="metric-desc"><span class="lang-en">Comply with enterprise security audits, dedicated SLAs, and high-volume real-time client throughput.</span><span class="lang-es">Cumplimiento de auditorías corporativas de seguridad, SLAs dedicados y mayor volumen transaccional.</span></div>
-                </div>
-              </div>
-              <div class="diagram-preview-box" onclick="openLightbox('media/ia/ia-models.jpg')">
-                <img src="media/ia/ia-models.jpg" alt="Capacidad de modelos">
-                <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-en">Zoom Model Spectrum</span><span class="lang-es">Ampliar Rango de Modelos</span></div>
-              </div>
-            </div>
-          </div>
-          <div class="slide-footer">
-            <div class="punchline-badge">
-              <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
-              <span class="lang-en">Strategic Law: The investment increases our organizational bandwidth to capture bigger projects and higher revenue.</span>
-              <span class="lang-es">Regla estratégica: La inversión aumenta nuestra capacidad para atender proyectos más grandes, clientes más exigentes y operaciones más complejas.</span>
-            </div>
-          </div>
-        </section>
-        
-
-        <!-- SLIDE 5: TALENT PRODUCTIVITY ACCELERATION -->
+        <!-- SLIDE 5: AGENTS COLLAPSE -->
         <section class="slide" id="comparativo-slide-5" data-slide="5" data-deck="comparativo">
           <div class="slide-top-meta">
-            <span class="slide-badge-category"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> <span class="lang-en">HUMAN CAPITAL · TALENT MULTIPLIER</span><span class="lang-es">CAPITAL HUMANO · MULTIPLICADOR DE TALENTO</span></span>
-            <span class="slide-num-tag">05 / 10</span>
+            <span class="slide-badge-category"><span class="lang-en">OPERATING REALITY · SATURATION</span><span class="lang-es">REALIDAD OPERATIVA · SATURACIÓN</span></span>
+            <span class="slide-num-tag">05 / 14</span>
           </div>
           <div class="slide-header">
-            <h2><span class="lang-en">Empowering Hardware Means Empowering People</span><span class="lang-es">Potenciar los equipos significa potenciar a las personas</span></h2>
-            <p class="slide-lead"><span class="lang-en">Infrastructure must not be viewed as mere machinery. Eliminating developer idle time drastically compounds output and accelerates delivery cycles.</span><span class="lang-es">La infraestructura no son simples máquinas; es el multiplicador que elimina tiempos muertos y maximiza la velocidad de entrega del equipo técnico.</span></p>
+            <h2><span class="lang-en">We run agents 24/7 — until the machine collapses</span><span class="lang-es">Corremos agentes 24/7 — hasta que la máquina colapsa</span></h2>
+            <p class="slide-lead"><span class="lang-en">A few agents already work around the clock. Beyond that, the current equipment cannot hold the load. Ambition is not the bottleneck. Capacity is.</span><span class="lang-es">Algunos agentes ya trabajan día y noche. Más allá de eso, el equipo actual no sostiene la carga. La ambición no es el cuello de botella. La capacidad sí.</span></p>
           </div>
           <div class="slide-body">
             <div class="split-layout">
-              <div style="display: flex; flex-direction: column; gap: 10px;">
-                <div class="cards-grid-2x2" style="grid-template-columns: 1fr 1fr;">
-                  <div class="feature-card">
-                    <div class="card-icon-wrapper emerald"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-                    <div class="card-text-group">
-                      <div class="card-title"><span class="lang-en">-70% Idle Waiting Time</span><span class="lang-es">-70% Tiempo Muerto de Espera</span></div>
-                      <div class="card-desc"><span class="lang-en">Instant local prompt debugging, vector searches, and code compilation without cloud latency lag.</span><span class="lang-es">Pruebas e inferencia instantáneas sin esperar cola en servidores remotos.</span></div>
-                    </div>
-                  </div>
-                  <div class="feature-card">
-                    <div class="card-icon-wrapper cyan"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
-                    <div class="card-text-group">
-                      <div class="card-title"><span class="lang-en">3x Iteration Frequency</span><span class="lang-es">3x Frecuencia de Iteración</span></div>
-                      <div class="card-desc"><span class="lang-en">Developers run comprehensive test suites and edge case evaluations in minutes instead of overnight.</span><span class="lang-es">Más pruebas, prototipos más sólidos y detección inmediata de errores de código.</span></div>
-                    </div>
-                  </div>
+              <div class="cards-grid-2x2">
+                <div class="feature-card">
+                  <div class="card-title"><span class="lang-en">Few agents live</span><span class="lang-es">Pocos agentes vivos</span></div>
+                  <div class="card-desc"><span class="lang-en">We prove the model works — then hit a hard ceiling.</span><span class="lang-es">Demostramos que el modelo funciona — y luego chocamos con un techo duro.</span></div>
+                </div>
+                <div class="feature-card">
+                  <div class="card-title"><span class="lang-en">Saturation</span><span class="lang-es">Saturación</span></div>
+                  <div class="card-desc"><span class="lang-en">When more processes start, everything slows or fails.</span><span class="lang-es">Cuando arrancan más procesos, todo se ralentiza o falla.</span></div>
+                </div>
+                <div class="feature-card">
+                  <div class="card-title"><span class="lang-en">Local-first intent</span><span class="lang-es">Intención local-first</span></div>
+                  <div class="card-desc"><span class="lang-en">We keep information as local as possible — by conviction, not slogan.</span><span class="lang-es">Mantenemos la información lo más local posible — por convicción, no por eslogan.</span></div>
                 </div>
                 <div class="feature-card highlight-card">
-                  <div class="card-icon-wrapper gold"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg></div>
-                  <div class="card-text-group">
-                    <div class="card-title"><span class="lang-en">The Executive Productivity Equation:</span><span class="lang-es">La Ecuación de Productividad Empresarial:</span></div>
-                    <div class="card-desc" style="font-size: 0.92rem; color: #fff; font-weight: 600;">
-                      <span class="lang-en">Better Hardware → Zero Idle Lag → Higher Developer Velocity → More Client Projects Delivered per Quarter</span>
-                      <span class="lang-es">Mejor equipo → Menos tiempo perdido → Mayor productividad del personal → Mayor capacidad para facturar proyectos</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="diagram-preview-box" onclick="openLightbox('media/ia/ia-talent-acceleration.jpg')">
-                <img src="media/ia/ia-talent-acceleration.jpg" alt="Aceleración de talento y productividad">
-                <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-en">Zoom Talent Workstation</span><span class="lang-es">Ampliar Estación de Trabajo</span></div>
-              </div>
-            </div>
-          </div>
-          <div class="slide-footer">
-            <div class="punchline-badge">
-              <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg></span>
-              <span class="lang-en">Principle: We do not merely buy faster hardware; we directly elevate the execution throughput of our human talent.</span>
-              <span class="lang-es">Principio: No solamente mejoramos computadores; aumentamos la capacidad de ejecución y valor de nuestros trabajadores.</span>
-            </div>
-          </div>
-        </section>
-        
-
-        <!-- SLIDE 6: PHASED INVESTMENT STRUCTURE -->
-        <section class="slide" id="comparativo-slide-6" data-slide="6" data-deck="comparativo">
-          <div class="slide-top-meta">
-            <span class="slide-badge-category"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> <span class="lang-en">CAPEX ALLOCATION · PHASED BUDGET</span><span class="lang-es">ASIGNACIÓN DE CAPITAL · PRESUPUESTO ESCALONADO</span></span>
-            <span class="slide-num-tag">06 / 10</span>
-          </div>
-          <div class="slide-header">
-            <h2><span class="lang-en">Phased Capital Investment Model: How Much to Grow?</span><span class="lang-es">¿Cuánto cuesta crecer? Modelo de inversión escalonada</span></h2>
-            <p class="slide-lead"><span class="lang-en">Infrastructure must scale progressively in sync with contract revenue. We do not over-provision capital before customer demand validates it.</span><span class="lang-es">La infraestructura debe crecer por etapas alineadas a los ingresos. No sobredimensionamos capital antes de que los clientes lo justifiquen.</span></p>
-          </div>
-          <div class="slide-body">
-            <div class="split-layout">
-              <div style="display: flex; flex-direction: column; gap: 8px;">
-                <div class="timeline-v-flow">
-                  <div class="timeline-step-card">
-                    <div class="step-num-bubble emerald">N0</div>
-                    <div class="step-content">
-                      <div class="step-title"><span class="lang-en">Level 0: Existing Baseline (US$ 0)</span><span class="lang-es">Nivel 0: Infraestructura Actual (US$ 0)</span></div>
-                      <div class="step-desc"><span class="lang-en">Already available. Used for software dev, lightweight 7B/8B testing, document indexing, and client demos.</span><span class="lang-es">Ya disponible. Desarrollo, prototipos, pruebas internas, integraciones API y validación comercial inicial.</span></div>
-                    </div>
-                  </div>
-                  <div class="timeline-step-card">
-                    <div class="step-num-bubble cyan">N1</div>
-                    <div class="step-content">
-                      <div class="step-title"><span class="lang-en">Level 1: Intermediate AI Node (US$ 2,500 – 3,500)</span><span class="lang-es">Nivel 1: Estación IA Intermedia (US$ 2.500 – 3.500)</span></div>
-                      <div class="step-desc"><span class="lang-en">High memory workstation (64GB–128GB). Unlocks serious local AI, RAG embeddings, and privacy projects.</span><span class="lang-es">Equipos con alto buffer de memoria unificada/RAM. Permite IA local seria, privacidad y proyectos de mayor volumen.</span></div>
-                    </div>
-                  </div>
-                  <div class="timeline-step-card">
-                    <div class="step-num-bubble purple">N2</div>
-                    <div class="step-content">
-                      <div class="step-title"><span class="lang-en">Level 2: Professional AI Workstation (US$ 4,000 – 6,500)</span><span class="lang-es">Nivel 2: Estación IA Profesional (US$ 4.000 – 6.500)</span></div>
-                      <div class="step-desc"><span class="lang-en">Enterprise-grade GPUs (RTX 4090 / Mac Studio / GB10). Serves 70B quantized models, fine-tuning, and heavy client loads.</span><span class="lang-es">Workstations dedicadas de alto rendimiento. Modelos 70B, fine-tuning local y contratos corporativos.</span></div>
-                    </div>
-                  </div>
-                  <div class="timeline-step-card">
-                    <div class="step-num-bubble gold">N3</div>
-                    <div class="step-content">
-                      <div class="step-title"><span class="lang-en">Level 3: Centralized Enterprise Server (Custom Scale)</span><span class="lang-es">Nivel 3: Servidor Empresarial Centralizado (A Medida)</span></div>
-                      <div class="step-desc"><span class="lang-en">Rack-mount servers with redundant power, fiber SAN, and 24/7 clustered high availability for scaled SaaS.</span><span class="lang-es">Servidor en rack, red de alta velocidad y operación continua centralizada para múltiples clientes en producción.</span></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="diagram-preview-box" onclick="openLightbox('media/ia/ia-tower.jpg')">
-                <img src="media/ia/ia-tower.jpg" alt="Estaciones de trabajo escalonadas">
-                <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-en">Zoom Hardware Tiers</span><span class="lang-es">Ampliar Niveles de Hardware</span></div>
-              </div>
-            </div>
-          </div>
-          <div class="slide-footer">
-            <div class="punchline-badge">
-              <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
-              <span class="lang-en">Takeaway: We do not need to buy the entire infrastructure on day one. We invest strictly in verified, revenue-generating steps.</span>
-              <span class="lang-es">Mensaje clave: No necesitamos comprar toda la infraestructura desde el comienzo; invertimos por etapas justificadas por el negocio.</span>
-            </div>
-          </div>
-        </section>
-        
-
-        <!-- SLIDE 7: WHEN IS INVESTMENT JUSTIFIED? -->
-        <section class="slide" id="comparativo-slide-7" data-slide="7" data-deck="comparativo">
-          <div class="slide-top-meta">
-            <span class="slide-badge-category"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> <span class="lang-en">DECISION CRITERIA · ROI TRIGGERS</span><span class="lang-es">CRITERIOS DE DECISIÓN · GATILLADORES DE ROI</span></span>
-            <span class="slide-num-tag">07 / 10</span>
-          </div>
-          <div class="slide-header">
-            <h2><span class="lang-en">The 5 Business Triggers: When Is It Time to Invest?</span><span class="lang-es">Los 5 gatilladores financieros: ¿Cuándo vale la pena invertir?</span></h2>
-            <p class="slide-lead"><span class="lang-en">A hardware upgrade is never justified by novelty; it is strictly triggered when capacity unlocks immediate commercial revenue or prevents contractual risk.</span><span class="lang-es">La empresa no invierte por novedad tecnológica; invierte cuando la nueva capacidad genera ingresos, reduce costos o abre contratos inmediatos.</span></p>
-          </div>
-          <div class="slide-body">
-            <div class="split-layout">
-              <div class="cards-grid-2x2">
-                <div class="feature-card">
-                  <div class="card-icon-wrapper gold"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
-                  <div class="card-text-group">
-                    <div class="card-title"><span class="lang-en">1. High-Value Client Demands</span><span class="lang-es">1. Clientes con Requisitos Mayores</span></div>
-                    <div class="card-desc"><span class="lang-en">Client contract requires sub-second response times, dedicated instances, high concurrency, or custom model fine-tuning.</span><span class="lang-es">Aparecen contratos que exigen alta velocidad, múltiples usuarios concurrentes o modelos dedicados.</span></div>
-                  </div>
-                </div>
-                <div class="feature-card">
-                  <div class="card-icon-wrapper purple"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></div>
-                  <div class="card-text-group">
-                    <div class="card-title"><span class="lang-en">2. Absolute Privacy Mandate</span><span class="lang-es">2. Privacidad y Soberanía de Datos</span></div>
-                    <div class="card-desc"><span class="lang-en">Enterprise compliance prevents client datasets from traversing public clouds (Banking, Legal, Healthcare).</span><span class="lang-es">El cliente exige por contrato que sus datos jamás salgan de la infraestructura física bajo nuestro control.</span></div>
-                  </div>
-                </div>
-                <div class="feature-card">
-                  <div class="card-icon-wrapper cyan"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></div>
-                  <div class="card-text-group">
-                    <div class="card-title"><span class="lang-en">3. Cloud API Crossover Point</span><span class="lang-es">3. Punto de Cruce de Facturas Cloud</span></div>
-                    <div class="card-desc"><span class="lang-en">Monthly cloud token bills surpass the 6-month hardware amortization cost. Local execution becomes instantly profitable.</span><span class="lang-es">El gasto mensual en APIs de nube supera el costo de amortizar un equipo local propio en 6 meses.</span></div>
-                  </div>
-                </div>
-                <div class="feature-card">
-                  <div class="card-icon-wrapper emerald"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-                  <div class="card-text-group">
-                    <div class="card-title"><span class="lang-en">4. 24/7 Production Deployment</span><span class="lang-es">4. Operación Permanente en Vivo</span></div>
-                    <div class="card-desc"><span class="lang-en">Live services transition from internal testing to production SLAs requiring non-stop uptime and redundancy.</span><span class="lang-es">La plataforma pasa de fase prototipo a servicio en producción que debe estar disponible día y noche.</span></div>
-                  </div>
-                </div>
-              </div>
-              <div class="diagram-preview-box" onclick="openLightbox('media/ia/ia-client.jpg')">
-                <img src="media/ia/ia-client.jpg" alt="Explicación y propuesta al cliente">
-                <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-en">Zoom Client Case</span><span class="lang-es">Ampliar Propuesta Cliente</span></div>
-              </div>
-            </div>
-          </div>
-          <div class="slide-footer">
-            <div class="punchline-badge">
-              <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
-              <span class="lang-en">Investment Rule: We invest when new capacity generates revenue, reduces recurrent cost, or unlocks opportunities we cannot otherwise seize.</span>
-              <span class="lang-es">Regla de inversión: Invertimos cuando la nueva capacidad genera ingresos, reduce costos, eleva productividad o permite captar clientes que hoy no podemos asumir.</span>
-            </div>
-          </div>
-        </section>
-        
-
-        <!-- SLIDE 8: 24/7 CONTINUITY AND THE 4 PILLARS -->
-        <section class="slide" id="comparativo-slide-8" data-slide="8" data-deck="comparativo">
-          <div class="slide-top-meta">
-            <span class="slide-badge-category"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg> <span class="lang-en">ENTERPRISE RESILIENCE · 24/7 PILLARS</span><span class="lang-es">RESILIENCIA EMPRESARIAL · 4 PILARES 24/7</span></span>
-            <span class="slide-num-tag">08 / 10</span>
-          </div>
-          <div class="slide-header">
-            <h2><span class="lang-en">The True Goal: Robust 24/7 Technological Operations</span><span class="lang-es">El verdadero objetivo: Una operación tecnológica 24/7</span></h2>
-            <p class="slide-lead"><span class="lang-en">Raw computational power loses its value if a single power outage, thermal drop, or network failure knocks services offline. Continuity is the foundation of enterprise trust.</span><span class="lang-es">La potencia pierde su valor si un corte eléctrico, recalentamiento o caída de red deja los servicios fuera de línea. La continuidad es el activo real.</span></p>
-          </div>
-          <div class="slide-body">
-            <div class="split-layout">
-              <div class="cards-grid-2x2">
-                <div class="feature-card">
-                  <div class="card-icon-wrapper emerald"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-                  <div class="card-text-group">
-                    <div class="card-title"><span class="lang-en">Pillar 1: Empowered Talent</span><span class="lang-es">Pilar 1: Talento Potenciado</span></div>
-                    <div class="card-desc"><span class="lang-en">Ergonomic, responsive workstations equipped with modern AI development tooling and zero lag.</span><span class="lang-es">Mejores herramientas de trabajo que multiplican la productividad del personal y aceleran entregas.</span></div>
-                  </div>
-                </div>
-                <div class="feature-card">
-                  <div class="card-icon-wrapper cyan"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6" rx="1"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></svg></div>
-                  <div class="card-text-group">
-                    <div class="card-title"><span class="lang-en">Pillar 2: Compute Capacity</span><span class="lang-es">Pilar 2: Capacidad Tecnológica</span></div>
-                    <div class="card-desc"><span class="lang-en">Scalable GPU VRAM, fast NVMe arrays, and dedicated local models for complex institutional workloads.</span><span class="lang-es">Hardware especializado en IA, procesamiento masivo y bases de datos para proyectos exigentes.</span></div>
-                  </div>
-                </div>
-                <div class="feature-card">
-                  <div class="card-icon-wrapper gold"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
-                  <div class="card-text-group">
-                    <div class="card-title"><span class="lang-en">Pillar 3: Protected Power</span><span class="lang-es">Pilar 3: Continuidad Eléctrica</span></div>
-                    <div class="card-desc"><span class="lang-en">Double-conversion online UPS, surge suppression, automated voltage regulation, and safe automated shutdown.</span><span class="lang-es">Sistemas UPS de respaldo, supresión de picos, regulación de voltaje y apagado seguro ante apagones.</span></div>
-                  </div>
-                </div>
-                <div class="feature-card">
-                  <div class="card-icon-wrapper purple"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg></div>
-                  <div class="card-text-group">
-                    <div class="card-title"><span class="lang-en">Pillar 4: Redundant Network</span><span class="lang-es">Pilar 4: Conectividad Redundante</span></div>
-                    <div class="card-desc"><span class="lang-en">Dual WAN fiber providers with instant automatic failover, enterprise routers, and 24/7 uptime monitoring.</span><span class="lang-es">Doble proveedor de Internet con conmutación automática de respaldo y monitoreo permanente de red.</span></div>
-                  </div>
+                  <div class="card-title"><span class="lang-en">The ask behind the pain</span><span class="lang-es">El ask detrás del dolor</span></div>
+                  <div class="card-desc"><span class="lang-en">More machines and tools = more agents that do not collapse.</span><span class="lang-es">Más máquinas y herramientas = más agentes que no colapsan.</span></div>
                 </div>
               </div>
               <div class="diagram-preview-box" onclick="openLightbox('media/ia/ia-datacenter-24-7.jpg')">
-                <img src="media/ia/ia-datacenter-24-7.jpg" alt="Centro de operaciones y continuidad 24/7">
-                <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-en">Zoom 24/7 Center</span><span class="lang-es">Ampliar Centro 24/7</span></div>
+                <img src="media/ia/ia-datacenter-24-7.jpg" alt="Operación 24/7">
+                <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-en">Zoom 24/7</span><span class="lang-es">Ampliar 24/7</span></div>
               </div>
             </div>
           </div>
           <div class="slide-footer">
             <div class="punchline-badge">
-              <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span>
-              <span class="lang-en">Formula: Better Tools + Resilient Infrastructure = Maximum Output + High Capacity + Zero Operational Risk.</span>
-              <span class="lang-es">Fórmula empresarial: Mejores herramientas + Mejor infraestructura = Mayor productividad + Mayor capacidad + Menor riesgo operativo.</span>
+              <span class="lang-en">Board line: Software ambition without hardware capacity is a promise with a fuse.</span>
+              <span class="lang-es">Línea de directorio: Ambición de software sin capacidad de hardware es una promesa con mecha.</span>
             </div>
           </div>
         </section>
-        
 
-        <!-- SLIDE 9: 3-LAYER INVESTMENT MODEL & DECISION CHECKLIST -->
+        <!-- SLIDE 6: HUMAN HOURS -->
+        <section class="slide" id="comparativo-slide-6" data-slide="6" data-deck="comparativo">
+          <div class="slide-top-meta">
+            <span class="slide-badge-category"><span class="lang-en">HUMAN CAPITAL · SUSTAINABLE PACE</span><span class="lang-es">CAPITAL HUMANO · RITMO SOSTENIBLE</span></span>
+            <span class="slide-num-tag">06 / 14</span>
+          </div>
+          <div class="slide-header">
+            <h2><span class="lang-en">12–15 hour days are not a strategy</span><span class="lang-es">12–15 horas diarias no son una estrategia</span></h2>
+            <p class="slide-lead"><span class="lang-en">Our work quality is high because the team burns long days. The goal of this investment is not only more output — it is output that no longer requires breaking people to meet the mission.</span><span class="lang-es">Nuestra calidad es alta porque el equipo quema días largos. El objetivo de esta inversión no es solo más producción — es producir sin romper personas para cumplir la misión.</span></p>
+          </div>
+          <div class="slide-body">
+            <div class="split-layout">
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                <div class="metric-card gold">
+                  <div class="metric-val">12–15h</div>
+                  <div class="metric-label"><span class="lang-en">Current daily intensity</span><span class="lang-es">Intensidad diaria actual</span></div>
+                  <div class="metric-desc"><span class="lang-en">Heroic pace that works — until it does not.</span><span class="lang-es">Ritmo heroico que funciona — hasta que deja de funcionar.</span></div>
+                </div>
+                <div class="feature-card highlight-card">
+                  <div class="card-title"><span class="lang-en">Investment as rest infrastructure</span><span class="lang-es">Inversión como infraestructura de descanso</span></div>
+                  <div class="card-desc"><span class="lang-en">More capable machines and agents absorb overnight and repetitive load. Humans return to judgment, design, and closing — with hours left to recover.</span><span class="lang-es">Máquinas y agentes más capaces absorben la carga nocturna y repetitiva. Los humanos vuelven al criterio, el diseño y el cierre — con horas para recuperarse.</span></div>
+                </div>
+              </div>
+              <div class="diagram-preview-box" onclick="openLightbox('media/ia/ia-reclaimed-hours.jpg')">
+                <img src="media/ia/ia-reclaimed-hours.jpg" alt="Horas recuperadas">
+                <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-en">Zoom Rest</span><span class="lang-es">Ampliar Descanso</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="slide-footer">
+            <div class="punchline-badge">
+              <span class="lang-en">Depth: The best capacity investment buys machines that work while founders sleep.</span>
+              <span class="lang-es">Profundidad: La mejor inversión en capacidad compra máquinas que trabajan mientras los fundadores duermen.</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- SLIDE 7: RENT VS OWN -->
+        <section class="slide" id="comparativo-slide-7" data-slide="7" data-deck="comparativo">
+          <div class="slide-top-meta">
+            <span class="slide-badge-category"><span class="lang-en">STRATEGIC CONTRAST</span><span class="lang-es">CONTRASTE ESTRATÉGICO</span></span>
+            <span class="slide-num-tag">07 / 14</span>
+          </div>
+          <div class="slide-header">
+            <h2><span class="lang-en">Rent intelligence — or own the engine</span><span class="lang-es">Alquilar inteligencia — o poseer el motor</span></h2>
+            <p class="slide-lead"><span class="lang-en">Cloud AI is powerful and useful. It is also a recurring toll that never becomes equity. Local capacity flips that math.</span><span class="lang-es">La IA en la nube es potente y útil. También es un peaje recurrente que nunca se vuelve patrimonio. La capacidad local cambia esa matemática.</span></p>
+          </div>
+          <div class="slide-body">
+            <div class="split-layout">
+              <div class="cards-grid-2x2" style="grid-template-columns:1fr 1fr;">
+                <div class="feature-card">
+                  <div class="card-title"><span class="lang-en">Renting (cloud APIs)</span><span class="lang-es">Alquilar (APIs cloud)</span></div>
+                  <div class="card-desc"><span class="lang-en">High monthly cost · data leaves home · speed depends on someone else · zero residual asset</span><span class="lang-es">Costo mensual alto · datos salen de casa · la velocidad depende de otro · cero activo residual</span></div>
+                </div>
+                <div class="feature-card highlight-card">
+                  <div class="card-title"><span class="lang-en">Owning (local capacity)</span><span class="lang-es">Poseer (capacidad local)</span></div>
+                  <div class="card-desc"><span class="lang-en">CapEx becomes asset · data stays closer · agents run on our floor · compounding advantage</span><span class="lang-es">El CapEx se vuelve activo · datos más cerca · agentes en nuestro piso · ventaja que compone</span></div>
+                </div>
+              </div>
+              <div class="diagram-preview-box" onclick="openLightbox('media/ia/ia-rent-vs-own.jpg')">
+                <img src="media/ia/ia-rent-vs-own.jpg" alt="Alquilar vs poseer">
+                <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-en">Zoom Contrast</span><span class="lang-es">Ampliar Contraste</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="slide-footer">
+            <div class="punchline-badge">
+              <span class="lang-en">Rule: Use the cloud as a bridge. Build ownership as the destination.</span>
+              <span class="lang-es">Regla: Usa la nube como puente. Construye la propiedad como destino.</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- SLIDE 8: TIER $5K -->
+        <section class="slide" id="comparativo-slide-8" data-slide="8" data-deck="comparativo">
+          <div class="slide-top-meta">
+            <span class="slide-badge-category"><span class="lang-en">TIER A · ENTRY ASSET ≈ $5,000</span><span class="lang-es">NIVEL A · ACTIVO DE ENTRADA ≈ $5.000</span></span>
+            <span class="slide-num-tag">08 / 14</span>
+          </div>
+          <div class="slide-header">
+            <h2><span class="lang-en">~$5,000 — the first leap off rented dependency</span><span class="lang-es">~$5.000 — el primer salto fuera de la dependencia alquilada</span></h2>
+            <p class="slide-lead"><span class="lang-en">Example gear: high-memory AI workstation / compact local node (class of Mac mini–class or GPU entry tower). Not the finish line — the proof that ownership works.</span><span class="lang-es">Ejemplo de equipo: estación IA de alta memoria / nodo local compacto (clase Mac mini o torre GPU de entrada). No es la meta — es la prueba de que poseer funciona.</span></p>
+          </div>
+          <div class="slide-body">
+            <div class="split-layout">
+              <div class="timeline-v-flow">
+                <div class="timeline-step-card"><div class="step-num-bubble emerald">+</div><div class="step-content"><div class="step-title"><span class="lang-en">What unlocks</span><span class="lang-es">Qué se desbloquea</span></div><div class="step-desc"><span class="lang-en">More stable small AIs, more concurrent local agents, faster day-to-day development without every call going to a paid API.</span><span class="lang-es">IAs pequeñas más estables, más agentes locales concurrentes, desarrollo diario más rápido sin cada llamada a una API de pago.</span></div></div></div>
+                <div class="timeline-step-card"><div class="step-num-bubble cyan">+</div><div class="step-content"><div class="step-title"><span class="lang-en">Investor reading</span><span class="lang-es">Lectura para el inversor</span></div><div class="step-desc"><span class="lang-en">Lowest-risk proof of concept: convert a slice of monthly AI spend into a durable workstation asset.</span><span class="lang-es">Prueba de concepto de menor riesgo: convertir una porción del gasto mensual de IA en un activo durable.</span></div></div></div>
+              </div>
+              <div class="diagram-preview-box" onclick="openLightbox('media/ia/ia-minipc.jpg')">
+                <img src="media/ia/ia-minipc.jpg" alt="Nodo de entrada">
+                <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-en">Zoom Tier A</span><span class="lang-es">Ampliar Nivel A</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="slide-footer">
+            <div class="punchline-badge">
+              <span class="lang-en">$5k line: Enough to stop begging the cloud for every small thought.</span>
+              <span class="lang-es">Línea de $5k: Suficiente para dejar de pedirle a la nube cada pensamiento pequeño.</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- SLIDE 9: TIER MID -->
         <section class="slide" id="comparativo-slide-9" data-slide="9" data-deck="comparativo">
           <div class="slide-top-meta">
-            <span class="slide-badge-category"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg> <span class="lang-en">FRAMEWORK · 3-LAYER MODEL</span><span class="lang-es">MARCO ESTRATÉGICO · MODELO EN 3 CAPAS</span></span>
-            <span class="slide-num-tag">09 / 10</span>
+            <span class="slide-badge-category"><span class="lang-en">TIER B · GROWTH NODE ≈ $35,000–$50,000</span><span class="lang-es">NIVEL B · NODO DE CRECIMIENTO ≈ $35.000–$50.000</span></span>
+            <span class="slide-num-tag">09 / 14</span>
           </div>
           <div class="slide-header">
-            <h2><span class="lang-en">3-Layer Investment Architecture &amp; Decision Matrix</span><span class="lang-es">Modelo de inversión en 3 capas &amp; Matriz de decisión</span></h2>
-            <p class="slide-lead"><span class="lang-en">A clear structural checklist to evaluate any technological acquisition before allocating company capital.</span><span class="lang-es">Checklist estructurado para evaluar con rigor cualquier adquisición tecnológica antes de comprometer capital.</span></p>
+            <h2><span class="lang-en">~$35k–$50k — agents that stop collapsing</span><span class="lang-es">~$35k–$50k — agentes que dejan de colapsar</span></h2>
+            <p class="slide-lead"><span class="lang-en">Example gear: professional AI workstation / serious GPU tower (class of RTX-class workstations, high-RAM studios). This is where 24/7 stops being fragile.</span><span class="lang-es">Ejemplo de equipo: estación profesional de IA / torre GPU seria (clase workstations RTX, studios de alta RAM). Aquí el 24/7 deja de ser frágil.</span></p>
           </div>
           <div class="slide-body">
             <div class="split-layout">
-              <div style="display: flex; flex-direction: column; gap: 8px;">
-                <div class="timeline-v-flow">
-                  <div class="timeline-step-card">
-                    <div class="step-num-bubble cyan">C1</div>
-                    <div class="step-content">
-                      <div class="step-title"><span class="lang-en">LAYER 1 — PEOPLE (Talent Productivity)</span><span class="lang-es">CAPA 1 — PERSONAS (Productividad del Talento)</span></div>
-                      <div class="step-desc"><span class="lang-en">Investment in high-speed workstations. Result: faster developers, rapid prototypes, and more shipped projects.</span><span class="lang-es">Inversión en mejores estaciones. Resultado: desarrolladores más veloces y productivos.</span></div>
-                    </div>
-                  </div>
-                  <div class="timeline-step-card">
-                    <div class="step-num-bubble gold">C2</div>
-                    <div class="step-content">
-                      <div class="step-title"><span class="lang-en">LAYER 2 — TECHNOLOGY (Compute &amp; Storage)</span><span class="lang-es">CAPA 2 — TECNOLOGÍA (Capacidad de Cómputo)</span></div>
-                      <div class="step-desc"><span class="lang-en">Investment in dedicated AI hardware, VRAM, and servers. Result: capacity to execute higher-tier client contracts.</span><span class="lang-es">Inversión en estaciones de IA, VRAM y servidores. Resultado: capacidad para proyectos de mayor nivel.</span></div>
-                    </div>
-                  </div>
-                  <div class="timeline-step-card">
-                    <div class="step-num-bubble emerald">C3</div>
-                    <div class="step-content">
-                      <div class="step-title"><span class="lang-en">LAYER 3 — CONTINUITY (24/7 Operations)</span><span class="lang-es">CAPA 3 — CONTINUIDAD (Operación 24/7)</span></div>
-                      <div class="step-desc"><span class="lang-en">Investment in UPS, dual WAN, cooling, monitoring, and automated backups. Result: non-stop institutional uptime.</span><span class="lang-es">Inversión en energía protegida, Internet redundante, monitoreo y copias de seguridad continuas.</span></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="feature-card" style="padding: 8px 12px;">
-                  <div class="card-icon-wrapper purple"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
-                  <div class="card-text-group">
-                    <div class="card-title"><span class="lang-en">5-Question Filter:</span><span class="lang-es">Filtro de 5 Preguntas:</span></div>
-                    <div class="card-desc"><span class="lang-en">1. Can we do it with what we have? 2. Where is the bottleneck? 3. What do we gain? 4. What is the cost vs benefit? 5. Does the business demand it today?</span><span class="lang-es">1. ¿Podemos hacerlo con lo actual? 2. ¿Dónde está el límite? 3. ¿Qué ganamos? 4. ¿Costo vs beneficio? 5. ¿El negocio lo exige hoy?</span></div>
-                  </div>
-                </div>
+              <div class="cards-grid-2x2">
+                <div class="feature-card"><div class="card-title"><span class="lang-en">Several agents 24/7</span><span class="lang-es">Varios agentes 24/7</span></div><div class="card-desc"><span class="lang-en">Parallel processes without constant thermal and memory collapse.</span><span class="lang-es">Procesos en paralelo sin colapso constante de memoria y temperatura.</span></div></div>
+                <div class="feature-card"><div class="card-title"><span class="lang-en">Faster custom training</span><span class="lang-es">Entrenamiento a medida más rápido</span></div><div class="card-desc"><span class="lang-en">Less need to pay a rented model just to shape our own.</span><span class="lang-es">Menos necesidad de pagar un modelo alquilado solo para moldear el nuestro.</span></div></div>
+                <div class="feature-card"><div class="card-title"><span class="lang-en">Tools budget included</span><span class="lang-es">Presupuesto de herramientas incluido</span></div><div class="card-desc"><span class="lang-en">Software, storage, and orchestration that make the hardware usable.</span><span class="lang-es">Software, almacenamiento y orquestación que hacen usable el hardware.</span></div></div>
+                <div class="feature-card highlight-card"><div class="card-title"><span class="lang-en">Human effect</span><span class="lang-es">Efecto humano</span></div><div class="card-desc"><span class="lang-en">Overnight load shifts to machines — reclaiming rest without missing goals.</span><span class="lang-es">La carga nocturna pasa a las máquinas — recuperando descanso sin fallar metas.</span></div></div>
               </div>
-              <div class="diagram-preview-box" onclick="openLightbox('media/ia/ia-rag.jpg')">
-                <img src="media/ia/ia-rag.jpg" alt="Arquitectura en 3 capas">
-                <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-en">Zoom Architecture</span><span class="lang-es">Ampliar Arquitectura</span></div>
+              <div class="diagram-preview-box" onclick="openLightbox('media/ia/ia-tower.jpg')">
+                <img src="media/ia/ia-tower.jpg" alt="Estación de crecimiento">
+                <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-en">Zoom Tier B</span><span class="lang-es">Ampliar Nivel B</span></div>
               </div>
             </div>
           </div>
           <div class="slide-footer">
             <div class="punchline-badge">
-              <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg></span>
-              <span class="lang-en">Framework Rule: First develop with what we have. Invest when the business proves it requires higher capacity.</span>
-              <span class="lang-es">Principio rector: Primero desarrollamos con lo que tenemos; invertimos cuando el negocio demuestra que necesita más capacidad.</span>
+              <span class="lang-en">$50k line: This is where capacity starts looking like a company, not a laptop.</span>
+              <span class="lang-es">Línea de $50k: Aquí la capacidad empieza a verse como empresa, no como laptop.</span>
             </div>
           </div>
         </section>
-        
 
-        <!-- SLIDE 10: ROADMAP & EXECUTIVE CLOSING -->
+        <!-- SLIDE 10: TIER $150K -->
         <section class="slide" id="comparativo-slide-10" data-slide="10" data-deck="comparativo">
           <div class="slide-top-meta">
-            <span class="slide-badge-category"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg> <span class="lang-en">STRATEGIC ROADMAP · EXECUTIVE SUMMARY</span><span class="lang-es">HOJA DE RUTA · RESUMEN EJECUTIVO</span></span>
-            <span class="slide-num-tag">10 / 10</span>
+            <span class="slide-badge-category"><span class="lang-en">TIER C · ENTERPRISE NODE ≈ $100,000–$150,000</span><span class="lang-es">NIVEL C · NODO EMPRESARIAL ≈ $100.000–$150.000</span></span>
+            <span class="slide-num-tag">10 / 14</span>
           </div>
           <div class="slide-header">
-            <h2><span class="lang-en">Strategic Growth Roadmap: Building an Enterprise Asset</span><span class="lang-es">Hoja de ruta estratégica: Construyendo un activo empresarial</span></h2>
-            <p class="slide-lead"><span class="lang-en">Our goal is not to accumulate hardware; it is to forge a scalable technological asset that accelerates talent, captures revenue, and operates continuously.</span><span class="lang-es">El objetivo no es acumular computadores, sino forjar una capacidad tecnológica que potencie al talento, genere ingresos y opere 24/7.</span></p>
+            <h2><span class="lang-en">~$100k–$150k — a lab that multiplies the whole portfolio</span><span class="lang-es">~$100k–$150k — un laboratorio que multiplica todo el portafolio</span></h2>
+            <p class="slide-lead"><span class="lang-en">Example gear: multi-GPU / DGX-class or clustered nodes with redundancy. This is not vanity hardware — it is the floor for many agents, serious training, and venture-scale experiments.</span><span class="lang-es">Ejemplo de equipo: multi-GPU / clase DGX o nodos en cluster con redundancia. No es hardware de vanidad — es el piso para muchos agentes, entrenamiento serio y experimentos a escala de venture.</span></p>
           </div>
           <div class="slide-body">
             <div class="split-layout">
-              <div style="display: flex; flex-direction: column; gap: 8px;">
-                <div class="timeline-v-flow">
-                  <div class="timeline-step-card">
-                    <div class="step-num-bubble cyan">01</div>
-                    <div class="step-content">
-                      <div class="step-title"><span class="lang-en">01. Immediate Phase: Exploit Current Assets</span><span class="lang-es">01. Fase Inmediata: Explotar Activos Actuales</span></div>
-                      <div class="step-desc"><span class="lang-en">Develop software solutions, prototypes, integrations, and secure early client validation at zero added capex.</span><span class="lang-es">Desarrollar soluciones, prototipos y validar comercialmente proyectos sin compras prematuras.</span></div>
-                    </div>
-                  </div>
-                  <div class="timeline-step-card">
-                    <div class="step-num-bubble gold">02</div>
-                    <div class="step-content">
-                      <div class="step-title"><span class="lang-en">02. Growth Trigger: Identify Real Boundary</span><span class="lang-es">02. Gatillador de Crecimiento: Identificar el Límite</span></div>
-                      <div class="step-desc"><span class="lang-en">Detect concrete demand bottlenecks in local model size, concurrency, privacy compliance, or latency.</span><span class="lang-es">Detectar cuellos de botella reales en tamaño de modelos, privacidad requerida o concurrencia de clientes.</span></div>
-                    </div>
-                  </div>
-                  <div class="timeline-step-card">
-                    <div class="step-num-bubble emerald">03</div>
-                    <div class="step-content">
-                      <div class="step-title"><span class="lang-en">03. Scaled Phase: Enterprise 24/7 Continuity</span><span class="lang-es">03. Fase de Escala: Continuidad Empresarial 24/7</span></div>
-                      <div class="step-desc"><span class="lang-en">Deploy dedicated AI nodes backed by UPS power, dual WAN, and strict institutional SLA monitoring.</span><span class="lang-es">Incorporar estaciones y servidores con respaldo eléctrico UPS, doble conexión y estabilidad continua.</span></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="feature-card highlight-card" style="padding: 10px 14px;">
-                  <div class="card-icon-wrapper gold"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg></div>
-                  <div class="card-text-group">
-                    <div class="card-title"><span class="lang-en">Executive Closing Takeaway:</span><span class="lang-es">Mensaje Ejecutivo Final:</span></div>
-                    <div class="card-desc" style="font-size: 0.92rem; color: #fff; font-weight: 600;">
-                      <span class="lang-en">Infrastructure upgrades stop being mere technology expenses; they become direct investments in our company's productive, commercial, and operational power.</span>
-                      <span class="lang-es">Comprar infraestructura deja de ser un gasto tecnológico y pasa a convertirse en una inversión directa en la capacidad productiva, comercial y operativa de la empresa.</span>
-                    </div>
-                  </div>
-                </div>
+              <div class="timeline-v-flow">
+                <div class="timeline-step-card"><div class="step-num-bubble gold">01</div><div class="step-content"><div class="step-title"><span class="lang-en">Many agents &amp; processes</span><span class="lang-es">Muchos agentes y procesos</span></div><div class="step-desc"><span class="lang-en">Parallel automation across LUMI, Arcana, FoodTech, and internal ops.</span><span class="lang-es">Automatización en paralelo para LUMI, Arcana, FoodTech y operaciones internas.</span></div></div></div>
+                <div class="timeline-step-card"><div class="step-num-bubble purple">02</div><div class="step-content"><div class="step-title"><span class="lang-en">Serious local training</span><span class="lang-es">Entrenamiento local serio</span></div><div class="step-desc"><span class="lang-en">Custom models shaped in-house with less toll-booth dependency.</span><span class="lang-es">Modelos a medida moldeados en casa con menos peaje externo.</span></div></div></div>
+                <div class="timeline-step-card"><div class="step-num-bubble emerald">03</div><div class="step-content"><div class="step-title"><span class="lang-en">Institutional posture</span><span class="lang-es">Postura institucional</span></div><div class="step-desc"><span class="lang-en">Capacity you can show investors and clients as a real operating asset.</span><span class="lang-es">Capacidad que puedes mostrar a inversores y clientes como activo operativo real.</span></div></div></div>
               </div>
               <div class="diagram-preview-box" onclick="openLightbox('media/ia/ia-dgx.jpg')">
-                <img src="media/ia/ia-dgx.jpg" alt="Escalamiento empresarial">
-                <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-en">Zoom Enterprise Scale</span><span class="lang-es">Ampliar Escala Empresarial</span></div>
+                <img src="media/ia/ia-dgx.jpg" alt="Nodo empresarial">
+                <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-en">Zoom Tier C</span><span class="lang-es">Ampliar Nivel C</span></div>
               </div>
             </div>
           </div>
           <div class="slide-footer">
             <div class="punchline-badge">
-              <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
-              <span class="lang-en">Progression: People → Technology → Continuity → Clients → Scalable Growth.</span>
-              <span class="lang-es">Ruta progresiva: Personas → Tecnología → Continuidad → Clientes → Escalamiento.</span>
+              <span class="lang-en">$150k line: Buy the engine room that lets five ventures breathe at once.</span>
+              <span class="lang-es">Línea de $150k: Compra la sala de máquinas que deja respirar a cinco ventures a la vez.</span>
             </div>
           </div>
         </section>
-        
+
+        <!-- SLIDE 11: WHAT UNLOCKS -->
+        <section class="slide" id="comparativo-slide-11" data-slide="11" data-deck="comparativo">
+          <div class="slide-top-meta">
+            <span class="slide-badge-category"><span class="lang-en">UNLOCK MAP · IF → THEN</span><span class="lang-es">MAPA DE DESTRABES · SI → ENTONCES</span></span>
+            <span class="slide-num-tag">11 / 14</span>
+          </div>
+          <div class="slide-header">
+            <h2><span class="lang-en">If we invest in this — we can advance that</span><span class="lang-es">Si invertimos en esto — avanzamos en aquello</span></h2>
+            <p class="slide-lead"><span class="lang-en">Investors do not buy GPUs. They buy a clearer path from capital to capability.</span><span class="lang-es">Los inversores no compran GPUs. Compran un camino más claro del capital a la capacidad.</span></p>
+          </div>
+          <div class="slide-body">
+            <div class="split-layout">
+              <div class="timeline-v-flow">
+                <div class="timeline-step-card"><div class="step-num-bubble cyan">→</div><div class="step-content"><div class="step-title"><span class="lang-en">More agents running</span><span class="lang-es">Más agentes corriendo</span></div><div class="step-desc"><span class="lang-en">Overnight research, ops watches, QA loops, and customer assist — without waking the team.</span><span class="lang-es">Investigación nocturna, vigilancia ops, bucles de QA y asistencia — sin despertar al equipo.</span></div></div></div>
+                <div class="timeline-step-card"><div class="step-num-bubble gold">→</div><div class="step-content"><div class="step-title"><span class="lang-en">More processes live</span><span class="lang-es">Más procesos en vivo</span></div><div class="step-desc"><span class="lang-en">Parallel pipelines across ventures instead of serial heroics.</span><span class="lang-es">Pipelines en paralelo entre ventures en vez de heroicidad en serie.</span></div></div></div>
+                <div class="timeline-step-card"><div class="step-num-bubble emerald">→</div><div class="step-content"><div class="step-title"><span class="lang-en">Faster custom intelligence</span><span class="lang-es">Inteligencia a medida más rápida</span></div><div class="step-desc"><span class="lang-en">Train and refine models closer to home — with less rented toll.</span><span class="lang-es">Entrenar y refinar modelos más cerca de casa — con menos peaje alquilado.</span></div></div></div>
+                <div class="timeline-step-card"><div class="step-num-bubble purple">→</div><div class="step-content"><div class="step-title"><span class="lang-en">Portfolio acceleration</span><span class="lang-es">Aceleración del portafolio</span></div><div class="step-desc"><span class="lang-en">LUMI, Arcana, FoodTech and more share one stronger engine room.</span><span class="lang-es">LUMI, Arcana, FoodTech y más comparten una sala de máquinas más fuerte.</span></div></div></div>
+              </div>
+              <div class="diagram-preview-box" onclick="openLightbox('media/ia/ia-models.jpg')">
+                <img src="media/ia/ia-models.jpg" alt="Mapa de capacidad">
+                <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-en">Zoom Unlock</span><span class="lang-es">Ampliar Destrabe</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="slide-footer">
+            <div class="punchline-badge">
+              <span class="lang-en">Formula: Capital → Capacity → Agents → Hours → Ventures.</span>
+              <span class="lang-es">Fórmula: Capital → Capacidad → Agentes → Horas → Ventures.</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- SLIDE 12: LOCAL SECURITY -->
+        <section class="slide" id="comparativo-slide-12" data-slide="12" data-deck="comparativo">
+          <div class="slide-top-meta">
+            <span class="slide-badge-category"><span class="lang-en">TRUST · LOCAL BY DESIGN</span><span class="lang-es">CONFIANZA · LOCAL POR DISEÑO</span></span>
+            <span class="slide-num-tag">12 / 14</span>
+          </div>
+          <div class="slide-header">
+            <h2><span class="lang-en">We keep information as local as we can</span><span class="lang-es">Mantenemos la información lo más local que podemos</span></h2>
+            <p class="slide-lead"><span class="lang-en">Owning capacity is also a security posture: sensitive work stays closer to our hands, under our rules, inside our perimeter.</span><span class="lang-es">Poseer capacidad también es una postura de seguridad: el trabajo sensible permanece más cerca de nuestras manos, bajo nuestras reglas, dentro de nuestro perímetro.</span></p>
+          </div>
+          <div class="slide-body">
+            <div class="split-layout">
+              <div class="cards-grid-2x2">
+                <div class="feature-card"><div class="card-title"><span class="lang-en">Less data egress</span><span class="lang-es">Menos salida de datos</span></div><div class="card-desc"><span class="lang-en">Critical loops can stay on machines we control.</span><span class="lang-es">Los bucles críticos pueden quedarse en máquinas que controlamos.</span></div></div>
+                <div class="feature-card"><div class="card-title"><span class="lang-en">Client confidence</span><span class="lang-es">Confianza del cliente</span></div><div class="card-desc"><span class="lang-en">Easier to explain custody when the engine is ours.</span><span class="lang-es">Más fácil explicar la custodia cuando el motor es nuestro.</span></div></div>
+                <div class="feature-card"><div class="card-title"><span class="lang-en">Strategic independence</span><span class="lang-es">Independencia estratégica</span></div><div class="card-desc"><span class="lang-en">Pricing shocks and API limits stop being existential.</span><span class="lang-es">Los shocks de precio y los límites de API dejan de ser existenciales.</span></div></div>
+                <div class="feature-card highlight-card"><div class="card-title"><span class="lang-en">Investor angle</span><span class="lang-es">Ángulo inversor</span></div><div class="card-desc"><span class="lang-en">Security is not a slide decoration — it is a reason capital prefers ownership.</span><span class="lang-es">La seguridad no es decoración de slide — es una razón por la que el capital prefiere la propiedad.</span></div></div>
+              </div>
+              <div class="diagram-preview-box" onclick="openLightbox('media/ia/ia-rag.jpg')">
+                <img src="media/ia/ia-rag.jpg" alt="Arquitectura local">
+                <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-en">Zoom Trust</span><span class="lang-es">Ampliar Confianza</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="slide-footer">
+            <div class="punchline-badge">
+              <span class="lang-en">Depth: Whoever holds the compute holds the quietest form of power — custody.</span>
+              <span class="lang-es">Profundidad: Quien sostiene el cómputo sostiene la forma más silenciosa de poder — la custodia.</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- SLIDE 13: ASK LADDER -->
+        <section class="slide" id="comparativo-slide-13" data-slide="13" data-deck="comparativo">
+          <div class="slide-top-meta">
+            <span class="slide-badge-category"><span class="lang-en">THE ASK · $5,000 → $150,000</span><span class="lang-es">EL ASK · $5.000 → $150.000</span></span>
+            <span class="slide-num-tag">13 / 14</span>
+          </div>
+          <div class="slide-header">
+            <h2><span class="lang-en">Dare to invest in the machines — at the size that matches ambition</span><span class="lang-es">Atrévete a invertir en las máquinas — al tamaño que coincide con la ambición</span></h2>
+            <p class="slide-lead"><span class="lang-en">We are inviting capital into equipment and tools from $5,000 to $150,000. Each rung has a clear example and a clear unlock.</span><span class="lang-es">Invitamos al capital a equipos y herramientas desde $5.000 hasta $150.000. Cada peldaño tiene un ejemplo claro y un destrabe claro.</span></p>
+          </div>
+          <div class="slide-body">
+            <div class="split-layout">
+              <div class="timeline-v-flow">
+                <div class="timeline-step-card"><div class="step-num-bubble emerald">A</div><div class="step-content"><div class="step-title"><span class="lang-en">$5,000 — Entry workstation / compact node</span><span class="lang-es">$5.000 — Estación de entrada / nodo compacto</span></div><div class="step-desc"><span class="lang-en">Stabilize small AIs and first local agent density.</span><span class="lang-es">Estabilizar IAs pequeñas y primera densidad de agentes locales.</span></div></div></div>
+                <div class="timeline-step-card"><div class="step-num-bubble cyan">B</div><div class="step-content"><div class="step-title"><span class="lang-en">$35,000–$50,000 — Professional AI workstation</span><span class="lang-es">$35.000–$50.000 — Estación profesional de IA</span></div><div class="step-desc"><span class="lang-en">Multiple 24/7 agents + faster custom training + tools.</span><span class="lang-es">Varios agentes 24/7 + entrenamiento a medida más rápido + herramientas.</span></div></div></div>
+                <div class="timeline-step-card"><div class="step-num-bubble gold">C</div><div class="step-content"><div class="step-title"><span class="lang-en">$100,000–$150,000 — Enterprise / lab node</span><span class="lang-es">$100.000–$150.000 — Nodo empresarial / laboratorio</span></div><div class="step-desc"><span class="lang-en">Portfolio-scale capacity, serious local training, institutional posture.</span><span class="lang-es">Capacidad a escala de portafolio, entrenamiento local serio, postura institucional.</span></div></div></div>
+              </div>
+              <div class="diagram-preview-box" onclick="openLightbox('media/ia/ia-gpu.jpg')">
+                <img src="media/ia/ia-gpu.jpg" alt="Escalera de inversión">
+                <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-en">Zoom Ask</span><span class="lang-es">Ampliar Ask</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="slide-footer">
+            <div class="punchline-badge">
+              <span class="lang-en">Close: You are not funding gadgets. You are funding the engine that makes the rest of the portfolio possible.</span>
+              <span class="lang-es">Cierre: No estás financiando gadgets. Estás financiando el motor que hace posible el resto del portafolio.</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- SLIDE 14: CLOSING -->
+        <section class="slide" id="comparativo-slide-14" data-slide="14" data-deck="comparativo">
+          <div class="slide-top-meta">
+            <span class="slide-badge-category"><span class="lang-en">CLOSE · NEXT MOVE</span><span class="lang-es">CIERRE · SIGUIENTE PASO</span></span>
+            <span class="slide-num-tag">14 / 14</span>
+          </div>
+          <div class="slide-header">
+            <h2><span class="lang-en">Build the asset. Free the hours. Scale the ventures.</span><span class="lang-es">Construye el activo. Libera las horas. Escala las ventures.</span></h2>
+            <p class="slide-lead"><span class="lang-en">Today we ship with limited capacity. With the right machines and tools, we train faster, run more agents, keep data closer, and meet goals without living at 12–15 hours forever.</span><span class="lang-es">Hoy entregamos con capacidad limitada. Con las máquinas y herramientas correctas, entrenamos más rápido, corremos más agentes, mantenemos los datos más cerca y cumplimos metas sin vivir eternamente a 12–15 horas.</span></p>
+          </div>
+          <div class="slide-body">
+            <div class="split-layout">
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                <div class="hero-flow-ribbon" style="flex-wrap:wrap;">
+                  <div class="flow-step-pill"><span class="lang-en">1. Choose a tier</span><span class="lang-es">1. Elige un nivel</span></div>
+                  <div class="flow-arrow"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
+                  <div class="flow-step-pill"><span class="lang-en">2. Deploy capacity</span><span class="lang-es">2. Despliega capacidad</span></div>
+                  <div class="flow-arrow"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
+                  <div class="flow-step-pill"><span class="lang-en">3. Measure agents + hours freed</span><span class="lang-es">3. Mide agentes + horas liberadas</span></div>
+                </div>
+                <div class="feature-card highlight-card">
+                  <div class="card-title"><span class="lang-en">Final boardroom line</span><span class="lang-es">Frase final de directorio</span></div>
+                  <div class="card-desc" style="font-size:0.95rem;font-weight:600;color:var(--text-secondary);">
+                    <span class="lang-en">The future we are building needs an engine we own — not a meter we rent.</span>
+                    <span class="lang-es">El futuro que estamos construyendo necesita un motor que poseemos — no un medidor que alquilamos.</span>
+                  </div>
+                </div>
+              </div>
+              <div class="diagram-preview-box" onclick="openLightbox('media/ia/ia-own-capacity.jpg')">
+                <img src="media/ia/ia-own-capacity.jpg" alt="Cierre ejecutivo">
+                <div class="zoom-hint-pill"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span class="lang-en">Zoom Close</span><span class="lang-es">Ampliar Cierre</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="slide-footer">
+            <div class="punchline-badge">
+              <span class="lang-en">Ask range: $5,000 → $150,000 in equipment &amp; tools. Pick the rung. Own the capacity.</span>
+              <span class="lang-es">Rango del ask: $5.000 → $150.000 en equipos y herramientas. Elige el peldaño. Posee la capacidad.</span>
+            </div>
+          </div>
+        </section>
+
         </div>
 
-        <div class="deck-container" id="deck-restaurante">
+<div class="deck-container" id="deck-restaurante">
           
         <!-- SLIDE 1: COVER HERO -->
         <section class="slide active slide-hero-lumi" id="restaurante-slide-1" data-slide="1" data-deck="restaurante">
@@ -3538,7 +3618,7 @@
                   <div class="card-icon-wrapper amber"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
                   <div class="card-text-group">
                     <div class="card-title"><span class="lang-en">The Owner's Bottom Line:</span><span class="lang-es">La lectura del dueño:</span></div>
-                    <div class="card-desc" style="font-size: 0.88rem; color: #f8fafc;">
+                    <div class="card-desc" style="font-size: 0.88rem; color: var(--text-secondary);">
                       <span class="lang-en">To generate $24k in new net profit at a 6% margin, you would need $400,000 USD in extra sales. Recovering leakage goes 100% straight to net cash EBITDA.</span>
                       <span class="lang-es">Para ganar $24k netos nuevos al 6% de margen, tendrías que vender $400,000 USD adicionales. Recuperar la fuga va 100% directo a la utilidad líquida.</span>
                     </div>
@@ -3809,7 +3889,7 @@
                   <div class="card-icon-wrapper emerald"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></div>
                   <div class="card-text-group">
                     <div class="card-title"><span class="lang-en">EBITDA Margin Impact: 2 to 5 Percentage Points</span><span class="lang-es">Impacto en EBITDA: 2 a 5 Puntos Porcentuales</span></div>
-                    <div class="card-desc" style="font-size: 0.86rem; color: #f1f5f9;">
+                    <div class="card-desc" style="font-size: 0.86rem; color: var(--text-secondary);">
                       <span class="lang-en">Eliminating non-operational shrinkage, unrecorded comps, and invoicing errors recovers 2–5% of EBITDA directly into the owner's pocket.</span>
                       <span class="lang-es">Subir de nivel operativo protege de 2 a 5 puntos porcentuales de EBITDA que hoy se pierden en fugas invisibles.</span>
                     </div>
@@ -3881,7 +3961,7 @@
                   <div class="card-icon-wrapper gold"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
                   <div class="card-text-group">
                     <div class="card-title"><span class="lang-en">NIST Digital Security Alignment:</span><span class="lang-es">Alineación con el Marco NIST:</span></div>
-                    <div class="card-desc" style="font-size: 0.86rem; color: #fff;">
+                    <div class="card-desc" style="font-size: 0.86rem; color: var(--text-secondary);">
                       <span class="lang-en">Identify → Protect → Detect → Respond → Recover. Arcana acts as the "Digital HACCP" ensuring financial and operational data integrity.</span>
                       <span class="lang-es">Identificar → Proteger → Detectar → Responder → Recuperar. Arcana actúa como un "HACCP Digital" asegurando la integridad de los datos.</span>
                     </div>
@@ -4096,7 +4176,7 @@
                   <div class="card-icon-wrapper gold"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg></div>
                   <div class="card-text-group">
                     <div class="card-title"><span class="lang-en">Executive Closing Takeaway:</span><span class="lang-es">Cierre Ejecutivo:</span></div>
-                    <div class="card-desc" style="font-size: 0.95rem; color: #fff; font-weight: 600;">
+                    <div class="card-desc" style="font-size: 0.95rem; color: var(--text-secondary); font-weight: 600;">
                       <span class="lang-en">The owner stops asking others to trust them; they start being able to prove every dollar with mathematical certainty.</span>
                       <span class="lang-es">El dueño deja de pedir que le crean; ahora puede demostrar cada dólar con certeza matemática.</span>
                     </div>
@@ -4134,36 +4214,40 @@
           <span class="lang-es">Siguiente</span>
           <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
         </button>
+        <button class="btn-nav btn-nav-ghost deck-audio-tour-btn" id="deckAudioTourBtn" onclick="startDeckAudioTour()" style="display: none;" title="Tour de audio completo (Shift+V)">
+          <span class="pill-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></span>
+          <span class="lang-en">Audio tour</span>
+          <span class="lang-es">Tour audio</span>
+        </button>
         <button class="btn-nav btn-nav-ghost" id="hubReturnBtn" onclick="openExecutiveHub()">
           <span class="lang-en">All ventures</span>
           <span class="lang-es">Todas las ventures</span>
         </button>
       </div>
 
-      <div class="brand-footer-signature">
-        <span class="confidential-dot"></span>
-        <span class="sig-brand">3i BAIRD LAB</span>
-        <span class="sig-sep">·</span>
-        <span class="lang-en">CONFIDENTIAL — INVESTOR USE ONLY</span><span class="lang-es">CONFIDENCIAL — SOLO PARA INVERSORES</span>
-      </div>
-
-      <div class="keyboard-hints">
-        <span><kbd class="kbd-badge">←</kbd><kbd class="kbd-badge">→</kbd></span>
-        <span><kbd class="kbd-badge">C</kbd> <span class="lang-en">Q&amp;A</span><span class="lang-es">Notas / Q&amp;A</span></span>
-        <span><kbd class="kbd-badge">F</kbd> <span class="lang-en">Full screen</span><span class="lang-es">Pantalla</span></span>
+      <div class="bottom-controls-right">
+        <div class="bottom-qa-slot" id="bottomQaSlot">
+          <button class="floating-comments-trigger" id="floatingCommentsBtn" onclick="toggleCommentsDrawer()" title="Preguntas y sugerencias de esta diapositiva (C)" style="display: none;" aria-label="Abrir preguntas y sugerencias de esta diapositiva">
+            <span class="comments-glow-dot"></span>
+            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8"/><path d="M8 13h5"/></svg>
+            <span class="lang-es floating-comments-trigger__label">Preguntas &amp; Sugerencias</span>
+            <span class="lang-en floating-comments-trigger__label">Questions &amp; Feedback</span>
+            <span class="comments-badge-counter" id="floatingCommentsCount">0</span>
+          </button>
+        </div>
       </div>
     </footer>
 
   </div>
 
-  <!-- Overview Slide Drawer Modal (15 Slides Navigator) -->
+  <!-- Overview Slide Drawer Modal (Executive Navigator, per-deck slide count) -->
   <div class="overview-drawer" id="overviewDrawer">
     <div class="overview-header">
       <div>
         <div class="deck-modal-tag">| 3i BAIRD LAB · EXECUTIVE NAVIGATOR</div>
         <div class="overview-title">
-          <span class="lang-en">Executive Slide Navigator (15 Slides)</span>
-          <span class="lang-es">Navegador Ejecutivo (15 Diapositivas)</span>
+          <span class="lang-en" id="overviewTitleEn">Executive Slide Navigator</span>
+          <span class="lang-es" id="overviewTitleEs">Navegador Ejecutivo</span>
         </div>
       </div>
       <button class="lightbox-close-btn" onclick="toggleOverview()"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
@@ -4494,80 +4578,65 @@
     </div>
   </div>
 
-        <div class="overview-grid" id="overviewGrid-comparativo" style="display: none;">
+                <div class="overview-grid" id="overviewGrid-comparativo" style="display: none;">
           <div class="overview-thumb-card" data-deck="comparativo" onclick="goToSlide(1)">
-            <div class="thumb-num">SLIDE 01 / 10 · <span class="lang-en">EXECUTIVE PROPOSAL</span><span class="lang-es">PROPUESTA EJECUTIVA</span></div>
-            <div class="thumb-title">
-              <span class="lang-en">Enterprise AI Infrastructure Strategy</span>
-              <span class="lang-es">Estrategia Ejecutiva de Infraestructura IA</span>
-            </div>
+            <div class="thumb-num">SLIDE 01 / 14 · <span class="lang-en">COVER THESIS</span><span class="lang-es">PORTADA · TESIS</span></div>
+            <div class="thumb-title"><span class="lang-en">Stop Renting Intelligence. Start Owning Capacity.</span><span class="lang-es">Deja de alquilar inteligencia. Empieza a poseer capacidad.</span></div>
           </div>
           <div class="overview-thumb-card" data-deck="comparativo" onclick="goToSlide(2)">
-            <div class="thumb-num">SLIDE 02 / 10 · <span class="lang-en">CURRENT ASSETS</span><span class="lang-es">CAPACIDAD ACTUAL</span></div>
-            <div class="thumb-title">
-              <span class="lang-en">What Can We Build Today with Existing Hardware?</span>
-              <span class="lang-es">¿Qué podemos hacer hoy con la infraestructura actual?</span>
-            </div>
+            <div class="thumb-num">SLIDE 02 / 14 · <span class="lang-en">INVESTMENT THESIS</span><span class="lang-es">TESIS DE INVERSIÓN</span></div>
+            <div class="thumb-title"><span class="lang-en">One Idea. Four Outcomes.</span><span class="lang-es">Una idea. Cuatro resultados.</span></div>
           </div>
           <div class="overview-thumb-card" data-deck="comparativo" onclick="goToSlide(3)">
-            <div class="thumb-num">SLIDE 03 / 10 · <span class="lang-en">GROWTH LIMITS</span><span class="lang-es">LÍMITES OPERATIVOS</span></div>
-            <div class="thumb-title">
-              <span class="lang-en">Where Real Operational Limits Emerge</span>
-              <span class="lang-es">Dónde están nuestros límites operativos reales</span>
-            </div>
+            <div class="thumb-num">SLIDE 03 / 14 · <span class="lang-en">CURRENT CAPACITY</span><span class="lang-es">CAPACIDAD ACTUAL</span></div>
+            <div class="thumb-title"><span class="lang-en">What We Can Already Ship Today</span><span class="lang-es">Lo que ya podemos entregar hoy</span></div>
           </div>
           <div class="overview-thumb-card" data-deck="comparativo" onclick="goToSlide(4)">
-            <div class="thumb-num">SLIDE 04 / 10 · <span class="lang-en">BUSINESS VALUE</span><span class="lang-es">GANANCIA EMPRESARIAL</span></div>
-            <div class="thumb-title">
-              <span class="lang-en">What Do We Gain by Upgrading Hardware?</span>
-              <span class="lang-es">Qué ganamos al mejorar y escalar los equipos</span>
-            </div>
+            <div class="thumb-num">SLIDE 04 / 14 · <span class="lang-en">TRAINING WALL</span><span class="lang-es">MURO DE ENTRENAMIENTO</span></div>
+            <div class="thumb-title"><span class="lang-en">Training Costs Time — and Rented Brains</span><span class="lang-es">Entrenar cuesta tiempo — y cerebros alquilados</span></div>
           </div>
           <div class="overview-thumb-card" data-deck="comparativo" onclick="goToSlide(5)">
-            <div class="thumb-num">SLIDE 05 / 10 · <span class="lang-en">HUMAN TALENT</span><span class="lang-es">TALENTO & PERSONAS</span></div>
-            <div class="thumb-title">
-              <span class="lang-en">Empowering Hardware Means Empowering People</span>
-              <span class="lang-es">Potenciar los equipos = Potenciar a las personas</span>
-            </div>
+            <div class="thumb-num">SLIDE 05 / 14 · <span class="lang-en">AGENT SATURATION</span><span class="lang-es">SATURACIÓN DE AGENTES</span></div>
+            <div class="thumb-title"><span class="lang-en">Agents Run 24/7 — Until the Machine Collapses</span><span class="lang-es">Agentes 24/7 — hasta que la máquina colapsa</span></div>
           </div>
           <div class="overview-thumb-card" data-deck="comparativo" onclick="goToSlide(6)">
-            <div class="thumb-num">SLIDE 06 / 10 · <span class="lang-en">PHASED BUDGET</span><span class="lang-es">MODELO DE INVERSIÓN</span></div>
-            <div class="thumb-title">
-              <span class="lang-en">Phased Capital Investment Model: How Much to Grow?</span>
-              <span class="lang-es">¿Cuánto cuesta crecer? Inversión por etapas</span>
-            </div>
+            <div class="thumb-num">SLIDE 06 / 14 · <span class="lang-en">HUMAN CAPITAL</span><span class="lang-es">CAPITAL HUMANO</span></div>
+            <div class="thumb-title"><span class="lang-en">12–15 Hour Days Are Not a Strategy</span><span class="lang-es">12–15 horas diarias no son una estrategia</span></div>
           </div>
           <div class="overview-thumb-card" data-deck="comparativo" onclick="goToSlide(7)">
-            <div class="thumb-num">SLIDE 07 / 10 · <span class="lang-en">ROI TRIGGERS</span><span class="lang-es">GATILLADORES ROI</span></div>
-            <div class="thumb-title">
-              <span class="lang-en">The 5 Business Triggers: When Is It Time to Invest?</span>
-              <span class="lang-es">Los 5 gatilladores financieros para invertir</span>
-            </div>
+            <div class="thumb-num">SLIDE 07 / 14 · <span class="lang-en">RENT VS OWN</span><span class="lang-es">ALQUILAR VS POSEER</span></div>
+            <div class="thumb-title"><span class="lang-en">Rent Intelligence — or Own the Engine</span><span class="lang-es">Alquilar inteligencia — o poseer el motor</span></div>
           </div>
           <div class="overview-thumb-card" data-deck="comparativo" onclick="goToSlide(8)">
-            <div class="thumb-num">SLIDE 08 / 10 · <span class="lang-en">24/7 CONTINUITY</span><span class="lang-es">CONTINUIDAD 24/7</span></div>
-            <div class="thumb-title">
-              <span class="lang-en">The True Goal: Robust 24/7 Technological Operations</span>
-              <span class="lang-es">El verdadero objetivo: Operación tecnológica 24/7</span>
-            </div>
+            <div class="thumb-num">SLIDE 08 / 14 · <span class="lang-en">TIER A · $5K</span><span class="lang-es">NIVEL A · $5K</span></div>
+            <div class="thumb-title"><span class="lang-en">~$5,000 Entry Workstation Unlock</span><span class="lang-es">~$5.000 · Destrabe de estación de entrada</span></div>
           </div>
           <div class="overview-thumb-card" data-deck="comparativo" onclick="goToSlide(9)">
-            <div class="thumb-num">SLIDE 09 / 10 · <span class="lang-en">3-LAYER MODEL</span><span class="lang-es">MODELO EN 3 CAPAS</span></div>
-            <div class="thumb-title">
-              <span class="lang-en">3-Layer Investment Architecture & Decision Matrix</span>
-              <span class="lang-es">Modelo en 3 capas & Matriz de decisión</span>
-            </div>
+            <div class="thumb-num">SLIDE 09 / 14 · <span class="lang-en">TIER B · $35–50K</span><span class="lang-es">NIVEL B · $35–50K</span></div>
+            <div class="thumb-title"><span class="lang-en">~$35k–$50k Agents That Stop Collapsing</span><span class="lang-es">~$35k–$50k · Agentes que dejan de colapsar</span></div>
           </div>
           <div class="overview-thumb-card" data-deck="comparativo" onclick="goToSlide(10)">
-            <div class="thumb-num">SLIDE 10 / 10 · <span class="lang-en">STRATEGIC ROADMAP</span><span class="lang-es">HOJA DE RUTA</span></div>
-            <div class="thumb-title">
-              <span class="lang-en">Strategic Growth Roadmap: Building an Enterprise Asset</span>
-              <span class="lang-es">Hoja de ruta estratégica: Construir un activo empresarial</span>
-            </div>
+            <div class="thumb-num">SLIDE 10 / 14 · <span class="lang-en">TIER C · $100–150K</span><span class="lang-es">NIVEL C · $100–150K</span></div>
+            <div class="thumb-title"><span class="lang-en">~$100k–$150k Portfolio Engine Room</span><span class="lang-es">~$100k–$150k · Sala de máquinas del portafolio</span></div>
+          </div>
+          <div class="overview-thumb-card" data-deck="comparativo" onclick="goToSlide(11)">
+            <div class="thumb-num">SLIDE 11 / 14 · <span class="lang-en">UNLOCK MAP</span><span class="lang-es">MAPA DE DESTRABES</span></div>
+            <div class="thumb-title"><span class="lang-en">If We Invest in This — We Advance That</span><span class="lang-es">Si invertimos en esto — avanzamos en aquello</span></div>
+          </div>
+          <div class="overview-thumb-card" data-deck="comparativo" onclick="goToSlide(12)">
+            <div class="thumb-num">SLIDE 12 / 14 · <span class="lang-en">LOCAL TRUST</span><span class="lang-es">CONFIANZA LOCAL</span></div>
+            <div class="thumb-title"><span class="lang-en">Keep Information as Local as We Can</span><span class="lang-es">Mantener la información lo más local posible</span></div>
+          </div>
+          <div class="overview-thumb-card" data-deck="comparativo" onclick="goToSlide(13)">
+            <div class="thumb-num">SLIDE 13 / 14 · <span class="lang-en">THE ASK</span><span class="lang-es">EL ASK</span></div>
+            <div class="thumb-title"><span class="lang-en">$5,000 → $150,000 Equipment &amp; Tools Ladder</span><span class="lang-es">$5.000 → $150.000 Escalera de equipos y herramientas</span></div>
+          </div>
+          <div class="overview-thumb-card" data-deck="comparativo" onclick="goToSlide(14)">
+            <div class="thumb-num">SLIDE 14 / 14 · <span class="lang-en">EXECUTIVE CLOSE</span><span class="lang-es">CIERRE EJECUTIVO</span></div>
+            <div class="thumb-title"><span class="lang-en">Build the Asset. Free the Hours. Scale the Ventures.</span><span class="lang-es">Construye el activo. Libera las horas. Escala las ventures.</span></div>
           </div>
     </div>
-
-    <div class="overview-grid" id="overviewGrid-restaurante" style="display: none;">
+<div class="overview-grid" id="overviewGrid-restaurante" style="display: none;">
           <div class="overview-thumb-card" data-deck="restaurante" onclick="goToSlide(1)">
             <div class="thumb-num">SLIDE 01 / 10 · <span class="lang-en">EXECUTIVE PROPOSAL</span><span class="lang-es">PROPUESTA EJECUTIVA</span></div>
             <div class="thumb-title">
@@ -4705,6 +4774,10 @@
         <span class="lang-es">Preguntas</span><span class="lang-en">Questions</span>
         <span class="comments-tab-count" id="tabCountBadge">0</span>
       </button>
+      <button class="comments-tab-btn" id="tabBtnAsk" onclick="switchCommentsTab('ask')">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/><path d="M19 3v4"/><path d="M21 5h-4"/></svg>
+        <span class="lang-es">Ask IA</span><span class="lang-en">Ask AI</span>
+      </button>
       <button class="comments-tab-btn" id="tabBtnInject" onclick="switchCommentsTab('inject')">
         <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M12 5v14M5 12h14"/></svg>
         <span class="lang-es">Inyectar</span><span class="lang-en">Inject</span>
@@ -4729,6 +4802,54 @@
         <div id="commentsListContainer" class="comments-cards-list">
           <!-- Dynamically populated -->
         </div>
+      </div>
+
+      <!-- TAB ASK: Presentation-grounded client Q&A -->
+      <div class="comments-tab-panel" id="panelAsk">
+        <div class="inject-form-group">
+          <label class="inject-label" for="askPresentationInput">
+            <span class="lang-es">Pregunta del cliente (respuesta anclada a esta presentación)</span>
+            <span class="lang-en">Client question (answer grounded in this presentation)</span>
+          </label>
+          <textarea class="inject-textarea" id="askPresentationInput" rows="3" placeholder="Ej: ¿Qué desbloquea invertir US$50.000?" data-placeholder-es="Ej: ¿Qué desbloquea invertir US$50.000?" data-placeholder-en="E.g.: What does investing US$50,000 unlock?"></textarea>
+        </div>
+        <div class="inject-actions-row">
+          <button type="button" class="btn-inject-primary" id="askPresentationBtn" onclick="askPresentationEngine()">
+            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/><path d="M19 3v4"/><path d="M21 5h-4"/></svg>
+            <span class="lang-es">Preguntar al motor</span>
+            <span class="lang-en">Ask the engine</span>
+          </button>
+        </div>
+        <div id="askPresentationResult" class="ask-engine-result" hidden></div>
+
+        <details class="ask-llm-config" id="askLlmConfigPanel">
+          <summary>
+            <span class="lang-es">Configurar API LLM (OpenAI-compatible)</span>
+            <span class="lang-en">Configure LLM API (OpenAI-compatible)</span>
+          </summary>
+          <div class="inject-form-group">
+            <label class="inject-label" for="askLlmEndpoint">Endpoint</label>
+            <input type="url" class="inject-input" id="askLlmEndpoint" placeholder="/llm-proxy/api/v1/chat/completions" autocomplete="off">
+          </div>
+          <div class="inject-form-group">
+            <label class="inject-label" for="askLlmApiKey">API Key</label>
+            <input type="password" class="inject-input" id="askLlmApiKey" placeholder="sk-..." autocomplete="off">
+          </div>
+          <div class="inject-form-group">
+            <label class="inject-label" for="askLlmModel">Model</label>
+            <input type="text" class="inject-input" id="askLlmModel" placeholder="llama3" autocomplete="off">
+          </div>
+          <div class="inject-actions-row">
+            <button type="button" class="btn-inject-secondary" onclick="savePresentationLlmConfig()">
+              <span class="lang-es">Guardar configuración</span>
+              <span class="lang-en">Save configuration</span>
+            </button>
+          </div>
+          <p class="ask-llm-hint">
+            <span class="lang-es">La API key solo vive en esta sesión del navegador. No se sube a GitHub ni se guarda al cerrar. En GitHub Pages usa la URL completa del servidor LLM.</span>
+            <span class="lang-en">The API key lives only in this browser session. It is never pushed to GitHub and is cleared on close. On GitHub Pages use the full LLM server URL.</span>
+          </p>
+        </details>
       </div>
 
       <!-- TAB 2: Inject Single Question / Comment -->
@@ -4847,6 +4968,14 @@
       <button type="button" class="preset-pill-btn" onclick="setPitchTimerPreset(0, 'Cronómetro Libre (Count Up)')">&infin;</button>
     </div>
 
+    <div class="pitch-timer-sync-row">
+      <label class="pitch-timer-sync-label">
+        <input type="checkbox" id="pitchTimerSyncNarration" checked onchange="setBriefingOption('syncPitchTimer', this.checked)">
+        <span class="lang-en">Sync with audio narration</span>
+        <span class="lang-es">Sincronizar con narración audio</span>
+      </label>
+    </div>
+
     <div class="pitch-timer-controls">
       <button type="button" class="btn-timer-primary" id="pitchTimerPlayBtn" onclick="togglePitchTimerRun()">
         <span id="pitchTimerPlayIconWrap"><svg class="ico" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></span>
@@ -4859,6 +4988,53 @@
     </div>
   </div>
 
+  <div class="audio-tour-bar" id="audioTourBar" hidden aria-live="polite">
+    <div class="audio-tour-bar-left">
+      <span class="audio-tour-pulse" aria-hidden="true"></span>
+      <span class="audio-tour-label" id="audioTourLabel">Slide 1 / 15</span>
+    </div>
+    <div class="audio-tour-bar-actions">
+      <button type="button" class="audio-tour-btn" onclick="pauseExecutiveBriefing()" title="Pausar">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+      </button>
+      <button type="button" class="audio-tour-btn audio-tour-btn-stop" onclick="stopExecutiveBriefing()" title="Detener">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="1"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- LLM session gate: API key is entered on open and wiped on close. Never shipped in git. -->
+  <div class="llm-session-gate" id="llmSessionGate" hidden aria-hidden="true">
+    <div class="llm-session-gate__card" role="dialog" aria-modal="true" aria-labelledby="llmGateTitle">
+      <h2 class="llm-session-gate__title" id="llmGateTitle">
+        <span class="lang-es">API LLM de esta sesión</span>
+        <span class="lang-en">LLM API for this session</span>
+      </h2>
+      <p class="llm-session-gate__desc">
+        <span class="lang-es">Ingresa la key al abrir. Se borra al cerrar la pestaña y nunca se sube a GitHub.</span>
+        <span class="lang-en">Enter the key when you open. It is cleared when the tab closes and never pushed to GitHub.</span>
+      </p>
+      <form class="llm-session-gate__form" onsubmit="submitLlmSessionGate(event)">
+        <label class="inject-label" for="llmGateEndpoint">Endpoint</label>
+        <input type="text" class="inject-input" id="llmGateEndpoint" placeholder="/llm-proxy/api/v1/chat/completions" autocomplete="off">
+        <label class="inject-label" for="llmGateApiKey">API Key</label>
+        <input type="password" class="inject-input" id="llmGateApiKey" placeholder="sk-..." autocomplete="off" required>
+        <label class="inject-label" for="llmGateModel">Model</label>
+        <input type="text" class="inject-input" id="llmGateModel" placeholder="llama3" autocomplete="off">
+        <div class="llm-session-gate__actions">
+          <button type="submit" class="btn-inject-primary">
+            <span class="lang-es">Usar en esta sesión</span>
+            <span class="lang-en">Use this session</span>
+          </button>
+          <button type="button" class="btn-inject-secondary" onclick="skipLlmSessionGate()">
+            <span class="lang-es">Continuar sin LLM</span>
+            <span class="lang-en">Continue without LLM</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- Virtual Laser Pointer Element & Click Ripple -->
   <div class="laser-pointer-dot" id="laserPointerDot" aria-hidden="true">
     <div class="laser-pointer-core"></div>
@@ -4867,7 +5043,7 @@
   <div class="laser-spotlight-overlay" id="laserSpotlightOverlay" aria-hidden="true"></div>
 
   <!-- Presentation Logic Script -->
-  <script src="app.js?v=20260821c" onerror="(function(){var n=document.createElement('div');n.style.cssText='position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.85);color:#fff;font:600 1rem/1.5 system-ui;padding:24px;text-align:center';n.innerHTML='No se pudo cargar la app.<br>Recarga con <strong>Ctrl+Shift+R</strong> o abre:<br><code style=&quot;color:#7dd3fc&quot;>https://madarchy.github.io/PRESENTACION/</code>';document.body.appendChild(n);})();"></script>
+  <script src="app.js?v=20260827g" onerror="(function(){var n=document.createElement('div');n.style.cssText='position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.85);color:#fff;font:600 1rem/1.5 system-ui;padding:24px;text-align:center';n.innerHTML='No se pudo cargar la app.<br>Recarga con <strong>Ctrl+Shift+R</strong> o abre:<br><code style=&quot;color:#7dd3fc&quot;>https://madarchy.github.io/PRESENTACION/</code>';document.body.appendChild(n);})();"></script>
   <!-- Venture Hub OS Modern Hexagonal Module Entrypoint -->
   <script type="module" src="/src/main.ts"></script>
 </body>

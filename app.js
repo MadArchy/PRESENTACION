@@ -11,7 +11,7 @@
 
 let activeDeck = 'hub'; // 'hub', 'tutor', 'fastfood', 'arcana', 'comparativo'
 let currentSlide = 1;
-const DECK_SLIDE_COUNTS = { tutor: 15, fastfood: 15, arcana: 15, restaurante: 10, comparativo: 10 };
+const DECK_SLIDE_COUNTS = { tutor: 15, fastfood: 15, arcana: 15, restaurante: 10, comparativo: 14 };
 
 function totalSlides() {
   return DECK_SLIDE_COUNTS[activeDeck] || 15;
@@ -147,15 +147,19 @@ const SLIDE_BACKGROUNDS = {
   comparativo: {
     default: 'backgrounds/bg-ia-chip.jpg',
     1: 'backgrounds/bg-ia-lab.jpg',
-    2: 'media/ia/ia-models.jpg',
-    3: 'backgrounds/bg-ia-lab.jpg',
-    4: 'backgrounds/bg-ia-chip.jpg',
-    5: 'media/ia/ia-memory.jpg',
-    6: 'media/ia/ia-models.jpg',
-    7: 'media/ia/ia-workflow.jpg',
-    8: 'media/ia/ia-client.jpg',
-    9: 'backgrounds/bg-ia-lab.jpg',
-    10: 'backgrounds/bg-closing.jpg'
+    2: 'media/ia/ia-own-capacity.jpg',
+    3: 'media/ia/ia-workflow.jpg',
+    4: 'media/ia/ia-memory.jpg',
+    5: 'media/ia/ia-datacenter-24-7.jpg',
+    6: 'media/ia/ia-reclaimed-hours.jpg',
+    7: 'media/ia/ia-rent-vs-own.jpg',
+    8: 'media/ia/ia-minipc.jpg',
+    9: 'media/ia/ia-tower.jpg',
+    10: 'media/ia/ia-dgx.jpg',
+    11: 'media/ia/ia-models.jpg',
+    12: 'media/ia/ia-rag.jpg',
+    13: 'media/ia/ia-gpu.jpg',
+    14: 'backgrounds/bg-closing.jpg'
   }
 };
 
@@ -264,10 +268,49 @@ function initPlatform() {
   openExecutiveHub();
   applyLanguage(currentLang);
   setupTouchGestures();
+  setBriefingOption('autoAdvance', true);
+  setBriefingOption('syncPitchTimer', true);
+  warmupSpeechVoices();
+  setupHubVentureCards();
+  initPresentationLlmSession();
+}
+
+function setupHubVentureCards() {
+  const grid = document.getElementById('hubVentureGrid');
+  if (!grid) return;
+
+  grid.querySelectorAll('.hub-venture-card').forEach(card => {
+    const cta = card.querySelector('.hub-card-cta');
+    if (!cta) return;
+
+    card.setAttribute('role', 'button');
+    card.setAttribute('tabindex', '0');
+
+    const open = () => {
+      const videoDeck = cta.getAttribute('data-video-deck');
+      const deck = cta.getAttribute('data-deck');
+      if (videoDeck) playVentureVideo(videoDeck);
+      else if (deck) launchDeck(deck);
+    };
+
+    card.addEventListener('click', event => {
+      // The CTA keeps its own inline handler, so ignore bubbled button clicks.
+      if (event.target.closest('.hub-card-cta')) return;
+      open();
+    });
+
+    card.addEventListener('keydown', event => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      if (event.target.closest('.hub-card-cta')) return;
+      event.preventDefault();
+      open();
+    });
+  });
 }
 
 // Open Executive Hub (Menu)
 function openExecutiveHub() {
+  stopExecutiveBriefing();
   activeDeck = 'hub';
   document.documentElement.setAttribute('data-deck', 'hub');
 
@@ -292,6 +335,8 @@ function openExecutiveHub() {
   if (nextBtn) nextBtn.style.display = 'none';
   if (hubReturnBtn) hubReturnBtn.style.display = 'none';
   if (gridToggleBtn) gridToggleBtn.style.display = 'none';
+  const deckTourBtn = document.getElementById('deckAudioTourBtn');
+  if (deckTourBtn) deckTourBtn.style.display = 'none';
 
   // Hide mobile edge navigation and swipe banner on Hub
   const mobileEdgePrev = document.getElementById('mobileEdgePrev');
@@ -309,6 +354,7 @@ function openExecutiveHub() {
 // Launch Specific Presentation
 function launchDeck(deckKey) {
   if (!DECK_CONFIG[deckKey] || deckKey === 'hub') return;
+  stopExecutiveBriefing();
   activeDeck = deckKey;
   currentSlide = 1;
   document.documentElement.setAttribute('data-deck', activeDeck);
@@ -330,6 +376,8 @@ function launchDeck(deckKey) {
   if (nextBtn) nextBtn.style.display = 'inline-flex';
   if (hubReturnBtn) hubReturnBtn.style.display = 'inline-flex';
   if (gridToggleBtn) gridToggleBtn.style.display = 'inline-flex';
+  const deckTourBtn = document.getElementById('deckAudioTourBtn');
+  if (deckTourBtn) deckTourBtn.style.display = 'inline-flex';
 
   // Reset mobile swipe hint
   const swipeHint = document.getElementById('mobileSwipeHint');
@@ -343,7 +391,9 @@ function launchDeck(deckKey) {
   ['tutor', 'fastfood', 'arcana', 'restaurante', 'comparativo'].forEach(key => {
     const grid = document.getElementById(`overviewGrid-${key}`);
     if (grid) {
-      grid.style.display = key === activeDeck ? 'grid' : 'none';
+      // Empty string (not 'grid') so the stylesheet decides the layout: the
+      // upgraded navigator stacks act sections instead of a flat card grid.
+      grid.style.display = key === activeDeck ? '' : 'none';
     }
   });
 
@@ -352,8 +402,11 @@ function launchDeck(deckKey) {
 }
 
 // Slide Navigation with Fluid Directional Transitions
-function goToSlide(slideNum, direction = 'next') {
+function goToSlide(slideNum, direction = 'next', options = {}) {
   if (activeDeck === 'hub') return;
+  if (!options.fromBriefingTour) {
+    stopExecutiveBriefing();
+  }
   const total = totalSlides();
   if (slideNum < 1) slideNum = 1;
   if (slideNum > total) slideNum = total;
@@ -437,12 +490,11 @@ function updateSlideDisplay(direction = 'next') {
   const activeGrid = document.getElementById(`overviewGrid-${activeDeck}`);
   if (activeGrid) {
     const thumbs = activeGrid.querySelectorAll('.overview-thumb-card');
+    // data-slide is authoritative once the navigator groups cards by act,
+    // because document order no longer matches the running order.
     thumbs.forEach((thumb, idx) => {
-      if (idx + 1 === currentSlide) {
-        thumb.classList.add('active');
-      } else {
-        thumb.classList.remove('active');
-      }
+      const slideNum = parseInt(thumb.dataset.slide || '', 10) || idx + 1;
+      thumb.classList.toggle('active', slideNum === currentSlide);
     });
   }
 
@@ -484,6 +536,16 @@ function updateDrawerFormLanguage(lang) {
   }
 }
 
+// Language visibility is applied as inline styles, so any markup injected
+// after the last applyLanguage() call would render both languages at once.
+// Views built on demand must re-apply it over their own subtree.
+function applyLanguageWithin(root, lang = currentLang) {
+  const scope = root || document;
+  const showEs = lang !== 'en';
+  scope.querySelectorAll('.lang-es').forEach(el => { el.style.display = showEs ? '' : 'none'; });
+  scope.querySelectorAll('.lang-en').forEach(el => { el.style.display = showEs ? 'none' : ''; });
+}
+
 function applyLanguage(lang) {
   currentLang = lang === 'en' ? 'en' : 'es';
   document.documentElement.setAttribute('data-lang', currentLang);
@@ -493,23 +555,26 @@ function applyLanguage(lang) {
 
   updateChromeMeta();
 
-  const esElements = document.querySelectorAll('.lang-es');
-  const enElements = document.querySelectorAll('.lang-en');
-
-  if (currentLang === 'es') {
-    esElements.forEach(el => el.style.display = '');
-    enElements.forEach(el => el.style.display = 'none');
-  } else {
-    esElements.forEach(el => el.style.display = 'none');
-    enElements.forEach(el => el.style.display = '');
-  }
+  applyLanguageWithin(document, currentLang);
 
   // Update drawer forms, placeholders, and options
   updateDrawerFormLanguage(currentLang);
 
+  const navSearch = document.getElementById('navSearchInput');
+  if (navSearch) {
+    navSearch.placeholder = navSearch.getAttribute(`data-placeholder-${currentLang}`) || navSearch.placeholder;
+  }
+  if (isOverviewOpen) refreshNavigatorState();
+
   // Live update executive audience badge & pitch timer
   if (typeof updateAudienceBadgeLanguage === 'function') updateAudienceBadgeLanguage();
   if (typeof updatePitchTimerPlayBtn === 'function') updatePitchTimerPlayBtn();
+
+  populateBriefingVoiceSelectors();
+
+  if (isSpeechSupported() && speechSynthesis.speaking && briefingEngine.mode) {
+    stopExecutiveBriefing();
+  }
 
   // Live update slide Q&A drawer if active
   if (typeof isCommentsOpen !== 'undefined' && isCommentsOpen) {
@@ -540,17 +605,424 @@ function toggleFullscreen() {
   }
 }
 
+// ==========================================================================
+// EXECUTIVE NAVIGATOR (Overview Drawer)
+// Turns the flat slide grid into a narrative map: slides are grouped into
+// pitch acts and annotated with Q&A readiness so the presenter can see, at a
+// glance, where the story is thin before walking into the room.
+// ==========================================================================
+
+// The canonical pitch arc. Sections always render in this order.
+const NARRATIVE_ACTS = [
+  { id: 'opening', upTo: 0.08, es: 'Apertura y Tesis', en: 'Opening & Thesis' },
+  { id: 'problem', upTo: 0.30, es: 'Problema y Dolor', en: 'Problem & Pain' },
+  { id: 'solution', upTo: 0.55, es: 'Solución y Tecnología', en: 'Solution & Technology' },
+  { id: 'market', upTo: 0.75, es: 'Mercado y Competencia', en: 'Market & Competition' },
+  { id: 'model', upTo: 0.92, es: 'Modelo y Economía', en: 'Model & Economics' },
+  { id: 'close', upTo: 1.01, es: 'Cierre y Ask', en: 'Close & Ask' }
+];
+
+// Slides are classified by their own category label rather than by position,
+// because the decks do not follow a uniform running order (slide 3 is already
+// "Our Solution" in one deck and "Investment Thesis" in another). Rules are
+// evaluated top-down and the first keyword hit wins, so multi-word phrases
+// must precede the broader single-word buckets that could also match them
+// ("Investment Thesis" vs "Investment Ask" vs "Investment Model").
+const NAV_ACT_RULES = [
+  ['close', ['cierre ejecutivo', 'executive closing', 'investment ask', 'ronda de inversion',
+    'solicitud de inversion', 'proximos pasos', 'next steps', 'hoja de ruta', 'roadmap', 'expansion']],
+  ['opening', ['tesis de inversion', 'investment thesis', 'propuesta ejecutiva', 'executive proposal',
+    'baird lab']],
+  ['market', ['tamano de mercado', 'market size', 'comparativa de mercado', 'benchmark',
+    'traccion', 'traction', 'metricas', 'metrics', 'ventaja competitiva', 'competitive advantage',
+    'posicionamiento', 'positioning', 'scope', 'estrategias del sector', 'sector strategies']],
+  ['model', ['modelo de negocio', 'business model', 'economia unitaria', 'unit economics',
+    'modelo de inversion', 'capex', 'presupuesto', 'budget', 'gatilladores roi', 'roi',
+    'franquicia', 'flywheel', 'gestion de riesgos', 'risk', 'modelo en 3 capas', '3-layer model',
+    'checklist', 'promesa honesta', 'honest promise', 'ganancia empresarial', 'business value']],
+  ['problem', ['problema', 'problem', 'pain', 'dolor', 'limites', 'limits', 'fugas', 'leaks',
+    'nist', 'madurez operativa', 'operational maturity', 'capacidad actual', 'current assets']],
+  ['solution', ['solucion', 'solution', 'que es', 'what is', 'multi-agente', 'multi-agent',
+    'memoria', 'memory', 'grafos', 'knowledge graph', 'hardware', 'infraestructura',
+    'infrastructure', 'correlacion', 'correlation', 'ecosistema', 'ecosystem', 'stack',
+    'tecnologico', 'technical', 'ingenieria de menu', 'menu engineering', 'cierre diario',
+    'daily close', 'liquidacion', 'settlement', 'portal', 'dominio', 'mastery', 'integracion',
+    'integration', 'ciudad piloto', 'pilot city', 'continuidad', 'continuity', 'talento',
+    'talent', 'personas', 'people', 'equipos', 'teams', 'piloto', 'pilot', 'arcana']]
+];
+
+const NAV_SECONDS_PER_SLIDE = 40;
+const navFilter = { text: '', act: 'all' };
+
+function actById(id) {
+  return NARRATIVE_ACTS.find((act) => act.id === id) || NARRATIVE_ACTS[0];
+}
+
+function resolveNarrativeAct(slideNum, total, categoryText) {
+  // The cover slide always opens the story, whatever its label says.
+  if (slideNum <= 1) return NARRATIVE_ACTS[0];
+
+  const haystack = navNormalize(categoryText);
+  if (haystack) {
+    const hit = NAV_ACT_RULES.find(([, keywords]) => keywords.some((kw) => haystack.includes(kw)));
+    if (hit) return actById(hit[0]);
+  }
+
+  // Unlabelled or unrecognised slide: fall back to its relative position.
+  const ratio = slideNum / Math.max(total, 1);
+  return NARRATIVE_ACTS.find((act) => ratio <= act.upTo) || NARRATIVE_ACTS[NARRATIVE_ACTS.length - 1];
+}
+
+// Lowercase and strip diacritics so "solucion" matches "Solución".
+function navNormalize(str) {
+  return String(str || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function navActLabel(act) {
+  return `<span class="lang-es">${act.es}</span><span class="lang-en">${act.en}</span>`;
+}
+
+function navEstimatedMinutes(slideCount) {
+  return Math.max(1, Math.round((slideCount * NAV_SECONDS_PER_SLIDE) / 60));
+}
+
+function ensureNavigatorChrome() {
+  if (!overviewDrawer || overviewDrawer.dataset.navChrome === '1') return;
+
+  const header = overviewDrawer.querySelector('.overview-header');
+  if (!header) return;
+
+  const stats = document.createElement('div');
+  stats.className = 'nav-stats';
+  stats.id = 'navStats';
+  header.insertBefore(stats, header.querySelector('.lightbox-close-btn'));
+
+  const toolbar = document.createElement('div');
+  toolbar.className = 'nav-toolbar';
+  toolbar.innerHTML = `
+    <div class="nav-search">
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="search" id="navSearchInput" autocomplete="off"
+        data-placeholder-es="Buscar por título o tema…"
+        data-placeholder-en="Search by title or topic…"
+        placeholder="Buscar por título o tema…"
+        aria-label="Buscar diapositiva">
+    </div>
+    <div class="nav-act-chips" id="navActChips" role="group" aria-label="Filtrar por acto narrativo"></div>
+  `;
+  header.insertAdjacentElement('afterend', toolbar);
+
+  const input = document.getElementById('navSearchInput');
+  if (input) {
+    input.addEventListener('input', () => {
+      navFilter.text = navNormalize(input.value);
+      applyNavigatorFilter();
+    });
+    input.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        const first = visibleNavigatorCards()[0];
+        if (first) first.focus();
+      }
+    });
+  }
+
+  overviewDrawer.dataset.navChrome = '1';
+}
+
+function buildNavigatorForDeck(deckKey) {
+  const grid = document.getElementById(`overviewGrid-${deckKey}`);
+  if (!grid || grid.dataset.navUpgraded === '1') return;
+
+  const cards = Array.from(grid.querySelectorAll('.overview-thumb-card'));
+  if (cards.length === 0) return;
+  const total = cards.length;
+
+  const slides = cards.map((card, index) => {
+    const numEl = card.querySelector('.thumb-num');
+    const titleEl = card.querySelector('.thumb-title');
+    // The category lives as .lang-es/.lang-en spans inside .thumb-num, after
+    // the "SLIDE 01 / 15 ·" prefix we are replacing with a dedicated chip.
+    const categoryHtml = numEl ? Array.from(numEl.children).map((el) => el.outerHTML).join('') : '';
+    return {
+      slide: index + 1,
+      categoryHtml,
+      titleHtml: titleEl ? titleEl.innerHTML : '',
+      searchText: navNormalize(`${numEl ? numEl.textContent : ''} ${titleEl ? titleEl.textContent : ''}`),
+      act: resolveNarrativeAct(index + 1, total, numEl ? numEl.textContent : '')
+    };
+  });
+
+  const groups = NARRATIVE_ACTS
+    .map((act) => ({ act, items: slides.filter((item) => item.act.id === act.id) }))
+    .filter((group) => group.items.length > 0);
+
+  grid.innerHTML = `
+    ${groups.map((group) => renderNavigatorAct(group, total)).join('')}
+    <div class="nav-empty" id="navEmptyState" hidden>
+      <span class="lang-es">Ninguna diapositiva coincide con la búsqueda.</span>
+      <span class="lang-en">No slides match your search.</span>
+    </div>
+  `;
+  grid.dataset.navUpgraded = '1';
+  grid.dataset.navTotal = String(total);
+  applyLanguageWithin(grid);
+}
+
+function renderNavigatorAct(group, total) {
+  const minutes = navEstimatedMinutes(group.items.length);
+  return `
+    <section class="nav-act" data-act="${group.act.id}">
+      <header class="nav-act__head">
+        <span class="nav-act__marker" aria-hidden="true"></span>
+        <h3 class="nav-act__name">${navActLabel(group.act)}</h3>
+        <span class="nav-act__meta">
+          <span class="lang-es">${group.items.length} de ${total} diapositivas · ~${minutes} min</span>
+          <span class="lang-en">${group.items.length} of ${total} slides · ~${minutes} min</span>
+        </span>
+        <span class="nav-act__readiness" data-act-readiness="${group.act.id}"></span>
+      </header>
+      <div class="nav-act__cards">
+        ${group.items.map((item) => renderNavigatorCard(item, total)).join('')}
+      </div>
+    </section>
+  `;
+}
+
+function renderNavigatorCard(item, total) {
+  const padded = item.slide < 10 ? `0${item.slide}` : `${item.slide}`;
+  return `
+    <div class="overview-thumb-card nav-card" data-slide="${item.slide}" data-act="${item.act.id}"
+      data-search="${escapeHtml(item.searchText)}" role="button" tabindex="0"
+      aria-label="Diapositiva ${item.slide} de ${total}" onclick="goToSlide(${item.slide})">
+      <div class="nav-card__head">
+        <span class="nav-card__num">${padded}</span>
+        <span class="nav-card__cat">${item.categoryHtml}</span>
+      </div>
+      <div class="thumb-title">${item.titleHtml}</div>
+      <div class="nav-card__foot" data-nav-foot="${item.slide}"></div>
+    </div>
+  `;
+}
+
+function visibleNavigatorCards() {
+  const grid = document.getElementById(`overviewGrid-${activeDeck}`);
+  if (!grid) return [];
+  return Array.from(grid.querySelectorAll('.nav-card')).filter((card) => !card.classList.contains('is-hidden'));
+}
+
+function refreshNavigatorState() {
+  const grid = document.getElementById(`overviewGrid-${activeDeck}`);
+  if (!grid || grid.dataset.navUpgraded !== '1') return;
+
+  const total = parseInt(grid.dataset.navTotal || '0', 10) || totalSlides();
+  const isEs = getActiveLang() === 'es';
+  const readinessByAct = {};
+  let slidesWithQa = 0;
+
+  grid.querySelectorAll('.nav-card').forEach((card) => {
+    const slide = parseInt(card.dataset.slide || '0', 10);
+    const act = card.dataset.act || 'opening';
+    const notes = getSlideNotes(activeDeck, slide);
+    const pinned = notes.filter((note) => note.pinned).length;
+
+    readinessByAct[act] = readinessByAct[act] || { ready: 0, count: 0 };
+    readinessByAct[act].count += 1;
+    if (notes.length > 0) {
+      readinessByAct[act].ready += 1;
+      slidesWithQa += 1;
+    }
+
+    card.classList.toggle('is-current', slide === currentSlide);
+    card.classList.toggle('is-unprepared', notes.length === 0);
+
+    const foot = card.querySelector('.nav-card__foot');
+    if (foot) {
+      const badges = [];
+      if (slide === currentSlide) {
+        badges.push(`<span class="nav-badge nav-badge--current">${isEs ? 'En pantalla' : 'On screen'}</span>`);
+      }
+      if (notes.length > 0) {
+        badges.push(`<span class="nav-badge nav-badge--qa">${notes.length} Q&amp;A</span>`);
+      } else {
+        badges.push(`<span class="nav-badge nav-badge--gap">${isEs ? 'Sin Q&amp;A' : 'No Q&amp;A'}</span>`);
+      }
+      if (pinned > 0) {
+        badges.push(`<span class="nav-badge nav-badge--key">${isEs ? 'Clave' : 'Key'}</span>`);
+      }
+      foot.innerHTML = badges.join('');
+    }
+  });
+
+  grid.querySelectorAll('[data-act-readiness]').forEach((el) => {
+    const stats = readinessByAct[el.getAttribute('data-act-readiness')];
+    if (!stats) {
+      el.textContent = '';
+      return;
+    }
+    const complete = stats.ready === stats.count;
+    el.className = `nav-act__readiness ${complete ? 'is-complete' : 'is-partial'}`;
+    el.textContent = isEs
+      ? `${stats.ready}/${stats.count} con Q&A`
+      : `${stats.ready}/${stats.count} with Q&A`;
+  });
+
+  renderNavigatorStats(total, slidesWithQa, isEs);
+  renderNavigatorActChips(readinessByAct, isEs);
+  applyNavigatorFilter();
+}
+
+function renderNavigatorStats(total, slidesWithQa, isEs) {
+  // Decks do not share a slide count (10 for Arcana Restaurantes and the AI
+  // infrastructure brief, 15 for the rest), so the heading must follow the deck.
+  const titleEn = document.getElementById('overviewTitleEn');
+  const titleEs = document.getElementById('overviewTitleEs');
+  const deckName = DECK_CONFIG[activeDeck];
+  if (titleEn) {
+    titleEn.textContent = `${deckName ? deckName.title_en : 'Executive'} · Slide Navigator (${total} Slides)`;
+  }
+  if (titleEs) {
+    titleEs.textContent = `${deckName ? deckName.title_es : 'Ejecutivo'} · Navegador (${total} Diapositivas)`;
+  }
+
+  const stats = document.getElementById('navStats');
+  if (!stats) return;
+
+  const percent = total > 0 ? Math.round((currentSlide / total) * 100) : 0;
+  const remaining = Math.max(0, total - currentSlide);
+
+  stats.innerHTML = `
+    <div class="nav-stat">
+      <span class="nav-stat__value">${currentSlide} / ${total}</span>
+      <span class="nav-stat__label">${isEs ? 'Posición actual' : 'Current position'}</span>
+      <div class="nav-stat__bar"><span style="width: ${percent}%"></span></div>
+    </div>
+    <div class="nav-stat">
+      <span class="nav-stat__value">${slidesWithQa} / ${total}</span>
+      <span class="nav-stat__label">${isEs ? 'Con Q&A preparado' : 'With Q&A prepared'}</span>
+    </div>
+    <div class="nav-stat">
+      <span class="nav-stat__value">~${navEstimatedMinutes(remaining)} min</span>
+      <span class="nav-stat__label">${isEs ? 'Restante estimado' : 'Estimated remaining'}</span>
+    </div>
+  `;
+}
+
+function renderNavigatorActChips(readinessByAct, isEs) {
+  const container = document.getElementById('navActChips');
+  const grid = document.getElementById(`overviewGrid-${activeDeck}`);
+  if (!container || !grid) return;
+
+  const acts = Array.from(grid.querySelectorAll('.nav-act')).map((section) => {
+    const id = section.getAttribute('data-act');
+    const meta = NARRATIVE_ACTS.find((act) => act.id === id) || NARRATIVE_ACTS[0];
+    return { id, meta, count: (readinessByAct[id] || { count: 0 }).count };
+  });
+
+  const allChip = `
+    <button type="button" class="nav-chip ${navFilter.act === 'all' ? 'is-active' : ''}"
+      onclick="setNavigatorActFilter('all')">${isEs ? 'Todo el pitch' : 'Full pitch'}</button>
+  `;
+
+  container.innerHTML = allChip + acts.map((act) => `
+    <button type="button" class="nav-chip ${navFilter.act === act.id ? 'is-active' : ''}"
+      onclick="setNavigatorActFilter('${act.id}')">
+      ${isEs ? act.meta.es : act.meta.en}<span class="nav-chip__count">${act.count}</span>
+    </button>
+  `).join('');
+}
+
+function setNavigatorActFilter(actId) {
+  navFilter.act = actId;
+  applyNavigatorFilter();
+  renderNavigatorActChips(
+    Array.from(document.querySelectorAll(`#overviewGrid-${activeDeck} .nav-act`)).reduce((acc, section) => {
+      const id = section.getAttribute('data-act');
+      acc[id] = { count: section.querySelectorAll('.nav-card').length, ready: 0 };
+      return acc;
+    }, {}),
+    getActiveLang() === 'es'
+  );
+}
+
+function applyNavigatorFilter() {
+  const grid = document.getElementById(`overviewGrid-${activeDeck}`);
+  if (!grid || grid.dataset.navUpgraded !== '1') return;
+
+  let visible = 0;
+  grid.querySelectorAll('.nav-card').forEach((card) => {
+    const matchesText = !navFilter.text || (card.dataset.search || '').includes(navFilter.text);
+    const matchesAct = navFilter.act === 'all' || card.dataset.act === navFilter.act;
+    const show = matchesText && matchesAct;
+    card.classList.toggle('is-hidden', !show);
+    if (show) visible += 1;
+  });
+
+  grid.querySelectorAll('.nav-act').forEach((section) => {
+    const hasVisible = !!section.querySelector('.nav-card:not(.is-hidden)');
+    section.classList.toggle('is-hidden', !hasVisible);
+  });
+
+  const empty = document.getElementById('navEmptyState');
+  if (empty) empty.hidden = visible > 0;
+}
+
+function handleNavigatorKeydown(event) {
+  const cards = visibleNavigatorCards();
+  if (cards.length === 0) return;
+
+  const currentIndex = cards.indexOf(document.activeElement);
+  let nextIndex = null;
+
+  if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
+    nextIndex = currentIndex < 0 ? 0 : Math.min(currentIndex + 1, cards.length - 1);
+  } else if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
+    nextIndex = currentIndex < 0 ? 0 : Math.max(currentIndex - 1, 0);
+  } else if (event.key === 'Home') {
+    nextIndex = 0;
+  } else if (event.key === 'End') {
+    nextIndex = cards.length - 1;
+  } else if ((event.key === 'Enter' || event.key === ' ') && currentIndex >= 0) {
+    event.preventDefault();
+    cards[currentIndex].click();
+    return;
+  }
+
+  if (nextIndex !== null) {
+    event.preventDefault();
+    cards[nextIndex].focus();
+    cards[nextIndex].scrollIntoView({ block: 'nearest' });
+  }
+}
+
 // Overview Drawer Toggle
 function toggleOverview() {
   if (activeDeck === 'hub') return;
   isOverviewOpen = !isOverviewOpen;
-  if (overviewDrawer) {
-    if (isOverviewOpen) {
-      overviewDrawer.classList.add('open');
-    } else {
-      overviewDrawer.classList.remove('open');
-    }
+  if (!overviewDrawer) return;
+
+  if (!isOverviewOpen) {
+    overviewDrawer.classList.remove('open');
+    return;
   }
+
+  ensureNavigatorChrome();
+  buildNavigatorForDeck(activeDeck);
+  navFilter.text = '';
+  navFilter.act = 'all';
+  const input = document.getElementById('navSearchInput');
+  if (input) input.value = '';
+  refreshNavigatorState();
+  overviewDrawer.classList.add('open');
+
+  const current = overviewDrawer.querySelector('.nav-card.is-current');
+  if (current) current.scrollIntoView({ block: 'center' });
+  if (input) setTimeout(() => input.focus(), 80);
 }
 
 // Lightbox Zoom
@@ -690,7 +1162,11 @@ document.addEventListener('keydown', (e) => {
   }
 
   if (isOverviewOpen) {
-    if (e.key === 'Escape' || e.key.toLowerCase() === 'g') toggleOverview();
+    if (e.key === 'Escape' || e.key.toLowerCase() === 'g') {
+      toggleOverview();
+      return;
+    }
+    handleNavigatorKeydown(e);
     return;
   }
 
@@ -780,7 +1256,20 @@ document.addEventListener('keydown', (e) => {
       e.preventDefault();
       toggleTheme();
       break;
+    case 'v':
+    case 'V':
+      e.preventDefault();
+      if (e.shiftKey && activeDeck !== 'hub') {
+        startDeckAudioTour();
+      } else {
+        toggleExecutiveBriefing();
+      }
+      break;
     case 'Escape':
+      if (isSpeechSupported() && speechSynthesis.speaking) {
+        stopExecutiveBriefing();
+        break;
+      }
       const timerPopover = document.getElementById('pitchTimerPopover');
       if (timerPopover && timerPopover.classList.contains('open')) {
         togglePitchTimerPanel();
@@ -866,260 +1355,532 @@ const CURATED_SLIDE_QA = {
       {
         "id": "comp-1-1",
         "category": "inversor",
-        "question_es": "¿Por qué la estrategia de infraestructura debe basarse en etapas de negocio y no en potencia bruta?",
-        "question_en": "Why should infrastructure strategy be based on business stages rather than raw computing power?",
-        "answer_es": "Comprar hardware antes de tener tracción comercial genera capital ocioso y rápida obsolescencia. La inversión progresiva asegura que cada equipo esté financiado y amortizado por contratos activos.",
-        "answer_en": "Purchasing hardware before commercial traction creates idle capital and rapid depreciation. Phased investment ensures every machine is funded and amortized by active client contracts.",
+        "question_es": "¿Por qué 'poseer capacidad' es mejor tesis que 'alquilar inteligencia'?",
+        "question_en": "Why is 'owning capacity' a stronger thesis than 'renting intelligence'?",
+        "answer_es": "Alquilar da acceso, pero no patrimonio. Poseer hardware convierte el gasto recurrente en un activo que acelera las ventures, retiene datos y reduce dependencia de facturas cloud.",
+        "answer_en": "Renting buys access, not equity. Owned hardware turns recurring spend into an asset that accelerates ventures, retains data, and reduces cloud-invoice dependency.",
         "pinned": true,
         "timestamp": "Preset 3i",
-        "question": "¿Por qué la estrategia de infraestructura debe basarse en etapas de negocio y no en potencia bruta?",
-        "answer": "Comprar hardware antes de tener tracción comercial genera capital ocioso y rápida obsolescencia. La inversión progresiva asegura que cada equipo esté financiado y amortizado por contratos activos."
+        "question": "¿Por qué 'poseer capacidad' es mejor tesis que 'alquilar inteligencia'?",
+        "answer": "Alquilar da acceso, pero no patrimonio. Poseer hardware convierte el gasto recurrente en un activo que acelera las ventures, retiene datos y reduce dependencia de facturas cloud."
       },
       {
         "id": "comp-1-2",
-        "category": "nota",
-        "question_es": "Nota del presentador: Tesis central de apertura",
-        "question_en": "Presenter Note: Core opening thesis",
-        "answer_es": "Enfatizar que el objetivo de 3i Baird Lab no es acumular servidores costosos, sino crear un activo productivo y rentable que multiplique los ingresos.",
-        "answer_en": "Emphasize that 3i Baird Lab's goal is not accumulating expensive servers, but forging a productive, profitable asset that multiplies enterprise revenue.",
+        "category": "objecion",
+        "question_es": "¿No es más fácil quedarse 100% en APIs cloud?",
+        "question_en": "Isn't it easier to stay 100% on cloud APIs?",
+        "answer_es": "Es más fácil a corto plazo y más caro e inestable a largo plazo. La nube sigue siendo puente; la propiedad es el destino estratégico.",
+        "answer_en": "Easier short-term, costlier and less stable long-term. Cloud remains a bridge; ownership is the strategic destination.",
         "pinned": false,
         "timestamp": "Preset 3i",
-        "question": "Nota del presentador: Tesis central de apertura",
-        "answer": "Enfatizar que el objetivo de 3i Baird Lab no es acumular servidores costosos, sino crear un activo productivo y rentable que multiplique los ingresos."
+        "question": "¿No es más fácil quedarse 100% en APIs cloud?",
+        "answer": "Es más fácil a corto plazo y más caro e inestable a largo plazo. La nube sigue siendo puente; la propiedad es el destino estratégico."
+      },
+      {
+        "id": "comp-1-3",
+        "category": "nota",
+        "question_es": "Nota del presentador: Frase de apertura",
+        "question_en": "Presenter note: Opening line",
+        "answer_es": "Abrir con: 'Cada hora que alquilamos el cerebro de otro, pagamos dos veces: en efectivo y en dependencia'.",
+        "answer_en": "Open with: 'Every hour we rent someone else's brain, we pay twice: in cash and in dependency'.",
+        "pinned": true,
+        "timestamp": "Preset 3i",
+        "question": "Nota del presentador: Frase de apertura",
+        "answer": "Abrir con: 'Cada hora que alquilamos el cerebro de otro, pagamos dos veces: en efectivo y en dependencia'."
       }
     ],
     "2": [
       {
         "id": "comp-2-1",
-        "category": "operativa",
-        "question_es": "¿Qué soluciones concretas podemos monetizar de inmediato con Capex US$0?",
-        "question_en": "What concrete solutions can we monetize immediately at $0 Capex?",
-        "answer_es": "Plataformas web empresariales, RAG documental con APIs de frontera, automatizaciones de procesos de negocio y prototipos funcionales para validación comercial.",
-        "answer_en": "Enterprise web platforms, document RAG with frontier APIs, business workflow automations, and functional prototypes for commercial validation.",
+        "category": "inversor",
+        "question_es": "¿Cuáles son los cuatro resultados de invertir en capacidad propia?",
+        "question_en": "What are the four outcomes of investing in owned capacity?",
+        "answer_es": "Más rápido, más seguro, nuestro (activo) y humano (agentes que liberan horas del equipo).",
+        "answer_en": "Faster, safer, ours (an asset), and human (agents that free team hours).",
         "pinned": true,
         "timestamp": "Preset 3i",
-        "question": "¿Qué soluciones concretas podemos monetizar de inmediato con Capex US$0?",
-        "answer": "Plataformas web empresariales, RAG documental con APIs de frontera, automatizaciones de procesos de negocio y prototipos funcionales para validación comercial."
+        "question": "¿Cuáles son los cuatro resultados de invertir en capacidad propia?",
+        "answer": "Más rápido, más seguro, nuestro (activo) y humano (agentes que liberan horas del equipo)."
       },
       {
         "id": "comp-2-2",
-        "category": "inversor",
-        "question_es": "¿Por qué no renovar toda la flota de desarrollo de inmediato?",
-        "question_en": "Why not upgrade the entire developer fleet right away?",
-        "answer_es": "Los equipos actuales son más que suficientes para la fase de desarrollo y demos; el desembolso de capital se reserva para cuando un cliente exija procesamiento masivo o privacidad local.",
-        "answer_en": "Current machines are fully capable for development and demos; capital deployment is reserved for when clients demand massive throughput or local privacy.",
+        "category": "operativa",
+        "question_es": "¿Cómo se traduce 'más seguro' para un inversor no técnico?",
+        "question_en": "How does 'safer' translate for a non-technical investor?",
+        "answer_es": "El trabajo sensible puede quedarse en máquinas bajo nuestro control, con menos datos saliendo a terceros.",
+        "answer_en": "Sensitive work can stay on machines we control, with less data leaving to third parties.",
         "pinned": false,
         "timestamp": "Preset 3i",
-        "question": "¿Por qué no renovar toda la flota de desarrollo de inmediato?",
-        "answer": "Los equipos actuales son más que suficientes para la fase de desarrollo y demos; el desembolso de capital se reserva para cuando un cliente exija procesamiento masivo o privacidad local."
+        "question": "¿Cómo se traduce 'más seguro' para un inversor no técnico?",
+        "answer": "El trabajo sensible puede quedarse en máquinas bajo nuestro control, con menos datos saliendo a terceros."
+      },
+      {
+        "id": "comp-2-3",
+        "category": "nota",
+        "question_es": "Nota del presentador: No vender GPUs, vender resultados",
+        "question_en": "Presenter note: Don't sell GPUs — sell outcomes",
+        "answer_es": "Insistir: el inversor no compra hardware; compra velocidad, custodia, agentes y horas recuperadas.",
+        "answer_en": "Insist: the investor is not buying hardware; they are buying speed, custody, agents, and reclaimed hours.",
+        "pinned": false,
+        "timestamp": "Preset 3i",
+        "question": "Nota del presentador: No vender GPUs, vender resultados",
+        "answer": "Insistir: el inversor no compra hardware; compra velocidad, custodia, agentes y horas recuperadas."
       }
     ],
     "3": [
       {
         "id": "comp-3-1",
-        "category": "objecion",
-        "question_es": "¿Cuáles son los 4 cuellos de botella que nos obligarán a comprar hardware dedicado?",
-        "question_en": "What are the 4 bottlenecks that will trigger dedicated hardware purchases?",
-        "answer_es": "1) Volumen de datos (modelos 32B-70B que requieren VRAM), 2) Concurrencia de usuarios, 3) Mandato de privacidad On-Premise, 4) Disponibilidad 24/7 sin riesgo de fallas.",
-        "answer_en": "1) Data volume (32B-70B models requiring high VRAM), 2) Multi-user concurrency, 3) On-Premise privacy compliance, 4) 24/7 non-stop availability.",
+        "category": "inversor",
+        "question_es": "¿Qué podemos entregar hoy sin CapEx adicional?",
+        "question_en": "What can we ship today with no additional CapEx?",
+        "answer_es": "Programas simples, páginas web, pequeñas plataformas de pago, algunos agentes (incluso 24/7 limitados) e IAs muy pequeñas.",
+        "answer_en": "Simple software, websites, small paid platforms, a few agents (including limited 24/7), and very small AIs.",
         "pinned": true,
         "timestamp": "Preset 3i",
-        "question": "¿Cuáles son los 4 cuellos de botella que nos obligarán a comprar hardware dedicado?",
-        "answer": "1) Volumen de datos (modelos 32B-70B que requieren VRAM), 2) Concurrencia de usuarios, 3) Mandato de privacidad On-Premise, 4) Disponibilidad 24/7 sin riesgo de fallas."
+        "question": "¿Qué podemos entregar hoy sin CapEx adicional?",
+        "answer": "Programas simples, páginas web, pequeñas plataformas de pago, algunos agentes (incluso 24/7 limitados) e IAs muy pequeñas."
       },
       {
         "id": "comp-3-2",
+        "category": "objecion",
+        "question_es": "Si ya pueden hacer eso, ¿para qué invertir?",
+        "question_en": "If you can already do that, why invest?",
+        "answer_es": "Porque el piso actual sirve para construir, no para multiplicar. Al escalar agentes o entrenamiento, el equipo colapsa y el peaje cloud sube.",
+        "answer_en": "Because today's floor can build, not multiply. Scaling agents or training collapses the machine and raises the cloud toll.",
+        "pinned": true,
+        "timestamp": "Preset 3i",
+        "question": "Si ya pueden hacer eso, ¿para qué invertir?",
+        "answer": "Porque el piso actual sirve para construir, no para multiplicar. Al escalar agentes o entrenamiento, el equipo colapsa y el peaje cloud sube."
+      },
+      {
+        "id": "comp-3-3",
         "category": "nota",
-        "question_es": "Nota del presentador: Metáfora de la VRAM para clientes no técnicos",
-        "question_en": "Presenter Note: VRAM metaphor for non-technical clients",
-        "answer_es": "Comparar la VRAM con el ancho de una autopista: si el modelo de IA no cabe en la memoria de la tarjeta gráfica, el sistema se vuelve 50 veces más lento.",
-        "answer_en": "Compare VRAM to highway lanes: if the AI model does not fit directly in GPU memory, execution slows down by 50x.",
+        "question_es": "Nota del presentador: Línea honesta",
+        "question_en": "Presenter note: Honest line",
+        "answer_es": "Decir explícitamente: 'Podemos construir. Todavía no podemos multiplicar sin romperse'.",
+        "answer_en": "Say explicitly: 'We can build. We cannot yet multiply without breaking'.",
         "pinned": false,
         "timestamp": "Preset 3i",
-        "question": "Nota del presentador: Metáfora de la VRAM para clientes no técnicos",
-        "answer": "Comparar la VRAM con el ancho de una autopista: si el modelo de IA no cabe en la memoria de la tarjeta gráfica, el sistema se vuelve 50 veces más lento."
+        "question": "Nota del presentador: Línea honesta",
+        "answer": "Decir explícitamente: 'Podemos construir. Todavía no podemos multiplicar sin romperse'."
       }
     ],
     "4": [
       {
         "id": "comp-4-1",
         "category": "inversor",
-        "question_es": "¿Qué métricas financieras justifican una inversión en estaciones dedicadas?",
-        "question_en": "What financial metrics justify investing in dedicated workstations?",
-        "answer_es": "+300% de capacidad de procesamiento paralelo, 100% de retención de datos confidenciales (cero fuga a nubes públicas) y reducción de hasta el 65% en costos recurrentes de APIs.",
-        "answer_en": "+300% concurrent processing throughput, 100% confidential data retention (zero cloud leakage), and up to 65% reduction in recurring API expenses.",
+        "question_es": "¿Cuánto cuesta en promedio entrenar con modelos de frontera de pago?",
+        "question_en": "What is the average cost of training with paid frontier models?",
+        "answer_es": "En ciclos serios de entrenamiento, el peaje de modelos de frontera de pago ronda un promedio de unos US$5.000, además del tiempo del equipo.",
+        "answer_en": "On serious training cycles, the paid frontier-model toll averages about US$5,000 — on top of team time.",
         "pinned": true,
         "timestamp": "Preset 3i",
-        "question": "¿Qué métricas financieras justifican una inversión en estaciones dedicadas?",
-        "answer": "+300% de capacidad de procesamiento paralelo, 100% de retención de datos confidenciales (cero fuga a nubes públicas) y reducción de hasta el 65% en costos recurrentes de APIs."
+        "question": "¿Cuánto cuesta en promedio entrenar con modelos de frontera de pago?",
+        "answer": "En ciclos serios de entrenamiento, el peaje de modelos de frontera de pago ronda un promedio de unos US$5.000, además del tiempo del equipo."
       },
       {
         "id": "comp-4-2",
-        "category": "operativa",
-        "question_es": "¿Cómo ayuda el hardware propio a cerrar clientes Enterprise?",
-        "question_en": "How does owned hardware help close Enterprise contracts?",
-        "answer_es": "Permite firmar acuerdos de nivel de servicio (SLAs) con garantías de privacidad y tiempos de respuesta dedicados que la nube pública no garantiza a bajo costo.",
-        "answer_en": "It enables signing strict SLAs with dedicated response times and privacy guarantees that public cloud APIs cannot provide at fixed costs.",
+        "category": "objecion",
+        "question_es": "¿Por qué no seguir pagando APIs si ya funciona?",
+        "question_en": "Why not keep paying APIs if it already works?",
+        "answer_es": "Porque el peaje es recurrente, no crea activo, y aumenta la dependencia. El hardware convierte parte de ese gasto en capacidad propia.",
+        "answer_en": "Because the toll is recurring, creates no asset, and increases dependency. Hardware converts part of that spend into owned capacity.",
         "pinned": false,
         "timestamp": "Preset 3i",
-        "question": "¿Cómo ayuda el hardware propio a cerrar clientes Enterprise?",
-        "answer": "Permite firmar acuerdos de nivel de servicio (SLAs) con garantías de privacidad y tiempos de respuesta dedicados que la nube pública no garantiza a bajo costo."
+        "question": "¿Por qué no seguir pagando APIs si ya funciona?",
+        "answer": "Porque el peaje es recurrente, no crea activo, y aumenta la dependencia. El hardware convierte parte de ese gasto en capacidad propia."
+      },
+      {
+        "id": "comp-4-3",
+        "category": "nota",
+        "question_es": "Nota del presentador: Tiempo + efectivo",
+        "question_en": "Presenter note: Time + cash",
+        "answer_es": "Subrayar el doble costo: días del equipo a 12–15 h + ~US$5.000 de peaje en ciclos serios.",
+        "answer_en": "Underline the double cost: team days at 12–15h + ~US$5,000 toll on serious cycles.",
+        "pinned": false,
+        "timestamp": "Preset 3i",
+        "question": "Nota del presentador: Tiempo + efectivo",
+        "answer": "Subrayar el doble costo: días del equipo a 12–15 h + ~US$5.000 de peaje en ciclos serios."
       }
     ],
     "5": [
       {
         "id": "comp-5-1",
-        "category": "nota",
-        "question_es": "Nota del presentador: La ecuación de productividad del talento",
-        "question_en": "Presenter Note: The talent productivity equation",
-        "answer_es": "Destacar la regla: 'Mejor hardware = -70% tiempo de espera = 3x más iteraciones = proyectos entregados en la mitad del tiempo'.",
-        "answer_en": "Highlight the rule: 'Better hardware = -70% waiting lag = 3x iteration frequency = projects delivered in half the time'.",
+        "category": "operativa",
+        "question_es": "¿Qué pasa cuando intentan correr más agentes 24/7?",
+        "question_en": "What happens when you try to run more 24/7 agents?",
+        "answer_es": "Algunos agentes ya corren, pero al subir la carga el equipo se satura: todo se ralentiza o colapsa. La ambición no es el límite; la capacidad sí.",
+        "answer_en": "A few agents already run, but as load rises the machine saturates: everything slows or collapses. Ambition is not the limit; capacity is.",
         "pinned": true,
         "timestamp": "Preset 3i",
-        "question": "Nota del presentador: La ecuación de productividad del talento",
-        "answer": "Destacar la regla: 'Mejor hardware = -70% tiempo de espera = 3x más iteraciones = proyectos entregados en la mitad del tiempo'."
+        "question": "¿Qué pasa cuando intentan correr más agentes 24/7?",
+        "answer": "Algunos agentes ya corren, pero al subir la carga el equipo se satura: todo se ralentiza o colapsa. La ambición no es el límite; la capacidad sí."
       },
       {
         "id": "comp-5-2",
-        "category": "operativa",
-        "question_es": "¿Cómo se beneficia un desarrollador con inferencia local?",
-        "question_en": "How does a developer benefit from local AI inference?",
-        "answer_es": "Prueba y ajusta prompts y código en segundos sin esperar colas de red ni preocuparse por el costo por token durante la etapa de pruebas.",
-        "answer_en": "They test and iterate code and prompts in seconds with zero network queue delays and zero per-token cost anxiety during testing.",
+        "category": "inversor",
+        "question_es": "¿Por qué es importante mantener la información local?",
+        "question_en": "Why does keeping information local matter?",
+        "answer_es": "Por convicción de custodia y por ventaja comercial: menos fuga a terceros y mejor postura frente a clientes e inversores.",
+        "answer_en": "Out of custody conviction and commercial advantage: less third-party leakage and a stronger posture with clients and investors.",
         "pinned": false,
         "timestamp": "Preset 3i",
-        "question": "¿Cómo se beneficia un desarrollador con inferencia local?",
-        "answer": "Prueba y ajusta prompts y código en segundos sin esperar colas de red ni preocuparse por el costo por token durante la etapa de pruebas."
+        "question": "¿Por qué es importante mantener la información local?",
+        "answer": "Por convicción de custodia y por ventaja comercial: menos fuga a terceros y mejor postura frente a clientes e inversores."
+      },
+      {
+        "id": "comp-5-3",
+        "category": "nota",
+        "question_es": "Nota del presentador: Frase de directorio",
+        "question_en": "Presenter note: Board line",
+        "answer_es": "Usar: 'Ambición de software sin capacidad de hardware es una promesa con mecha'.",
+        "answer_en": "Use: 'Software ambition without hardware capacity is a promise with a fuse'.",
+        "pinned": true,
+        "timestamp": "Preset 3i",
+        "question": "Nota del presentador: Frase de directorio",
+        "answer": "Usar: 'Ambición de software sin capacidad de hardware es una promesa con mecha'."
       }
     ],
     "6": [
       {
         "id": "comp-6-1",
         "category": "inversor",
-        "question_es": "¿Cómo se estructuran los niveles de presupuesto recomendados?",
-        "question_en": "How are the recommended budget tiers structured?",
-        "answer_es": "Nivel 0: US$0 (Desarrollo y demos). Nivel 1: US$2.5k–3.5k (IA local intermedia). Nivel 2: US$4k–6.5k (Workstations profesionales 70B). Nivel 3: Servidores centralizados 24/7.",
-        "answer_en": "Tier 0: $0 (Dev & demos). Tier 1: $2.5k–$3.5k (Intermediate local AI). Tier 2: $4k–$6.5k (Professional 70B workstations). Tier 3: Centralized 24/7 servers.",
+        "question_es": "¿Cómo se relaciona la inversión con las 12–15 horas diarias del equipo?",
+        "question_en": "How does investment relate to the team's 12–15 hour days?",
+        "answer_es": "Hoy la calidad depende de ritmo heroico. Más capacidad y agentes absorben carga nocturna/repetitiva para cumplir metas con más descanso.",
+        "answer_en": "Today quality depends on heroic pace. More capacity and agents absorb overnight/repetitive load so goals are met with more rest.",
         "pinned": true,
         "timestamp": "Preset 3i",
-        "question": "¿Cómo se estructuran los niveles de presupuesto recomendados?",
-        "answer": "Nivel 0: US$0 (Desarrollo y demos). Nivel 1: US$2.5k–3.5k (IA local intermedia). Nivel 2: US$4k–6.5k (Workstations profesionales 70B). Nivel 3: Servidores centralizados 24/7."
+        "question": "¿Cómo se relaciona la inversión con las 12–15 horas diarias del equipo?",
+        "answer": "Hoy la calidad depende de ritmo heroico. Más capacidad y agentes absorben carga nocturna/repetitiva para cumplir metas con más descanso."
       },
       {
         "id": "comp-6-2",
         "category": "objecion",
-        "question_es": "¿Por qué no saltar directamente al servidor empresarial Nivel 3?",
-        "question_en": "Why not jump directly to a Tier 3 enterprise server?",
-        "answer_es": "Porque requiere costos adicionales de energía, refrigeración y mantenimiento. Solo debe adquirirse cuando múltiples clientes en producción lo financien.",
-        "answer_en": "Because it incurs ongoing power, thermal, and maintenance overhead. It must only be deployed once multiple production clients fund it.",
+        "question_es": "¿No es esto solo 'comprar comodidad' para el equipo?",
+        "question_en": "Isn't this just 'buying comfort' for the team?",
+        "answer_es": "No: es infraestructura de continuidad. Sin descanso sostenible, el cuello de botella pasa a ser el talento humano, no el software.",
+        "answer_en": "No: it is continuity infrastructure. Without sustainable rest, the bottleneck becomes human talent, not software.",
         "pinned": false,
         "timestamp": "Preset 3i",
-        "question": "¿Por qué no saltar directamente al servidor empresarial Nivel 3?",
-        "answer": "Porque requiere costos adicionales de energía, refrigeración y mantenimiento. Solo debe adquirirse cuando múltiples clientes en producción lo financien."
+        "question": "¿No es esto solo 'comprar comodidad' para el equipo?",
+        "answer": "No: es infraestructura de continuidad. Sin descanso sostenible, el cuello de botella pasa a ser el talento humano, no el software."
+      },
+      {
+        "id": "comp-6-3",
+        "category": "nota",
+        "question_es": "Nota del presentador: Ángulo humano",
+        "question_en": "Presenter note: Human angle",
+        "answer_es": "Cerrar la slide con: 'La mejor inversión compra máquinas que trabajan mientras los fundadores duermen'.",
+        "answer_en": "Close the slide with: 'The best investment buys machines that work while founders sleep'.",
+        "pinned": true,
+        "timestamp": "Preset 3i",
+        "question": "Nota del presentador: Ángulo humano",
+        "answer": "Cerrar la slide con: 'La mejor inversión compra máquinas que trabajan mientras los fundadores duermen'."
       }
     ],
     "7": [
       {
         "id": "comp-7-1",
         "category": "inversor",
-        "question_es": "¿Cuáles son los 5 gatilladores que autorizan la compra de nuevo equipo?",
-        "question_en": "What are the 5 triggers that authorize purchasing new hardware?",
-        "answer_es": "1. Cliente con contrato firmado que lo exija. 2. Saturación de proyectos simultáneos. 3. Facturas de Cloud API superiores al costo de amortización. 4. Requisito legal de privacidad. 5. Operación en vivo 24/7.",
-        "answer_en": "1. Signed client contract demanding it. 2. Concurrent project saturation. 3. Cloud API bills exceeding amortization costs. 4. Legal compliance mandate. 5. Non-stop 24/7 live ops.",
+        "question_es": "¿Cuál es la diferencia financiera entre alquilar y poseer?",
+        "question_en": "What is the financial difference between renting and owning?",
+        "answer_es": "Alquilar: costo mensual, datos fuera, cero activo residual. Poseer: CapEx que se vuelve activo, datos más cerca, ventaja que compone.",
+        "answer_en": "Renting: monthly cost, data leaves, zero residual asset. Owning: CapEx that becomes an asset, data closer, compounding advantage.",
         "pinned": true,
         "timestamp": "Preset 3i",
-        "question": "¿Cuáles son los 5 gatilladores que autorizan la compra de nuevo equipo?",
-        "answer": "1. Cliente con contrato firmado que lo exija. 2. Saturación de proyectos simultáneos. 3. Facturas de Cloud API superiores al costo de amortización. 4. Requisito legal de privacidad. 5. Operación en vivo 24/7."
+        "question": "¿Cuál es la diferencia financiera entre alquilar y poseer?",
+        "answer": "Alquilar: costo mensual, datos fuera, cero activo residual. Poseer: CapEx que se vuelve activo, datos más cerca, ventaja que compone."
       },
       {
         "id": "comp-7-2",
-        "category": "nota",
-        "question_es": "Nota de negociación con clientes",
-        "question_en": "Client negotiation note",
-        "answer_es": "Si un cliente exige privacidad total, el costo del nodo local dedicado puede trasladarse como costo directo de setup en la propuesta comercial.",
-        "answer_en": "If a client demands strict on-premise privacy, dedicated hardware costs can be factored directly into the onboarding setup fee.",
+        "category": "objecion",
+        "question_es": "¿Abandonan por completo la nube?",
+        "question_en": "Are you abandoning the cloud completely?",
+        "answer_es": "No. La nube sigue como puente y refuerzo. La tesis es no depender de ella como único motor.",
+        "answer_en": "No. Cloud remains a bridge and backup. The thesis is not to depend on it as the only engine.",
         "pinned": false,
         "timestamp": "Preset 3i",
-        "question": "Nota de negociación con clientes",
-        "answer": "Si un cliente exige privacidad total, el costo del nodo local dedicado puede trasladarse como costo directo de setup en la propuesta comercial."
+        "question": "¿Abandonan por completo la nube?",
+        "answer": "No. La nube sigue como puente y refuerzo. La tesis es no depender de ella como único motor."
+      },
+      {
+        "id": "comp-7-3",
+        "category": "nota",
+        "question_es": "Nota del presentador: Regla puente/destino",
+        "question_en": "Presenter note: Bridge/destination rule",
+        "answer_es": "Repetir: 'Usa la nube como puente. Construye la propiedad como destino'.",
+        "answer_en": "Repeat: 'Use the cloud as a bridge. Build ownership as the destination'.",
+        "pinned": false,
+        "timestamp": "Preset 3i",
+        "question": "Nota del presentador: Regla puente/destino",
+        "answer": "Repetir: 'Usa la nube como puente. Construye la propiedad como destino'."
       }
     ],
     "8": [
       {
         "id": "comp-8-1",
-        "category": "operativa",
-        "question_es": "¿Cuáles son los 4 pilares indispensables para una operación 24/7?",
-        "question_en": "What are the 4 indispensable pillars for a 24/7 operation?",
-        "answer_es": "1) Talento potenciado, 2) Capacidad tecnológica GPU, 3) Continuidad eléctrica (UPS online de doble conversión), 4) Conectividad redundante (Doble proveedor de Internet con failover).",
-        "answer_en": "1) Empowered talent, 2) Compute GPU capacity, 3) Electrical continuity (Double-conversion online UPS), 4) Redundant connectivity (Dual WAN failover).",
+        "category": "inversor",
+        "question_es": "¿Qué desbloquea una inversión de unos US$5.000?",
+        "question_en": "What does an investment of about US$5,000 unlock?",
+        "answer_es": "Estación/nodo de entrada: IAs pequeñas más estables, más agentes locales concurrentes y menos llamadas de pago para el trabajo diario.",
+        "answer_en": "Entry workstation/node: more stable small AIs, more concurrent local agents, and fewer paid calls for day-to-day work.",
         "pinned": true,
         "timestamp": "Preset 3i",
-        "question": "¿Cuáles son los 4 pilares indispensables para una operación 24/7?",
-        "answer": "1) Talento potenciado, 2) Capacidad tecnológica GPU, 3) Continuidad eléctrica (UPS online de doble conversión), 4) Conectividad redundante (Doble proveedor de Internet con failover)."
+        "question": "¿Qué desbloquea una inversión de unos US$5.000?",
+        "answer": "Estación/nodo de entrada: IAs pequeñas más estables, más agentes locales concurrentes y menos llamadas de pago para el trabajo diario."
       },
       {
         "id": "comp-8-2",
-        "category": "objecion",
-        "question_es": "¿Qué ocurre si solo compramos computadores sin respaldo eléctrico?",
-        "question_en": "What happens if we buy fast computers without power protection?",
-        "answer_es": "Una sola micro-interrupción eléctrica apaga los servidores, corrompe bases de datos y tumba los servicios de los clientes, arruinando la reputación de la empresa.",
-        "answer_en": "A single power surge shuts down servers, corrupts databases, and crashes live client services, destroying enterprise reputation.",
+        "category": "operativa",
+        "question_es": "¿Qué tipo de equipo es el Nivel A?",
+        "question_en": "What kind of gear is Tier A?",
+        "answer_es": "Estación IA de alta memoria o nodo local compacto (clase Mac mini / torre GPU de entrada), más herramientas básicas de orquestación.",
+        "answer_en": "High-memory AI workstation or compact local node (Mac mini–class / entry GPU tower), plus basic orchestration tools.",
         "pinned": false,
         "timestamp": "Preset 3i",
-        "question": "¿Qué ocurre si solo compramos computadores sin respaldo eléctrico?",
-        "answer": "Una sola micro-interrupción eléctrica apaga los servidores, corrompe bases de datos y tumba los servicios de los clientes, arruinando la reputación de la empresa."
+        "question": "¿Qué tipo de equipo es el Nivel A?",
+        "answer": "Estación IA de alta memoria o nodo local compacto (clase Mac mini / torre GPU de entrada), más herramientas básicas de orquestación."
+      },
+      {
+        "id": "comp-8-3",
+        "category": "nota",
+        "question_es": "Nota del presentador: Pitch de $5k",
+        "question_en": "Presenter note: $5k pitch",
+        "answer_es": "Posicionar $5k como prueba de menor riesgo: convertir una porción del gasto mensual de IA en activo durable.",
+        "answer_en": "Position $5k as lowest-risk proof: convert a slice of monthly AI spend into a durable asset.",
+        "pinned": true,
+        "timestamp": "Preset 3i",
+        "question": "Nota del presentador: Pitch de $5k",
+        "answer": "Posicionar $5k como prueba de menor riesgo: convertir una porción del gasto mensual de IA en activo durable."
       }
     ],
     "9": [
       {
         "id": "comp-9-1",
-        "category": "nota",
-        "question_es": "Nota del presentador: Desglose del modelo en 3 capas",
-        "question_en": "Presenter Note: 3-Layer Model breakdown",
-        "answer_es": "Capa 1: Personas (Velocidad). Capa 2: Tecnología (Cómputo). Capa 3: Continuidad (Resiliencia). Todo debe responder al filtro de las 5 preguntas antes de comprar.",
-        "answer_en": "Layer 1: People (Velocity). Layer 2: Technology (Compute). Layer 3: Continuity (Resilience). All purchases must pass the 5-question filter.",
+        "category": "inversor",
+        "question_es": "¿Qué cambia entre US$35.000 y US$50.000?",
+        "question_en": "What changes between US$35,000 and US$50,000?",
+        "answer_es": "Varios agentes 24/7 sin colapsar tan fácil, entrenamiento a medida más rápido, menos peaje 'IA para entrenar IA', y carga nocturna que libera horas humanas.",
+        "answer_en": "Several 24/7 agents without easy collapse, faster custom training, less 'AI-to-train-AI' toll, and overnight load that frees human hours.",
         "pinned": true,
         "timestamp": "Preset 3i",
-        "question": "Nota del presentador: Desglose del modelo en 3 capas",
-        "answer": "Capa 1: Personas (Velocidad). Capa 2: Tecnología (Cómputo). Capa 3: Continuidad (Resiliencia). Todo debe responder al filtro de las 5 preguntas antes de comprar."
+        "question": "¿Qué cambia entre US$35.000 y US$50.000?",
+        "answer": "Varios agentes 24/7 sin colapsar tan fácil, entrenamiento a medida más rápido, menos peaje 'IA para entrenar IA', y carga nocturna que libera horas humanas."
       },
       {
         "id": "comp-9-2",
-        "category": "operativa",
-        "question_es": "¿Cuál es la primera pregunta que debemos hacernos antes de cualquier compra?",
-        "question_en": "What is the first question to ask before any purchase?",
-        "answer_es": "¿Podemos resolver esta necesidad con la infraestructura que ya tenemos? Si la respuesta es sí, se optimiza lo existente.",
-        "answer_en": "Can we solve this need with the infrastructure we already own? If yes, we optimize existing assets first.",
+        "category": "objecion",
+        "question_es": "¿Por qué no saltar directo a $150k?",
+        "question_en": "Why not jump straight to $150k?",
+        "answer_es": "Porque el capital debe crecer con la capacidad demostrada. El Nivel B prueba continuidad 24/7 antes del nodo empresarial.",
+        "answer_en": "Because capital should grow with proven capacity. Tier B proves 24/7 continuity before the enterprise node.",
         "pinned": false,
         "timestamp": "Preset 3i",
-        "question": "¿Cuál es la primera pregunta que debemos hacernos antes de cualquier compra?",
-        "answer": "¿Podemos resolver esta necesidad con la infraestructura que ya tenemos? Si la respuesta es sí, se optimiza lo existente."
+        "question": "¿Por qué no saltar directo a $150k?",
+        "answer": "Porque el capital debe crecer con la capacidad demostrada. El Nivel B prueba continuidad 24/7 antes del nodo empresarial."
+      },
+      {
+        "id": "comp-9-3",
+        "category": "nota",
+        "question_es": "Nota del presentador: Frase $50k",
+        "question_en": "Presenter note: $50k line",
+        "answer_es": "Decir: 'Aquí la capacidad empieza a verse como empresa, no como laptop'.",
+        "answer_en": "Say: 'This is where capacity starts looking like a company, not a laptop'.",
+        "pinned": false,
+        "timestamp": "Preset 3i",
+        "question": "Nota del presentador: Frase $50k",
+        "answer": "Decir: 'Aquí la capacidad empieza a verse como empresa, no como laptop'."
       }
     ],
     "10": [
       {
         "id": "comp-10-1",
         "category": "inversor",
-        "question_es": "¿Cuál es el resumen ejecutivo final para la toma de decisiones?",
-        "question_en": "What is the final executive summary for decision-makers?",
-        "answer_es": "La infraestructura deja de ser un gasto tecnológico y se convierte en una inversión en capacidad productiva, comercial y operativa que respalda el crecimiento de 3i Baird Lab.",
-        "answer_en": "Infrastructure ceases to be a mere IT expense and becomes a direct investment in productive, commercial, and operational capability backing 3i Baird Lab's growth.",
+        "question_es": "¿Qué justifica US$100.000–$150.000?",
+        "question_en": "What justifies US$100,000–$150,000?",
+        "answer_es": "Sala de máquinas del portafolio: muchos agentes/procesos en paralelo, entrenamiento local serio y postura institucional frente a clientes e inversores.",
+        "answer_en": "Portfolio engine room: many parallel agents/processes, serious local training, and institutional posture for clients and investors.",
         "pinned": true,
         "timestamp": "Preset 3i",
-        "question": "¿Cuál es el resumen ejecutivo final para la toma de decisiones?",
-        "answer": "La infraestructura deja de ser un gasto tecnológico y se convierte en una inversión en capacidad productiva, comercial y operativa que respalda el crecimiento de 3i Baird Lab."
+        "question": "¿Qué justifica US$100.000–$150.000?",
+        "answer": "Sala de máquinas del portafolio: muchos agentes/procesos en paralelo, entrenamiento local serio y postura institucional frente a clientes e inversores."
       },
       {
         "id": "comp-10-2",
-        "category": "nota",
-        "question_es": "Nota de cierre: Llamado a la acción",
-        "question_en": "Closing Note: Strategic call to action",
-        "answer_es": "Concluir reforzando la ruta: 'Primero tracción comercial con lo que tenemos; luego escalamiento rentable con continuidad 24/7'.",
-        "answer_en": "Conclude by reiterating the path: 'First commercial traction with existing assets; then profitable scaling with 24/7 continuity'.",
+        "category": "operativa",
+        "question_es": "¿Cómo beneficia esto a LUMI, Arcana y FoodTech?",
+        "question_en": "How does this benefit LUMI, Arcana, and FoodTech?",
+        "answer_es": "Comparten una misma capacidad fuerte: automatización, demos, entrenamiento y operación sin pelearse por un solo equipo saturado.",
+        "answer_en": "They share one strong capacity: automation, demos, training, and ops without fighting over one saturated machine.",
         "pinned": false,
         "timestamp": "Preset 3i",
-        "question": "Nota de cierre: Llamado a la acción",
-        "answer": "Concluir reforzando la ruta: 'Primero tracción comercial con lo que tenemos; luego escalamiento rentable con continuidad 24/7'."
+        "question": "¿Cómo beneficia esto a LUMI, Arcana y FoodTech?",
+        "answer": "Comparten una misma capacidad fuerte: automatización, demos, entrenamiento y operación sin pelearse por un solo equipo saturado."
+      },
+      {
+        "id": "comp-10-3",
+        "category": "nota",
+        "question_es": "Nota del presentador: Frase $150k",
+        "question_en": "Presenter note: $150k line",
+        "answer_es": "Cerrar con: 'Compra la sala de máquinas que deja respirar a cinco ventures a la vez'.",
+        "answer_en": "Close with: 'Buy the engine room that lets five ventures breathe at once'.",
+        "pinned": true,
+        "timestamp": "Preset 3i",
+        "question": "Nota del presentador: Frase $150k",
+        "answer": "Cerrar con: 'Compra la sala de máquinas que deja respirar a cinco ventures a la vez'."
+      }
+    ],
+    "11": [
+      {
+        "id": "comp-11-1",
+        "category": "inversor",
+        "question_es": "Si invertimos en equipos, ¿qué avanzamos concretamente?",
+        "question_en": "If we invest in equipment, what concrete advances follow?",
+        "answer_es": "Más agentes corriendo, más procesos en vivo, inteligencia a medida más rápida y aceleración del portafolio completo.",
+        "answer_en": "More agents running, more live processes, faster custom intelligence, and full-portfolio acceleration.",
+        "pinned": true,
+        "timestamp": "Preset 3i",
+        "question": "Si invertimos en equipos, ¿qué avanzamos concretamente?",
+        "answer": "Más agentes corriendo, más procesos en vivo, inteligencia a medida más rápida y aceleración del portafolio completo."
+      },
+      {
+        "id": "comp-11-2",
+        "category": "operativa",
+        "question_es": "¿Cuál es la fórmula Capital → Capacidad?",
+        "question_en": "What is the Capital → Capacity formula?",
+        "answer_es": "Capital → Capacidad → Agentes → Horas liberadas → Ventures aceleradas.",
+        "answer_en": "Capital → Capacity → Agents → Hours freed → Ventures accelerated.",
+        "pinned": true,
+        "timestamp": "Preset 3i",
+        "question": "¿Cuál es la fórmula Capital → Capacidad?",
+        "answer": "Capital → Capacidad → Agentes → Horas liberadas → Ventures aceleradas."
+      },
+      {
+        "id": "comp-11-3",
+        "category": "nota",
+        "question_es": "Nota del presentador: No vender specs",
+        "question_en": "Presenter note: Don't sell specs",
+        "answer_es": "Evitar jerga de VRAM. Hablar siempre en si → entonces de negocio.",
+        "answer_en": "Avoid VRAM jargon. Always speak in business if → then.",
+        "pinned": false,
+        "timestamp": "Preset 3i",
+        "question": "Nota del presentador: No vender specs",
+        "answer": "Evitar jerga de VRAM. Hablar siempre en si → entonces de negocio."
+      }
+    ],
+    "12": [
+      {
+        "id": "comp-12-1",
+        "category": "inversor",
+        "question_es": "¿Por qué la custodia local es un argumento de inversión?",
+        "question_en": "Why is local custody an investment argument?",
+        "answer_es": "Porque seguridad y soberanía de datos reducen riesgo reputacional/contractual y facilitan cerrar clientes que no quieren datos en nubes ajenas.",
+        "answer_en": "Because data security and sovereignty reduce reputational/contract risk and help close clients who refuse third-party clouds.",
+        "pinned": true,
+        "timestamp": "Preset 3i",
+        "question": "¿Por qué la custodia local es un argumento de inversión?",
+        "answer": "Porque seguridad y soberanía de datos reducen riesgo reputacional/contractual y facilitan cerrar clientes que no quieren datos en nubes ajenas."
+      },
+      {
+        "id": "comp-12-2",
+        "category": "objecion",
+        "question_es": "¿La nube no es igual de segura con buenos contratos?",
+        "question_en": "Isn't the cloud equally secure with good contracts?",
+        "answer_es": "Puede ser segura, pero no elimina dependencia ni peajes, y muchos clientes exigen custodia física bajo nuestro control.",
+        "answer_en": "It can be secure, but it does not remove dependency or tolls, and many clients demand physical custody under our control.",
+        "pinned": false,
+        "timestamp": "Preset 3i",
+        "question": "¿La nube no es igual de segura con buenos contratos?",
+        "answer": "Puede ser segura, pero no elimina dependencia ni peajes, y muchos clientes exigen custodia física bajo nuestro control."
+      },
+      {
+        "id": "comp-12-3",
+        "category": "nota",
+        "question_es": "Nota del presentador: Frase de custodia",
+        "question_en": "Presenter note: Custody line",
+        "answer_es": "Usar: 'Quien sostiene el cómputo sostiene la forma más silenciosa de poder: la custodia'.",
+        "answer_en": "Use: 'Whoever holds the compute holds the quietest form of power: custody'.",
+        "pinned": false,
+        "timestamp": "Preset 3i",
+        "question": "Nota del presentador: Frase de custodia",
+        "answer": "Usar: 'Quien sostiene el cómputo sostiene la forma más silenciosa de poder: la custodia'."
+      }
+    ],
+    "13": [
+      {
+        "id": "comp-13-1",
+        "category": "inversor",
+        "question_es": "¿Cuál es el ask exacto?",
+        "question_en": "What is the exact ask?",
+        "answer_es": "Inversión en equipos y herramientas desde US$5.000 hasta US$150.000, en tres peldaños con destrabes claros (A/B/C).",
+        "answer_en": "Investment in equipment and tools from US$5,000 to US$150,000 across three rungs with clear unlocks (A/B/C).",
+        "pinned": true,
+        "timestamp": "Preset 3i",
+        "question": "¿Cuál es el ask exacto?",
+        "answer": "Inversión en equipos y herramientas desde US$5.000 hasta US$150.000, en tres peldaños con destrabes claros (A/B/C)."
+      },
+      {
+        "id": "comp-13-2",
+        "category": "objecion",
+        "question_es": "¿Puedo entrar solo con $5.000?",
+        "question_en": "Can I enter with only $5,000?",
+        "answer_es": "Sí. El Nivel A es la puerta de menor riesgo para demostrar propiedad y reducir peaje diario antes de escalar.",
+        "answer_en": "Yes. Tier A is the lowest-risk door to prove ownership and cut daily toll before scaling.",
+        "pinned": true,
+        "timestamp": "Preset 3i",
+        "question": "¿Puedo entrar solo con $5.000?",
+        "answer": "Sí. El Nivel A es la puerta de menor riesgo para demostrar propiedad y reducir peaje diario antes de escalar."
+      },
+      {
+        "id": "comp-13-3",
+        "category": "nota",
+        "question_es": "Nota del presentador: Cierre del ask",
+        "question_en": "Presenter note: Ask close",
+        "answer_es": "Rematar: 'No estás financiando gadgets. Estás financiando el motor del portafolio'.",
+        "answer_en": "Close: 'You are not funding gadgets. You are funding the portfolio engine'.",
+        "pinned": false,
+        "timestamp": "Preset 3i",
+        "question": "Nota del presentador: Cierre del ask",
+        "answer": "Rematar: 'No estás financiando gadgets. Estás financiando el motor del portafolio'."
+      }
+    ],
+    "14": [
+      {
+        "id": "comp-14-1",
+        "category": "inversor",
+        "question_es": "¿Cuál es el siguiente paso después de elegir un nivel?",
+        "question_en": "What is the next step after choosing a tier?",
+        "answer_es": "1) Elegir nivel A/B/C, 2) desplegar capacidad y herramientas, 3) medir agentes en vivo y horas liberadas del equipo.",
+        "answer_en": "1) Choose tier A/B/C, 2) deploy capacity and tools, 3) measure live agents and team hours freed.",
+        "pinned": true,
+        "timestamp": "Preset 3i",
+        "question": "¿Cuál es el siguiente paso después de elegir un nivel?",
+        "answer": "1) Elegir nivel A/B/C, 2) desplegar capacidad y herramientas, 3) medir agentes en vivo y horas liberadas del equipo."
+      },
+      {
+        "id": "comp-14-2",
+        "category": "operativa",
+        "question_es": "¿Cómo se mide el éxito de la inversión?",
+        "question_en": "How is investment success measured?",
+        "answer_es": "Agentes 24/7 estables, menor gasto cloud en ciclos de entrenamiento, datos más locales, y reducción del ritmo 12–15 h sin fallar metas.",
+        "answer_en": "Stable 24/7 agents, lower cloud spend on training cycles, more local data, and reduced 12–15h pace without missing goals.",
+        "pinned": false,
+        "timestamp": "Preset 3i",
+        "question": "¿Cómo se mide el éxito de la inversión?",
+        "answer": "Agentes 24/7 estables, menor gasto cloud en ciclos de entrenamiento, datos más locales, y reducción del ritmo 12–15 h sin fallar metas."
+      },
+      {
+        "id": "comp-14-3",
+        "category": "nota",
+        "question_es": "Nota del presentador: Frase final",
+        "question_en": "Presenter note: Final line",
+        "answer_es": "Cerrar el deck: 'El futuro que construimos necesita un motor que poseemos, no un medidor que alquilamos'.",
+        "answer_en": "Close the deck: 'The future we are building needs an engine we own — not a meter we rent'.",
+        "pinned": true,
+        "timestamp": "Preset 3i",
+        "question": "Nota del presentador: Frase final",
+        "answer": "Cerrar el deck: 'El futuro que construimos necesita un motor que poseemos, no un medidor que alquilamos'."
       }
     ]
   },
@@ -1984,6 +2745,169 @@ function getCommentAnswer(item, lang = getActiveLang()) {
   return item.answer_es || item.answer_en || item.answer || '';
 }
 
+/* --------------------------------------------------------------------------
+   Comment translation
+   Client-submitted Q&A is often stored in only one language. When the UI
+   switches, we fetch the missing locale via MyMemory (free, no API key) and
+   persist question_en/es + answer_en/es in localStorage so it only translates
+   once per note.
+   -------------------------------------------------------------------------- */
+const QA_TRANSLATE_DELAY_MS = 350;
+let qaTranslateQueue = Promise.resolve();
+const qaTranslateInFlight = new Set();
+
+function queueCommentTranslation(task) {
+  qaTranslateQueue = qaTranslateQueue.then(task).catch(() => {});
+  return qaTranslateQueue;
+}
+
+function detectTextLang(text) {
+  if (!text || !String(text).trim()) return null;
+  const sample = String(text).trim();
+  if (/[áéíóúñ¿¡]/i.test(sample)) return 'es';
+  const lower = sample.toLowerCase();
+  const esHits = (lower.match(/\b(el|la|los|las|de|del|qué|cuál|por|entre|gracias|nota|pregunta|respuesta|diapositiva|inversor|objeción|operativa|margen|proyectado|gracias a|reducción)\b/g) || []).length;
+  const enHits = (lower.match(/\b(the|what|why|how|which|between|thanks|note|question|answer|slide|investor|objection|projected|margin|reduction|operational)\b/g) || []).length;
+  if (esHits > enHits) return 'es';
+  if (enHits > esHits) return 'en';
+  return null;
+}
+
+function getCommentFieldSourceLang(item, part) {
+  const esKey = `${part}_es`;
+  const enKey = `${part}_en`;
+  const esText = item[esKey]?.trim();
+  const enText = item[enKey]?.trim();
+  if (esText && !enText) return 'es';
+  if (enText && !esText) return 'en';
+  if (esText && enText) return null;
+  const generic = item[part]?.trim();
+  return generic ? detectTextLang(generic) : null;
+}
+
+function commentNeedsTranslation(item, targetLang = getActiveLang()) {
+  if (!item) return false;
+  const sourceLang = targetLang === 'en' ? 'es' : 'en';
+
+  for (const part of ['question', 'answer']) {
+    const targetKey = `${part}_${targetLang}`;
+    if (item[targetKey]?.trim()) continue;
+
+    const sourceKey = `${part}_${sourceLang}`;
+    const sourceText = item[sourceKey]?.trim() || item[part]?.trim();
+    if (!sourceText) continue;
+
+    const fromLang = item[sourceKey]?.trim()
+      ? sourceLang
+      : (detectTextLang(sourceText) || sourceLang);
+
+    if (fromLang !== targetLang) return true;
+  }
+  return false;
+}
+
+async function translateText(text, fromLang, toLang) {
+  const clean = String(text || '').trim();
+  if (!clean || fromLang === toLang) return clean;
+
+  const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(clean)}&langpair=${fromLang}|${toLang}`;
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+  const data = await response.json();
+  if (data.responseStatus === 200 && data.responseData?.translatedText) {
+    const translated = String(data.responseData.translatedText).trim();
+    if (translated && translated.toUpperCase() !== clean.toUpperCase()) return translated;
+    if (translated) return translated;
+  }
+  throw new Error('Translation unavailable');
+}
+
+async function ensureCommentTranslated(item, targetLang = getActiveLang()) {
+  if (!item) return false;
+  const sourceLang = targetLang === 'en' ? 'es' : 'en';
+  let changed = false;
+
+  for (const part of ['question', 'answer']) {
+    const targetKey = `${part}_${targetLang}`;
+    const sourceKey = `${part}_${sourceLang}`;
+    if (item[targetKey]?.trim()) continue;
+
+    const sourceText = item[sourceKey]?.trim() || item[part]?.trim();
+    if (!sourceText) continue;
+
+    const fromLang = item[sourceKey]?.trim()
+      ? sourceLang
+      : (detectTextLang(sourceText) || sourceLang);
+
+    if (fromLang === targetLang) {
+      item[targetKey] = sourceText;
+      changed = true;
+      continue;
+    }
+
+    item[targetKey] = await translateText(sourceText, fromLang, targetLang);
+    changed = true;
+  }
+
+  delete item._translateError;
+  return changed;
+}
+
+async function translateAndPersistComment(deck, slide, itemId, targetLang = getActiveLang()) {
+  const notes = getSlideNotes(deck, slide);
+  const item = notes.find((note) => note.id === itemId);
+  if (!item || !commentNeedsTranslation(item, targetLang)) return false;
+
+  item._translating = true;
+  if (isCommentsOpen && activeDeck === deck && currentSlide === slide) renderCommentsList();
+
+  try {
+    const changed = await ensureCommentTranslated(item, targetLang);
+    delete item._translating;
+    if (changed) {
+      saveSlideNotes(deck, slide, notes);
+      if (isCommentsOpen && activeDeck === deck && currentSlide === slide) renderCommentsList();
+      return true;
+    }
+  } catch (err) {
+    delete item._translating;
+    item._translateError = true;
+    if (isCommentsOpen && activeDeck === deck && currentSlide === slide) renderCommentsList();
+  }
+  return false;
+}
+
+function scheduleCommentsTranslation(deck, slide, targetLang = getActiveLang()) {
+  const notes = getSlideNotes(deck, slide);
+  const pending = notes.filter((item) =>
+    commentNeedsTranslation(item, targetLang) && !item._translating && !qaTranslateInFlight.has(item.id)
+  );
+  if (pending.length === 0) return;
+
+  pending.forEach((item) => qaTranslateInFlight.add(item.id));
+
+  queueCommentTranslation(async () => {
+    for (const item of pending) {
+      try {
+        await translateAndPersistComment(deck, slide, item.id, targetLang);
+      } finally {
+        qaTranslateInFlight.delete(item.id);
+      }
+      await new Promise((resolve) => setTimeout(resolve, QA_TRANSLATE_DELAY_MS));
+    }
+  });
+}
+
+async function translateCommentById(id) {
+  const lang = getActiveLang();
+  showCommentsToast(lang === 'es' ? 'Traduciendo…' : 'Translating…');
+  const ok = await translateAndPersistComment(activeDeck, currentSlide, id, lang);
+  showCommentsToast(ok
+    ? (lang === 'es' ? 'Traducción lista' : 'Translation ready')
+    : (lang === 'es' ? 'No se pudo traducir. Revisa tu conexión.' : 'Could not translate. Check your connection.'));
+}
+
 function hydrateNoteFromPreset(item, preset) {
   if (!item || !preset) return item;
   if (preset.question_es) item.question_es = preset.question_es;
@@ -2012,6 +2936,8 @@ function getSlideNotes(deck, slide) {
         let migrated = false;
         if (presets && Array.isArray(presets)) {
           const presetMap = new Map(presets.map(p => [p.id, p]));
+          const existingIds = new Set(parsed.map(p => p.id).filter(Boolean));
+
           parsed.forEach(item => {
             const before = JSON.stringify(item);
             if (item.id && presetMap.has(item.id)) {
@@ -2025,6 +2951,14 @@ function getSlideNotes(deck, slide) {
               if (match) hydrateNoteFromPreset(item, match);
             }
             if (JSON.stringify(item) !== before) migrated = true;
+          });
+
+          // Merge brand-new curated presets that older localStorage copies never saw.
+          presets.forEach(preset => {
+            if (preset.id && !existingIds.has(preset.id)) {
+              parsed.push({ ...preset });
+              migrated = true;
+            }
           });
         }
         if (migrated) saveSlideNotes(deck, slide, parsed);
@@ -2051,6 +2985,71 @@ function saveSlideNotes(deck, slide, notesArray) {
   updateCommentsCounterBadge();
 }
 
+// --------------------------------------------------------------------------
+// Q&A trigger discoverability
+// Clients were missing the panel entirely, so the trigger advertises itself
+// (pulsing ring + a coach mark naming the action) until it is opened once.
+// The flag is persisted so a returning viewer is not nagged again.
+// --------------------------------------------------------------------------
+const QA_DISCOVERED_KEY = '3i_qa_trigger_discovered';
+
+function hasDiscoveredQa() {
+  try {
+    return localStorage.getItem(QA_DISCOVERED_KEY) === '1';
+  } catch (err) {
+    // Private mode or blocked storage: stay quiet rather than pulse forever.
+    return true;
+  }
+}
+
+function markQaDiscovered() {
+  try {
+    localStorage.setItem(QA_DISCOVERED_KEY, '1');
+  } catch (err) {
+    /* storage unavailable — the in-memory class removal below still applies */
+  }
+  const btn = document.getElementById('floatingCommentsBtn');
+  if (btn) btn.classList.remove('is-inviting');
+  dismissQaCoachMark();
+}
+
+function dismissQaCoachMark() {
+  const mark = document.getElementById('qaCoachMark');
+  if (mark) mark.remove();
+}
+
+function ensureQaCoachMark() {
+  if (hasDiscoveredQa() || document.getElementById('qaCoachMark')) return;
+
+  const slot = document.getElementById('bottomQaSlot');
+  if (!slot) return;
+
+  const mark = document.createElement('div');
+  mark.className = 'qa-coach-mark';
+  mark.id = 'qaCoachMark';
+  mark.setAttribute('role', 'status');
+  mark.innerHTML = `
+    <div class="qa-coach-mark__body">
+      <span class="lang-es">
+        <strong>¿Tienes una pregunta?</strong>
+        Deja aquí tus dudas o sugerencias sobre esta diapositiva. También puedes pulsar <b>C</b>.
+      </span>
+      <span class="lang-en">
+        <strong>Have a question?</strong>
+        Leave your questions or feedback about this slide here. You can also press <b>C</b>.
+      </span>
+    </div>
+    <button type="button" class="qa-coach-mark__close" aria-label="Cerrar aviso">×</button>
+  `;
+  mark.querySelector('.qa-coach-mark__close').addEventListener('click', (event) => {
+    event.stopPropagation();
+    markQaDiscovered();
+  });
+
+  slot.appendChild(mark);
+  applyLanguageWithin(mark);
+}
+
 function updateCommentsCounterBadge() {
   const floatingBtn = document.getElementById('floatingCommentsBtn');
   const countBadge = document.getElementById('floatingCommentsCount');
@@ -2058,10 +3057,15 @@ function updateCommentsCounterBadge() {
 
   if (activeDeck === 'hub') {
     if (floatingBtn) floatingBtn.style.display = 'none';
+    dismissQaCoachMark();
     return;
   }
 
-  if (floatingBtn) floatingBtn.style.display = 'inline-flex';
+  if (floatingBtn) {
+    floatingBtn.style.display = 'inline-flex';
+    floatingBtn.classList.toggle('is-inviting', !hasDiscoveredQa());
+  }
+  ensureQaCoachMark();
 
   const notes = getSlideNotes(activeDeck, currentSlide);
   const count = notes.length;
@@ -2119,6 +3123,7 @@ function updateCommentsDrawerHeader() {
 function openCommentsDrawer() {
   if (activeDeck === 'hub') return;
   isCommentsOpen = true;
+  markQaDiscovered();
 
   const drawer = document.getElementById('commentsDrawer');
   const backdrop = document.getElementById('commentsDrawerBackdrop');
@@ -2129,6 +3134,9 @@ function openCommentsDrawer() {
   updateDrawerFormLanguage(currentLang);
   renderCommentsList();
   updateCommentsCounterBadge();
+  renderQaOutboxStrip();
+  flushQaOutbox();
+  scheduleCommentsTranslation(activeDeck, currentSlide, getActiveLang());
 }
 
 function closeCommentsDrawer() {
@@ -2141,7 +3149,7 @@ function closeCommentsDrawer() {
 
 function switchCommentsTab(tabName) {
   activeCommentTab = tabName;
-  ['list', 'inject', 'bulk'].forEach(t => {
+  ['list', 'ask', 'inject', 'bulk'].forEach(t => {
     const btn = document.getElementById(`tabBtn${t.charAt(0).toUpperCase() + t.slice(1)}`);
     const panel = document.getElementById(`panel${t.charAt(0).toUpperCase() + t.slice(1)}`);
     if (btn) btn.classList.toggle('active', t === tabName);
@@ -2150,6 +3158,9 @@ function switchCommentsTab(tabName) {
 
   if (tabName === 'list') {
     renderCommentsList();
+  }
+  if (tabName === 'ask') {
+    loadPresentationLlmConfigIntoForm();
   }
 }
 
@@ -2200,12 +3211,21 @@ function renderCommentsList() {
 
     const qText = getCommentQuestion(item, lang);
     const aText = getCommentAnswer(item, lang);
+    const needsTranslate = commentNeedsTranslation(item, lang);
+    const isTranslating = !!item._translating;
+    const translateFailed = !!item._translateError;
+    const sourceLang = getCommentFieldSourceLang(item, 'question') || getCommentFieldSourceLang(item, 'answer');
+    const showLangHint = sourceLang && sourceLang !== lang && (needsTranslate || translateFailed);
 
     return `
-      <div class="comment-card ${item.pinned ? 'is-pinned' : ''}" data-id="${item.id}">
+      <div class="comment-card ${item.pinned ? 'is-pinned' : ''} ${isTranslating ? 'is-translating' : ''}" data-id="${item.id}">
         <div class="comment-card-top">
           <span class="comment-type-tag ${catClass}">${catLabel}</span>
           <div class="comment-card-actions">
+            ${needsTranslate || translateFailed ? `
+            <button class="comment-action-btn btn-translate" onclick="translateCommentById('${item.id}')" title="${lang === 'es' ? 'Traducir al español' : 'Translate to English'}">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+            </button>` : ''}
             <button class="comment-action-btn btn-pin ${item.pinned ? 'active' : ''}" onclick="togglePinComment('${item.id}')" title="${item.pinned ? (lang === 'es' ? 'Desfijar' : 'Unpin') : (lang === 'es' ? 'Fijar arriba' : 'Pin to top')}">
               <svg class="ico" viewBox="0 0 24 24" fill="${item.pinned ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2"><path d="M12 2v8"/><path d="m18 10-6-6-6 6"/><path d="M5 22h14"/><path d="M12 14v8"/></svg>
             </button>
@@ -2220,13 +3240,304 @@ function renderCommentsList() {
         <div class="comment-text-question">${escapeHtml(qText)}</div>
         ${aText ? `<div class="comment-text-answer">💡 ${escapeHtml(aText)}</div>` : ''}
         <div class="comment-card-meta">
+          ${isTranslating ? `<span class="comment-translate-status">${lang === 'es' ? 'Traduciendo…' : 'Translating…'}</span>` : ''}
+          ${showLangHint && !isTranslating ? `<span class="comment-lang-hint">${lang === 'es' ? 'Original en inglés' : 'Original in Spanish'}</span>` : ''}
+          ${translateFailed && !isTranslating ? `<span class="comment-lang-hint comment-lang-hint--warn">${lang === 'es' ? 'Traducción pendiente' : 'Translation pending'}</span>` : ''}
           <span>${item.timestamp || (lang === 'es' ? 'Inyectada' : 'Injected')}</span>
           <span>${activeDeck.toUpperCase()} · #${currentSlide}</span>
         </div>
       </div>
     `;
   }).join('');
+
+  scheduleCommentsTranslation(activeDeck, currentSlide, lang);
 }
+
+/* ==========================================================================
+   CLIENT SUGGESTION DELIVERY
+   Notes are stored in the viewer's own localStorage, which means a suggestion
+   left by a client on their device never reaches us. This layer forwards each
+   submission to a real destination, queueing it locally whenever the network
+   or the endpoint is unavailable so nothing is ever silently lost.
+
+   >>> TO ACTIVATE: fill in `endpoint` below. <<<
+   Until then submissions are queued and the client is offered the email
+   fallback, so the flow still works with zero configuration.
+
+   provider options:
+     'formspree'    endpoint: https://formspree.io/f/XXXXXXX
+                    Easiest to set up and confirms delivery. Free tier covers
+                    50 submissions/month.
+     'googleScript' endpoint: https://script.google.com/macros/s/XXXX/exec
+                    Writes to a Google Sheet. Deploy the Apps Script as a web
+                    app with access set to "Anyone".
+     'webhook'      endpoint: any URL accepting a JSON POST (Make, Zapier,
+                    n8n, your own API).
+   ========================================================================== */
+const QA_DELIVERY = {
+  endpoint: '',
+  provider: 'formspree',
+  // Used by the "send by email" fallback. Set this to the address that should
+  // receive client suggestions.
+  fallbackEmail: ''
+};
+
+const QA_OUTBOX_KEY = '3i_qa_outbox';
+const QA_MAX_ATTEMPTS = 5;
+
+function isQaDeliveryConfigured() {
+  return typeof QA_DELIVERY.endpoint === 'string' && QA_DELIVERY.endpoint.trim().length > 0;
+}
+
+function readQaOutbox() {
+  try {
+    const raw = localStorage.getItem(QA_OUTBOX_KEY);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (err) {
+    return [];
+  }
+}
+
+function writeQaOutbox(queue) {
+  try {
+    localStorage.setItem(QA_OUTBOX_KEY, JSON.stringify(queue));
+  } catch (err) {
+    /* storage full or blocked: the queue simply won't survive a reload */
+  }
+  renderQaOutboxStrip();
+}
+
+function getSlideHeadingText(deck, slide) {
+  const container = document.getElementById(`deck-${deck}`);
+  if (!container) return '';
+  const slideEl = container.querySelector(`.slide[data-slide="${slide}"]`);
+  const h2 = slideEl ? slideEl.querySelector('h2') : null;
+  if (!h2) return '';
+  const langEl = h2.querySelector(`.lang-${getActiveLang()}`);
+  return (langEl || h2).textContent.trim().replace(/\s+/g, ' ').slice(0, 200);
+}
+
+function buildQaPayload(item) {
+  const meta = DECK_CONFIG[activeDeck] || {};
+  return {
+    id: item.id,
+    submittedAt: new Date().toISOString(),
+    deck: activeDeck,
+    deckTitle: meta.title_es || meta.title_en || activeDeck,
+    slide: currentSlide,
+    slideTitle: getSlideHeadingText(activeDeck, currentSlide),
+    category: item.category || '',
+    question: item.question || '',
+    answer: item.answer || '',
+    language: getActiveLang(),
+    audience: typeof currentAudience === 'string' ? currentAudience : '',
+    pageUrl: window.location.href
+  };
+}
+
+function qaPayloadAsText(payload) {
+  const lines = [
+    `Deck: ${payload.deckTitle} (${payload.deck})`,
+    `Diapositiva ${payload.slide}: ${payload.slideTitle}`,
+    `Categoría: ${payload.category}`,
+    `Idioma: ${payload.language}`,
+    `Fecha: ${payload.submittedAt}`,
+    '',
+    `Pregunta / sugerencia:`,
+    payload.question
+  ];
+  if (payload.answer) lines.push('', 'Detalle adicional:', payload.answer);
+  return lines.join('\n');
+}
+
+function buildQaRequest(payload) {
+  const url = QA_DELIVERY.endpoint.trim();
+
+  if (QA_DELIVERY.provider === 'formspree') {
+    return {
+      url,
+      options: {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          _subject: `Sugerencia · ${payload.deckTitle} · slide ${payload.slide}`,
+          message: qaPayloadAsText(payload),
+          ...payload
+        })
+      }
+    };
+  }
+
+  if (QA_DELIVERY.provider === 'googleScript') {
+    // No custom Content-Type: keeps this a "simple" request so the browser
+    // skips the CORS preflight that Apps Script does not answer.
+    return { url, options: { method: 'POST', body: JSON.stringify(payload) } };
+  }
+
+  return {
+    url,
+    options: {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }
+  };
+}
+
+async function postQaPayload(payload) {
+  const { url, options } = buildQaRequest(payload);
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return { ok: true, confirmed: true };
+  } catch (err) {
+    // A CORS-restricted endpoint throws even when it accepted the data. Retry
+    // opaquely: if that resolves, the request did leave the browser, but we
+    // cannot read the response, so it counts as unconfirmed.
+    try {
+      await fetch(url, { ...options, mode: 'no-cors' });
+      return { ok: true, confirmed: false };
+    } catch (err2) {
+      return { ok: false, error: err2.message || String(err2) };
+    }
+  }
+}
+
+function enqueueQaSuggestion(item) {
+  const queue = readQaOutbox();
+  queue.push({ payload: buildQaPayload(item), attempts: 0, status: 'pending' });
+  writeQaOutbox(queue);
+  return flushQaOutbox();
+}
+
+async function flushQaOutbox() {
+  if (!isQaDeliveryConfigured()) {
+    renderQaOutboxStrip();
+    return { sent: 0, pending: readQaOutbox().length };
+  }
+
+  const queue = readQaOutbox();
+  const pending = queue.filter((entry) => entry.status === 'pending' && entry.attempts < QA_MAX_ATTEMPTS);
+  if (pending.length === 0) {
+    renderQaOutboxStrip();
+    return { sent: 0, pending: 0 };
+  }
+
+  let sent = 0;
+  for (const entry of pending) {
+    entry.attempts += 1;
+    const result = await postQaPayload(entry.payload);
+    if (result.ok) {
+      entry.status = result.confirmed ? 'sent' : 'sent-unconfirmed';
+      sent += 1;
+    }
+  }
+
+  // Keep only what still needs attention, so the queue cannot grow forever.
+  const remaining = queue.filter((entry) => entry.status === 'pending');
+  writeQaOutbox(remaining);
+  return { sent, pending: remaining.length };
+}
+
+function qaPendingCount() {
+  return readQaOutbox().filter((entry) => entry.status === 'pending').length;
+}
+
+function sendQaOutboxByEmail() {
+  const queue = readQaOutbox();
+  const pending = queue.filter((entry) => entry.status === 'pending');
+  if (pending.length === 0) return;
+
+  const isEs = getActiveLang() === 'es';
+  const body = pending.map((entry, i) => `--- ${i + 1} ---\n${qaPayloadAsText(entry.payload)}`).join('\n\n');
+  const subject = isEs
+    ? `Sugerencias sobre la presentación (${pending.length})`
+    : `Presentation feedback (${pending.length})`;
+
+  const address = (QA_DELIVERY.fallbackEmail || '').trim();
+  window.location.href = `mailto:${address}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+  // The mail client takes over from here; we cannot confirm it was actually
+  // sent, so the entries are cleared optimistically but the notes themselves
+  // remain stored on the slide.
+  writeQaOutbox(queue.filter((entry) => entry.status !== 'pending'));
+  showCommentsToast(isEs ? 'Abriendo tu cliente de correo…' : 'Opening your email client…');
+}
+
+function copyQaOutboxToClipboard() {
+  const pending = readQaOutbox().filter((entry) => entry.status === 'pending');
+  if (pending.length === 0) return;
+  const isEs = getActiveLang() === 'es';
+  const text = pending.map((entry, i) => `--- ${i + 1} ---\n${qaPayloadAsText(entry.payload)}`).join('\n\n');
+  navigator.clipboard.writeText(text).then(
+    () => showCommentsToast(isEs ? 'Sugerencias copiadas al portapapeles' : 'Feedback copied to clipboard'),
+    () => showCommentsToast(isEs ? 'No se pudo copiar' : 'Copy failed')
+  );
+}
+
+function renderQaOutboxStrip() {
+  const panel = document.getElementById('panelList');
+  if (!panel) return;
+
+  const pending = qaPendingCount();
+  let strip = document.getElementById('qaOutboxStrip');
+
+  if (pending === 0) {
+    if (strip) strip.remove();
+    return;
+  }
+
+  if (!strip) {
+    strip = document.createElement('div');
+    strip.className = 'qa-outbox-strip';
+    strip.id = 'qaOutboxStrip';
+    panel.insertBefore(strip, panel.firstElementChild);
+  }
+
+  const isEs = getActiveLang() === 'es';
+  const configured = isQaDeliveryConfigured();
+  const headline = configured
+    ? (isEs ? `${pending} sugerencia(s) sin enviar` : `${pending} suggestion(s) not sent`)
+    : (isEs ? `${pending} sugerencia(s) guardada(s) solo en este dispositivo` : `${pending} suggestion(s) saved on this device only`);
+  const detail = configured
+    ? (isEs ? 'No se pudo contactar al servidor. Se reintentará automáticamente.' : 'The server could not be reached. We will retry automatically.')
+    : (isEs ? 'Envíalas para que lleguen al equipo.' : 'Send them so the team receives them.');
+
+  strip.innerHTML = `
+    <div class="qa-outbox-strip__text">
+      <strong>${headline}</strong>
+      <span>${detail}</span>
+    </div>
+    <div class="qa-outbox-strip__actions">
+      ${configured ? `<button type="button" class="qa-outbox-btn" data-qa-action="retry">${isEs ? 'Reintentar' : 'Retry'}</button>` : ''}
+      <button type="button" class="qa-outbox-btn" data-qa-action="email">${isEs ? 'Enviar por correo' : 'Send by email'}</button>
+      <button type="button" class="qa-outbox-btn qa-outbox-btn--ghost" data-qa-action="copy">${isEs ? 'Copiar' : 'Copy'}</button>
+    </div>
+  `;
+
+  strip.querySelectorAll('[data-qa-action]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const action = btn.getAttribute('data-qa-action');
+      if (action === 'retry') {
+        flushQaOutbox().then(({ sent }) => {
+          showCommentsToast(sent > 0
+            ? (isEs ? 'Sugerencias enviadas' : 'Suggestions sent')
+            : (isEs ? 'Sigue sin conexión con el servidor' : 'Still cannot reach the server'));
+        });
+      } else if (action === 'email') {
+        sendQaOutboxByEmail();
+      } else if (action === 'copy') {
+        copyQaOutboxToClipboard();
+      }
+    });
+  });
+}
+
+// Retry as soon as connectivity returns.
+window.addEventListener('online', () => {
+  flushQaOutbox();
+});
 
 function handleInjectSingle(event) {
   event.preventDefault();
@@ -2263,7 +3574,24 @@ function handleInjectSingle(event) {
   if (aEl) aEl.value = '';
 
   switchCommentsTab('list');
-  showCommentsToast(currentLang === 'es' ? 'Pregunta inyectada con éxito' : 'Question injected successfully');
+
+  const isEs = currentLang === 'es';
+  const otherLang = isEs ? 'en' : 'es';
+  queueCommentTranslation(async () => {
+    await translateAndPersistComment(activeDeck, currentSlide, newItem.id, otherLang);
+  });
+
+  if (isQaDeliveryConfigured()) {
+    showCommentsToast(isEs ? 'Enviando tu sugerencia…' : 'Sending your feedback…');
+    enqueueQaSuggestion(newItem).then(({ sent }) => {
+      showCommentsToast(sent > 0
+        ? (isEs ? '¡Gracias! Tu sugerencia fue enviada al equipo' : 'Thank you! Your feedback reached the team')
+        : (isEs ? 'Guardada. La enviaremos en cuanto haya conexión' : 'Saved. We will send it once you are back online'));
+    });
+  } else {
+    enqueueQaSuggestion(newItem);
+    showCommentsToast(isEs ? 'Guardada en este dispositivo' : 'Saved on this device');
+  }
 }
 
 function handleBulkInject() {
@@ -2642,17 +3970,7 @@ function updatePitchTimerPlayBtn() {
     textWrap.innerHTML = pitchTimer.isRunning
       ? `<span class="lang-es">Pausar</span><span class="lang-en">Pause</span>`
       : `<span class="lang-es">Iniciar</span><span class="lang-en">Start</span>`;
-    if (typeof applyLanguage === 'function') {
-      const esElements = textWrap.querySelectorAll('.lang-es');
-      const enElements = textWrap.querySelectorAll('.lang-en');
-      if (currentLang === 'es') {
-        esElements.forEach(el => el.style.display = '');
-        enElements.forEach(el => el.style.display = 'none');
-      } else {
-        esElements.forEach(el => el.style.display = 'none');
-        enElements.forEach(el => el.style.display = '');
-      }
-    }
+    applyLanguageWithin(textWrap);
   }
 }
 
@@ -2778,6 +4096,1208 @@ function showToast(message) {
   }, 2800);
 }
 
+// ==========================================================================
+// EXECUTIVE BRIEFING ENGINE — Text-to-Speech + Deck Tour + Pitch Timer Sync
+// Browser TTS by default. Optional external provider via NARRATION_DELIVERY.
+// Keyboard: V = read · Shift+V = deck tour · Esc = stop
+// ==========================================================================
+
+const NARRATION_DELIVERY = {
+  provider: 'browser',
+  elevenlabs: { apiKey: '', voiceId: '' },
+  azure: { key: '', region: 'eastus', voice: 'es-ES-ElviraNeural' }
+};
+
+const EXECUTIVE_BRIEFING_SCRIPTS = {
+  all: {
+    es: 'Bienvenido al Centro de Mando Ventures de 3i Baird Lab. Este briefing confidencial reúne cinco tesis invertibles en cuatro verticales: LUMI en EdTech con tutoría multi-agente; FoodTech QSR para franquicias inteligentes; Arcana Web3 e IoT para confianza auditable; Arcana Restaurantes para dueños que recuperan EBITDA; e Infraestructura de IA local — dejar de alquilar inteligencia y poseer capacidad desde cinco mil hasta ciento cincuenta mil dólares. Sesenta y nueve slides ejecutivas, bilingües y listas para preguntas.',
+    en: 'Welcome to the 3i Baird Lab Executive Venture Command Center. This confidential briefing unites five investable theses across four verticals: LUMI in EdTech, FoodTech QSR, Arcana Web3 and IoT, Arcana Restaurants, and local AI Infrastructure — stop renting intelligence and own capacity from five thousand to one hundred fifty thousand dollars. Sixty-nine executive slides, bilingual and Q&A ready.'
+  },
+  growth: {
+    es: 'Línea de interés: Crecimiento y EdTech. LUMI es nuestra apuesta en tutoría multi-agente con IA: escala instrucción personalizada de élite, captura datos de aprendizaje defendibles y abre mercado B2C y B2B institucional. Quince slides de pitch inversor con demo en video. Ideal para fondos EdTech y strategics educativos.',
+    en: 'Interest lane: Growth and EdTech. LUMI is our multi-agent AI tutoring bet: it scales elite one-to-one instruction, captures defensible learning data, and opens B2C and institutional B2B markets. Fifteen investor slides with video demo. Built for EdTech funds and education strategics.'
+  },
+  operations: {
+    es: 'Línea de interés: Operaciones y QSR. FoodTech QSR digitaliza franquicias con telemetría de cocina, control de margen y visibilidad multi-local. Arcana Restaurantes traduce la misma tesis de confianza operativa para dueños independientes que necesitan recuperar EBITDA sin vivir en el local. Diez a quince slides por deck, orientadas a operadores y capital privado.',
+    en: 'Interest lane: Operations and QSR. FoodTech QSR digitizes franchises with kitchen telemetry, margin control, and multi-unit visibility. Arcana Restaurants applies operational trust for independent owners recovering EBITDA without living inside the store. Ten to fifteen slides per deck for operators and private capital.'
+  },
+  deeptech: {
+    es: 'Línea de interés: Deep Tech y Confianza. Arcana Web3 e IoT construye confianza auditable. Infraestructura IA local es la tesis para inversores no técnicos: hoy hacemos webs, plataformas pequeñas y pocos agentes; entrenar modelos cuesta tiempo y peajes en la nube; si invertimos de cinco mil a ciento cincuenta mil en equipos y herramientas, corremos más agentes, mantenemos datos locales y recuperamos horas de un equipo que hoy trabaja doce a quince horas. Ideal para CTOs, family offices y fondos deep tech.',
+    en: 'Interest lane: Deep Tech and Trust. Arcana Web3 and IoT builds auditable trust. Local AI Infrastructure is the thesis for non-technical investors: today we ship websites, small paid platforms, and a few agents; training models costs time and cloud tolls; investing five thousand to one hundred fifty thousand in equipment and tools unlocks more agents, local data custody, and reclaimed hours for a team working twelve to fifteen hours a day. Built for CTOs, family offices, and deep-tech funds.'
+  }
+};
+
+const briefingEngine = {
+  mode: null,
+  paused: false,
+  progressTimer: null,
+  startedAt: 0,
+  estimatedMs: 0,
+  activeLane: 'all',
+  autoAdvance: true,
+  syncPitchTimer: true,
+  deckTourActive: false,
+  timerPausedForNarration: false,
+  timerStartedByNarration: false,
+  pendingAdvanceTimer: null,
+  voiceOverrides: { en: '', es: '' }
+};
+
+function setBriefingOption(key, value) {
+  if (key === 'autoAdvance') briefingEngine.autoAdvance = !!value;
+  if (key === 'syncPitchTimer') briefingEngine.syncPitchTimer = !!value;
+
+  const autoEl = document.getElementById('briefingAutoAdvance');
+  const syncEl = document.getElementById('briefingSyncTimer');
+  const timerSyncEl = document.getElementById('pitchTimerSyncNarration');
+  if (autoEl) autoEl.checked = briefingEngine.autoAdvance;
+  if (syncEl) syncEl.checked = briefingEngine.syncPitchTimer;
+  if (timerSyncEl) timerSyncEl.checked = briefingEngine.syncPitchTimer;
+}
+
+function toggleBriefingDetails(force) {
+  const narrator = document.getElementById('hubBriefingNarrator');
+  const details = document.getElementById('hubBriefingDetails');
+  const toggleBtn = document.getElementById('hubBriefingToggleBtn');
+  if (!narrator || !details) return;
+
+  const shouldOpen = typeof force === 'boolean'
+    ? force
+    : narrator.classList.contains('is-collapsed');
+
+  narrator.classList.toggle('is-collapsed', !shouldOpen);
+  details.hidden = !shouldOpen;
+  if (toggleBtn) toggleBtn.setAttribute('aria-expanded', String(shouldOpen));
+}
+
+function getSpeechLang() {
+  // Prefer the live document attribute so TTS never lags behind the UI toggle.
+  const htmlLang = document.documentElement.getAttribute('data-lang');
+  if (htmlLang === 'en' || htmlLang === 'es') return htmlLang;
+  return currentLang === 'en' ? 'en' : 'es';
+}
+
+function getHubBriefingText() {
+  const lane = briefingEngine.activeLane || 'all';
+  const script = EXECUTIVE_BRIEFING_SCRIPTS[lane] || EXECUTIVE_BRIEFING_SCRIPTS.all;
+  const lang = getSpeechLang();
+  return script[lang] || script.en || script.es;
+}
+
+const TTS_VOICE_RANK_HINTS = {
+  en: [
+    'google us english', 'microsoft aria', 'microsoft jenny', 'microsoft guy',
+    'microsoft zira', 'samantha', 'alex', 'karen', 'daniel', 'en-us neural',
+    'en-us natural', 'english united states', 'english (united states)'
+  ],
+  es: [
+    'google español', 'google espanol', 'microsoft sabina', 'microsoft elvira',
+    'microsoft helia', 'paulina', 'monica', 'es-es neural', 'es-mx neural',
+    'spanish (spain)', 'spanish (mexico)', 'españa', 'mexico'
+  ]
+};
+
+const TTS_LOCALE_PRIORITY = {
+  en: ['en-us', 'en-gb', 'en-au', 'en'],
+  es: ['es-es', 'es-mx', 'es-us', 'es']
+};
+
+function loadBriefingVoicePreferences() {
+  try {
+    const raw = localStorage.getItem('vhos_tts_voices');
+    if (!raw) return;
+    const parsed = JSON.parse(raw);
+    if (parsed && typeof parsed === 'object') {
+      briefingEngine.voiceOverrides.en = parsed.en || '';
+      briefingEngine.voiceOverrides.es = parsed.es || '';
+    }
+  } catch (_) { /* ignore corrupt storage */ }
+}
+
+function saveBriefingVoicePreferences() {
+  try {
+    localStorage.setItem('vhos_tts_voices', JSON.stringify(briefingEngine.voiceOverrides));
+  } catch (_) { /* ignore quota errors */ }
+}
+
+function normalizeTtsToken(value) {
+  return (value || '').toLowerCase().replace(/\s+/g, ' ').trim();
+}
+
+function scoreSpeechVoice(voice, lang) {
+  const name = normalizeTtsToken(voice.name);
+  const vlang = normalizeTtsToken(voice.lang).replace('_', '-');
+  let score = 0;
+
+  const localeOrder = TTS_LOCALE_PRIORITY[lang] || [lang];
+  const localeIdx = localeOrder.findIndex(prefix => vlang.startsWith(prefix));
+  if (localeIdx === -1) return -1000;
+  score += 120 - localeIdx * 18;
+
+  if (lang === 'en' && vlang.startsWith('en-us')) score += 40;
+  if (lang === 'es' && (vlang.startsWith('es-es') || vlang.startsWith('es-mx'))) score += 30;
+
+  TTS_VOICE_RANK_HINTS[lang].forEach((hint, idx) => {
+    if (name.includes(hint)) score += 90 - idx;
+  });
+
+  if (name.includes('neural') || name.includes('natural') || name.includes('online')) score += 35;
+  if (name.includes('google')) score += 22;
+  if (name.includes('microsoft')) score += 18;
+  if (!voice.localService) score += 12;
+
+  if (name.includes('espeak') || name.includes('android talk') || name.includes('festival')) score -= 80;
+  if (lang === 'en' && (vlang.startsWith('es') || name.includes('spanish'))) score -= 200;
+  if (lang === 'es' && (vlang.startsWith('en') || name.includes('english'))) score -= 200;
+
+  return score;
+}
+
+function getVoicesForLang(lang) {
+  if (!isSpeechSupported()) return [];
+  return speechSynthesis.getVoices().filter(v => scoreSpeechVoice(v, lang) > -500);
+}
+
+function pickSpeechVoice(lang) {
+  if (!isSpeechSupported()) return null;
+  const voices = speechSynthesis.getVoices();
+  if (!voices.length) return null;
+
+  const overrideUri = briefingEngine.voiceOverrides?.[lang];
+  if (overrideUri) {
+    const pinned = voices.find(v => v.voiceURI === overrideUri);
+    // Never honor a pinned voice that belongs to the other language.
+    if (pinned && scoreSpeechVoice(pinned, lang) > -500) return pinned;
+  }
+
+  const ranked = voices
+    .map(v => ({ v, score: scoreSpeechVoice(v, lang) }))
+    .filter(entry => entry.score > -500)
+    .sort((a, b) => b.score - a.score);
+
+  const best = ranked[0]?.v || null;
+  if (!best) return null;
+
+  // Hard guard: voice locale must match the requested language family.
+  const vlang = normalizeTtsToken(best.lang).replace('_', '-');
+  if (lang === 'en' && !vlang.startsWith('en')) return null;
+  if (lang === 'es' && !vlang.startsWith('es')) return null;
+  return best;
+}
+
+function ensureSpeechVoicesReady() {
+  if (!isSpeechSupported()) return Promise.resolve([]);
+  const existing = speechSynthesis.getVoices();
+  if (existing.length) return Promise.resolve(existing);
+
+  return new Promise((resolve) => {
+    let settled = false;
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      resolve(speechSynthesis.getVoices());
+    };
+    window.addEventListener('voiceschanged', finish, { once: true });
+    speechSynthesis.getVoices();
+    setTimeout(finish, 700);
+  });
+}
+
+function populateBriefingVoiceSelectors() {
+  if (!isSpeechSupported()) return;
+
+  const enSelect = document.getElementById('briefingVoiceEn');
+  const esSelect = document.getElementById('briefingVoiceEs');
+  if (!enSelect || !esSelect) return;
+
+  const buildOptions = (selectEl, lang, autoLabel) => {
+    const current = briefingEngine.voiceOverrides[lang] || '';
+    const voices = getVoicesForLang(lang)
+      .sort((a, b) => scoreSpeechVoice(b, lang) - scoreSpeechVoice(a, lang));
+
+    selectEl.innerHTML = '';
+    const autoOpt = document.createElement('option');
+    autoOpt.value = '';
+    autoOpt.textContent = autoLabel;
+    selectEl.appendChild(autoOpt);
+
+    voices.forEach(voice => {
+      const opt = document.createElement('option');
+      opt.value = voice.voiceURI;
+      opt.textContent = `${voice.name} (${voice.lang})`;
+      selectEl.appendChild(opt);
+    });
+
+    selectEl.value = voices.some(v => v.voiceURI === current) ? current : '';
+  };
+
+  buildOptions(enSelect, 'en', currentLang === 'es' ? 'Auto (recomendada)' : 'Auto (recommended)');
+  buildOptions(esSelect, 'es', currentLang === 'es' ? 'Auto (recomendada)' : 'Auto (recommended)');
+}
+
+function setBriefingVoice(lang, voiceURI) {
+  if (!briefingEngine.voiceOverrides) briefingEngine.voiceOverrides = { en: '', es: '' };
+  briefingEngine.voiceOverrides[lang] = voiceURI || '';
+  saveBriefingVoicePreferences();
+  populateBriefingVoiceSelectors();
+
+  const voice = pickSpeechVoice(lang);
+  const status = document.getElementById('hubBriefingStatus');
+  if (status && voice) {
+    status.textContent = currentLang === 'es'
+      ? `Voz ${lang.toUpperCase()}: ${voice.name}`
+      : `${lang.toUpperCase()} voice: ${voice.name}`;
+  }
+}
+
+function prepareTextForSpeech(text, lang) {
+  if (!text) return '';
+  let output = text.replace(/\s+/g, ' ').trim();
+
+  const shared = [
+    [/\b3i\s+BAIRD\s+LAB\b/gi, lang === 'es' ? 'three eye Baird Lab' : 'Three Eye Baird Lab'],
+    [/\b3i\b/g, lang === 'es' ? 'three eye' : 'Three Eye'],
+    [/\bLUMI\b/g, 'LOO-mee'],
+    [/\bArcana\b/g, lang === 'es' ? 'Arcana' : 'Ar-KAH-nah'],
+    [/\bEdTech\b/gi, lang === 'es' ? 'Ed Tec' : 'Ed Tech'],
+    [/\bFoodTech\b/gi, lang === 'es' ? 'Food Tec' : 'Food Tech'],
+    [/\bWeb3\b/gi, lang === 'es' ? 'Web tres' : 'Web three'],
+    [/\bIoT\b/g, lang === 'es' ? 'I o T' : 'I O T'],
+    [/\bQSR\b/g, lang === 'es' ? 'Q S R' : 'Q S R'],
+    [/\bAI\b/g, lang === 'es' ? 'I A' : 'A I'],
+    [/\bB2B\b/g, lang === 'es' ? 'B a B' : 'B to B'],
+    [/\bB2C\b/g, lang === 'es' ? 'B a C' : 'B to C'],
+    [/\bVC\b/g, lang === 'es' ? 'V C' : 'V C'],
+    [/\bCTO\b/g, lang === 'es' ? 'C T O' : 'C T O'],
+    [/\bCFO\b/g, lang === 'es' ? 'C F O' : 'C F O'],
+    [/\bROI\b/g, lang === 'es' ? 'R O I' : 'R O I'],
+    [/\bTAM\b/g, lang === 'es' ? 'T A M' : 'T A M'],
+    [/\bEBITDA\b/gi, lang === 'es' ? 'E bit da' : 'EE-bit-dah'],
+    [/\bCapEx\b/gi, lang === 'es' ? 'cap ex' : 'CAP-ex'],
+    [/\bcapex\b/gi, lang === 'es' ? 'cap ex' : 'CAP-ex'],
+    [/\bHACCP\b/g, 'HACCP'],
+    [/\bPCI\b/g, 'P C I'],
+    [/\bNIST\b/g, 'N I S T'],
+    [/\bGPU\b/g, 'G P U'],
+    [/\bRAG\b/g, lang === 'es' ? 'R A G' : 'RAG'],
+    [/\bPolygon\b/g, lang === 'es' ? 'Polígon' : 'PAH-lee-gon'],
+    [/\bUSD\b/g, 'U S D'],
+    [/(\d)\s*k\b/gi, '$1 thousand']
+  ];
+
+  shared.forEach(([pattern, replacement]) => {
+    output = output.replace(pattern, replacement);
+  });
+
+  if (lang === 'en') {
+    output = output
+      .replace(/\bmulti-agent\b/gi, 'multi agent')
+      .replace(/\bdeep-dive\b/gi, 'deep dive')
+      .replace(/\bquick-service\b/gi, 'quick service')
+      .replace(/\bsupply-chain\b/gi, 'supply chain')
+      .replace(/\bunit-economics\b/gi, 'unit economics')
+      .replace(/\bboard-ready\b/gi, 'board ready');
+  }
+
+  return output.replace(/\s{2,}/g, ' ').trim();
+}
+
+function refreshSpeechVoiceCatalog() {
+  populateBriefingVoiceSelectors();
+}
+
+function warmupSpeechVoices() {
+  if (!isSpeechSupported()) return;
+  loadBriefingVoicePreferences();
+  if (speechSynthesis.getVoices().length) {
+    refreshSpeechVoiceCatalog();
+    return;
+  }
+  window.addEventListener('voiceschanged', refreshSpeechVoiceCatalog, { once: true });
+  speechSynthesis.getVoices();
+}
+
+function isSpeechSupported() {
+  return typeof window !== 'undefined' && 'speechSynthesis' in window;
+}
+
+function extractReadableSlideText(slideEl) {
+  if (!slideEl) return '';
+  const clone = slideEl.cloneNode(true);
+  clone.querySelectorAll('script, style, .zoom-hint-pill, [aria-hidden="true"]').forEach(n => n.remove());
+
+  const lang = getSpeechLang();
+  const dropClass = lang === 'en' ? 'lang-es' : 'lang-en';
+  clone.querySelectorAll(`.${dropClass}`).forEach(el => el.remove());
+
+  // Detached clones do not inherit html[data-lang] CSS, so also drop anything
+  // still marked display:none from the last applyLanguage() pass.
+  clone.querySelectorAll('[hidden]').forEach(el => el.remove());
+  clone.querySelectorAll('[style]').forEach(el => {
+    const display = (el.style && el.style.display) || '';
+    if (display === 'none') el.remove();
+  });
+
+  const chunks = [];
+  const title = clone.querySelector('.hero-title, .slide-header h2, .hub-hero-headline, .hub-card-title');
+  if (title) chunks.push(title.textContent.trim());
+
+  const lead = clone.querySelector('.hero-subtitle, .slide-header .slide-lead, .hub-hero-tagline, .hub-card-hook');
+  if (lead) chunks.push(lead.textContent.trim());
+
+  clone.querySelectorAll('.card-title, .step-title, .metric-val, .metric-label, .metric-desc, .card-desc, .step-desc, .punchline-badge, .proof-text, .quote-box p, .feature-bullet, .comparison-table th, .comparison-table td.aspect').forEach(el => {
+    const t = el.textContent.replace(/\s+/g, ' ').trim();
+    if (t && t.length > 2) chunks.push(t);
+  });
+
+  if (!chunks.length) {
+    return clone.textContent.replace(/\s+/g, ' ').trim().slice(0, 1200);
+  }
+
+  const unique = [];
+  const seen = new Set();
+  chunks.forEach(c => {
+    const key = c.toLowerCase();
+    if (!seen.has(key)) {
+      seen.add(key);
+      unique.push(c);
+    }
+  });
+  return unique.join('. ').replace(/\.\s*\./g, '.').slice(0, 1400);
+}
+
+function getActiveSlideElement() {
+  const container = activeDeck === 'hub'
+    ? document.getElementById('deck-hub')
+    : document.getElementById(`deck-${activeDeck}`);
+  if (!container) return null;
+  return container.querySelector('.slide.active') || container.querySelector('.slide');
+}
+
+function updateAudioTourBar() {
+  const bar = document.getElementById('audioTourBar');
+  const label = document.getElementById('audioTourLabel');
+  const deckTourBtn = document.getElementById('deckAudioTourBtn');
+  const showTourChrome = briefingEngine.deckTourActive || (briefingEngine.mode === 'slide' && activeDeck !== 'hub');
+
+  if (bar) bar.hidden = !showTourChrome;
+  if (label && activeDeck !== 'hub') {
+    label.textContent = currentLang === 'es'
+      ? `Slide ${currentSlide} / ${totalSlides()}`
+      : `Slide ${currentSlide} / ${totalSlides()}`;
+  }
+  if (deckTourBtn) deckTourBtn.classList.toggle('is-active', briefingEngine.deckTourActive);
+}
+
+function syncPitchTimerWithNarration(action) {
+  if (!briefingEngine.syncPitchTimer) return;
+
+  if (action === 'start') {
+    if (!pitchTimer.isRunning) {
+      togglePitchTimerRun();
+      briefingEngine.timerStartedByNarration = true;
+    }
+    briefingEngine.timerPausedForNarration = false;
+    return;
+  }
+
+  if (action === 'pause') {
+    if (pitchTimer.isRunning) {
+      togglePitchTimerRun();
+      briefingEngine.timerPausedForNarration = true;
+    }
+    return;
+  }
+
+  if (action === 'resume') {
+    if (briefingEngine.timerPausedForNarration && !pitchTimer.isRunning) {
+      togglePitchTimerRun();
+      briefingEngine.timerPausedForNarration = false;
+    }
+  }
+}
+
+function updateBriefingUI(state, message) {
+  const narrator = document.getElementById('hubBriefingNarrator');
+  const playBtn = document.getElementById('hubBriefingPlayBtn');
+  const pauseBtn = document.getElementById('hubBriefingPauseBtn');
+  const stopBtn = document.getElementById('hubBriefingStopBtn');
+  const progress = document.getElementById('hubBriefingProgress');
+  const status = document.getElementById('hubBriefingStatus');
+  const hudBtn = document.getElementById('voiceBriefingBtn');
+
+  const speaking = state === 'speaking';
+  const paused = state === 'paused';
+
+  if (narrator) narrator.classList.toggle('is-speaking', speaking || paused);
+  if (playBtn) {
+    playBtn.hidden = speaking && !paused;
+    const label = playBtn.querySelector('.lang-es');
+    const labelEn = playBtn.querySelector('.lang-en');
+    if (paused) {
+      if (label) label.textContent = 'Reanudar';
+      if (labelEn) labelEn.textContent = 'Resume';
+    } else if (speaking) {
+      if (label) label.textContent = briefingEngine.deckTourActive ? 'Tour…' : 'Escuchando…';
+      if (labelEn) labelEn.textContent = briefingEngine.deckTourActive ? 'Tour…' : 'Playing…';
+    } else {
+      if (label) label.textContent = 'Escuchar';
+      if (labelEn) labelEn.textContent = 'Listen';
+    }
+  }
+  if (pauseBtn) pauseBtn.hidden = !speaking || paused;
+  if (stopBtn) stopBtn.hidden = !speaking && !paused;
+  if (progress) progress.hidden = !speaking && !paused;
+  if (hudBtn) hudBtn.classList.toggle('is-speaking', speaking || paused);
+
+  if (status && message !== undefined) {
+    status.textContent = message;
+  }
+
+  updateAudioTourBar();
+}
+
+function clearBriefingProgressTimer() {
+  if (briefingEngine.progressTimer) {
+    clearInterval(briefingEngine.progressTimer);
+    briefingEngine.progressTimer = null;
+  }
+  if (briefingEngine.pendingAdvanceTimer) {
+    clearTimeout(briefingEngine.pendingAdvanceTimer);
+    briefingEngine.pendingAdvanceTimer = null;
+  }
+  const fill = document.getElementById('hubBriefingProgressFill');
+  if (fill) fill.style.width = '0%';
+}
+
+function startBriefingProgressEstimate(text) {
+  clearBriefingProgressTimer();
+  const fill = document.getElementById('hubBriefingProgressFill');
+  if (!fill) return;
+  briefingEngine.startedAt = Date.now();
+  briefingEngine.estimatedMs = Math.max(8000, Math.min(120000, text.length * 58));
+  briefingEngine.progressTimer = setInterval(() => {
+    const elapsed = Date.now() - briefingEngine.startedAt;
+    const pct = Math.min(98, (elapsed / briefingEngine.estimatedMs) * 100);
+    fill.style.width = `${pct}%`;
+  }, 120);
+}
+
+function finishBriefingPlayback(message) {
+  clearBriefingProgressTimer();
+  const fill = document.getElementById('hubBriefingProgressFill');
+  if (fill) fill.style.width = '100%';
+
+  const wasDeckTour = briefingEngine.deckTourActive;
+  briefingEngine.mode = null;
+  briefingEngine.deckTourActive = false;
+  briefingEngine.paused = false;
+  updateBriefingUI('idle', message);
+  updateAudioTourBar();
+  setTimeout(() => updateBriefingUI('idle', ''), 2600);
+
+  if (wasDeckTour) {
+    showToast(currentLang === 'es' ? 'Tour de audio completado.' : 'Audio deck tour complete.');
+  }
+}
+
+function scheduleDeckTourAdvance() {
+  if (!briefingEngine.deckTourActive || !briefingEngine.autoAdvance) {
+    finishBriefingPlayback(currentLang === 'es' ? 'Lectura completada.' : 'Reading complete.');
+    return;
+  }
+
+  if (currentSlide >= totalSlides()) {
+    finishBriefingPlayback(currentLang === 'es' ? 'Tour de deck completado.' : 'Deck tour complete.');
+    return;
+  }
+
+  briefingEngine.pendingAdvanceTimer = setTimeout(() => {
+    goToSlide(currentSlide + 1, 'next', { fromBriefingTour: true });
+    updateAudioTourBar();
+    const slide = getActiveSlideElement();
+    const text = extractReadableSlideText(slide);
+    speakExecutiveText(text, 'slide', { partOfTour: true });
+  }, 520);
+}
+
+function speakExecutiveText(text, mode, options = {}) {
+  if (!isSpeechSupported()) {
+    showToast(getSpeechLang() === 'es' ? 'Tu navegador no soporta lectura en voz alta.' : 'Your browser does not support text-to-speech.');
+    return;
+  }
+  if (!text || !text.trim()) {
+    if (briefingEngine.deckTourActive) {
+      scheduleDeckTourAdvance();
+      return;
+    }
+    showToast(getSpeechLang() === 'es' ? 'No hay texto para leer en esta vista.' : 'No readable text on this view.');
+    return;
+  }
+
+  speechSynthesis.cancel();
+  clearBriefingProgressTimer();
+
+  const lang = getSpeechLang();
+  const preparedText = prepareTextForSpeech(text.trim(), lang);
+
+  const startUtterance = (voice) => {
+    if (lang === 'en' && !voice) {
+      showToast('No English voice found. Open Audio options and pick an English voice, or install one in Windows.');
+      updateBriefingUI('idle', 'No English TTS voice');
+      return;
+    }
+    if (lang === 'es' && !voice) {
+      showToast('No se encontró voz en español. Elige una en Opciones de audio o instálala en Windows.');
+      updateBriefingUI('idle', 'Sin voz TTS en español');
+      return;
+    }
+
+    const utterance = new SpeechSynthesisUtterance(preparedText);
+    utterance.lang = voice.lang || (lang === 'es' ? 'es-ES' : 'en-US');
+    utterance.rate = lang === 'en' ? 0.88 : 0.92;
+    utterance.pitch = lang === 'en' ? 0.98 : 1;
+    utterance.voice = voice;
+
+    briefingEngine.mode = mode;
+    briefingEngine.paused = false;
+    if (options.partOfTour) briefingEngine.deckTourActive = true;
+
+    utterance.onstart = () => {
+      startBriefingProgressEstimate(text);
+      syncPitchTimerWithNarration('start');
+      let msg;
+      if (mode === 'hub') {
+        const laneLabel = briefingEngine.activeLane === 'all'
+          ? (lang === 'es' ? 'Briefing completo' : 'Full briefing')
+          : (lang === 'es' ? `Briefing · ${briefingEngine.activeLane}` : `Briefing · ${briefingEngine.activeLane}`);
+        msg = lang === 'es' ? `${laneLabel} en reproducción…` : `${laneLabel} playing…`;
+      } else if (briefingEngine.deckTourActive) {
+        msg = lang === 'es'
+          ? `Tour audio · slide ${currentSlide} de ${totalSlides()}…`
+          : `Audio tour · slide ${currentSlide} of ${totalSlides()}…`;
+      } else {
+        msg = lang === 'es' ? `Leyendo slide ${currentSlide}…` : `Reading slide ${currentSlide}…`;
+      }
+      if (voice?.name) {
+        msg += lang === 'es' ? ` · ${voice.name}` : ` · ${voice.name}`;
+      }
+      updateBriefingUI('speaking', msg);
+    };
+
+    utterance.onend = () => {
+      if (briefingEngine.deckTourActive && briefingEngine.autoAdvance) {
+        scheduleDeckTourAdvance();
+        return;
+      }
+      finishBriefingPlayback(lang === 'es' ? 'Briefing completado.' : 'Briefing complete.');
+    };
+
+    utterance.onerror = () => {
+      briefingEngine.deckTourActive = false;
+      finishBriefingPlayback(lang === 'es' ? 'No se pudo reproducir el audio.' : 'Could not play audio.');
+    };
+
+    // Chrome sometimes ignores the first speak() right after cancel().
+    setTimeout(() => speechSynthesis.speak(utterance), 40);
+  };
+
+  ensureSpeechVoicesReady().then(() => {
+    const voice = pickSpeechVoice(lang);
+    startUtterance(voice);
+  });
+}
+
+function stopExecutiveBriefing() {
+  if (!isSpeechSupported()) return;
+  speechSynthesis.cancel();
+  clearBriefingProgressTimer();
+  briefingEngine.mode = null;
+  briefingEngine.deckTourActive = false;
+  briefingEngine.paused = false;
+  briefingEngine.timerPausedForNarration = false;
+  updateBriefingUI('idle', currentLang === 'es' ? 'Audio detenido.' : 'Audio stopped.');
+  updateAudioTourBar();
+  setTimeout(() => updateBriefingUI('idle', ''), 1800);
+}
+
+function pauseExecutiveBriefing() {
+  if (!isSpeechSupported()) return;
+  if (speechSynthesis.speaking && !speechSynthesis.paused) {
+    speechSynthesis.pause();
+    briefingEngine.paused = true;
+    syncPitchTimerWithNarration('pause');
+    updateBriefingUI('paused', currentLang === 'es' ? 'Pausado.' : 'Paused.');
+  }
+}
+
+function startDeckAudioTour() {
+  if (activeDeck === 'hub') {
+    showToast(currentLang === 'es' ? 'Abre un deck para iniciar el tour.' : 'Open a deck to start the tour.');
+    return;
+  }
+  if (!isSpeechSupported()) {
+    showToast(currentLang === 'es' ? 'Tu navegador no soporta lectura en voz alta.' : 'Your browser does not support text-to-speech.');
+    return;
+  }
+
+  stopExecutiveBriefing();
+  briefingEngine.deckTourActive = true;
+  if (currentSlide !== 1) {
+    goToSlide(1, 'next', { fromBriefingTour: true });
+  }
+  updateAudioTourBar();
+  showToast(currentLang === 'es' ? '▶ Tour de audio iniciado' : '▶ Audio tour started');
+
+  const slide = getActiveSlideElement();
+  const text = extractReadableSlideText(slide);
+  speakExecutiveText(text, 'slide', { partOfTour: true });
+}
+
+function toggleExecutiveBriefing() {
+  if (!isSpeechSupported()) {
+    showToast(currentLang === 'es' ? 'Tu navegador no soporta lectura en voz alta.' : 'Your browser does not support text-to-speech.');
+    return;
+  }
+
+  if (speechSynthesis.speaking) {
+    if (speechSynthesis.paused) {
+      speechSynthesis.resume();
+      briefingEngine.paused = false;
+      syncPitchTimerWithNarration('resume');
+      updateBriefingUI('speaking', currentLang === 'es' ? 'Reanudando…' : 'Resuming…');
+    } else {
+      pauseExecutiveBriefing();
+    }
+    return;
+  }
+
+  if (activeDeck === 'hub') {
+    speakExecutiveText(getHubBriefingText(), 'hub');
+    return;
+  }
+
+  briefingEngine.deckTourActive = false;
+  const slide = getActiveSlideElement();
+  const text = extractReadableSlideText(slide);
+  speakExecutiveText(text, 'slide');
+}
+
+function filterHubInterestLane(laneId) {
+  const lane = laneId || 'all';
+  briefingEngine.activeLane = lane;
+
+  document.querySelectorAll('.hub-lane-tab').forEach(tab => {
+    const active = tab.getAttribute('data-lane') === lane;
+    tab.classList.toggle('is-active', active);
+    tab.setAttribute('aria-selected', active ? 'true' : 'false');
+  });
+
+  document.querySelectorAll('.hub-venture-card').forEach(card => {
+    const cardLane = card.getAttribute('data-lane');
+    const show = lane === 'all' || cardLane === lane;
+    card.classList.toggle('is-hidden', !show);
+  });
+
+  const status = document.getElementById('hubBriefingStatus');
+  if (status && activeDeck === 'hub') {
+    const laneNames = {
+      all: { es: 'Todas las líneas', en: 'All lanes' },
+      growth: { es: 'Crecimiento & EdTech', en: 'Growth & EdTech' },
+      operations: { es: 'Operaciones & QSR', en: 'Operations & QSR' },
+      deeptech: { es: 'Deep Tech & Confianza', en: 'Deep Tech & Trust' }
+    };
+    const name = laneNames[lane]?.[currentLang] || lane;
+    status.textContent = currentLang === 'es'
+      ? `Briefing listo para: ${name}. Pulsa Escuchar.`
+      : `Briefing ready for: ${name}. Press Listen.`;
+  }
+}
+
+if (isSpeechSupported()) {
+  speechSynthesis.getVoices();
+  window.addEventListener('voiceschanged', refreshSpeechVoiceCatalog);
+}
+
+// ==========================================================================
+// PRESENTATION-GROUNDED ASK ENGINE
+// Answers client questions using curated Q&A + slide text. Optional OpenAI-
+// compatible LLM API. The API key is NEVER committed and NEVER persisted to
+// localStorage: it lives only in this browser session and is wiped on close.
+// ==========================================================================
+const PRESENTATION_LLM_PREFS_KEY = 'vhos_presentation_llm_prefs';
+const PRESENTATION_LLM_SESSION_KEY = 'vhos_presentation_llm_session';
+const PRESENTATION_LLM_DEFAULTS = {
+  // Local Vite proxy (dev). On GitHub Pages the user must paste the full URL.
+  endpoint: '/llm-proxy/api/v1/chat/completions',
+  model: 'llama3'
+};
+const presentationLlm = {
+  endpoint: PRESENTATION_LLM_DEFAULTS.endpoint,
+  apiKey: '',
+  model: PRESENTATION_LLM_DEFAULTS.model
+};
+
+function wipePresentationLlmSecrets() {
+  presentationLlm.apiKey = '';
+  try { sessionStorage.removeItem(PRESENTATION_LLM_SESSION_KEY); } catch (_) { /* ignore */ }
+  try {
+    // Purge any legacy key that may have been saved before this policy.
+    const raw = localStorage.getItem(PRESENTATION_LLM_PREFS_KEY)
+      || localStorage.getItem('vhos_presentation_llm');
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed && typeof parsed === 'object') {
+        delete parsed.apiKey;
+        localStorage.setItem(PRESENTATION_LLM_PREFS_KEY, JSON.stringify({
+          endpoint: parsed.endpoint || PRESENTATION_LLM_DEFAULTS.endpoint,
+          model: parsed.model || PRESENTATION_LLM_DEFAULTS.model
+        }));
+      }
+    }
+    localStorage.removeItem('vhos_presentation_llm');
+  } catch (_) { /* ignore */ }
+  const keyEl = document.getElementById('askLlmApiKey');
+  const gateKey = document.getElementById('llmGateApiKey');
+  if (keyEl) keyEl.value = '';
+  if (gateKey) gateKey.value = '';
+}
+
+function loadPresentationLlmConfig() {
+  try {
+    const prefsRaw = localStorage.getItem(PRESENTATION_LLM_PREFS_KEY)
+      || localStorage.getItem('vhos_presentation_llm');
+    if (prefsRaw) {
+      const parsed = JSON.parse(prefsRaw);
+      if (parsed && typeof parsed === 'object') {
+        let endpoint = String(parsed.endpoint || PRESENTATION_LLM_DEFAULTS.endpoint).trim()
+          || PRESENTATION_LLM_DEFAULTS.endpoint;
+        if (/spark-e020\.tail02df6b\.ts\.net/i.test(endpoint) && /localhost|127\.0\.0\.1/.test(location.host)) {
+          const path = endpoint.replace(/^https?:\/\/[^/]+/i, '') || '/api/v1/chat/completions';
+          endpoint = `/llm-proxy${path.startsWith('/') ? path : `/${path}`}`;
+        }
+        presentationLlm.endpoint = endpoint;
+        presentationLlm.model = String(parsed.model || PRESENTATION_LLM_DEFAULTS.model).trim()
+          || PRESENTATION_LLM_DEFAULTS.model;
+      }
+    } else {
+      presentationLlm.endpoint = PRESENTATION_LLM_DEFAULTS.endpoint;
+      presentationLlm.model = PRESENTATION_LLM_DEFAULTS.model;
+    }
+  } catch (_) {
+    presentationLlm.endpoint = PRESENTATION_LLM_DEFAULTS.endpoint;
+    presentationLlm.model = PRESENTATION_LLM_DEFAULTS.model;
+  }
+
+  // API key: session only.
+  try {
+    const sessionRaw = sessionStorage.getItem(PRESENTATION_LLM_SESSION_KEY);
+    if (sessionRaw) {
+      const session = JSON.parse(sessionRaw);
+      presentationLlm.apiKey = String(session?.apiKey || '').trim();
+    } else {
+      presentationLlm.apiKey = '';
+    }
+  } catch (_) {
+    presentationLlm.apiKey = '';
+  }
+}
+
+function persistPresentationLlmPrefs() {
+  try {
+    localStorage.setItem(PRESENTATION_LLM_PREFS_KEY, JSON.stringify({
+      endpoint: presentationLlm.endpoint,
+      model: presentationLlm.model
+    }));
+    localStorage.removeItem('vhos_presentation_llm');
+  } catch (_) { /* ignore */ }
+}
+
+function persistPresentationLlmSessionKey() {
+  try {
+    if (presentationLlm.apiKey) {
+      sessionStorage.setItem(PRESENTATION_LLM_SESSION_KEY, JSON.stringify({
+        apiKey: presentationLlm.apiKey
+      }));
+    } else {
+      sessionStorage.removeItem(PRESENTATION_LLM_SESSION_KEY);
+    }
+  } catch (_) { /* ignore */ }
+}
+
+function savePresentationLlmConfig() {
+  const endpointEl = document.getElementById('askLlmEndpoint');
+  const keyEl = document.getElementById('askLlmApiKey');
+  const modelEl = document.getElementById('askLlmModel');
+  presentationLlm.endpoint = (endpointEl?.value || '').trim() || PRESENTATION_LLM_DEFAULTS.endpoint;
+  presentationLlm.apiKey = (keyEl?.value || '').trim();
+  presentationLlm.model = (modelEl?.value || PRESENTATION_LLM_DEFAULTS.model).trim()
+    || PRESENTATION_LLM_DEFAULTS.model;
+  persistPresentationLlmPrefs();
+  persistPresentationLlmSessionKey();
+  showCommentsToast(getActiveLang() === 'es'
+    ? 'API guardada solo para esta sesión'
+    : 'API saved for this session only');
+  hideLlmSessionGate();
+}
+
+function loadPresentationLlmConfigIntoForm() {
+  loadPresentationLlmConfig();
+  const endpointEl = document.getElementById('askLlmEndpoint');
+  const keyEl = document.getElementById('askLlmApiKey');
+  const modelEl = document.getElementById('askLlmModel');
+  if (endpointEl) {
+    endpointEl.value = presentationLlm.endpoint || PRESENTATION_LLM_DEFAULTS.endpoint;
+    endpointEl.placeholder = PRESENTATION_LLM_DEFAULTS.endpoint;
+  }
+  if (keyEl) {
+    keyEl.value = presentationLlm.apiKey || '';
+    keyEl.placeholder = 'sk-... (solo esta sesión)';
+  }
+  if (modelEl) {
+    modelEl.value = presentationLlm.model || PRESENTATION_LLM_DEFAULTS.model;
+    modelEl.placeholder = PRESENTATION_LLM_DEFAULTS.model;
+  }
+}
+
+function isPresentationLlmConfigured() {
+  loadPresentationLlmConfig();
+  return !!(presentationLlm.endpoint && presentationLlm.apiKey);
+}
+
+function showLlmSessionGate() {
+  const gate = document.getElementById('llmSessionGate');
+  if (!gate) return;
+  loadPresentationLlmConfig();
+  const endpointEl = document.getElementById('llmGateEndpoint');
+  const keyEl = document.getElementById('llmGateApiKey');
+  const modelEl = document.getElementById('llmGateModel');
+  if (endpointEl) endpointEl.value = presentationLlm.endpoint || PRESENTATION_LLM_DEFAULTS.endpoint;
+  if (modelEl) modelEl.value = presentationLlm.model || PRESENTATION_LLM_DEFAULTS.model;
+  if (keyEl) keyEl.value = '';
+  gate.hidden = false;
+  gate.setAttribute('aria-hidden', 'false');
+  setTimeout(() => keyEl?.focus(), 40);
+}
+
+function hideLlmSessionGate() {
+  const gate = document.getElementById('llmSessionGate');
+  if (!gate) return;
+  gate.hidden = true;
+  gate.setAttribute('aria-hidden', 'true');
+}
+
+function submitLlmSessionGate(event) {
+  if (event) event.preventDefault();
+  const endpointEl = document.getElementById('llmGateEndpoint');
+  const keyEl = document.getElementById('llmGateApiKey');
+  const modelEl = document.getElementById('llmGateModel');
+  const endpoint = (endpointEl?.value || '').trim();
+  const apiKey = (keyEl?.value || '').trim();
+  const model = (modelEl?.value || '').trim() || PRESENTATION_LLM_DEFAULTS.model;
+  if (!apiKey) {
+    showToast(getActiveLang() === 'es' ? 'Ingresa la API key para esta sesión' : 'Enter the API key for this session');
+    keyEl?.focus();
+    return;
+  }
+  presentationLlm.endpoint = endpoint || PRESENTATION_LLM_DEFAULTS.endpoint;
+  presentationLlm.apiKey = apiKey;
+  presentationLlm.model = model;
+  persistPresentationLlmPrefs();
+  persistPresentationLlmSessionKey();
+  hideLlmSessionGate();
+  loadPresentationLlmConfigIntoForm();
+  showToast(getActiveLang() === 'es'
+    ? 'API lista · se borrará al cerrar'
+    : 'API ready · cleared when you close');
+}
+
+function skipLlmSessionGate() {
+  wipePresentationLlmSecrets();
+  hideLlmSessionGate();
+  showToast(getActiveLang() === 'es'
+    ? 'Ask IA usará solo notas curadas (sin LLM)'
+    : 'Ask AI will use curated notes only (no LLM)');
+}
+
+function initPresentationLlmSession() {
+  wipePresentationLlmSecrets();
+  loadPresentationLlmConfig();
+  // Endpoint/model prefs may remain; key must be re-entered every open.
+  presentationLlm.apiKey = '';
+  try { sessionStorage.removeItem(PRESENTATION_LLM_SESSION_KEY); } catch (_) { /* ignore */ }
+  showLlmSessionGate();
+
+  const clear = () => wipePresentationLlmSecrets();
+  window.addEventListener('pagehide', clear);
+  window.addEventListener('beforeunload', clear);
+}
+
+function tokenizeAskQuery(text) {
+  return String(text || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9$\s]/g, ' ')
+    .split(/\s+/)
+    .filter(t => t.length > 2);
+}
+
+function scoreAskOverlap(queryTokens, haystack) {
+  if (!queryTokens.length || !haystack) return 0;
+  const hay = haystack.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  let hits = 0;
+  queryTokens.forEach(t => { if (hay.includes(t)) hits += 1; });
+  return hits / queryTokens.length;
+}
+
+function buildPresentationCorpus(deck, preferSlide) {
+  const lang = getActiveLang();
+  const chunks = [];
+  const total = DECK_SLIDE_COUNTS[deck] || 0;
+  const container = document.getElementById(`deck-${deck}`);
+
+  for (let slide = 1; slide <= total; slide += 1) {
+    const slideEl = container ? container.querySelector(`.slide[data-slide="${slide}"]`) : null;
+    const body = slideEl ? extractReadableSlideText(slideEl) : '';
+    const notes = getSlideNotes(deck, slide);
+    const noteText = notes.map(n => {
+      const q = lang === 'en' ? (n.question_en || n.question || '') : (n.question_es || n.question || '');
+      const a = lang === 'en' ? (n.answer_en || n.answer || '') : (n.answer_es || n.answer || '');
+      return `Q: ${q}\nA: ${a}`;
+    }).join('\n');
+
+    chunks.push({
+      deck,
+      slide,
+      priority: slide === preferSlide ? 2 : (Math.abs(slide - preferSlide) <= 1 ? 1.25 : 1),
+      title: getSlideHeadingText(deck, slide),
+      body,
+      notes: noteText,
+      text: `${body}\n${noteText}`
+    });
+  }
+  return chunks;
+}
+
+function findLocalGroundedAnswers(question, deck, slide) {
+  const tokens = tokenizeAskQuery(question);
+  const corpus = buildPresentationCorpus(deck, slide);
+  const scored = corpus.map(chunk => ({
+    ...chunk,
+    score: scoreAskOverlap(tokens, chunk.text) * chunk.priority
+  })).filter(c => c.score >= 0.18)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 4);
+
+  // Also score curated Q&A items directly for tight matches.
+  const qaHits = [];
+  const deckPresets = CURATED_SLIDE_QA[deck] || {};
+  Object.keys(deckPresets).forEach(slideKey => {
+    (deckPresets[slideKey] || []).forEach(item => {
+      const q = `${item.question_es || ''} ${item.question_en || ''} ${item.answer_es || ''} ${item.answer_en || ''}`;
+      const score = scoreAskOverlap(tokens, q) * (String(slideKey) === String(slide) ? 1.5 : 1);
+      if (score >= 0.28) {
+        qaHits.push({
+          slide: Number(slideKey),
+          score,
+          question_es: item.question_es,
+          question_en: item.question_en,
+          answer_es: item.answer_es,
+          answer_en: item.answer_en
+        });
+      }
+    });
+  });
+  qaHits.sort((a, b) => b.score - a.score);
+
+  return { chunks: scored, qaHits: qaHits.slice(0, 3) };
+}
+
+function renderAskEngineResult(payload) {
+  const box = document.getElementById('askPresentationResult');
+  if (!box) return;
+  const lang = getActiveLang();
+  const citations = (payload.citations || [])
+    .map(c => `<span class="ask-cite">S${c}</span>`)
+    .join(' ');
+
+  box.hidden = false;
+  box.innerHTML = `
+    <div class="ask-engine-status ask-engine-status--${payload.status}">${payload.statusLabel}</div>
+    <div class="ask-engine-answer">${payload.answer}</div>
+    ${citations ? `<div class="ask-engine-cites"><span class="lang-es">Fuentes</span><span class="lang-en">Sources</span>: ${citations}</div>` : ''}
+    ${payload.mode ? `<div class="ask-engine-mode">${payload.mode}</div>` : ''}
+  `;
+  applyLanguageWithin(box, lang);
+}
+
+async function callPresentationLlm(question, contextBlocks) {
+  loadPresentationLlmConfig();
+  const lang = getActiveLang();
+  const system = lang === 'es'
+    ? 'Eres el motor de Q&A de la presentación 3i BAIRD LAB. Responde SOLO con base en el contexto de diapositivas y notas. Si no hay evidencia suficiente, di exactamente: INSUFICIENTE. Sé ejecutivo, claro y breve (máx. 120 palabras). Cita slides como S3, S8.'
+    : 'You are the 3i BAIRD LAB presentation Q&A engine. Answer ONLY from the provided slide and notes context. If evidence is insufficient, say exactly: INSUFFICIENT. Be executive, clear, and brief (max 120 words). Cite slides as S3, S8.';
+
+  const context = contextBlocks.map(c =>
+    `[Slide ${c.slide}] ${c.title || ''}\n${(c.text || '').slice(0, 900)}`
+  ).join('\n\n---\n\n');
+
+  const payload = {
+    model: presentationLlm.model,
+    temperature: 0.2,
+    messages: [
+      { role: 'system', content: system },
+      { role: 'user', content: `CONTEXT:\n${context}\n\nQUESTION:\n${question}` }
+    ]
+  };
+
+  // Spark / OpenWebUI often expose either /api/v1 or /v1. Try the configured
+  // endpoint first, then a small set of OpenAI-compatible fallbacks.
+  const configured = presentationLlm.endpoint.replace(/\/$/, '');
+  const candidates = Array.from(new Set([
+    configured,
+    '/llm-proxy/api/v1/chat/completions',
+    '/llm-proxy/v1/chat/completions',
+    '/llm-proxy/openai/v1/chat/completions'
+  ]));
+
+  let lastError = null;
+  for (const url of candidates) {
+    try {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${presentationLlm.apiKey}`
+        },
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) {
+        const errText = await res.text().catch(() => '');
+        lastError = new Error(`LLM HTTP ${res.status} @ ${url}: ${errText.slice(0, 160)}`);
+        continue;
+      }
+      const data = await res.json();
+      const answer = data?.choices?.[0]?.message?.content
+        || data?.output_text
+        || data?.answer
+        || '';
+      const cleaned = String(answer).trim();
+      if (cleaned) {
+        // Persist only the working endpoint path (never the API key).
+        if (url !== presentationLlm.endpoint) {
+          presentationLlm.endpoint = url;
+          persistPresentationLlmPrefs();
+        }
+        return cleaned;
+      }
+      lastError = new Error(`Empty LLM response @ ${url}`);
+    } catch (err) {
+      lastError = err;
+    }
+  }
+  throw lastError || new Error('LLM request failed');
+}
+
+async function askPresentationEngine() {
+  const input = document.getElementById('askPresentationInput');
+  const btn = document.getElementById('askPresentationBtn');
+  const question = (input?.value || '').trim();
+  const lang = getActiveLang();
+
+  if (!question) {
+    showCommentsToast(lang === 'es' ? 'Escribe una pregunta' : 'Type a question');
+    return;
+  }
+  if (activeDeck === 'hub') {
+    showCommentsToast(lang === 'es' ? 'Abre un deck para preguntar' : 'Open a deck to ask');
+    return;
+  }
+
+  if (btn) btn.disabled = true;
+  renderAskEngineResult({
+    status: 'pending',
+    statusLabel: lang === 'es' ? 'Buscando en la presentación…' : 'Searching the presentation…',
+    answer: lang === 'es' ? 'Analizando slides y notas curadas…' : 'Analyzing slides and curated notes…',
+    citations: [currentSlide]
+  });
+
+  try {
+    const local = findLocalGroundedAnswers(question, activeDeck, currentSlide);
+    const contextBlocks = local.chunks.length
+      ? local.chunks
+      : buildPresentationCorpus(activeDeck, currentSlide).filter(c => Math.abs(c.slide - currentSlide) <= 1);
+
+    if (isPresentationLlmConfigured()) {
+      try {
+        const llmAnswer = await callPresentationLlm(question, contextBlocks.slice(0, 5));
+        const insufficient = /^(INSUFICIENTE|INSUFFICIENT)\b/i.test(llmAnswer);
+        renderAskEngineResult({
+          status: insufficient ? 'insufficient' : 'grounded',
+          statusLabel: insufficient
+            ? (lang === 'es' ? 'Evidencia insuficiente' : 'Insufficient evidence')
+            : (lang === 'es' ? 'Respuesta anclada (LLM)' : 'Grounded answer (LLM)'),
+          answer: llmAnswer || (lang === 'es' ? 'Sin respuesta del modelo.' : 'No model response.'),
+          citations: contextBlocks.slice(0, 4).map(c => c.slide),
+          mode: `${presentationLlm.model}`
+        });
+        return;
+      } catch (llmErr) {
+        // Fall through to local curated notes instead of showing a dead "S2" error.
+        console.warn('LLM ask failed, falling back to local corpus:', llmErr);
+      }
+    }
+
+    if (local.qaHits.length) {
+      const hit = local.qaHits[0];
+      const answer = lang === 'en'
+        ? (hit.answer_en || hit.answer_es)
+        : (hit.answer_es || hit.answer_en);
+      renderAskEngineResult({
+        status: 'grounded',
+        statusLabel: lang === 'es' ? 'Respuesta anclada (notas curadas)' : 'Grounded answer (curated notes)',
+        answer,
+        citations: local.qaHits.map(h => h.slide),
+        mode: lang === 'es'
+          ? 'Matcher local (LLM no disponible o falló)'
+          : 'Local matcher (LLM unavailable or failed)'
+      });
+      return;
+    }
+
+    if (local.chunks.length) {
+      const top = local.chunks[0];
+      renderAskEngineResult({
+        status: 'grounded',
+        statusLabel: lang === 'es' ? 'Contexto de slide encontrado' : 'Slide context found',
+        answer: (top.body || top.text || '').slice(0, 420) || (lang === 'es' ? 'Hay contexto, pero sin respuesta curada. Configura tu API LLM.' : 'Context found, but no curated answer. Configure your LLM API.'),
+        citations: local.chunks.map(c => c.slide),
+        mode: lang === 'es' ? 'Corpus local' : 'Local corpus'
+      });
+      return;
+    }
+
+    renderAskEngineResult({
+      status: 'insufficient',
+      statusLabel: lang === 'es' ? 'Evidencia insuficiente' : 'Insufficient evidence',
+      answer: lang === 'es'
+        ? 'No encontré base suficiente en esta presentación para responder con rigor. Reformula o revisa otra slide.'
+        : 'Not enough evidence in this presentation to answer rigorously. Reframe or check another slide.',
+      citations: [currentSlide]
+    });
+  } catch (err) {
+    renderAskEngineResult({
+      status: 'error',
+      statusLabel: lang === 'es' ? 'Error del motor' : 'Engine error',
+      answer: String(err?.message || err),
+      citations: [currentSlide]
+    });
+  } finally {
+    if (btn) btn.disabled = false;
+  }
+}
+
 Object.assign(window, {
   launchDeck,
   playVentureVideo,
@@ -2790,6 +5310,7 @@ Object.assign(window, {
   toggleTheme,
   toggleFullscreen,
   toggleOverview,
+  setNavigatorActFilter,
   openLightbox,
   closeLightbox,
   closeLightboxDirect,
@@ -2806,6 +5327,7 @@ Object.assign(window, {
   injectSlidePresets,
   copyCurrentSlideNotes,
   copyCommentText,
+  translateCommentById,
   togglePinComment,
   deleteComment,
   exportAllDeckNotes,
@@ -2817,7 +5339,19 @@ Object.assign(window, {
   resetPitchTimer,
   toggleLaserPointer,
   showToast,
-  showCommentsToast
+  showCommentsToast,
+  toggleExecutiveBriefing,
+  pauseExecutiveBriefing,
+  stopExecutiveBriefing,
+  filterHubInterestLane,
+  setBriefingOption,
+  startDeckAudioTour,
+  setBriefingVoice,
+  askPresentationEngine,
+  savePresentationLlmConfig,
+  submitLlmSessionGate,
+  skipLlmSessionGate,
+  toggleBriefingDetails
 });
 
 window.addEventListener('DOMContentLoaded', initPlatform);
