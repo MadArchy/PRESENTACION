@@ -2057,12 +2057,12 @@ const CURATED_SLIDE_QA = {
         "category": "inversor",
         "question_es": "¿Cuál es el margen operativo unitario proyectado del local automatizado?",
         "question_en": "What is the projected unit EBITDA margin of the automated store?",
-        "answer_es": "Entre 28% y 34% de EBITDA gracias a la reducción del 60% de mano de obra en cocina y reducción de desperdicio a menos del 1.5%.",
-        "answer_en": "Between 28% and 34% EBITDA margin driven by 60% kitchen labor reduction and shrinking ingredient waste under 1.5%.",
+        "answer_es": "EBITDA sólido gracias a la reducción de mano de obra en cocina y desperdicio de insumos minimizado.",
+        "answer_en": "Strong EBITDA driven by reduced kitchen labor and minimized ingredient waste.",
         "pinned": true,
         "timestamp": "Preset 3i",
         "question": "¿Cuál es el margen operativo unitario proyectado del local automatizado?",
-        "answer": "Entre 28% y 34% de EBITDA gracias a la reducción del 60% de mano de obra en cocina y reducción de desperdicio a menos del 1.5%."
+        "answer": "EBITDA sólido gracias a la reducción de mano de obra en cocina y desperdicio de insumos minimizado."
       },
       {
         "id": "ff-1-2",
@@ -2111,12 +2111,12 @@ const CURATED_SLIDE_QA = {
         "category": "inversor",
         "question_es": "¿Comparativa directa con franquicias tradicionales?",
         "question_en": "How does it compare against traditional franchise models?",
-        "answer_es": "40% menor Capex de apertura, 65% menos personal en cocina y punto de equilibrio alcanzable con solo 60 pedidos diarios.",
-        "answer_en": "40% lower opening Capex, 65% fewer kitchen staff, and breakeven reachable with just 60 daily orders.",
+        "answer_es": "Menor CAPEX de apertura, menos personal en cocina y punto de equilibrio alcanzable con volumen diario moderado.",
+        "answer_en": "Lower opening CAPEX, fewer kitchen staff, and breakeven reachable with moderate daily order volume.",
         "pinned": true,
         "timestamp": "Preset 3i",
         "question": "¿Comparativa directa con franquicias tradicionales?",
-        "answer": "40% menor Capex de apertura, 65% menos personal en cocina y punto de equilibrio alcanzable con solo 60 pedidos diarios."
+        "answer": "Menor CAPEX de apertura, menos personal en cocina y punto de equilibrio alcanzable con volumen diario moderado."
       }
     ],
     "5": [
@@ -2167,12 +2167,12 @@ const CURATED_SLIDE_QA = {
         "category": "inversor",
         "question_es": "¿Cuál es el costo unitario de producto (Food Cost)?",
         "question_en": "What is the targeted unit Food Cost percentage?",
-        "answer_es": "Estandarizado en 26% de costo de materia prima gracias a cero sobreporciones y compras centralizadas de insumos.",
-        "answer_en": "Standardized at 26% of gross sales due to zero over-portioning and centralized ingredient sourcing.",
+        "answer_es": "Costo de materia prima estandarizado gracias a cero sobreporciones y compras centralizadas de insumos.",
+        "answer_en": "Standardized ingredient cost through zero over-portioning and centralized sourcing.",
         "pinned": true,
         "timestamp": "Preset 3i",
         "question": "¿Cuál es el costo unitario de producto (Food Cost)?",
-        "answer": "Estandarizado en 26% de costo de materia prima gracias a cero sobreporciones y compras centralizadas de insumos."
+        "answer": "Costo de materia prima estandarizado gracias a cero sobreporciones y compras centralizadas de insumos."
       }
     ],
     "9": [
@@ -2209,12 +2209,12 @@ const CURATED_SLIDE_QA = {
         "category": "inversor",
         "question_es": "¿Tamaño del mercado objetivo accesible (TAM/SAM)?",
         "question_en": "What is the Total and Serviceable Addressable Market (TAM/SAM)?",
-        "answer_es": "Mercado QSR regional de pizza y comida rápida superior a $450M USD en ciudades intermedias de Colombia.",
-        "answer_en": "Regional pizza & fast food QSR market exceeding $450M USD across intermediate cities in Colombia.",
+        "answer_es": "Mercado QSR regional de pizza y comida rápida amplio en ciudades intermedias de Colombia.",
+        "answer_en": "Large regional pizza and fast-food QSR market across intermediate cities in Colombia.",
         "pinned": true,
         "timestamp": "Preset 3i",
         "question": "¿Tamaño del mercado objetivo accesible (TAM/SAM)?",
-        "answer": "Mercado QSR regional de pizza y comida rápida superior a $450M USD en ciudades intermedias de Colombia."
+        "answer": "Mercado QSR regional de pizza y comida rápida amplio en ciudades intermedias de Colombia."
       }
     ],
     "12": [
@@ -2251,12 +2251,12 @@ const CURATED_SLIDE_QA = {
         "category": "inversor",
         "question_es": "¿Monto de la ronda de inversión y asignación de fondos?",
         "question_en": "Seed round size and capital allocation?",
-        "answer_es": "Ronda Semilla de $120,000 USD destinada a equipamiento de cocina automatizada (55%), adecuación del local (25%) y capital de trabajo (20%).",
-        "answer_en": "$120,000 USD Seed Round allocated to kitchen automation (55%), store fit-out (25%), and working capital (20%).",
+        "answer_es": "Ronda piloto destinada a equipamiento de cocina automatizada, adecuación del local y capital de trabajo.",
+        "answer_en": "Pilot round allocated to kitchen automation, store fit-out, and working capital.",
         "pinned": true,
         "timestamp": "Preset 3i",
         "question": "¿Monto de la ronda de inversión y asignación de fondos?",
-        "answer": "Ronda Semilla de $120,000 USD destinada a equipamiento de cocina automatizada (55%), adecuación del local (25%) y capital de trabajo (20%)."
+        "answer": "Ronda piloto destinada a equipamiento de cocina automatizada, adecuación del local y capital de trabajo."
       }
     ],
     "15": [
@@ -3161,6 +3161,9 @@ function switchCommentsTab(tabName) {
   }
   if (tabName === 'ask') {
     loadPresentationLlmConfigIntoForm();
+    if (!isPresentationLlmConfigured()) {
+      openAskLlmConfigPanel();
+    }
   }
 }
 
@@ -4858,9 +4861,7 @@ function wipePresentationLlmSecrets() {
     localStorage.removeItem('vhos_presentation_llm');
   } catch (_) { /* ignore */ }
   const keyEl = document.getElementById('askLlmApiKey');
-  const gateKey = document.getElementById('llmGateApiKey');
   if (keyEl) keyEl.value = '';
-  if (gateKey) gateKey.value = '';
 }
 
 function loadPresentationLlmConfig() {
@@ -4938,7 +4939,6 @@ function savePresentationLlmConfig() {
   showCommentsToast(getActiveLang() === 'es'
     ? 'API guardada solo para esta sesión'
     : 'API saved for this session only');
-  hideLlmSessionGate();
 }
 
 function loadPresentationLlmConfigIntoForm() {
@@ -4965,59 +4965,14 @@ function isPresentationLlmConfigured() {
   return !!(presentationLlm.endpoint && presentationLlm.apiKey);
 }
 
-function showLlmSessionGate() {
-  const gate = document.getElementById('llmSessionGate');
-  if (!gate) return;
-  loadPresentationLlmConfig();
-  const endpointEl = document.getElementById('llmGateEndpoint');
-  const keyEl = document.getElementById('llmGateApiKey');
-  const modelEl = document.getElementById('llmGateModel');
-  if (endpointEl) endpointEl.value = presentationLlm.endpoint || PRESENTATION_LLM_DEFAULTS.endpoint;
-  if (modelEl) modelEl.value = presentationLlm.model || PRESENTATION_LLM_DEFAULTS.model;
-  if (keyEl) keyEl.value = '';
-  gate.hidden = false;
-  gate.setAttribute('aria-hidden', 'false');
-  setTimeout(() => keyEl?.focus(), 40);
-}
-
-function hideLlmSessionGate() {
-  const gate = document.getElementById('llmSessionGate');
-  if (!gate) return;
-  gate.hidden = true;
-  gate.setAttribute('aria-hidden', 'true');
-}
-
-function submitLlmSessionGate(event) {
-  if (event) event.preventDefault();
-  const endpointEl = document.getElementById('llmGateEndpoint');
-  const keyEl = document.getElementById('llmGateApiKey');
-  const modelEl = document.getElementById('llmGateModel');
-  const endpoint = (endpointEl?.value || '').trim();
-  const apiKey = (keyEl?.value || '').trim();
-  const model = (modelEl?.value || '').trim() || PRESENTATION_LLM_DEFAULTS.model;
-  if (!apiKey) {
-    showToast(getActiveLang() === 'es' ? 'Ingresa la API key para esta sesión' : 'Enter the API key for this session');
-    keyEl?.focus();
-    return;
-  }
-  presentationLlm.endpoint = endpoint || PRESENTATION_LLM_DEFAULTS.endpoint;
-  presentationLlm.apiKey = apiKey;
-  presentationLlm.model = model;
-  persistPresentationLlmPrefs();
-  persistPresentationLlmSessionKey();
-  hideLlmSessionGate();
+function openAskLlmConfigPanel(options = {}) {
+  const panel = document.getElementById('askLlmConfigPanel');
+  if (!panel) return;
+  panel.open = true;
   loadPresentationLlmConfigIntoForm();
-  showToast(getActiveLang() === 'es'
-    ? 'API lista · se borrará al cerrar'
-    : 'API ready · cleared when you close');
-}
-
-function skipLlmSessionGate() {
-  wipePresentationLlmSecrets();
-  hideLlmSessionGate();
-  showToast(getActiveLang() === 'es'
-    ? 'Ask IA usará solo notas curadas (sin LLM)'
-    : 'Ask AI will use curated notes only (no LLM)');
+  if (options.focusKey) {
+    setTimeout(() => document.getElementById('askLlmApiKey')?.focus(), 40);
+  }
 }
 
 function initPresentationLlmSession() {
@@ -5026,7 +4981,6 @@ function initPresentationLlmSession() {
   // Endpoint/model prefs may remain; key must be re-entered every open.
   presentationLlm.apiKey = '';
   try { sessionStorage.removeItem(PRESENTATION_LLM_SESSION_KEY); } catch (_) { /* ignore */ }
-  showLlmSessionGate();
 
   const clear = () => wipePresentationLlmSecrets();
   window.addEventListener('pagehide', clear);
@@ -5215,6 +5169,10 @@ async function askPresentationEngine() {
     return;
   }
 
+  if (!isPresentationLlmConfigured()) {
+    openAskLlmConfigPanel({ focusKey: true });
+  }
+
   if (btn) btn.disabled = true;
   renderAskEngineResult({
     status: 'pending',
@@ -5349,8 +5307,6 @@ Object.assign(window, {
   setBriefingVoice,
   askPresentationEngine,
   savePresentationLlmConfig,
-  submitLlmSessionGate,
-  skipLlmSessionGate,
   toggleBriefingDetails
 });
 
